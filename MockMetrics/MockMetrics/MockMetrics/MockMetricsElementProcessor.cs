@@ -67,6 +67,8 @@ namespace MockMetrics
             }
 
             var nameSpaceTests = classTests.GetContainingNamespaceDeclaration();
+            
+	    // todo: include nested classes
             var fileTests = classTests.GetContainingFile() as ICSharpTypeAndNamespaceHolderDeclaration;
 
             var hasSpaceNunitUsing =
