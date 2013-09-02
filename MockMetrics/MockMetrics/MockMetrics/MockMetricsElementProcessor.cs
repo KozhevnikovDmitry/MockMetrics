@@ -43,9 +43,12 @@ namespace MockMetrics
             if (methodDeclaration == null)
                 return;
 
+            if (methodDeclaration.IsAbstract)
+                return;
+
             if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
-                ProcessUnitTest(methodDeclaration.DeclaredElement);
+                ProcessUnitTest(methodDeclaration);
             }
         }
 
@@ -59,7 +62,7 @@ namespace MockMetrics
             return method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestAttribute"), false);
         }
 
-        private void ProcessUnitTest(IMethod method)
+        private void ProcessUnitTest(IMethodDeclaration unitTest)
         {
 
         }
