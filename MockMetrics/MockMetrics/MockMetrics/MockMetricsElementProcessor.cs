@@ -40,50 +40,28 @@ namespace MockMetrics
         {
             var methodDeclaration = element as IMethodDeclaration;
 
-            if (element == null)
+            if (methodDeclaration == null)
                 return;
 
-            if (IsNunitTestDeclaration(methodDeclaration))
+            if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
-                ProcessUnitTest(methodDeclaration);
+                ProcessUnitTest(methodDeclaration.DeclaredElement);
             }
         }
 
-        private bool IsNunitTestDeclaration(IMethodDeclaration method)
+        private bool IsNunitTestDeclaration(IMethod method)
         {
-            var isTest =
-                method.Attributes.Any(t => t.Name.ShortName == "Test" || t.Name.ShortName == "TestCase");
-
-            if (!isTest)
+            if (method == null)
             {
                 return false;
             }
 
-            var classTests = method.GetContainingTypeDeclaration();
-            var isFixtureClass = classTests.Attributes.Any(t => t.Name.ShortName == "TestFixture");
-            if (!isFixtureClass)
-            {
-                return false;
-            }
-
-            var nameSpaceTests = classTests.GetContainingNamespaceDeclaration();
-            
-	    // todo: include nested classes
-            var fileTests = classTests.GetContainingFile() as ICSharpTypeAndNamespaceHolderDeclaration;
-
-            var hasSpaceNunitUsing =
-                nameSpaceTests.Imports.Any(t => t.ImportedSymbolName.QualifiedName == "NUnit.Framework");
-
-            var hasFileNunitUsing = fileTests != null &&
-                                    fileTests.Imports.Any(
-                                        t => t.ImportedSymbolName.QualifiedName == "NUnit.Framework");
-
-            return hasSpaceNunitUsing || hasFileNunitUsing;
+            return method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestAttribute"), false);
         }
 
-        private void ProcessUnitTest(IMethodDeclaration unitTest)
+        private void ProcessUnitTest(IMethod method)
         {
-            int i = 0;
+
         }
 
         public bool ProcessingIsFinished
