@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics", "MockMetrics\MockMetrics\MockMetrics.csproj", "{529DB9BB-25F6-42B1-A70F-764094B10206}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics", "MockMetrics\MockMetrics.csproj", "{529DB9BB-25F6-42B1-A70F-764094B10206}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Tests", "MockMetrics\MockMetrics.Tests\MockMetrics.Tests.csproj", "{A252BF6E-9631-494C-91ED-2187FB1445D6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Tests", "MockMetrics.Tests\MockMetrics.Tests.csproj", "{6A8A1CB6-59CA-4118-9FAB-7B66B37EB1C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,10 @@ Global
 		{529DB9BB-25F6-42B1-A70F-764094B10206}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{529DB9BB-25F6-42B1-A70F-764094B10206}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{529DB9BB-25F6-42B1-A70F-764094B10206}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A252BF6E-9631-494C-91ED-2187FB1445D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A252BF6E-9631-494C-91ED-2187FB1445D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A252BF6E-9631-494C-91ED-2187FB1445D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A252BF6E-9631-494C-91ED-2187FB1445D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A8A1CB6-59CA-4118-9FAB-7B66B37EB1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A8A1CB6-59CA-4118-9FAB-7B66B37EB1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A8A1CB6-59CA-4118-9FAB-7B66B37EB1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A8A1CB6-59CA-4118-9FAB-7B66B37EB1C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
