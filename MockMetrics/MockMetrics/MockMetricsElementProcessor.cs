@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using JetBrains.ReSharper.Daemon;
+using JetBrains.ReSharper.Feature.Services.LiveTemplates.Macros.Implementations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
@@ -69,15 +70,34 @@ namespace MockMetrics
             var snapshot = new Snapshot();
             var subTree = unitTest.EnumerateSubTree();
 
+            var expressions = subTree.OfType<IExpressionStatement>();
             var variables = subTree.OfType<IMultipleLocalVariableDeclaration>();
             var constants = subTree.OfType<IMultipleLocalConstantDeclaration>();
-            
+
             foreach (var variable in variables)
             {
                 ProcessLocalVariable(snapshot, variable);
             }
 
+            foreach (var expression in expressions)
+            {
+                ProcessExpression(snapshot, expression);
+            }
+
             Highlightings.Add(new HighlightingInfo(unitTest.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
+        }
+
+        private void ProcessExpression(Snapshot snapshot, IExpressionStatement expression)
+        {
+            if (expression.Expression is IInvocationExpression)
+            {
+                var invocation = expression.Expression as IInvocationExpression;
+                var invokedMethod = invocation.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+                if (invokedMethod.ToString().StartsWith("Method:NUnit.Framework.Assert"))
+                {
+                    snapshot.Asserts.Add(expression);
+                }
+            }
         }
 
         private void ProcessLocalVariable(Snapshot snapshot, IMultipleLocalVariableDeclaration declaration)
@@ -107,7 +127,7 @@ namespace MockMetrics
                     {
                         var invocation = value as IInvocationExpression;
                         var invokedMethod = invocation.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
-                        if (invokedMethod.ToString() == "Method:Moq.Mock.Of()")
+                        if (invokedMethod.ToString().StartsWith("Method:Moq.Mock.Of()"))
                         {
                             snapshot.Stubs.Add(localVariableDeclaration);
                             continue;
@@ -124,18 +144,12 @@ namespace MockMetrics
                             continue;
                         }
 
-                        snapshot.Targets.Add(localVariableDeclaration);
+                        snapshot.TargetObjects.Add(localVariableDeclaration);
                     }
                 }
-
-
-
-
             }
         }
-
-
-
+        
         public bool ProcessingIsFinished
         {
             get
@@ -150,15 +164,20 @@ namespace MockMetrics
     {
         public Snapshot()
         {
-            Targets = new List<ILocalVariableDeclaration>();
+            TargetObjects = new List<ILocalVariableDeclaration>();
             Stubs = new List<ILocalVariableDeclaration>();
             Mocks = new List<ILocalVariableDeclaration>();
+            Asserts = new List<IExpressionStatement>();
         }
 
-        public List<ILocalVariableDeclaration> Targets { get; set; }
+        public List<IInvocationExpression> TargetCalls { get; set; }
+
+        public List<ILocalVariableDeclaration> TargetObjects { get; set; }
 
         public List<ILocalVariableDeclaration> Stubs { get; set; }
 
         public List<ILocalVariableDeclaration> Mocks { get; set; }
+
+        public List<IExpressionStatement> Asserts { get; set; }
     }
 }
