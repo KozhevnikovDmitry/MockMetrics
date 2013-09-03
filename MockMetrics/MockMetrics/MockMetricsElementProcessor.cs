@@ -13,6 +13,7 @@ namespace MockMetrics
         private readonly IDaemonProcess _process;
 
         private List<HighlightingInfo> _highlightings;
+        private readonly UnitTestProcessor _processor;
 
         public List<HighlightingInfo> Highlightings
         {
@@ -26,6 +27,7 @@ namespace MockMetrics
         {
             _process = process;
             _highlightings = new List<HighlightingInfo>();
+            _processor = new UnitTestProcessor();
         }
 
         public bool InteriorShouldBeProcessed(ITreeNode element)
@@ -50,7 +52,8 @@ namespace MockMetrics
 
             if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
-                ProcessUnitTest(methodDeclaration);
+                var snapshot = _processor.EatUnitTest(methodDeclaration);
+                Highlightings.Add(new HighlightingInfo(methodDeclaration.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
             }
         }
 
@@ -65,91 +68,6 @@ namespace MockMetrics
                 || method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestCaseAttribute"), false);
         }
 
-        private void ProcessUnitTest(IMethodDeclaration unitTest)
-        {
-            var snapshot = new Snapshot();
-            var subTree = unitTest.EnumerateSubTree();
-
-            var expressions = subTree.OfType<IExpressionStatement>();
-            var variables = subTree.OfType<IMultipleLocalVariableDeclaration>();
-            var constants = subTree.OfType<IMultipleLocalConstantDeclaration>();
-
-            foreach (var variable in variables)
-            {
-                ProcessLocalVariable(snapshot, variable);
-            }
-
-            foreach (var expression in expressions)
-            {
-                ProcessExpression(snapshot, expression);
-            }
-
-            Highlightings.Add(new HighlightingInfo(unitTest.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
-        }
-
-        private void ProcessExpression(Snapshot snapshot, IExpressionStatement expression)
-        {
-            if (expression.Expression is IInvocationExpression)
-            {
-                var invocation = expression.Expression as IInvocationExpression;
-                var invokedMethod = invocation.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
-                if (invokedMethod.ToString().StartsWith("Method:NUnit.Framework.Assert"))
-                {
-                    snapshot.Asserts.Add(expression);
-                }
-            }
-        }
-
-        private void ProcessLocalVariable(Snapshot snapshot, IMultipleLocalVariableDeclaration declaration)
-        {
-            foreach (var localVariableDeclaration in declaration.EnumerateSubTree().OfType<ILocalVariableDeclaration>())
-            {
-                var localVariableType = localVariableDeclaration.DeclaredElement.Type;
-
-                if (localVariableType.Classify == TypeClassification.VALUE_TYPE)
-                {
-                    snapshot.Stubs.Add(localVariableDeclaration);
-                    continue;
-                }
-
-                if (localVariableDeclaration.Initial is IArrayInitializer)
-                {
-                    snapshot.Stubs.Add(localVariableDeclaration);
-                    continue;
-                }
-
-                if (localVariableDeclaration.Initial is IExpressionInitializer)
-                {
-                    var expressionInitializer = localVariableDeclaration.Initial as IExpressionInitializer;
-                    var value = expressionInitializer.Value;
-
-                    if (value is IInvocationExpression)
-                    {
-                        var invocation = value as IInvocationExpression;
-                        var invokedMethod = invocation.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
-                        if (invokedMethod.ToString().StartsWith("Method:Moq.Mock.Of()"))
-                        {
-                            snapshot.Stubs.Add(localVariableDeclaration);
-                            continue;
-                        }
-                    }
-
-                    if (value is IObjectCreationExpression)
-                    {
-                        var objectCreation = value as IObjectCreationExpression;
-                        var constructedType = objectCreation.TypeReference.CurrentResolveResult.DeclaredElement;
-                        if (constructedType.ToString() == "Class:Moq.Mock`1")
-                        {
-                            snapshot.Mocks.Add(localVariableDeclaration);
-                            continue;
-                        }
-
-                        snapshot.TargetObjects.Add(localVariableDeclaration);
-                    }
-                }
-            }
-        }
-        
         public bool ProcessingIsFinished
         {
             get
@@ -158,26 +76,5 @@ namespace MockMetrics
             }
 
         }
-    }
-
-    public class Snapshot
-    {
-        public Snapshot()
-        {
-            TargetObjects = new List<ILocalVariableDeclaration>();
-            Stubs = new List<ILocalVariableDeclaration>();
-            Mocks = new List<ILocalVariableDeclaration>();
-            Asserts = new List<IExpressionStatement>();
-        }
-
-        public List<IInvocationExpression> TargetCalls { get; set; }
-
-        public List<ILocalVariableDeclaration> TargetObjects { get; set; }
-
-        public List<ILocalVariableDeclaration> Stubs { get; set; }
-
-        public List<ILocalVariableDeclaration> Mocks { get; set; }
-
-        public List<IExpressionStatement> Asserts { get; set; }
     }
 }

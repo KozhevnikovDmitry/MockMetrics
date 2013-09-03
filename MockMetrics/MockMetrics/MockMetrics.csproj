@@ -53,6 +53,8 @@
     </Compile>
     <Compile Include="MockMetricsSettings.cs" />
     <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Snapshot.cs" />
+    <Compile Include="UnitTestProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />
