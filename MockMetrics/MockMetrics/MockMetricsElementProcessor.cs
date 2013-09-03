@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using JetBrains.ReSharper.Daemon;
-using JetBrains.ReSharper.Feature.Services.LinqTools;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
@@ -72,7 +71,7 @@ namespace MockMetrics
 
             var variables = subTree.OfType<IMultipleLocalVariableDeclaration>();
             var constants = subTree.OfType<IMultipleLocalConstantDeclaration>();
-
+            
             foreach (var variable in variables)
             {
                 ProcessLocalVariable(snapshot, variable);
@@ -103,7 +102,34 @@ namespace MockMetrics
                 {
                     var expressionInitializer = localVariableDeclaration.Initial as IExpressionInitializer;
                     var value = expressionInitializer.Value;
+
+                    if (value is IInvocationExpression)
+                    {
+                        var invocation = value as IInvocationExpression;
+                        var invokedMethod = invocation.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+                        if (invokedMethod.ToString() == "Method:Moq.Mock.Of()")
+                        {
+                            snapshot.Stubs.Add(localVariableDeclaration);
+                            continue;
+                        }
+                    }
+
+                    if (value is IObjectCreationExpression)
+                    {
+                        var objectCreation = value as IObjectCreationExpression;
+                        var constructedType = objectCreation.TypeReference.CurrentResolveResult.DeclaredElement;
+                        if (constructedType.ToString() == "Class:Moq.Mock`1")
+                        {
+                            snapshot.Mocks.Add(localVariableDeclaration);
+                            continue;
+                        }
+
+                        snapshot.Targets.Add(localVariableDeclaration);
+                    }
                 }
+
+
+
 
             }
         }
