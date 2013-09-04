@@ -11,6 +11,7 @@ namespace MockMetrics
         private readonly IDaemonProcess _process;
 
         private List<HighlightingInfo> _highlightings;
+        private readonly UnitTestProcessor _processor;
 
         public List<HighlightingInfo> Highlightings
         {
@@ -24,6 +25,7 @@ namespace MockMetrics
         {
             _process = process;
             _highlightings = new List<HighlightingInfo>();
+            _processor = new UnitTestProcessor();
         }
 
         public bool InteriorShouldBeProcessed(ITreeNode element)
@@ -43,9 +45,13 @@ namespace MockMetrics
             if (methodDeclaration == null)
                 return;
 
+            if (methodDeclaration.IsAbstract)
+                return;
+
             if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
-                ProcessUnitTest(methodDeclaration.DeclaredElement);
+                var snapshot = _processor.EatUnitTest(methodDeclaration);
+                Highlightings.Add(new HighlightingInfo(methodDeclaration.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
             }
         }
 
@@ -56,12 +62,8 @@ namespace MockMetrics
                 return false;
             }
 
-            return method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestAttribute"), false);
-        }
-
-        private void ProcessUnitTest(IMethod method)
-        {
-
+            return method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestAttribute"), false)
+                || method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestCaseAttribute"), false);
         }
 
         public bool ProcessingIsFinished
