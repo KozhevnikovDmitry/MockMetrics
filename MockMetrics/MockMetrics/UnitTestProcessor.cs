@@ -13,14 +13,14 @@ namespace MockMetrics
     {
         public Snapshot EatUnitTest(IMethodDeclaration unitTest)
         {
-            var snapshot = new Snapshot();
-            EatBlockStatement(snapshot, unitTest.Body);
+            var snapshot = new Snapshot(unitTest);
+            EatBlock(snapshot, unitTest.Body);
             return snapshot;
         }
 
-        #region Eat Common Statements
+        #region Eat Statements
 
-        private void EatBlockStatement(Snapshot snapshot, IBlock block)
+        private void EatBlock(Snapshot snapshot, IBlock block)
         {
             foreach (var statement in block.Statements.OfType<ICSharpStatement>())
             {
@@ -44,7 +44,7 @@ namespace MockMetrics
 
             if (statement is IBlock)
             {
-                EatBlockStatement(snapshot, statement as IBlock);
+                EatBlock(snapshot, statement as IBlock);
                 return;
             }
 
@@ -95,134 +95,6 @@ namespace MockMetrics
         #endregion
         
 
-        #region Eat Declaration
-
-        private void EatDeclaration(Snapshot snapshot, IDeclarationStatement declaration)
-        {
-            foreach (var localConstantDeclaration in declaration.ConstantDeclarationsEnumerable)
-            {
-                EatConstantDeclaration(snapshot, localConstantDeclaration);
-            }
-
-            foreach (var localVariableDeclaration in declaration.VariableDeclarationsEnumerable)
-            {
-                EatLocalVariableDeclaration(snapshot, localVariableDeclaration);
-            }
-        }
-
-        private void EatLocalVariableDeclaration(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
-        {
-            if (localVariableDeclaration.Initial is IArrayInitializer)
-            {
-                snapshot.Stubs.Add(localVariableDeclaration);
-                return;
-            }
-
-            if (localVariableDeclaration.Initial is IExpressionInitializer)
-            {
-                var initializer = localVariableDeclaration.Initial as IExpressionInitializer;
-                if (initializer.Value is ICSharpLiteralExpression)
-                {
-                    snapshot.Stubs.Add(localVariableDeclaration);
-                    return;
-                }
-
-                if (initializer.Value is IObjectCreationExpression)
-                {
-                    EatNewVariable(snapshot, localVariableDeclaration, initializer.Value as IObjectCreationExpression);
-
-                }
-
-                if (initializer.Value is IInvocationExpression)
-                {
-                    EatResultVariable(snapshot, localVariableDeclaration, initializer.Value as IInvocationExpression);
-
-                }
-            }
-        }
-
-        private void EatConstantDeclaration(Snapshot snapshot, ILocalConstantDeclaration localConstantDeclaration)
-        {
-            snapshot.Constants.Add(localConstantDeclaration);
-        }
-
-
-        private void EatNewVariable(Snapshot snapshot, 
-                                    ILocalVariableDeclaration variableDeclaration,
-                                    IObjectCreationExpression initializer)
-        {
-            var element = variableDeclaration.DeclaredElement;
-
-            if (element.Type.Classify == TypeClassification.VALUE_TYPE)
-            {
-                snapshot.Stubs.Add(variableDeclaration);
-                return;
-            }
-
-            if (element.Type.ToString().StartsWith("Moq.Mock`1[T -> "))
-            {
-                snapshot.Mocks.Add(variableDeclaration);
-                EatMock(snapshot, variableDeclaration);
-                return;
-            }
-
-            snapshot.TargetCandidates.Add(variableDeclaration);
-            EatTargetCandidate(snapshot, variableDeclaration);
-        }
-
-        private void EatTargetCandidate(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
-        {
-            var к = variableDeclaration;
-        }
-
-        private void EatMock(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
-        {
-            var mock = variableDeclaration.DeclaredElement;
-            
-        }
-
-        private void EatResultVariable(Snapshot snapshot,
-                                       ILocalVariableDeclaration variableDeclaration,
-                                       IInvocationExpression initializer)
-        {
-            var invokedMethod = initializer.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
-            if (invokedMethod.ToString().StartsWith("Method:Moq.Mock.Of()"))
-            {
-                snapshot.Stubs.Add(variableDeclaration);
-                return;
-            }
-
-            snapshot.TargetCandidates.Add(variableDeclaration);
-            EatTargetCandidate(snapshot, variableDeclaration);
-        }
-
-        #endregion
-
-
-        #region Eat Expressions
-        
-        private void EatExpressionStatement(Snapshot snapshot, IExpressionStatement expression)
-        {
-            
-            if (expression.Expression is IInvocationExpression)
-            {
-                var invocation = expression.Expression as IInvocationExpression;
-                var invokedMethod = invocation.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
-                if (invokedMethod.ToString().StartsWith("Method:NUnit.Framework.Assert"))
-                {
-                    snapshot.Asserts.Add(expression);
-                }
-            }
-        }
-
-        private void EatExpression(Snapshot snapshot, ICSharpExpression expression)
-        {
-
-        }
-        
-        #endregion
-
-
         #region Eat CSharp Constructions
 
         private void EatIfStatement(Snapshot snapshot, IIfStatement ifStatement)
@@ -271,21 +143,228 @@ namespace MockMetrics
 
         private void EatTryStatement(Snapshot snapshot, ITryStatement tryStatement)
         {
-            EatBlockStatement(snapshot, tryStatement.Try);
+            EatBlock(snapshot, tryStatement.Try);
             if (tryStatement.Catches.Any())
             {
                 foreach (var catchClause in tryStatement.Catches)
                 {
-                    EatBlockStatement(snapshot, catchClause.Body);
+                    EatBlock(snapshot, catchClause.Body);
                 }
             }
 
             if (tryStatement.FinallyKeyword != null)
             {
-                EatBlockStatement(snapshot, tryStatement.FinallyBlock);
+                EatBlock(snapshot, tryStatement.FinallyBlock);
             }
         }
 
         #endregion
+
+       
+        #region Eat Declaration
+
+        private void EatDeclaration(Snapshot snapshot, IDeclarationStatement declaration)
+        {
+            foreach (var localConstantDeclaration in declaration.ConstantDeclarationsEnumerable)
+            {
+                EatConstantDeclaration(snapshot, localConstantDeclaration);
+            }
+
+            foreach (var localVariableDeclaration in declaration.VariableDeclarationsEnumerable)
+            {
+                EatLocalVariableDeclaration(snapshot, localVariableDeclaration);
+            }
+        }
+
+        private void EatConstantDeclaration(Snapshot snapshot, ILocalConstantDeclaration localConstantDeclaration)
+        {
+            snapshot.Constants.Add(localConstantDeclaration);
+        }
+
+        private void EatLocalVariableDeclaration(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+            if (localVariableDeclaration.Initial is IArrayInitializer)
+            {
+                snapshot.Stubs.Add(localVariableDeclaration);
+                return;
+            }
+
+            if (localVariableDeclaration.Initial is IExpressionInitializer)
+            {
+                var initializer = localVariableDeclaration.Initial as IExpressionInitializer;
+                EatExpressionVariable(snapshot, initializer.Value, localVariableDeclaration);
+            }
+        }
+
+        private void EatExpressionVariable(Snapshot snapshot, ICSharpExpression initializerExpression, ILocalVariableDeclaration localVariableDeclaration)
+        {
+            if (initializerExpression is ICSharpLiteralExpression)
+            {
+                EatCSharpLiteralExpression(snapshot, localVariableDeclaration);
+                return;
+            }
+
+            if (initializerExpression is IObjectCreationExpression)
+            {
+                EatObjectCreationExpression(snapshot, localVariableDeclaration);
+                return;
+            }
+
+            if (initializerExpression is IInvocationExpression)
+            {
+                EatInvocationExpression(snapshot, localVariableDeclaration, initializerExpression as IInvocationExpression);
+                return;
+            }
+
+            if (initializerExpression is IReferenceExpression)
+            {
+                EatReferenceExpression(snapshot, localVariableDeclaration);
+                return;
+            }
+
+            if (initializerExpression is IEqualityExpression)
+            {
+                EatEqualityExpression(snapshot, localVariableDeclaration);
+                return;
+            }
+
+            if (initializerExpression is IUnaryExpression)
+            {
+                EatUnaryExpression(snapshot, localVariableDeclaration);
+                return;
+            }
+
+            if (initializerExpression is IBinaryExpression)
+            {
+                EatBinaryExpression(snapshot, localVariableDeclaration);
+                return;
+            }
+
+            if (initializerExpression is IConditionalTernaryExpression)
+            {
+                EatConditionalTernaryExpression(snapshot, localVariableDeclaration);
+                return;
+            }
+        }
+
+        #region Eat Local Variable Initial Expression
+
+        private void EatCSharpLiteralExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+            snapshot.Stubs.Add(localVariableDeclaration);
+        }
+
+        private void EatObjectCreationExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+            var element = localVariableDeclaration.DeclaredElement;
+
+            if (element.Type.Classify == TypeClassification.VALUE_TYPE)
+            {
+                snapshot.Stubs.Add(localVariableDeclaration);
+                return;
+            }
+
+            if (element.Type.ToString().StartsWith("Moq.Mock`1[T -> "))
+            {
+                snapshot.Mocks.Add(localVariableDeclaration);
+                EatMoqMock(snapshot, localVariableDeclaration);
+                return;
+            }
+
+            snapshot.TargetCandidates.Add(localVariableDeclaration);
+            EatTargetCandidate(snapshot, localVariableDeclaration);
+        }
+
+        private void EatInvocationExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration, IInvocationExpression invocationExpression)
+        {
+            var invokedMethod = invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+            if (invokedMethod.ToString().StartsWith("Method:Moq.Mock.Of()"))
+            {
+                snapshot.Stubs.Add(localVariableDeclaration);
+                return;
+            }
+
+            // TODO : eat some variable instances that create by method invocation
+        }
+
+        private void EatReferenceExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+            
+        }
+
+        private void EatEqualityExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+
+        }
+
+        private void EatUnaryExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+
+        }
+
+        private void EatBinaryExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+
+        }
+
+        private void EatConditionalTernaryExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+
+        }
+        
+        #endregion
+
+        #region Eat Target
+
+        private void EatTargetCandidate(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
+        {
+            var к = variableDeclaration;
+        }
+        
+        #endregion
+
+        #region Eat Moq Stub
+
+        private void EatMoqStubMock(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
+        {
+            var mock = variableDeclaration.DeclaredElement;
+        }
+        
+        #endregion
+
+        #region Eat Moq Mock
+
+        private void EatMoqMock(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
+        {
+            var mock = variableDeclaration.DeclaredElement;
+        }
+        
+        #endregion
+        
+        #endregion
+
+
+        #region Eat Expressions
+        
+        private void EatExpressionStatement(Snapshot snapshot, IExpressionStatement expression)
+        {
+            if (expression.Expression is IInvocationExpression)
+            {
+                var invocation = expression.Expression as IInvocationExpression;
+                var invokedMethod = invocation.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+                if (invokedMethod.ToString().StartsWith("Method:NUnit.Framework.Assert"))
+                {
+                    snapshot.Asserts.Add(expression);
+                }
+            }
+        }
+
+        private void EatExpression(Snapshot snapshot, ICSharpExpression expression)
+        {
+
+        }
+        
+        #endregion
+
     }
 }
