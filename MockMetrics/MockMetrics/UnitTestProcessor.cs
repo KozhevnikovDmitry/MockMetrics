@@ -25,7 +25,15 @@ namespace MockMetrics
         
         private void EatConstants(Snapshot snapshot, IEnumerable<ITreeNode> testSubTree)
         {
-            
+            var variables = testSubTree.OfType<IMultipleConstantDeclaration>();
+
+            foreach (var variable in variables)
+            {
+                foreach (var constantDeclaration in variable.EnumerateSubTree().OfType<ILocalConstantDeclaration>())
+                {
+                    snapshot.Constants.Add(constantDeclaration);
+                }
+            }
         }
 
         #endregion

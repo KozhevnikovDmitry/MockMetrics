@@ -1,7 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 
-namespace MM.Debug
+namespace MockMetrics.Tests
 {
     public class Inverter
     {

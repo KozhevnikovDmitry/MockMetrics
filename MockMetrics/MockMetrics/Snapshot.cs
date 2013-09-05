@@ -17,6 +17,8 @@ namespace MockMetrics
 
         public List<ILocalVariableDeclaration> TargetCandidates { get; set; }
 
+        public List<ILocalConstantDeclaration> Constants { get; set; }
+
         public List<ILocalVariableDeclaration> Stubs { get; set; }
 
         public List<ILocalVariableDeclaration> Mocks { get; set; }
