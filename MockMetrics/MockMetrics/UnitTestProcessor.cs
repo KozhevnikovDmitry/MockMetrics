@@ -1,8 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Decompiler.Ast;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
+using IExpressionStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IExpressionStatement;
+using IForStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IForStatement;
+using IIfStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IIfStatement;
+using IObjectCreationExpression = JetBrains.ReSharper.Psi.CSharp.Tree.IObjectCreationExpression;
+using ITryStatement = JetBrains.ReSharper.Psi.CSharp.Tree.ITryStatement;
+using IUsingStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IUsingStatement;
 
 namespace MockMetrics
 {
@@ -11,77 +18,135 @@ namespace MockMetrics
         public Snapshot EatUnitTest(IMethodDeclaration unitTest)
         {
             var snapshot = new Snapshot();
-            var subTree = unitTest.EnumerateSubTree();
-
-            EatConstants(snapshot, subTree);
-            EatLocalVariables(snapshot, subTree);
-            EatExpressions(snapshot, subTree);
-
+            EatBlockStatement(snapshot, unitTest.Body);
             return snapshot;
         }
 
-        #region EatConstants
-        
-        private void EatConstants(Snapshot snapshot, IEnumerable<ITreeNode> testSubTree)
+        private void EatBlockStatement(Snapshot snapshot, IBlock block)
         {
-            var variables = testSubTree.OfType<IMultipleConstantDeclaration>();
-
-            foreach (var variable in variables)
+            foreach (var statement in block.Statements.OfType<ICSharpStatement>())
             {
-                foreach (var constantDeclaration in variable.EnumerateSubTree().OfType<ILocalConstantDeclaration>())
-                {
-                    snapshot.Constants.Add(constantDeclaration);
-                }
+                EatStatement(snapshot, statement);
             }
         }
 
-        #endregion
-
-        #region Eat Variables
-
-        private void EatLocalVariables(Snapshot snapshot, IEnumerable<ITreeNode> testSubTree)
+        private void EatStatement(Snapshot snapshot, ICSharpStatement statement)
         {
-           var variables = testSubTree.OfType<IMultipleLocalVariableDeclaration>();
-
-            foreach (var variable in variables)
+            if (statement is IDeclarationStatement)
             {
-                foreach (var localVariableDeclaration in variable.EnumerateSubTree().OfType<ILocalVariableDeclaration>())
-                {
-                    EatLocalVariable(snapshot, localVariableDeclaration);
-                }
-            }
-        }
-
-        private void EatLocalVariable(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
-        {
-            if (variableDeclaration.Initial is IArrayInitializer)
-            {
-                snapshot.Stubs.Add(variableDeclaration);
+                EatDeclaration(snapshot, statement as IDeclarationStatement);
                 return;
             }
 
-            if (variableDeclaration.Initial is IExpressionInitializer)
+            if (statement is IExpressionStatement)
             {
-                var initializer = variableDeclaration.Initial as IExpressionInitializer;
+                EatExpression(snapshot, statement as IExpressionStatement);
+                return;
+            }
+
+            if (statement is IIfStatement)
+            {
+                EatIfStatement(snapshot, statement as IIfStatement);
+                return;
+            }
+
+            if (statement is IForStatement)
+            {
+                EatForStatement(snapshot, statement as IForStatement);
+                return;
+            }
+
+            if (statement is IForeachStatement)
+            {
+                EatForeachStatement(snapshot, statement as IForeachStatement);
+                return;
+            }
+
+            if (statement is IUsingStatement)
+            {
+                EatUsingStatement(snapshot, statement as IUsingStatement);
+                return;
+            }
+
+            if (statement is IWhileStatement)
+            {
+                EatWhileStatement(snapshot, statement as IWhileStatement);
+                return;
+            }
+
+            if (statement is IDoStatement)
+            {
+                EatDoStatement(snapshot, statement as IDoStatement);
+                return;
+            }
+
+
+            if (statement is IBlock)
+            {
+                EatBlockStatement(snapshot, statement as IBlock);
+                return;
+            }
+
+            if (statement is ITryStatement)
+            {
+                EatTryStatement(snapshot, statement as ITryStatement);
+                return;
+            }
+
+        }
+
+
+        #region Eat Declaration
+
+        private void EatDeclaration(Snapshot snapshot, IDeclarationStatement declaration)
+        {
+            foreach (var localConstantDeclaration in declaration.ConstantDeclarationsEnumerable)
+            {
+                EatConstantDeclaration(snapshot, localConstantDeclaration);
+            }
+
+            foreach (var localVariableDeclaration in declaration.VariableDeclarationsEnumerable)
+            {
+                EatLocalVariableDeclaration(snapshot, localVariableDeclaration);
+            }
+        }
+
+        private void EatLocalVariableDeclaration(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        {
+            if (localVariableDeclaration.Initial is IArrayInitializer)
+            {
+                snapshot.Stubs.Add(localVariableDeclaration);
+                return;
+            }
+
+            if (localVariableDeclaration.Initial is IExpressionInitializer)
+            {
+                var initializer = localVariableDeclaration.Initial as IExpressionInitializer;
                 if (initializer.Value is ICSharpLiteralExpression)
                 {
-                    snapshot.Stubs.Add(variableDeclaration);
+                    snapshot.Stubs.Add(localVariableDeclaration);
                     return;
                 }
 
                 if (initializer.Value is IObjectCreationExpression)
                 {
-                    EatNewVariable(snapshot, variableDeclaration, initializer.Value as IObjectCreationExpression);
+                    EatNewVariable(snapshot, localVariableDeclaration, initializer.Value as IObjectCreationExpression);
 
                 }
 
                 if (initializer.Value is IInvocationExpression)
                 {
-                    EatResultVariable(snapshot, variableDeclaration, initializer.Value as IInvocationExpression);
+                    EatResultVariable(snapshot, localVariableDeclaration, initializer.Value as IInvocationExpression);
 
                 }
             }
         }
+
+        private void EatConstantDeclaration(Snapshot snapshot, ILocalConstantDeclaration localConstantDeclaration)
+        {
+            snapshot.Constants.Add(localConstantDeclaration);
+        }
+
 
         private void EatNewVariable(Snapshot snapshot, 
                                     ILocalVariableDeclaration variableDeclaration,
@@ -134,17 +199,9 @@ namespace MockMetrics
 
         #endregion
 
+
         #region Eat Expressions
-
-        private void EatExpressions(Snapshot snapshot, IEnumerable<ITreeNode> testSubTree)
-        {
-            var expressions = testSubTree.OfType<IExpressionStatement>();
-            foreach (var expression in expressions)
-            {
-                EatExpression(snapshot, expression);
-            }
-        }
-
+        
         private void EatExpression(Snapshot snapshot, IExpressionStatement expression)
         {
             if (expression.Expression is IInvocationExpression)
@@ -158,6 +215,40 @@ namespace MockMetrics
             }
         }
         
+        #endregion
+
+
+        #region Eat CSharp Construction
+
+        private void EatIfStatement(Snapshot snapshot, IIfStatement ifStatement)
+        {
+            
+        }
+        private void EatForStatement(Snapshot snapshot, IForStatement forStatement)
+        {
+            
+        }
+        private void EatForeachStatement(Snapshot snapshot, IForeachStatement foreachStatement)
+        {
+            
+        }
+        private void EatUsingStatement(Snapshot snapshot, IUsingStatement usingStatement)
+        {
+            
+        }
+        private void EatWhileStatement(Snapshot snapshot, IWhileStatement whileStatement)
+        {
+            
+        }
+        private void EatDoStatement(Snapshot snapshot, IDoStatement doStatement)
+        {
+            
+        }
+        private void EatTryStatement(Snapshot snapshot, ITryStatement tryStatement)
+        {
+            
+        }
+
         #endregion
     }
 }
