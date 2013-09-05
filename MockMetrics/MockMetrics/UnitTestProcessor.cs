@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using JetBrains.Decompiler.Ast;
-using JetBrains.ReSharper.Psi;
+﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Tree;
 using IExpressionStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IExpressionStatement;
 using IForStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IForStatement;
 using IIfStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IIfStatement;
@@ -21,6 +17,8 @@ namespace MockMetrics
             EatBlockStatement(snapshot, unitTest.Body);
             return snapshot;
         }
+
+        #region Eat Common Statements
 
         private void EatBlockStatement(Snapshot snapshot, IBlock block)
         {
@@ -40,7 +38,13 @@ namespace MockMetrics
 
             if (statement is IExpressionStatement)
             {
-                EatExpression(snapshot, statement as IExpressionStatement);
+                EatExpressionStatement(snapshot, statement as IExpressionStatement);
+                return;
+            }
+
+            if (statement is IBlock)
+            {
+                EatBlockStatement(snapshot, statement as IBlock);
                 return;
             }
 
@@ -80,13 +84,6 @@ namespace MockMetrics
                 return;
             }
 
-
-            if (statement is IBlock)
-            {
-                EatBlockStatement(snapshot, statement as IBlock);
-                return;
-            }
-
             if (statement is ITryStatement)
             {
                 EatTryStatement(snapshot, statement as ITryStatement);
@@ -95,6 +92,8 @@ namespace MockMetrics
 
         }
 
+        #endregion
+        
 
         #region Eat Declaration
 
@@ -202,8 +201,9 @@ namespace MockMetrics
 
         #region Eat Expressions
         
-        private void EatExpression(Snapshot snapshot, IExpressionStatement expression)
+        private void EatExpressionStatement(Snapshot snapshot, IExpressionStatement expression)
         {
+            
             if (expression.Expression is IInvocationExpression)
             {
                 var invocation = expression.Expression as IInvocationExpression;
@@ -214,39 +214,76 @@ namespace MockMetrics
                 }
             }
         }
+
+        private void EatExpression(Snapshot snapshot, ICSharpExpression expression)
+        {
+
+        }
         
         #endregion
 
 
-        #region Eat CSharp Construction
+        #region Eat CSharp Constructions
 
         private void EatIfStatement(Snapshot snapshot, IIfStatement ifStatement)
         {
-            
+            EatExpression(snapshot, ifStatement.Condition);
+            EatStatement(snapshot, ifStatement.Then);
+
+            if (ifStatement.ElseKeyword != null)
+            {
+                EatStatement(snapshot, ifStatement.Else);
+            }
         }
+
         private void EatForStatement(Snapshot snapshot, IForStatement forStatement)
         {
-            
+            // TODO : eat for index init
+            EatExpression(snapshot, forStatement.Condition);
+            // TODO : eat for index iterate
+            EatStatement(snapshot, forStatement.Body);
         }
+
         private void EatForeachStatement(Snapshot snapshot, IForeachStatement foreachStatement)
         {
-            
+            // TODO eat foreach currentReference as stub?
+            EatExpression(snapshot, foreachStatement.Collection);
+            EatStatement(snapshot, foreachStatement.Body);
         }
+
         private void EatUsingStatement(Snapshot snapshot, IUsingStatement usingStatement)
         {
-            
+            // TODO eat statement in using brackets: may be local variable declaration or variable assignment or just varibale name
+            EatStatement(snapshot, usingStatement.Body);
         }
+
         private void EatWhileStatement(Snapshot snapshot, IWhileStatement whileStatement)
         {
-            
+            EatExpression(snapshot, whileStatement.Condition);
+            EatStatement(snapshot, whileStatement.Body);
         }
+
         private void EatDoStatement(Snapshot snapshot, IDoStatement doStatement)
         {
-            
+            EatStatement(snapshot, doStatement.Body);
+            EatExpression(snapshot, doStatement.Condition);
         }
+
         private void EatTryStatement(Snapshot snapshot, ITryStatement tryStatement)
         {
-            
+            EatBlockStatement(snapshot, tryStatement.Try);
+            if (tryStatement.Catches.Any())
+            {
+                foreach (var catchClause in tryStatement.Catches)
+                {
+                    EatBlockStatement(snapshot, catchClause.Body);
+                }
+            }
+
+            if (tryStatement.FinallyKeyword != null)
+            {
+                EatBlockStatement(snapshot, tryStatement.FinallyBlock);
+            }
         }
 
         #endregion
