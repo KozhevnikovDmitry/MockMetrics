@@ -3,7 +3,6 @@ using System.Linq;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
-using JetBrains.ReSharper.Psi.Util;
 
 namespace MockMetrics
 {
@@ -42,7 +41,7 @@ namespace MockMetrics
 
         private void EatLocalVariables(Snapshot snapshot, IEnumerable<ITreeNode> testSubTree)
         {
-            var variables = testSubTree.OfType<IMultipleLocalVariableDeclaration>();
+           var variables = testSubTree.OfType<IMultipleLocalVariableDeclaration>();
 
             foreach (var variable in variables)
             {
@@ -70,15 +69,15 @@ namespace MockMetrics
                     return;
                 }
 
-                if (initializer is IObjectCreationExpression)
+                if (initializer.Value is IObjectCreationExpression)
                 {
-                    EatNewVariable(snapshot, variableDeclaration, initializer as IObjectCreationExpression);
+                    EatNewVariable(snapshot, variableDeclaration, initializer.Value as IObjectCreationExpression);
 
                 }
 
-                if (initializer is IInvocationExpression)
+                if (initializer.Value is IInvocationExpression)
                 {
-                    EatResultVariable(snapshot, variableDeclaration, initializer as IInvocationExpression);
+                    EatResultVariable(snapshot, variableDeclaration, initializer.Value as IInvocationExpression);
 
                 }
             }
@@ -88,14 +87,15 @@ namespace MockMetrics
                                     ILocalVariableDeclaration variableDeclaration,
                                     IObjectCreationExpression initializer)
         {
-            var constructedType = initializer.TypeReference.CurrentResolveResult.DeclaredElement;
+            var element = variableDeclaration.DeclaredElement;
 
-            if (constructedType.Type().Classify == TypeClassification.VALUE_TYPE)
+            if (element.Type.Classify == TypeClassification.VALUE_TYPE)
             {
                 snapshot.Stubs.Add(variableDeclaration);
+                return;
             }
 
-            if (constructedType.ToString() == "Class:Moq.Mock`1")
+            if (element.Type.ToString().StartsWith("Moq.Mock`1[T -> "))
             {
                 snapshot.Mocks.Add(variableDeclaration);
                 EatMock(snapshot, variableDeclaration);
@@ -108,12 +108,13 @@ namespace MockMetrics
 
         private void EatTargetCandidate(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
         {
-            
+            var к = variableDeclaration;
         }
 
         private void EatMock(Snapshot snapshot, ILocalVariableDeclaration variableDeclaration)
         {
-
+            var mock = variableDeclaration.DeclaredElement;
+            
         }
 
         private void EatResultVariable(Snapshot snapshot,
