@@ -48,6 +48,7 @@
     <Compile Include="Eat\IExpressionEater.cs" />
     <Compile Include="Eat\IStatementEater.cs" />
     <Compile Include="Eat\StatementEat.cs" />
+    <Compile Include="Eat\UnitTestEater.cs" />
     <Compile Include="MockMetricInfo.cs" />
     <Compile Include="MockMetricsDaemonStage.cs" />
     <Compile Include="MockMetricsDaemonStageProcess.cs" />
