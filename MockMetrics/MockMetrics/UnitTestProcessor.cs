@@ -20,15 +20,7 @@ namespace MockMetrics
         }
 
         #region Eat Statements
-
-        private void EatBlock(Snapshot snapshot, IBlock block)
-        {
-            foreach (var statement in block.Statements.OfType<ICSharpStatement>())
-            {
-                EatStatement(snapshot, statement);
-            }
-        }
-
+        
         private void EatStatement(Snapshot snapshot, ICSharpStatement statement)
         {
             if (statement is IDeclarationStatement)
@@ -169,11 +161,16 @@ namespace MockMetrics
             }
 
         }
-
-        #endregion
-
-
+        
         #region Eat CSharp Constructions
+
+        private void EatBlock(Snapshot snapshot, IBlock block)
+        {
+            foreach (var statement in block.Statements.OfType<ICSharpStatement>())
+            {
+                EatStatement(snapshot, statement);
+            }
+        }
 
         private void EatIfStatement(Snapshot snapshot, IIfStatement ifStatement)
         {
@@ -300,6 +297,8 @@ namespace MockMetrics
         {
             throw new System.NotImplementedException();
         }
+
+        #endregion
 
         #endregion
 
@@ -527,6 +526,7 @@ namespace MockMetrics
                 return;
             }
 
+            // unreachable
             if (expression is IAnonymousFunctionExpression)
             {
                 return;
@@ -552,6 +552,7 @@ namespace MockMetrics
                 return;
             }
 
+            // unreachable
             if (expression is ICreationExpression)
             {
                 return;
@@ -647,6 +648,7 @@ namespace MockMetrics
                 return;
             }
 
+            // unreachable
             if (expression is IOperatorExpression)
             {
                 return;

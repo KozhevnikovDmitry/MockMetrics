@@ -44,8 +44,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IExpressionEater.cs" />
-    <Compile Include="IStatementEater.cs" />
+    <Compile Include="Eat\ExpessionEat.cs" />
+    <Compile Include="Eat\IExpressionEater.cs" />
+    <Compile Include="Eat\IStatementEater.cs" />
+    <Compile Include="Eat\StatementEat.cs" />
     <Compile Include="MockMetricInfo.cs" />
     <Compile Include="MockMetricsDaemonStage.cs" />
     <Compile Include="MockMetricsDaemonStageProcess.cs" />
@@ -59,9 +61,12 @@
     <Compile Include="UnitTestProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MM alg.txt" />
     <Content Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Eat\Expression\" />
+    <Folder Include="Eat\Statement\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <PropertyGroup>

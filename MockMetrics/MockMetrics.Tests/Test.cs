@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -33,6 +34,15 @@ namespace MockMetrics.Tests
 
     public class Inverter
     {
+        public Inverter(int i, decimal j)
+        {
+            
+        }
+
+        public Inverter Inverter1 { get; set; }
+
+        public string Str { get; set; }
+
         public bool GetBool(bool item)
         { 
             return !item;
@@ -42,12 +52,18 @@ namespace MockMetrics.Tests
     [TestFixture]
     public class InverterTests
     {
+        public string Str { get; set; }
+
         [Test]
         public void GetBoolTest1()
         {
             var item = true;
-            var inverter = new Inverter();
+            var inverter = new Inverter(1,1);
 
+            var query = from t in new string('1', 100500)
+                        where t != 1
+                        select t;
+            
             // Act
             var result = inverter.GetBool(item);
 
@@ -59,7 +75,7 @@ namespace MockMetrics.Tests
         public void GetBoolTest2()
         {
             // Assert
-            Assert.False(new Inverter().GetBool(true));
+            Assert.False(new Inverter(1,1).GetBool(true));
         }
 
         [Test]
