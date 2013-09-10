@@ -34,7 +34,7 @@ namespace MockMetrics.Tests
     public class Inverter
     {
         public bool GetBool(bool item)
-        {
+        { 
             return !item;
         }
     }
@@ -43,10 +43,9 @@ namespace MockMetrics.Tests
     public class InverterTests
     {
         [Test]
-        public void GetBoolTest()
+        public void GetBoolTest1()
         {
             var item = true;
-            var stub = Mock.Of<Inverter>();
             var inverter = new Inverter();
 
             // Act
@@ -54,6 +53,13 @@ namespace MockMetrics.Tests
 
             // Assert
             Assert.False(result);
+        }
+
+        [Test]
+        public void GetBoolTest2()
+        {
+            // Assert
+            Assert.False(new Inverter().GetBool(true));
         }
 
         [Test]

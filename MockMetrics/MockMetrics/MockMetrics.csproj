@@ -44,6 +44,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IExpressionEater.cs" />
+    <Compile Include="IStatementEater.cs" />
     <Compile Include="MockMetricInfo.cs" />
     <Compile Include="MockMetricsDaemonStage.cs" />
     <Compile Include="MockMetricsDaemonStageProcess.cs" />

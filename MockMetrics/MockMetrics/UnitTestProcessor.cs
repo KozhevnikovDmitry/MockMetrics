@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi;
+﻿using System.Collections.Generic;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using IExpressionStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IExpressionStatement;
 using IForStatement = JetBrains.ReSharper.Psi.CSharp.Tree.IForStatement;
@@ -88,12 +89,89 @@ namespace MockMetrics
             {
                 EatTryStatement(snapshot, statement as ITryStatement);
                 return;
+            } 
+            
+            if (statement is ISwitchStatement)
+            {
+                EatSwitchStatement(snapshot, statement as ISwitchStatement);
+                return;
+            }
+
+            if (statement is ISwitchLabelStatement)
+            {
+                EatSwitchLabelStatement(snapshot, statement as ISwitchLabelStatement);
+                return;
+            }
+
+            if (statement is IThrowStatement)
+            {
+                EatThrowStatement(snapshot, statement as IThrowStatement);
+                return;
+            }
+
+            if (statement is ILockStatement)
+            {
+                EatLockStatement(snapshot, statement as ILockStatement);
+                return;
+            }
+
+            if (statement is IReturnStatement)
+            {
+                EatReturnStatement(snapshot, statement as IReturnStatement);
+                return;
+            }
+
+            if (statement is IYieldStatement)
+            {
+                EatYieldStatement(snapshot, statement as IYieldStatement);
+                return;
+            }
+
+            if (statement is IGotoStatement)
+            {
+                EatGotoStatement(snapshot, statement as IGotoStatement);
+                return;
+            }
+
+            if (statement is IGotoCaseStatement)
+            {
+                EatGotoCaseStatement(snapshot, statement as IGotoCaseStatement);
+                return;
+            }
+
+            if (statement is ILabelStatement)
+            {
+                EatLabelStatement(snapshot, statement as ILabelStatement);
+                return;
+            }
+            if (statement is IEmptyStatement)
+            {
+                EatEmptyStatement(snapshot, statement as IEmptyStatement);
+                return;
+            }
+
+            if (statement is IUncheckedStatement)
+            {
+                EatUncheckedStatement(snapshot, statement as IUncheckedStatement);
+                return;
+            }
+
+            if (statement is IUnsafeCodeFixedStatement)
+            {
+                EatUnsafeCodeFixedStatement(snapshot, statement as IUnsafeCodeFixedStatement);
+                return;
+            }
+
+            if (statement is IUnsafeCodeUnsafeStatement)
+            {
+                EatUnsafeCodeUnsafeStatement(snapshot, statement as IUnsafeCodeUnsafeStatement);
+                return;
             }
 
         }
 
         #endregion
-        
+
 
         #region Eat CSharp Constructions
 
@@ -158,13 +236,83 @@ namespace MockMetrics
             }
         }
 
+        private void EatUnsafeCodeUnsafeStatement(Snapshot snapshot, IUnsafeCodeUnsafeStatement unsafeCodeUnsafeStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatUnsafeCodeFixedStatement(Snapshot snapshot, IUnsafeCodeFixedStatement unsafeCodeFixedStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatUncheckedStatement(Snapshot snapshot, IUncheckedStatement uncheckedStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatEmptyStatement(Snapshot snapshot, IEmptyStatement emptyStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatLabelStatement(Snapshot snapshot, ILabelStatement labelStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatGotoCaseStatement(Snapshot snapshot, IGotoCaseStatement gotoCaseStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatGotoStatement(Snapshot snapshot, IGotoStatement gotoStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatYieldStatement(Snapshot snapshot, IYieldStatement yieldStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatReturnStatement(Snapshot snapshot, IReturnStatement returnStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatLockStatement(Snapshot snapshot, ILockStatement lockStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatThrowStatement(Snapshot snapshot, IThrowStatement throwStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatSwitchLabelStatement(Snapshot snapshot, ISwitchLabelStatement switchLabelStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void EatSwitchStatement(Snapshot snapshot, ISwitchStatement switchStatement)
+        {
+            throw new System.NotImplementedException();
+        }
+
         #endregion
 
-       
+
         #region Eat Declaration
 
         private void EatDeclaration(Snapshot snapshot, IDeclarationStatement declaration)
         {
+            new Snapshot(null)
+            {
+                Asserts = new List<IExpressionStatement>()
+            };
+
             foreach (var localConstantDeclaration in declaration.ConstantDeclarationsEnumerable)
             {
                 EatConstantDeclaration(snapshot, localConstantDeclaration);
@@ -196,7 +344,8 @@ namespace MockMetrics
             }
         }
 
-        private void EatExpressionVariable(Snapshot snapshot, ICSharpExpression initializerExpression, ILocalVariableDeclaration localVariableDeclaration)
+        private void EatExpressionVariable(Snapshot snapshot, ICSharpExpression initializerExpression,
+            ILocalVariableDeclaration localVariableDeclaration)
         {
             if (initializerExpression is ICSharpLiteralExpression)
             {
@@ -212,7 +361,8 @@ namespace MockMetrics
 
             if (initializerExpression is IInvocationExpression)
             {
-                EatInvocationExpression(snapshot, localVariableDeclaration, initializerExpression as IInvocationExpression);
+                EatInvocationExpression(snapshot, localVariableDeclaration,
+                    initializerExpression as IInvocationExpression);
                 return;
             }
 
@@ -275,7 +425,8 @@ namespace MockMetrics
             EatTargetCandidate(snapshot, localVariableDeclaration);
         }
 
-        private void EatInvocationExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration, IInvocationExpression invocationExpression)
+        private void EatInvocationExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration,
+            IInvocationExpression invocationExpression)
         {
             var invokedMethod = invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
             if (invokedMethod.ToString().StartsWith("Method:Moq.Mock.Of()"))
@@ -289,7 +440,7 @@ namespace MockMetrics
 
         private void EatReferenceExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
         {
-            
+
         }
 
         private void EatEqualityExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
@@ -307,11 +458,12 @@ namespace MockMetrics
 
         }
 
-        private void EatConditionalTernaryExpression(Snapshot snapshot, ILocalVariableDeclaration localVariableDeclaration)
+        private void EatConditionalTernaryExpression(Snapshot snapshot,
+            ILocalVariableDeclaration localVariableDeclaration)
         {
 
         }
-        
+
         #endregion
 
         #region Eat Target
@@ -320,7 +472,7 @@ namespace MockMetrics
         {
             var к = variableDeclaration;
         }
-        
+
         #endregion
 
         #region Eat Moq Stub
@@ -329,7 +481,7 @@ namespace MockMetrics
         {
             var mock = variableDeclaration.DeclaredElement;
         }
-        
+
         #endregion
 
         #region Eat Moq Mock
@@ -338,14 +490,14 @@ namespace MockMetrics
         {
             var mock = variableDeclaration.DeclaredElement;
         }
-        
+
         #endregion
-        
+
         #endregion
 
 
         #region Eat Expressions
-        
+
         private void EatExpressionStatement(Snapshot snapshot, IExpressionStatement expression)
         {
             if (expression.Expression is IInvocationExpression)
@@ -357,14 +509,292 @@ namespace MockMetrics
                     snapshot.Asserts.Add(expression);
                 }
             }
+
+            EatExpression(snapshot, expression.Expression);
         }
 
         private void EatExpression(Snapshot snapshot, ICSharpExpression expression)
         {
+            #region AnonymousFunction
 
+            if (expression is ILambdaExpression)
+            {
+                return;
+            }
+
+            if (expression is IAnonymousMethodExpression)
+            {
+                return;
+            }
+
+            if (expression is IAnonymousFunctionExpression)
+            {
+                return;
+            }
+
+            #endregion
+
+
+            #region Object Creation
+
+            if (expression is IAnonymousObjectCreationExpression)
+            {
+                return;
+            }
+
+            if (expression is IArrayCreationExpression)
+            {
+                return;
+            }
+
+            if (expression is IObjectCreationExpression)
+            {
+                return;
+            }
+
+            if (expression is ICreationExpression)
+            {
+                return;
+            }
+
+            #endregion
+
+
+            #region Binary
+
+            if (expression is IBitwiseAndExpression)
+            {
+                return;
+            }
+
+            if (expression is IBitwiseExclusiveOrExpression)
+            {
+                return;
+            }
+
+            if (expression is IBitwiseInclusiveOrExpression)
+            {
+                return;
+            }
+
+            if (expression is IConditionalAndExpression)
+            {
+                return;
+            }
+
+            if (expression is IConditionalOrExpression)
+            {
+                return;
+            }
+
+            if (expression is IAdditiveExpression)
+            {
+                return;
+            }
+
+            if (expression is IEqualityExpression)
+            {
+                return;
+            }
+
+            if (expression is IMultiplicativeExpression)
+            {
+                return;
+            }
+
+            if (expression is INullCoalescingExpression)
+            {
+                return;
+            }
+
+            if (expression is IRelationalExpression)
+            {
+                return;
+            }
+
+            if (expression is IShiftExpression)
+            {
+                return;
+            }
+
+            if (expression is IBinaryExpression)
+            {
+                return;
+            }
+
+            #endregion
+
+
+            #region Operator
+
+            if (expression is IAssignmentExpression)
+            {
+                return;
+            }
+
+            if (expression is IPostfixOperatorExpression)
+            {
+                return;
+            }
+
+            if (expression is IPrefixOperatorExpression)
+            {
+                return;
+            }
+
+            if (expression is IUnaryOperatorExpression)
+            {
+                return;
+            }
+
+            if (expression is IOperatorExpression)
+            {
+                return;
+            }
+
+            #endregion
+
+
+            #region Primary
+
+            if (expression is IBaseExpression)
+            {
+                return;
+            }
+
+            if (expression is IUnsafeCodePointerAccessExpression)
+            {
+                return;
+            }
+
+            if (expression is IUnsafeCodePointerIndirectionExpression)
+            {
+                return;
+            }
+
+            if (expression is IUnsafeCodeSizeOfExpression)
+            {
+                return;
+            }
+
+            if (expression is I__ArglistExpression)
+            {
+                return;
+            }
+
+            if (expression is IParenthesizedExpression)
+            {
+                return;
+            }
+
+            if (expression is IPredefinedTypeExpression)
+            {
+                return;
+            }
+
+            if (expression is ICheckedExpression)
+            {
+                return;
+            }
+
+            if (expression is IUncheckedExpression)
+            {
+                return;
+            }
+
+            if (expression is IReferenceExpression)
+            {
+                return;
+            }
+
+            if (expression is IThisExpression)
+            {
+                return;
+            }
+
+            if (expression is ITypeofExpression)
+            {
+                return;
+            }
+
+            if (expression is IElementAccessExpression)
+            {
+                return;
+            }
+
+            if (expression is IInvocationExpression)
+            {
+                return;
+            }
+
+            if (expression is ICSharpLiteralExpression)
+            {
+                return;
+            }
+
+            if (expression is IDefaultExpression)
+            {
+                return;
+            }
+
+            if (expression is IPrimaryExpression)
+            {
+                return;
+            }
+
+            #endregion
+
+
+            #region Unary
+
+            if (expression is IUnsafeCodeAddressOfExpression)
+            {
+                return;
+            }
+
+            if (expression is IAwaitExpression)
+            {
+                return;
+            }
+
+            if (expression is ICastExpression)
+            {
+                return;
+            }
+
+            if (expression is IUnaryExpression)
+            {
+                return;
+            }
+
+            #endregion
+
+
+            #region CSharpExpression
+
+            if (expression is IIsExpression)
+            {
+                return;
+            }
+
+            if (expression is IAsExpression)
+            {
+                return;
+            }
+
+            if (expression is IConditionalTernaryExpression)
+            {
+                return;
+            }
+
+            if (expression is IQueryExpression)
+            {
+
+            }
+
+            #endregion
         }
-        
-        #endregion
 
+        #endregion
     }
 }
