@@ -6,17 +6,15 @@ using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Files;
 
-namespace MockMetrics
+namespace MockMetrics.Fake
 {
-    public class MockMetricsDaemonStageProcess : IDaemonStageProcess
+    public class FakeDaemonStageProcess : IDaemonStageProcess
     {
         private readonly IDaemonProcess _process;
-        private readonly int _arrangeAmount;
 
-        public MockMetricsDaemonStageProcess(IDaemonProcess process, int arrangeAmount)
+        public FakeDaemonStageProcess(IDaemonProcess process)
         {
             _process = process;
-            _arrangeAmount = arrangeAmount;
         }
 
         public void Execute(Action<DaemonStageResult> committer)
@@ -28,7 +26,7 @@ namespace MockMetrics
                 return;
 
             // Running visitor against the PSI
-            var elementProcessor = new MockMetricsElementProcessor(_process);
+            var elementProcessor = new FakesElementProcessor(_process);
             file.ProcessDescendants(elementProcessor);
 
             // Checking if the daemon is interrupted by user activity

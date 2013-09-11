@@ -4,14 +4,15 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 
-namespace MockMetrics
+namespace MockMetrics.Fake
 {
-    public class MockMetricsElementProcessor : IRecursiveElementProcessor
+    public class FakesElementProcessor : IRecursiveElementProcessor
     {
+        public static List<IMethodDeclaration> UnitTestDeclarations = new List<IMethodDeclaration>();
+
         private readonly IDaemonProcess _process;
 
         private List<HighlightingInfo> _highlightings;
-        private readonly UnitTestProcessor _processor;
 
         public List<HighlightingInfo> Highlightings
         {
@@ -21,7 +22,7 @@ namespace MockMetrics
             }
         }
 
-        public MockMetricsElementProcessor(IDaemonProcess process)
+        public FakesElementProcessor(IDaemonProcess process)
         {
             _process = process;
             _highlightings = new List<HighlightingInfo>();
@@ -46,12 +47,8 @@ namespace MockMetrics
 
             if (methodDeclaration.IsAbstract)
                 return;
-
-            if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
-            {
-                var snapshot = _processor.EatUnitTest(methodDeclaration);
-                Highlightings.Add(new HighlightingInfo(methodDeclaration.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
-            }
+            
+            UnitTestDeclarations.Add(methodDeclaration);
         }
 
         private bool IsNunitTestDeclaration(IMethod method)

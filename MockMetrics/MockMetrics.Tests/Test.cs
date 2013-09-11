@@ -54,6 +54,7 @@ namespace MockMetrics.Tests
     {
         public string Str { get; set; }
 
+        [Obsolete]
         [Test]
         public void GetBoolTest1()
         {
