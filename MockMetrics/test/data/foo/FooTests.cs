@@ -1,5 +1,3 @@
-using System;
-using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace MockMetrics.Tests
@@ -15,8 +13,6 @@ namespace MockMetrics.Tests
     [TestFixture]
     public class FooTests
     {
-        [Obsolete]
-        [NotNull]
         [Test]
         public void GetBoolTest()
         {

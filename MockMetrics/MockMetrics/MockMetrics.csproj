@@ -44,9 +44,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Eat\ExpessionEat.cs" />
-    <Compile Include="Eat\IExpressionEater.cs" />
-    <Compile Include="Eat\IStatementEater.cs" />
+    <Compile Include="Eat\Statement\BlockEater.cs" />
+    <Compile Include="Eat\Eater.cs" />
+    <Compile Include="Eat\IEater.cs" />
+    <Compile Include="Eat\ParameterEater.cs" />
+    <Compile Include="Eat\PostEater.cs" />
     <Compile Include="Eat\StatementEat.cs" />
     <Compile Include="Eat\UnitTestEater.cs" />
     <Compile Include="MockMetricInfo.cs" />
@@ -67,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Eat\Expression\" />
-    <Folder Include="Eat\Statement\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <PropertyGroup>

@@ -1,21 +1,115 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eat.Statement;
 
 namespace MockMetrics.Eat
 {
-    public class ExpessionEat
+    public static class Eater
     {
-        public ExpessionEat()
-        {
+        private static Dictionary<Type, object> _eaters; 
 
+        static Eater()
+        {
+            _eaters = new Dictionary<Type, object>();
+            _eaters[typeof (IBlock)] = new BlockEater();
+
+            //ILambdaExpression
+            //IAnonymousMethodExpression
+            //IAnonymousFunctionExpression
+            //IAnonymousObjectCreationExpression
+            //IArrayCreationExpression
+            //IObjectCreationExpression
+            //ICreationExpression
+            //IBitwiseAndExpression
+            //IBitwiseExclusiveOrExpression
+            //IBitwiseInclusiveOrExpression
+            //IConditionalAndExpression
+            //IConditionalOrExpression
+            //IAdditiveExpression
+            //IEqualityExpression
+            //IMultiplicativeExpression
+            //INullCoalescingExpression
+            //IRelationalExpression
+            //IShiftExpression
+            //IBinaryExpression
+            //IAssignmentExpression
+            //IPostfixOperatorExpression
+            //IPrefixOperatorExpression
+            //IUnaryOperatorExpression
+            //IOperatorExpression
+            //IBaseExpression
+            //IUnsafeCodePointerAccessExpression
+            //IUnsafeCodePointerIndirectionExpression
+            //IUnsafeCodeSizeOfExpression
+            //I__ArglistExpression
+            //IParenthesizedExpression
+            //IPredefinedTypeExpression
+            //ICheckedExpression
+            //IUncheckedExpression
+            //IReferenceExpression
+            //IThisExpression
+            //ITypeofExpression
+            //IElementAccessExpression
+            //IInvocationExpression
+            //ICSharpLiteralExpression
+            //IDefaultExpression
+            //IPrimaryExpression
+            //IUnsafeCodeAddressOfExpression
+            //IAwaitExpression
+            //ICastExpression
+            //IUnaryExpression
+            //IIsExpression
+            //IAsExpression
+            //IConditionalTernaryExpression
+            //IQueryExpression
+
+            //IDeclarationStatement
+            //IExpressionStatement
+            //IBlock
+            //IIfStatement
+            //IForStatement
+            //IForeachStatement
+            //IUsingStatement
+            //IWhileStatement
+            //IDoStatement
+            //ITryStatement
+            //ISwitchStatement
+            //ISwitchLabelStatement
+            //IThrowStatement
+            //ILockStatement
+            //IReturnStatement
+            //IYieldStatement
+            //IGotoStatement
+            //IGotoCaseStatement
+            //ILabelStatement
+            //IEmptyStatement
+            //IUncheckedStatement
+            //IUnsafeCodeFixedStatement
+            //IUnsafeCodeUnsafeStatement
         }
 
-        private IExpressionEater<T> GetEater<T>() where T : ICSharpExpression
+        private static IEater<T> GetEater<T>() where T : ICSharpTreeNode
         {
-            throw new NotImplementedException();
+            return _eaters[typeof(T)] as IEater<T>;
         }
 
-        public Snapshot Eat(Snapshot snapshot, IMethodDeclaration test, ICSharpExpression expression)
+        public static Snapshot Eat(Snapshot snapshot, IMethodDeclaration test, ICSharpTreeNode treeNode)
+        {
+            if (treeNode is ICSharpExpression)
+            {
+                return EatExpression(snapshot, test, treeNode as ICSharpExpression);
+            }
+
+            if (treeNode is ICSharpStatement)
+            {
+                return EatStatement(snapshot, test, treeNode as ICSharpStatement);
+            }
+
+            throw new NotSupportedException();
+        }
+
+        private static Snapshot EatExpression(Snapshot snapshot, IMethodDeclaration test, ICSharpExpression expression)
         {
             #region AnonymousFunction
 
@@ -296,57 +390,126 @@ namespace MockMetrics.Eat
 
             #endregion
 
-            throw new NotImplementedException();
+            throw new NotSupportedException();
+        }
+
+        private static Snapshot EatStatement(Snapshot snapshot, IMethodDeclaration test, ICSharpStatement statement)
+        {
+            if (statement is IDeclarationStatement)
+            {
+                return GetEater<IDeclarationStatement>().Eat(snapshot, test, statement as IDeclarationStatement);
+            }
+
+            if (statement is IExpressionStatement)
+            {
+                return GetEater<IExpressionStatement>().Eat(snapshot, test, statement as IExpressionStatement);
+            }
+
+            if (statement is IBlock)
+            {
+                return GetEater<IBlock>().Eat(snapshot, test, statement as IBlock);
+            }
+
+            if (statement is IIfStatement)
+            {
+                return GetEater<IIfStatement>().Eat(snapshot, test, statement as IIfStatement);
+            }
+
+            if (statement is IForStatement)
+            {
+                return GetEater<IForStatement>().Eat(snapshot, test, statement as IForStatement);
+            }
+
+            if (statement is IForeachStatement)
+            {
+                return GetEater<IForeachStatement>().Eat(snapshot, test, statement as IForeachStatement);
+            }
+
+            if (statement is IUsingStatement)
+            {
+                return GetEater<IUsingStatement>().Eat(snapshot, test, statement as IUsingStatement);
+            }
+
+            if (statement is IWhileStatement)
+            {
+                return GetEater<IWhileStatement>().Eat(snapshot, test, statement as IWhileStatement);
+            }
+
+            if (statement is IDoStatement)
+            {
+                return GetEater<IDoStatement>().Eat(snapshot, test, statement as IDoStatement);
+            }
+
+            if (statement is ITryStatement)
+            {
+                return GetEater<ITryStatement>().Eat(snapshot, test, statement as ITryStatement); ;
+            }
+
+            if (statement is ISwitchStatement)
+            {
+                return GetEater<ISwitchStatement>().Eat(snapshot, test, statement as ISwitchStatement);
+            }
+
+            if (statement is ISwitchLabelStatement)
+            {
+                return GetEater<ISwitchLabelStatement>().Eat(snapshot, test, statement as ISwitchLabelStatement);
+            }
+
+            if (statement is IThrowStatement)
+            {
+                return GetEater<IThrowStatement>().Eat(snapshot, test, statement as IThrowStatement);
+            }
+
+            if (statement is ILockStatement)
+            {
+                return GetEater<ILockStatement>().Eat(snapshot, test, statement as ILockStatement);
+            }
+
+            if (statement is IReturnStatement)
+            {
+                return GetEater<IReturnStatement>().Eat(snapshot, test, statement as IReturnStatement);
+            }
+
+            if (statement is IYieldStatement)
+            {
+                return GetEater<IYieldStatement>().Eat(snapshot, test, statement as IYieldStatement);
+            }
+
+            if (statement is IGotoStatement)
+            {
+                return GetEater<IGotoStatement>().Eat(snapshot, test, statement as IGotoStatement);
+            }
+
+            if (statement is IGotoCaseStatement)
+            {
+                return GetEater<IGotoCaseStatement>().Eat(snapshot, test, statement as IGotoCaseStatement);
+            }
+
+            if (statement is ILabelStatement)
+            {
+                return GetEater<ILabelStatement>().Eat(snapshot, test, statement as ILabelStatement);
+            }
+            if (statement is IEmptyStatement)
+            {
+                return GetEater<IEmptyStatement>().Eat(snapshot, test, statement as IEmptyStatement);
+            }
+
+            if (statement is IUncheckedStatement)
+            {
+                return GetEater<IUncheckedStatement>().Eat(snapshot, test, statement as IUncheckedStatement);
+            }
+
+            if (statement is IUnsafeCodeFixedStatement)
+            {
+                return GetEater<IUnsafeCodeFixedStatement>().Eat(snapshot, test, statement as IUnsafeCodeFixedStatement);
+            }
+
+            if (statement is IUnsafeCodeUnsafeStatement)
+            {
+                return GetEater<IUnsafeCodeUnsafeStatement>().Eat(snapshot, test, statement as IUnsafeCodeUnsafeStatement);
+            }
+
+            throw new NotSupportedException();
         }
     }
 }
-
-//ILambdaExpression
-//IAnonymousMethodExpression
-//IAnonymousFunctionExpression
-//IAnonymousObjectCreationExpression
-//IArrayCreationExpression
-//IObjectCreationExpression
-//ICreationExpression
-//IBitwiseAndExpression
-//IBitwiseExclusiveOrExpression
-//IBitwiseInclusiveOrExpression
-//IConditionalAndExpression
-//IConditionalOrExpression
-//IAdditiveExpression
-//IEqualityExpression
-//IMultiplicativeExpression
-//INullCoalescingExpression
-//IRelationalExpression
-//IShiftExpressio
-//IBinaryExpression
-//IAssignmentExpression
-//IPostfixOperatorExpression
-//IPrefixOperatorExpression
-//IUnaryOperatorExpression
-//IOperatorExpression
-//IBaseExpression
-//IUnsafeCodePointerAccessExpression
-//IUnsafeCodePointerIndirectionExpression
-//IUnsafeCodeSizeOfExpression
-//I__ArglistExpression
-//IParenthesizedExpression
-//IPredefinedTypeExpression
-//ICheckedExpression
-//IUncheckedExpression
-//IReferenceExpression
-//IThisExpression
-//ITypeofExpression
-//IElementAccessExpression
-//IInvocationExpression
-//ICSharpLiteralExpression
-//IDefaultExpression
-//IPrimaryExpression
-//IUnsafeCodeAddressOfExpression
-//IAwaitExpression
-//ICastExpression
-//IUnaryExpression
-//IIsExpression
-//IAsExpression
-//IConditionalTernaryExpression
-//IQueryExpression
