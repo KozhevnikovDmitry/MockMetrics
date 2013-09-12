@@ -47,8 +47,11 @@ namespace MockMetrics.Fake
 
             if (methodDeclaration.IsAbstract)
                 return;
-            
-            UnitTestDeclarations.Add(methodDeclaration);
+
+            if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
+            {
+                UnitTestDeclarations.Add(methodDeclaration);
+            }
         }
 
         private bool IsNunitTestDeclaration(IMethod method)

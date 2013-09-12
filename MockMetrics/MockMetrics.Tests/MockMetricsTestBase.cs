@@ -1,11 +1,13 @@
 ﻿using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.CSharp;
+using JetBrains.ReSharper.TestFramework;
 using MockMetrics.Fake;
 using NUnit.Framework;
 
 namespace MockMetrics.Tests
 {
+    [TestReferences(TEST_DATA + @"\nunit.framework.dll")]
     public class MockMetricsTestBase : CSharpHighlightingTestNet4Base
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting, IContextBoundSettingsStore settingsstore)
