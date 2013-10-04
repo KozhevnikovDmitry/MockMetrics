@@ -5,12 +5,17 @@ namespace MockMetrics
 {
     public class Snapshot
     {
-        public Snapshot()
+        public IMethodDeclaration UnitTest { get; private set; }
+        
+        public Snapshot(IMethodDeclaration unitTest)
         {
+            UnitTest = unitTest;
             TargetCandidates = new List<ILocalVariableDeclaration>();
             Stubs = new List<ILocalVariableDeclaration>();
             Mocks = new List<ILocalVariableDeclaration>();
             Asserts = new List<IExpressionStatement>();
+            TargetCalls = new List<IInvocationExpression>();
+            Constants = new List<ILocalConstantDeclaration>();
         }
 
         public List<IInvocationExpression> TargetCalls { get; set; }

@@ -3,6 +3,7 @@ using JetBrains.Threading;
 using System.Reflection;
 using System.Collections.Generic;
 using MockMetrics;
+using MockMetrics.Fake;
 using NUnit.Framework;
 
 /// <summary>
@@ -18,9 +19,10 @@ public class TestEnvironmentAssembly : ReSharperTestEnvironmentAssembly
   private static IEnumerable<Assembly> GetAssembliesToLoad()
   {
     // Test assembly
-    yield return Assembly.GetExecutingAssembly();
+      yield return Assembly.GetExecutingAssembly();
 
-    yield return typeof(MockMetricsElementProcessor).Assembly;
+      yield return typeof(FakeHighlighting).Assembly;
+      yield return typeof(Snapshot).Assembly;
   }
 
   public override void SetUp()
