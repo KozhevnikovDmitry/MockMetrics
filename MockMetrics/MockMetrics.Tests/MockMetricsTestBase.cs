@@ -1,13 +1,16 @@
-﻿using JetBrains.Application.Settings;
+﻿using System.Linq;
+using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.CSharp;
 using JetBrains.ReSharper.TestFramework;
+using MockMetrics.Eating;
 using MockMetrics.Fake;
 using NUnit.Framework;
 
 namespace MockMetrics.Tests
 {
     [TestReferences(TEST_DATA + @"\nunit.framework.dll")]
+    [TestReferences(PRODUCT_INSTALLATION + @"\MockMetrics.Fake.dll")]
     public class MockMetricsTestBase : CSharpHighlightingTestNet4Base
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting, IContextBoundSettingsStore settingsstore)
@@ -23,28 +26,26 @@ namespace MockMetrics.Tests
         [SetUp]
         public void Setup()
         {
-            FakesElementProcessor.UnitTestDeclarations.Clear();
+            FakesElementProcessor.Results.Clear();
         }
 
         [TearDown]
         public override void TearDown()
         {
             base.TearDown();
-            FakesElementProcessor.UnitTestDeclarations.Clear();
+            FakesElementProcessor.Results.Clear();
         }
 
-        [Test]
         [TestCase("FooTests.cs")]
         public void MockMetricsTest(string testName)
         {
             DoTestFiles(testName);
-            var references = GetReferencedAssemblies();
+            var snapshot = FakesElementProcessor.Results.Single().Value;
 
-            foreach (var unitTestDeclaration in FakesElementProcessor.UnitTestDeclarations)
-            {
-                var unitTestProcessor = new UnitTestProcessor();
-                var snapshot = unitTestProcessor.EatUnitTest(unitTestDeclaration);
-            }
+            Assert.AreEqual(snapshot.Stubs.Count, 1);
+            Assert.AreEqual(snapshot.Targets.Count, 1);
+            Assert.AreEqual(snapshot.TargetCalls.Count, 1);
+            Assert.AreEqual(snapshot.Asserts.Count, 1);
         }
     }
 }

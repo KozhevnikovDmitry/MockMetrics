@@ -2,7 +2,7 @@ using JetBrains.Application;
 using JetBrains.Threading;
 using System.Reflection;
 using System.Collections.Generic;
-using MockMetrics;
+using MockMetrics.Eating;
 using MockMetrics.Fake;
 using NUnit.Framework;
 

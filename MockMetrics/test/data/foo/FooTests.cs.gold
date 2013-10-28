@@ -1,15 +1,8 @@
+using MockMetrics.Fake.Tested;
 using NUnit.Framework;
 
 namespace MockMetrics.Tests
 {
-    public class Foo
-    {
-        public bool GetBool(bool item)
-        {
-            return !item;
-        }
-    }
-
     [TestFixture]
     public class FooTests
     {
@@ -17,13 +10,15 @@ namespace MockMetrics.Tests
         public void GetBoolTest()
         {
             // Arrange
+            var item = true;
             var foo = new Foo();
 
             // Act
-            var result = foo.GetBool(true);
+            var result = foo.GetBool(item);
 
             // Assert
             Assert.False(result);
         }
     }
 }
+---------------------------------------------------------

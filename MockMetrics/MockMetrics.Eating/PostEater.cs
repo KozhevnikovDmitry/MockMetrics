@@ -1,12 +1,9 @@
-﻿using System;
-
-namespace MockMetrics.Eat
+﻿namespace MockMetrics.Eating
 {
     public class PostEater
     {
         public void PostEat(Snapshot snapshot)
         {
-            throw new NotImplementedException();
         }
     }
 }

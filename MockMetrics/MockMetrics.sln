@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics", "MockMetrics\MockMetrics.csproj", "{529DB9BB-25F6-42B1-A70F-764094B10206}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Tests", "MockMetrics.Tests\MockMetrics.Tests.csproj", "{6A8A1CB6-59CA-4118-9FAB-7B66B37EB1C6}"
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B391C0
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Eating", "MockMetrics.Eating\MockMetrics.Eating.csproj", "{A3988EE1-0AA7-414E-AC61-ED918058DED5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{A9C497A1-142B-4BD4-9BF7-FB19BA06012D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9C497A1-142B-4BD4-9BF7-FB19BA06012D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9C497A1-142B-4BD4-9BF7-FB19BA06012D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3988EE1-0AA7-414E-AC61-ED918058DED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3988EE1-0AA7-414E-AC61-ED918058DED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3988EE1-0AA7-414E-AC61-ED918058DED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3988EE1-0AA7-414E-AC61-ED918058DED5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

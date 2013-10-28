@@ -1,18 +1,22 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 
-namespace MockMetrics.Eat
+namespace MockMetrics.Eating
 {
-    public class UnitTestEater 
+    public class UnitTestEater
     {
         public Snapshot EatUnitTest(IMethodDeclaration unitTest)
         {
+            // result snapshot
             var snapshot = new Snapshot(unitTest);
-            var regularParameterEater = new ParameterEater();
-            foreach (var cSharpParameterDeclaration in unitTest.ParameterDeclarations)
+
+            // all parameters are stubs
+            foreach (ICSharpParameterDeclaration cSharpParameterDeclaration in unitTest.ParameterDeclarations)
             {
-                regularParameterEater.Eat(snapshot, unitTest, cSharpParameterDeclaration);
+                snapshot.Stubs.Add(cSharpParameterDeclaration);
             }
+
             Eater.Eat(snapshot, unitTest, unitTest.Body);
+
             new PostEater().PostEat(snapshot);
 
             return snapshot;

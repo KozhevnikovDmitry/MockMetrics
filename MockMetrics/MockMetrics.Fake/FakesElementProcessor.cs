@@ -3,12 +3,13 @@ using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
+using MockMetrics.Eating;
 
 namespace MockMetrics.Fake
 {
     public class FakesElementProcessor : IRecursiveElementProcessor
     {
-        public static List<IMethodDeclaration> UnitTestDeclarations = new List<IMethodDeclaration>();
+        public static Dictionary<IMethodDeclaration, Snapshot> Results = new Dictionary<IMethodDeclaration, Snapshot>();
 
         private readonly IDaemonProcess _process;
 
@@ -40,6 +41,7 @@ namespace MockMetrics.Fake
 
         public void ProcessAfterInterior(ITreeNode element)
         {
+
             var methodDeclaration = element as IMethodDeclaration;
 
             if (methodDeclaration == null)
@@ -48,9 +50,10 @@ namespace MockMetrics.Fake
             if (methodDeclaration.IsAbstract)
                 return;
 
+            var nunitEater = new UnitTestEater();
             if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
-                UnitTestDeclarations.Add(methodDeclaration);
+                Results[methodDeclaration] = nunitEater.EatUnitTest(methodDeclaration);
             }
         }
 

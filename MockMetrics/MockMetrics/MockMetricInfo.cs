@@ -1,6 +1,7 @@
 ﻿using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using MockMetrics;
+using MockMetrics.Eating;
 
 [assembly: RegisterConfigurableSeverity(MockMetricInfo.SeverityId,
   null,
@@ -9,7 +10,6 @@ using MockMetrics;
   "MockMetricInfo",
   Severity.WARNING,
   false)]
-
 namespace MockMetrics
 {
     [ConfigurableSeverityHighlighting(SeverityId, CSharpLanguage.Name, OverlapResolve = OverlapResolveKind.WARNING)]
