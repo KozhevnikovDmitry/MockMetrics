@@ -16,6 +16,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B391C0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Eating", "MockMetrics.Eating\MockMetrics.Eating.csproj", "{A3988EE1-0AA7-414E-AC61-ED918058DED5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{1A8C2AD2-328B-46A8-98B5-203E5CA20422}"
+	ProjectSection(SolutionItems) = preProject
+		run-tests.cmd = run-tests.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
