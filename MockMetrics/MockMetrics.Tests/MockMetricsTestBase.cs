@@ -3,7 +3,6 @@ using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.CSharp;
 using JetBrains.ReSharper.TestFramework;
-using MockMetrics.Eating;
 using MockMetrics.Fake;
 using NUnit.Framework;
 
