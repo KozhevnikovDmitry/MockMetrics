@@ -3,7 +3,7 @@
 namespace MockMetrics.Eating.Statement
 {
     /// <summary>
-    ///     Just eat all statements
+    /// Just eat all statements
     /// </summary>
     public class BlockStatementEater : IStatementEater<IBlock>
     {

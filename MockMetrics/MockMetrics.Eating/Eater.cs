@@ -9,14 +9,9 @@ namespace MockMetrics.Eating
     public static class Eater
     {
         private static readonly Dictionary<Type, object> _eaters;
-
-        //private static readonly Container Container;
-
+        
         static Eater()
         {
-            //Container = new Container();
-            //Container.Configure(config => config.Scan(typeof(Eater).Assembly));
-
             _eaters = new Dictionary<Type, object>();
             _eaters[typeof (IBlock)] = new BlockStatementEater();
             _eaters[typeof (IDeclarationStatement)] = new DeclarationStatementEater();
