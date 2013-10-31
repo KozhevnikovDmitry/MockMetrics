@@ -1,1 +1,1 @@
-msbuild MockMetrics\MockMetrics\MockMetrics.sln
+msbuild MockMetrics\MockMetrics.sln
