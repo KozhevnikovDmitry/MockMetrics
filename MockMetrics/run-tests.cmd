@@ -1,1 +1,1 @@
-nunit-console.exe MockMetrics.Tests.dll
+msbuild MockMetrics\MockMetrics\MockMetrics.sln
