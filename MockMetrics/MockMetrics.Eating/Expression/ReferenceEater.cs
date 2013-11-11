@@ -2,9 +2,14 @@
 
 namespace MockMetrics.Eating.Expression
 {
-    public class ReferenceEater : IExpressionEater<IReferenceExpression>
+    public class ReferenceEater : ExpressionEater<IReferenceExpression>
     {
-        public ExpressionKind Eat(Snapshot snapshot, IMethodDeclaration unitTest, IReferenceExpression expression)
+        public ReferenceEater(Eater eater)
+            : base(eater)
+        {
+        }
+
+        public override ExpressionKind Eat(Snapshot snapshot, IReferenceExpression expression)
         {
             return ExpressionKind.None;
         }

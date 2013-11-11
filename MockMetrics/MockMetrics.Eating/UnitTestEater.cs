@@ -4,6 +4,13 @@ namespace MockMetrics.Eating
 {
     public class UnitTestEater
     {
+        private readonly Eater _eater;
+
+        public UnitTestEater(Eater eater)
+        {
+            _eater = eater;
+        }
+
         public Snapshot EatUnitTest(IMethodDeclaration unitTest)
         {
             // result snapshot
@@ -15,7 +22,7 @@ namespace MockMetrics.Eating
                 snapshot.Stubs.Add(cSharpParameterDeclaration);
             }
 
-            Eater.Eat(snapshot, unitTest, unitTest.Body);
+            _eater.Eat(snapshot, unitTest.Body);
 
             new PostEater().PostEat(snapshot);
 

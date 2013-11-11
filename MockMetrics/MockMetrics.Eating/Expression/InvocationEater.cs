@@ -3,13 +3,18 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Expression
 {
-    public class InvocationEater : IExpressionEater<IInvocationExpression>
+    public class InvocationEater : ExpressionEater<IInvocationExpression>
     {
-        public ExpressionKind Eat(Snapshot snapshot, IMethodDeclaration unitTest, IInvocationExpression expression)
+        public InvocationEater(Eater eater)
+            : base(eater)
+        {
+        }
+
+        public override ExpressionKind Eat(Snapshot snapshot, IInvocationExpression expression)
         {
             foreach (ICSharpArgument arg in expression.Arguments)
             {
-                ExpressionKind kind = Eater.Eat(snapshot, unitTest, arg.Value);
+                ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
                 snapshot.AddTreeNode(kind, arg);
             }
 

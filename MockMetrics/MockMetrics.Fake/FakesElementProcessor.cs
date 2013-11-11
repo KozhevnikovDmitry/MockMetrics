@@ -50,7 +50,7 @@ namespace MockMetrics.Fake
             if (methodDeclaration.IsAbstract)
                 return;
 
-            var nunitEater = new UnitTestEater();
+            var nunitEater = EatingRoot.Instance.GetUnitTestEater();
             if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
                 Results[methodDeclaration] = nunitEater.EatUnitTest(methodDeclaration);

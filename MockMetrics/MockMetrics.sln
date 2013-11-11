@@ -21,6 +21,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{1A8C
 		run-tests.cmd = run-tests.cmd
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Eating.Test", "MockMetrics.Eating.Test\MockMetrics.Eating.Test.csproj", "{C762A546-B95D-485C-8DEE-BE22B712D02B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{A3988EE1-0AA7-414E-AC61-ED918058DED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3988EE1-0AA7-414E-AC61-ED918058DED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3988EE1-0AA7-414E-AC61-ED918058DED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C762A546-B95D-485C-8DEE-BE22B712D02B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C762A546-B95D-485C-8DEE-BE22B712D02B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C762A546-B95D-485C-8DEE-BE22B712D02B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C762A546-B95D-485C-8DEE-BE22B712D02B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

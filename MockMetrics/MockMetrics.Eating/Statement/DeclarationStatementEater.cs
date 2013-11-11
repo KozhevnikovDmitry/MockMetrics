@@ -3,9 +3,14 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Statement
 {
-    public class DeclarationStatementEater : IStatementEater<IDeclarationStatement>
+    public class DeclarationStatementEater : StatementEater<IDeclarationStatement>
     {
-        public void Eat(Snapshot snapshot, IMethodDeclaration unitTest, IDeclarationStatement statement)
+        public DeclarationStatementEater(Eater eater)
+            : base(eater)
+        {
+        }
+
+        public override void Eat(Snapshot snapshot, IDeclarationStatement statement)
         {
             foreach (ILocalConstantDeclaration localConstantDeclaration in statement.ConstantDeclarationsEnumerable)
             {
@@ -14,25 +19,24 @@ namespace MockMetrics.Eating.Statement
 
             foreach (ILocalVariableDeclaration localVariableDeclaration in statement.VariableDeclarationsEnumerable)
             {
-                EatLocalVariable(snapshot, unitTest, localVariableDeclaration);
+                EatLocalVariable(snapshot, localVariableDeclaration);
             }
         }
 
 
-        private void EatLocalVariable(Snapshot snapshot, IMethodDeclaration unitTest,
+        private void EatLocalVariable(Snapshot snapshot,
             ILocalVariableDeclaration declaration)
         {
-            ExpressionKind kind = EatVariableInitializer(snapshot, unitTest, declaration.Initial);
+            ExpressionKind kind = EatVariableInitializer(snapshot, declaration.Initial);
             snapshot.AddTreeNode(kind, declaration);
         }
 
         private ExpressionKind EatVariableInitializer(Snapshot snapshot,
-            IMethodDeclaration unitTest,
             IVariableInitializer initializer)
         {
             if (initializer is IExpressionInitializer)
             {
-                return EatExpressionVariableInitializer(snapshot, unitTest, initializer as IExpressionInitializer);
+                return EatExpressionVariableInitializer(snapshot, initializer as IExpressionInitializer);
             }
 
             if (initializer is IArrayInitializer)
@@ -40,7 +44,7 @@ namespace MockMetrics.Eating.Statement
                 foreach (
                     IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
                 {
-                    ExpressionKind kind = EatVariableInitializer(snapshot, unitTest, variableInitializer);
+                    ExpressionKind kind = EatVariableInitializer(snapshot, variableInitializer);
 
                     snapshot.AddTreeNode(kind, variableInitializer);
                 }
@@ -64,10 +68,9 @@ namespace MockMetrics.Eating.Statement
         }
 
         private ExpressionKind EatExpressionVariableInitializer(Snapshot snapshot,
-            IMethodDeclaration unitTest,
             IExpressionInitializer initializer)
         {
-            return Eater.Eat(snapshot, unitTest, initializer.Value);
+            return Eater.Eat(snapshot, initializer.Value);
         }
     }
 }

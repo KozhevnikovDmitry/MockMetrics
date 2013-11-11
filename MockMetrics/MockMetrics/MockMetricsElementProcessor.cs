@@ -24,7 +24,7 @@ namespace MockMetrics
 
         public MockMetricsElementProcessor(IDaemonProcess process)
         {
-            _eater = new UnitTestEater();
+            _eater = EatingRoot.Instance.GetUnitTestEater();
             _process = process;
             _highlightings = new List<HighlightingInfo>();
         }

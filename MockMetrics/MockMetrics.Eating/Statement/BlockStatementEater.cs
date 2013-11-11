@@ -5,13 +5,18 @@ namespace MockMetrics.Eating.Statement
     /// <summary>
     /// Just eat all statements
     /// </summary>
-    public class BlockStatementEater : IStatementEater<IBlock>
+    public class BlockStatementEater : StatementEater<IBlock>
     {
-        public void Eat(Snapshot snapshot, IMethodDeclaration unitTest, IBlock statement)
+        public BlockStatementEater(Eater eater)
+            : base(eater)
+        {
+        }
+
+        public override void Eat(Snapshot snapshot, IBlock statement)
         {
             foreach (ICSharpStatement inBlockStatement in statement.Statements.OfType<ICSharpStatement>())
             {
-                Eater.Eat(snapshot, unitTest, inBlockStatement);
+                Eater.Eat(snapshot, inBlockStatement);
             }
         }
     }

@@ -5,9 +5,14 @@ namespace MockMetrics.Eating.Expression
     /// <summary>
     ///     All literals are stubs
     /// </summary>
-    public class LiteralExpressionEater : IExpressionEater<ICSharpLiteralExpression>
+    public class LiteralExpressionEater : ExpressionEater<ICSharpLiteralExpression>
     {
-        public ExpressionKind Eat(Snapshot snapshot, IMethodDeclaration unitTest, ICSharpLiteralExpression expression)
+        public LiteralExpressionEater(Eater eater)
+            : base(eater)
+        {
+        }
+
+        public override ExpressionKind Eat(Snapshot snapshot, ICSharpLiteralExpression expression)
         {
             return ExpressionKind.Stub;
         }

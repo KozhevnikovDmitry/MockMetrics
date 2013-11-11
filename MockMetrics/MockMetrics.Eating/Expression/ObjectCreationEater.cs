@@ -6,13 +6,18 @@ using JetBrains.ReSharper.Psi.Impl.reflection2.elements.Context;
 
 namespace MockMetrics.Eating.Expression
 {
-    public class ObjectCreationEater : IExpressionEater<IObjectCreationExpression>
+    public class ObjectCreationEater : ExpressionEater<IObjectCreationExpression>
     {
-        public ExpressionKind Eat(Snapshot snapshot, IMethodDeclaration unitTest, IObjectCreationExpression expression)
+        public ObjectCreationEater(Eater eater)
+            : base(eater)
+        {
+        }
+
+        public override ExpressionKind Eat(Snapshot snapshot, IObjectCreationExpression expression)
         {
             foreach (ICSharpArgument arg in expression.Arguments)
             {
-                ExpressionKind kind = Eater.Eat(snapshot, unitTest, arg.Value);
+                ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
                 snapshot.AddTreeNode(kind, arg);
             }
 

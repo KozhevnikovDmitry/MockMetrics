@@ -2,11 +2,16 @@
 
 namespace MockMetrics.Eating.Statement
 {
-    public class ExpressionStatementEater : IStatementEater<IExpressionStatement>
+    public class ExpressionStatementEater : StatementEater<IExpressionStatement>
     {
-        public void Eat(Snapshot snapshot, IMethodDeclaration unitTest, IExpressionStatement statement)
+        public ExpressionStatementEater(Eater eater)
+            : base(eater)
         {
-            ExpressionKind kind = Eater.Eat(snapshot, unitTest, statement.Expression);
+        }
+
+        public override void Eat(Snapshot snapshot, IExpressionStatement statement)
+        {
+            ExpressionKind kind = Eater.Eat(snapshot, statement.Expression);
             snapshot.AddTreeNode(kind, statement);
         }
     }
