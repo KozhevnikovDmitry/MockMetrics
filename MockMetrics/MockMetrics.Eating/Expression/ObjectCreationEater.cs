@@ -8,12 +8,12 @@ namespace MockMetrics.Eating.Expression
 {
     public class ObjectCreationEater : ExpressionEater<IObjectCreationExpression>
     {
-        public ObjectCreationEater(Eater eater)
+        public ObjectCreationEater(IEater eater)
             : base(eater)
         {
         }
 
-        public override ExpressionKind Eat(Snapshot snapshot, IObjectCreationExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IObjectCreationExpression expression)
         {
             foreach (ICSharpArgument arg in expression.Arguments)
             {

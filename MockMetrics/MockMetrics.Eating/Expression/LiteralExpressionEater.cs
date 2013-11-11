@@ -7,12 +7,12 @@ namespace MockMetrics.Eating.Expression
     /// </summary>
     public class LiteralExpressionEater : ExpressionEater<ICSharpLiteralExpression>
     {
-        public LiteralExpressionEater(Eater eater)
+        public LiteralExpressionEater(IEater eater)
             : base(eater)
         {
         }
 
-        public override ExpressionKind Eat(Snapshot snapshot, ICSharpLiteralExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
         {
             return ExpressionKind.Stub;
         }

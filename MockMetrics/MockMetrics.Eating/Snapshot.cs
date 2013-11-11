@@ -3,7 +3,18 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
 {
-    public class Snapshot
+    public interface ISnapshot
+    {
+        IMethodDeclaration UnitTest { get; }
+        List<ICSharpTreeNode> TargetCalls { get; set; }
+        List<ICSharpTreeNode> Targets { get; set; }
+        List<ICSharpTreeNode> Stubs { get; set; }
+        List<ICSharpTreeNode> Mocks { get; set; }
+        List<ICSharpTreeNode> Asserts { get; set; }
+        void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
+    }
+
+    public class Snapshot : ISnapshot
     {
         public Snapshot(IMethodDeclaration unitTest)
         {

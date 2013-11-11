@@ -5,21 +5,21 @@ namespace MockMetrics.Eating
 {
     public interface IExpressionEater
     {
-        ExpressionKind Eat(Snapshot snapshot, ICSharpExpression statement);
+        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement);
 
         Type ExpressionType { get; }
     }
 
     public interface IExpressionEater<T> : IExpressionEater where T : ICSharpExpression
     {
-        ExpressionKind Eat(Snapshot snapshot, T expression);
+        ExpressionKind Eat(ISnapshot snapshot, T expression);
     }
 
     public abstract class ExpressionEater<T> : IExpressionEater where T : ICSharpExpression
     {
-        protected readonly Eater Eater;
+        protected readonly IEater Eater;
 
-        protected ExpressionEater(Eater eater)
+        protected ExpressionEater(IEater eater)
         {
             Eater = eater;
         }
@@ -29,7 +29,7 @@ namespace MockMetrics.Eating
             get { return typeof(T); }
         }
 
-        public ExpressionKind Eat(Snapshot snapshot, ICSharpExpression expression)
+        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression)
         {
             if (expression is T)
             {
@@ -39,6 +39,6 @@ namespace MockMetrics.Eating
             throw new NotSupportedException();
         }
 
-        public abstract ExpressionKind Eat(Snapshot snapshot, T expression);
+        public abstract ExpressionKind Eat(ISnapshot snapshot, T expression);
     }
 }

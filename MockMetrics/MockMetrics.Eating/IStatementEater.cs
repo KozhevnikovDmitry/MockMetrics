@@ -5,26 +5,26 @@ namespace MockMetrics.Eating
 {
     public interface IStatementEater
     {
-        void Eat(Snapshot snapshot, ICSharpStatement statement);
+        void Eat(ISnapshot snapshot, ICSharpStatement statement);
 
         Type StatementType { get; }
     }
 
     public interface IStatementEater<T> : IStatementEater where T : ICSharpStatement
     {
-        void Eat(Snapshot snapshot, T statement);
+        void Eat(ISnapshot snapshot, T statement);
     }
 
     public abstract class StatementEater<T> : IStatementEater where T : ICSharpStatement
     {
-        protected readonly Eater Eater;
+        protected readonly IEater Eater;
 
-        protected StatementEater(Eater eater)
+        protected StatementEater(IEater eater)
         {
             Eater = eater;
         }
 
-        public void Eat(Snapshot snapshot, ICSharpStatement statement)
+        public void Eat(ISnapshot snapshot, ICSharpStatement statement)
         {
             if (statement is T)
             {
@@ -36,7 +36,7 @@ namespace MockMetrics.Eating
             }
         }
 
-        public abstract void Eat(Snapshot snapshot, T statement);
+        public abstract void Eat(ISnapshot snapshot, T statement);
 
         public Type StatementType
         {

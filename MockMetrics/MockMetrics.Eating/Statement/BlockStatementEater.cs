@@ -7,12 +7,12 @@ namespace MockMetrics.Eating.Statement
     /// </summary>
     public class BlockStatementEater : StatementEater<IBlock>
     {
-        public BlockStatementEater(Eater eater)
+        public BlockStatementEater(IEater eater)
             : base(eater)
         {
         }
 
-        public override void Eat(Snapshot snapshot, IBlock statement)
+        public override void Eat(ISnapshot snapshot, IBlock statement)
         {
             foreach (ICSharpStatement inBlockStatement in statement.Statements.OfType<ICSharpStatement>())
             {

@@ -6,7 +6,13 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
 {
-    public class Eater
+    public interface IEater
+    {
+        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression);
+        void Eat(ISnapshot snapshot, ICSharpStatement statement);
+    }
+
+    public class Eater : IEater
     {
         private readonly IContainer _container;
 
@@ -15,7 +21,7 @@ namespace MockMetrics.Eating
             _container = container;
         }
 
-        public ExpressionKind Eat(Snapshot snapshot, ICSharpExpression expression)
+        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
@@ -23,7 +29,7 @@ namespace MockMetrics.Eating
             return GetEater(expression).Eat(snapshot, expression);
         }
 
-        public void Eat(Snapshot snapshot, ICSharpStatement statement)
+        public void Eat(ISnapshot snapshot, ICSharpStatement statement)
         {
             if (statement == null)
                 throw new ArgumentNullException("statement");

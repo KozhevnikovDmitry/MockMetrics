@@ -5,12 +5,12 @@ namespace MockMetrics.Eating.Statement
 {
     public class DeclarationStatementEater : StatementEater<IDeclarationStatement>
     {
-        public DeclarationStatementEater(Eater eater)
+        public DeclarationStatementEater(IEater eater)
             : base(eater)
         {
         }
 
-        public override void Eat(Snapshot snapshot, IDeclarationStatement statement)
+        public override void Eat(ISnapshot snapshot, IDeclarationStatement statement)
         {
             foreach (ILocalConstantDeclaration localConstantDeclaration in statement.ConstantDeclarationsEnumerable)
             {
@@ -24,14 +24,14 @@ namespace MockMetrics.Eating.Statement
         }
 
 
-        private void EatLocalVariable(Snapshot snapshot,
+        private void EatLocalVariable(ISnapshot snapshot,
             ILocalVariableDeclaration declaration)
         {
             ExpressionKind kind = EatVariableInitializer(snapshot, declaration.Initial);
             snapshot.AddTreeNode(kind, declaration);
         }
 
-        private ExpressionKind EatVariableInitializer(Snapshot snapshot,
+        private ExpressionKind EatVariableInitializer(ISnapshot snapshot,
             IVariableInitializer initializer)
         {
             if (initializer is IExpressionInitializer)
@@ -41,8 +41,7 @@ namespace MockMetrics.Eating.Statement
 
             if (initializer is IArrayInitializer)
             {
-                foreach (
-                    IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
+                foreach (IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
                 {
                     ExpressionKind kind = EatVariableInitializer(snapshot, variableInitializer);
 
@@ -67,7 +66,7 @@ namespace MockMetrics.Eating.Statement
             throw new NotSupportedException();
         }
 
-        private ExpressionKind EatExpressionVariableInitializer(Snapshot snapshot,
+        private ExpressionKind EatExpressionVariableInitializer(ISnapshot snapshot,
             IExpressionInitializer initializer)
         {
             return Eater.Eat(snapshot, initializer.Value);

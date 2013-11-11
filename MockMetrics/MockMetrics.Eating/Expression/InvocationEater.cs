@@ -5,12 +5,12 @@ namespace MockMetrics.Eating.Expression
 {
     public class InvocationEater : ExpressionEater<IInvocationExpression>
     {
-        public InvocationEater(Eater eater)
+        public InvocationEater(IEater eater)
             : base(eater)
         {
         }
 
-        public override ExpressionKind Eat(Snapshot snapshot, IInvocationExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
             foreach (ICSharpArgument arg in expression.Arguments)
             {
