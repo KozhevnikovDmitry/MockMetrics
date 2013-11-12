@@ -5,6 +5,7 @@ using HaveBox;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Statement;
+using MockMetrics.Eating.VariableDeclaration;
 
 namespace MockMetrics.Eating
 {
@@ -13,6 +14,8 @@ namespace MockMetrics.Eating
         ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression);
         
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
+
+        void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
     }
 
     public class Eater : IEater
@@ -38,6 +41,28 @@ namespace MockMetrics.Eating
                 throw new ArgumentNullException("statement");
 
             GetEater(statement).Eat(snapshot, statement);
+        }
+
+        public void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
+        {
+            if (variableDeclaration == null)
+                throw new ArgumentNullException("variableDeclaration");
+
+            GetEater(variableDeclaration).Eat(snapshot, variableDeclaration);
+        }
+
+        private IVariableDeclarationEater GetEater(IVariableDeclaration variableDeclaration)
+        {
+            var eater =
+              _container.GetInstance<IEnumerable<IVariableDeclarationEater>>()
+                  .SingleOrDefault(t => t.VariableDecalrationType.IsInstanceOfType(variableDeclaration));
+
+            if (eater == null)
+            {
+                throw new NotSupportedException();
+            }
+
+            return eater;
         }
 
         public IExpressionEater GetEater(ICSharpExpression expression)
