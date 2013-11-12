@@ -42,7 +42,7 @@ namespace MockMetrics.Tests
             DoTestFiles(testName);
 
             Assert_SimpleVariablesTest(FakesElementProcessor.Results.Values.ToArray()[0]);
-            //Assert_ExpressionVariablesTest(FakesElementProcessor.Results.Values.ToArray()[1]);
+            Assert_ExpressionVariablesTest(FakesElementProcessor.Results.Values.ToArray()[1]);
         }
 
         private void Assert_SimpleVariablesTest(Snapshot snapshot)
