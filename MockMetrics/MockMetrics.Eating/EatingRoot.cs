@@ -100,8 +100,8 @@ namespace MockMetrics.Eating
             //IYieldStatement
             //IGotoStatement
             //IGotoCaseStatement
-            //ILabelStatement
-            //IEmptyStatement
+            //*ILabelStatement
+            //*IEmptyStatement
             //IUncheckedStatement
             //IUnsafeCodeFixedStatement
             //IUnsafeCodeUnsafeStatement

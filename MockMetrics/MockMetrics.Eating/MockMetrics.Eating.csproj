@@ -69,6 +69,7 @@
     <Compile Include="Statement\BlockStatementEater.cs" />
     <Compile Include="Statement\DeclarationStatementEater.cs" />
     <Compile Include="Statement\ExpressionStatementEater.cs" />
+    <Compile Include="Statement\LabelStatementEater.cs" />
     <Compile Include="Statement\StatementEater.cs" />
     <Compile Include="Statement\SwitchCaseStatementEater.cs" />
     <Compile Include="Statement\SwitchStatementEater.cs" />

@@ -13,8 +13,10 @@ namespace MockMetrics.Eating
         List<ICSharpTreeNode> Mocks { get; }
         List<ICSharpTreeNode> Asserts { get; }
         List<IReference> Variables { get; }
+        List<ILabelStatement> Labels { get; }
         void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
         void AddVariable(IReference reference);
+        void AddLabel(ILabelStatement label);
     }
 
     public class Snapshot : ISnapshot
@@ -28,6 +30,7 @@ namespace MockMetrics.Eating
             Asserts = new List<ICSharpTreeNode>();
             TargetCalls = new List<ICSharpTreeNode>();
             Variables = new List<IReference>();
+            Labels = new List<ILabelStatement>();
         }
 
         public IMethodDeclaration UnitTest { get; private set; }
@@ -43,6 +46,8 @@ namespace MockMetrics.Eating
         public List<ICSharpTreeNode> Asserts { get; private set; }
 
         public List<IReference> Variables { get; private set; }
+
+        public List<ILabelStatement> Labels { get; private set; }
 
         public void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode)
         {
@@ -83,6 +88,11 @@ namespace MockMetrics.Eating
         public void AddVariable(IReference reference)
         {
             Variables.Add(reference);
+        }
+
+        public void AddLabel(ILabelStatement label)
+        {
+            Labels.Add(label);
         }
     }
 }
