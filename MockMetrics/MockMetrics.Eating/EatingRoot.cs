@@ -89,11 +89,11 @@ namespace MockMetrics.Eating
             //*IForStatement
             //*IForeachStatement
             //IUsingStatement
-            //IWhileStatement
-            //IDoStatement
+            //*IWhileStatement
+            //*IDoStatement
             //ITryStatement
-            //ISwitchStatement
-            //ISwitchLabelStatement
+            //*ISwitchStatement
+            //*ISwitchLabelStatement
             //IThrowStatement
             //ILockStatement
             //IReturnStatement
