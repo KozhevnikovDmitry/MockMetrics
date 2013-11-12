@@ -62,6 +62,8 @@
     <Compile Include="Statement\EmptyStatementEater.cs" />
     <Compile Include="Statement\ForeachStatementEater.cs" />
     <Compile Include="Statement\ForStatementEater.cs" />
+    <Compile Include="Statement\GotoCaseStatementEater.cs" />
+    <Compile Include="Statement\GotoStatementEater.cs" />
     <Compile Include="Statement\IStatementEater.cs" />
     <Compile Include="PostEater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
