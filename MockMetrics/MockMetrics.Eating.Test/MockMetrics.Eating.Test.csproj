@@ -68,6 +68,7 @@
     <Compile Include="Statement\ExpressionStatementEaterTests.cs" />
     <Compile Include="Statement\ForeachStatementEaterTests.cs" />
     <Compile Include="Statement\ForStatementEaterTests.cs" />
+    <Compile Include="Statement\UncheckedStatementEaterTests.cs" />
     <Compile Include="Statement\WhileStatementEaterTests.cs" />
     <Compile Include="Statement\YieldStatementEaterTests.cs" />
   </ItemGroup>
