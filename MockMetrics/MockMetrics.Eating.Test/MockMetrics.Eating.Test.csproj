@@ -59,6 +59,7 @@
     <Compile Include="Statement\BlockStatementEaterTests.cs" />
     <Compile Include="Statement\DeclarationStatementEaterTests.cs" />
     <Compile Include="Statement\GotoCaseStatementEaterTests.cs" />
+    <Compile Include="Statement\IfStatementEaterTests.cs" />
     <Compile Include="Statement\ReturnStatementEaterTests.cs" />
     <Compile Include="Statement\ThrowsStatementEaterTests.cs" />
     <Compile Include="Statement\LockStatementEaterTests.cs" />
