@@ -107,6 +107,25 @@ namespace MockMetrics.Eating
             //*IUnsafeCodeUnsafeStatement
 
             #endregion
+
+            #region VariableDeclarations to eat
+
+            //IAnonymousMethodParameterDeclaration
+            //IArglistParameterDeclaration
+            //ICatchVariableDeclaration
+            //IConstantVariableDeclaration
+            //IEventDeclaration ?
+            //IFieldDeclaration ?
+            //IForeachVariableDeclaration
+            //ILambdaParameterDeclaration
+            //ILocalConstantDeclaration
+            //*ILocalVariableDeclaration
+            //IMultipleDeclarationMember
+            //IPropertyDeclaration ?
+            //IRegularParameterDeclaration
+            //IUnsafeCodeFixedPointerDeclaration
+
+            #endregion
         }
         
         public UnitTestEater GetUnitTestEater()
