@@ -77,6 +77,7 @@
     <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\CatchVariableDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\ForeachVariableDeclarationEaterTests.cs" />
+    <Compile Include="VariableDeclaration\LambdaParameterDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\LocalConstantDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\LocalVariableDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\RegularParameterDeclarationEaterTests.cs" />

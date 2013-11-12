@@ -110,7 +110,7 @@ namespace MockMetrics.Eating
 
             #region VariableDeclarations to eat
             
-            //IAnonymousMethodParameterDeclaration
+            //*IAnonymousMethodParameterDeclaration
             //ArglistParameterDeclaration
             //*ICatchVariableDeclaration
             //*IForeachVariableDeclaration

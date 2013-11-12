@@ -86,6 +86,7 @@
     <Compile Include="VariableDeclaration\CatchVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\ForeachVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\IVariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\LambdaParameterDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\LocalConstantDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\LocalVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\RegularParameterDeclarationEater.cs" />
