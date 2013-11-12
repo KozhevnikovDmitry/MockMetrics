@@ -25,6 +25,8 @@ namespace MockMetrics.Eating
         {
             _container = new Container();
             _container.Configure(config => config.MergeConfig(new EatingConfig(GetType().Assembly, _container)));
+            
+            #region Expressions to eat
 
             //ILambdaExpression
             //IAnonymousMethodExpression
@@ -75,13 +77,17 @@ namespace MockMetrics.Eating
             //IAsExpression
             //IConditionalTernaryExpression
             //IQueryExpression
+            
+            #endregion
+
+            #region Statements to eat
 
             //*IDeclarationStatement
             //*IExpressionStatement
             //*IBlock
             //IIfStatement
-            //IForStatement
-            //IForeachStatement
+            //*IForStatement
+            //*IForeachStatement
             //IUsingStatement
             //IWhileStatement
             //IDoStatement
@@ -99,6 +105,8 @@ namespace MockMetrics.Eating
             //IUncheckedStatement
             //IUnsafeCodeFixedStatement
             //IUnsafeCodeUnsafeStatement
+
+            #endregion
         }
         
         public UnitTestEater GetUnitTestEater()

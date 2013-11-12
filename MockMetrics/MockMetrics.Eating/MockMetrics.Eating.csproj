@@ -58,6 +58,7 @@
     <Compile Include="Expression\ObjectCreationEater.cs" />
     <Compile Include="Expression\ReferenceEater.cs" />
     <Compile Include="Expression\IExpressionEater.cs" />
+    <Compile Include="Statement\DoStatementEater.cs" />
     <Compile Include="Statement\ForeachStatementEater.cs" />
     <Compile Include="Statement\ForStatementEater.cs" />
     <Compile Include="Statement\IStatementEater.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Statement\DeclarationStatementEater.cs" />
     <Compile Include="Statement\ExpressionStatementEater.cs" />
     <Compile Include="Statement\StatementEater.cs" />
+    <Compile Include="Statement\WhileStatementEater.cs" />
     <Compile Include="UnitTestEater.cs" />
   </ItemGroup>
   <ItemGroup>

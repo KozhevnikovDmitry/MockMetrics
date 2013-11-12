@@ -61,7 +61,7 @@ namespace MockMetrics.Eating.Test.Statement
             // Arrange
             var snapshot = new Mock<ISnapshot>();
             var condition = Mock.Of<ICSharpExpression>();
-            var forStatement = Mock.Of<IForStatement>(t => t.Condition == condition && t.Initializer == Mock.Of<IForInitializer>());
+            var forStatement = Mock.Of<IForStatement>(t => t.Condition == condition);
             Mock.Get(forStatement)
                 .Setup(t => t.Initializer.Expressions)
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new ICSharpExpression[0]));
