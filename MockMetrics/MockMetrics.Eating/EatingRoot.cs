@@ -109,16 +109,16 @@ namespace MockMetrics.Eating
             #endregion
 
             #region VariableDeclarations to eat
-
+            
             //IAnonymousMethodParameterDeclaration
             //ArglistParameterDeclaration
-            //ICatchVariableDeclaration
+            //*ICatchVariableDeclaration
             //*IForeachVariableDeclaration
             //ILambdaParameterDeclaration
             //*ILocalConstantDeclaration
             //*ILocalVariableDeclaration
             //*IRegularParameterDeclaration
-            //IUnsafeCodeFixedPointerDeclaration
+            //*IUnsafeCodeFixedPointerDeclaration
 
             // THINKING ABOUT IT. May be passed through in DeclarationStatementEater
             //IMultipleDeclarationMember

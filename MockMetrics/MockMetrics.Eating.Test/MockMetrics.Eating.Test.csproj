@@ -74,6 +74,7 @@
     <Compile Include="Statement\UnsafeCodeUnsafeStatementEaterTests.cs" />
     <Compile Include="Statement\WhileStatementEaterTests.cs" />
     <Compile Include="Statement\YieldStatementEaterTests.cs" />
+    <Compile Include="VariableDeclaration\CatchVariableDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\ForeachVariableDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\LocalConstantDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\LocalVariableDeclarationEaterTests.cs" />

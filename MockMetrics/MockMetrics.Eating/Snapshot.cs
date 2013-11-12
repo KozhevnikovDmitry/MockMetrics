@@ -14,7 +14,7 @@ namespace MockMetrics.Eating
         List<IVariableDeclaration> Variables { get; }
         List<ILabelStatement> Labels { get; }
         void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
-        void AddVariable(IVariableDeclaration reference);
+        void AddVariable(IVariableDeclaration variableDeclaration);
         void AddLabel(ILabelStatement label);
     }
 
@@ -84,9 +84,9 @@ namespace MockMetrics.Eating
             }
         }
 
-        public void AddVariable(IVariableDeclaration reference)
+        public void AddVariable(IVariableDeclaration variableDeclaration)
         {
-            Variables.Add(reference);
+            Variables.Add(variableDeclaration);
         }
 
         public void AddLabel(ILabelStatement label)
