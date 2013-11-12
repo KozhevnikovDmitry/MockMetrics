@@ -113,17 +113,19 @@ namespace MockMetrics.Eating
             //IAnonymousMethodParameterDeclaration
             //IArglistParameterDeclaration
             //ICatchVariableDeclaration
-            //IConstantVariableDeclaration
-            //IEventDeclaration ?
-            //IFieldDeclaration ?
             //IForeachVariableDeclaration
             //ILambdaParameterDeclaration
-            //ILocalConstantDeclaration
+            //*ILocalConstantDeclaration
             //*ILocalVariableDeclaration
             //IMultipleDeclarationMember
-            //IPropertyDeclaration ?
             //IRegularParameterDeclaration
             //IUnsafeCodeFixedPointerDeclaration
+
+            // DO NOT EAT
+            //IConstantDeclaration ? (not occurs id methods)
+            //IEventDeclaration ? (not occurs id methods)
+            //IFieldDeclaration ? (not occurs id methods)
+            //IPropertyDeclaration ? (not occurs id methods)
 
             #endregion
         }

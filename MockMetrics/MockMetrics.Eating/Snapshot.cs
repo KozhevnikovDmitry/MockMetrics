@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Resolve;
 
@@ -12,10 +13,10 @@ namespace MockMetrics.Eating
         List<ICSharpTreeNode> Stubs { get; }
         List<ICSharpTreeNode> Mocks { get; }
         List<ICSharpTreeNode> Asserts { get; }
-        List<IReference> Variables { get; }
+        List<IVariableDeclaration> Variables { get; }
         List<ILabelStatement> Labels { get; }
         void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
-        void AddVariable(IReference reference);
+        void AddVariable(IVariableDeclaration reference);
         void AddLabel(ILabelStatement label);
     }
 
@@ -29,10 +30,10 @@ namespace MockMetrics.Eating
             Mocks = new List<ICSharpTreeNode>();
             Asserts = new List<ICSharpTreeNode>();
             TargetCalls = new List<ICSharpTreeNode>();
-            Variables = new List<IReference>();
+            Variables = new List<IVariableDeclaration>();
             Labels = new List<ILabelStatement>();
         }
-
+        
         public IMethodDeclaration UnitTest { get; private set; }
 
         public List<ICSharpTreeNode> TargetCalls { get; private set; }
@@ -45,7 +46,7 @@ namespace MockMetrics.Eating
 
         public List<ICSharpTreeNode> Asserts { get; private set; }
 
-        public List<IReference> Variables { get; private set; }
+        public List<IVariableDeclaration> Variables { get; private set; }
 
         public List<ILabelStatement> Labels { get; private set; }
 
@@ -85,7 +86,7 @@ namespace MockMetrics.Eating
             }
         }
 
-        public void AddVariable(IReference reference)
+        public void AddVariable(IVariableDeclaration reference)
         {
             Variables.Add(reference);
         }

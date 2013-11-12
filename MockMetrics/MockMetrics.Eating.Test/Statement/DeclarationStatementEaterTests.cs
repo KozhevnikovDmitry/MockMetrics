@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.Test.Statement
         public void AddConstantsToSnapshotAsStubsTest()
         {
             // Arrange
-            var snapshot = new Mock<ISnapshot>();
+            var snapshot = Mock.Of<ISnapshot>();
             var constantDeclaration = Mock.Of<ILocalConstantDeclaration>();
             var declarationStatement = Mock.Of<IDeclarationStatement>();
             Mock.Get(declarationStatement)
@@ -27,10 +27,10 @@ namespace MockMetrics.Eating.Test.Statement
             var declarationStatementEater = new DeclarationStatementEater(eater.Object);
 
             // Act
-            declarationStatementEater.Eat(snapshot.Object, declarationStatement);
+            declarationStatementEater.Eat(snapshot, declarationStatement);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, constantDeclaration), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, constantDeclaration), Times.Once);
         }
 
         [Test]

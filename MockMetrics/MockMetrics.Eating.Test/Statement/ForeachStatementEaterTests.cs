@@ -60,20 +60,20 @@ namespace MockMetrics.Eating.Test.Statement
         }
 
         [Test]
-        public void AddCurrentReferenceToSnapshotAsStubTest()
+        public void AddForeachVariableToSnapshotAsStubTest()
         {
             // Arrange
-            var snapshot = new Mock<ISnapshot>();
-            var currentRef = Mock.Of<IForeachStatementReference>();
-            var foreachStatement = Mock.Of<IForeachStatement>(t => t.CurrentReference == currentRef);
-            var eater = Mock.Of<IEater>();
-            var foreachEater = new ForeachStatementEater(eater);
+            var snapshot = Mock.Of<ISnapshot>();
+            var foreachVariableDeclaration = Mock.Of<IForeachVariableDeclaration>();
+            var foreachStatement = Mock.Of<IForeachStatement>(t => t.IteratorDeclaration == foreachVariableDeclaration);
+            var eater = new Mock<IEater>();
+            var foreachEater = new ForeachStatementEater(eater.Object);
 
             // Act
-            foreachEater.Eat(snapshot.Object, foreachStatement);
+            foreachEater.Eat(snapshot, foreachStatement);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(currentRef), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, foreachVariableDeclaration), Times.Once);
         }
     }
 }

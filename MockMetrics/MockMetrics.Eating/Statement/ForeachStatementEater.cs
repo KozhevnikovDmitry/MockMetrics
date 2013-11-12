@@ -11,11 +11,10 @@ namespace MockMetrics.Eating.Statement
         public override void Eat(ISnapshot snapshot, IForeachStatement statement)
         {
             Eater.Eat(snapshot, statement.Body);
+            Eater.Eat(snapshot, statement.IteratorDeclaration);
 
             var kind = Eater.Eat(snapshot, statement.Collection);
             snapshot.AddTreeNode(kind, statement.Collection);
-
-            snapshot.AddVariable(statement.CurrentReference);
         }
     }
 }

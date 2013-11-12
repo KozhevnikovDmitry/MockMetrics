@@ -25,7 +25,8 @@ namespace MockMetrics.Eating.VariableDeclaration
 
             if (initializer is IArrayInitializer)
             {
-                foreach (IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
+                foreach (
+                    IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
                 {
                     ExpressionKind kind = EatVariableInitializer(snapshot, variableInitializer);
 

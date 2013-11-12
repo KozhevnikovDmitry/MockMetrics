@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.Statement
         {
             foreach (ILocalConstantDeclaration localConstantDeclaration in statement.ConstantDeclarations)
             {
-                snapshot.AddTreeNode(ExpressionKind.Stub, localConstantDeclaration);
+                Eater.Eat(snapshot, localConstantDeclaration);
             }
 
             foreach (ILocalVariableDeclaration localVariableDeclaration in statement.VariableDeclarations)

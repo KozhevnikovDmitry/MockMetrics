@@ -82,7 +82,9 @@
     <Compile Include="Statement\WhileStatementEater.cs" />
     <Compile Include="Statement\YieldStatementEater.cs" />
     <Compile Include="UnitTestEater.cs" />
+    <Compile Include="VariableDeclaration\ForeachVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\IVariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\LocalConstantDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\LocalVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\UnsafeCodeFixedPointerEater.cs" />
     <Compile Include="VariableDeclaration\VariableDeclarationEater.cs" />
