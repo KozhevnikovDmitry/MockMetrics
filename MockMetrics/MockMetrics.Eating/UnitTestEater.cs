@@ -17,9 +17,9 @@ namespace MockMetrics.Eating
             var snapshot = new Snapshot(unitTest);
 
             // all parameters are stubs
-            foreach (ICSharpParameterDeclaration cSharpParameterDeclaration in unitTest.ParameterDeclarations)
+            foreach (var parameterDeclaration in unitTest.ParameterDeclarations)
             {
-                snapshot.Stubs.Add(cSharpParameterDeclaration);
+                _eater.Eat(snapshot, parameterDeclaration);
             }
 
             _eater.Eat(snapshot, unitTest.Body);

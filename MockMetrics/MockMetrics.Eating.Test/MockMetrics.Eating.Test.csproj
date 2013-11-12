@@ -76,6 +76,7 @@
     <Compile Include="Statement\YieldStatementEaterTests.cs" />
     <Compile Include="VariableDeclaration\ForeachVariableDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\LocalConstantDeclarationEaterTests.cs" />
+    <Compile Include="VariableDeclaration\RegularParameterDeclarationEaterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />

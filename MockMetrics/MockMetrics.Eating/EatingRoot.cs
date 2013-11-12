@@ -1,5 +1,6 @@
 ﻿using System;
 using HaveBox;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
 {
@@ -111,15 +112,17 @@ namespace MockMetrics.Eating
             #region VariableDeclarations to eat
 
             //IAnonymousMethodParameterDeclaration
-            //IArglistParameterDeclaration
+            //ArglistParameterDeclaration
             //ICatchVariableDeclaration
-            //IForeachVariableDeclaration
+            //*IForeachVariableDeclaration
             //ILambdaParameterDeclaration
             //*ILocalConstantDeclaration
             //*ILocalVariableDeclaration
-            //IMultipleDeclarationMember
-            //IRegularParameterDeclaration
+            //*IRegularParameterDeclaration
             //IUnsafeCodeFixedPointerDeclaration
+
+            // THINKING ABOUT IT. May be passed through in DeclarationStatementEater
+            //IMultipleDeclarationMember
 
             // DO NOT EAT
             //IConstantDeclaration ? (not occurs id methods)

@@ -86,6 +86,7 @@
     <Compile Include="VariableDeclaration\IVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\LocalConstantDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\LocalVariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\RegularParameterDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\UnsafeCodeFixedPointerEater.cs" />
     <Compile Include="VariableDeclaration\VariableDeclarationEater.cs" />
   </ItemGroup>
