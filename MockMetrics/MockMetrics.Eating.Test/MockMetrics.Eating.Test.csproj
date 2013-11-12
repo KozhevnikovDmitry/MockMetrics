@@ -57,6 +57,7 @@
     <Compile Include="EaterTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statement\BlockStatementEaterTests.cs" />
+    <Compile Include="Statement\ReturnStatementEaterTests.cs" />
     <Compile Include="Statement\ThrowsStatementEaterTests.cs" />
     <Compile Include="Statement\LockStatementEaterTests.cs" />
     <Compile Include="Statement\LabelStatementEaterTests.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Statement\ForeachStatementEaterTests.cs" />
     <Compile Include="Statement\ForStatementEaterTests.cs" />
     <Compile Include="Statement\WhileStatementEaterTests.cs" />
+    <Compile Include="Statement\YieldStatementEaterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />
