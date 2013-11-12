@@ -59,6 +59,7 @@
     <Compile Include="Expression\ReferenceEater.cs" />
     <Compile Include="Expression\IExpressionEater.cs" />
     <Compile Include="Statement\DoStatementEater.cs" />
+    <Compile Include="Statement\EmptyStatementEater.cs" />
     <Compile Include="Statement\ForeachStatementEater.cs" />
     <Compile Include="Statement\ForStatementEater.cs" />
     <Compile Include="Statement\IStatementEater.cs" />
