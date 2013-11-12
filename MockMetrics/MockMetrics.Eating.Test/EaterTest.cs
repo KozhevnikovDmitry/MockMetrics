@@ -19,13 +19,13 @@ namespace MockMetrics.Eating.Tests
             container.Configure(config => config.MergeConfig(new EatingConfig(typeof(EatingConfig).Assembly, container)));
 
             // Act
-            var eater = container.GetInstance<Eater>();
+            var eater = container.GetInstance<IEater>();
             var unitTestEater = container.GetInstance<UnitTestEater>();
             var expressionEaters = container.GetInstance<IEnumerable<IExpressionEater>>();
             var statementEaters = container.GetInstance<IEnumerable<IStatementEater>>();
 
             // Assert
-            Assert.IsInstanceOf<Eater>(eater);
+            Assert.IsInstanceOf<IEater>(eater);
             Assert.IsInstanceOf<UnitTestEater>(unitTestEater);
             Assert.IsNotEmpty(expressionEaters);
             Assert.IsNotEmpty(statementEaters);
@@ -39,7 +39,7 @@ namespace MockMetrics.Eating.Tests
             container.Configure(config => config.MergeConfig(new EatingConfig(typeof(EatingConfig).Assembly, container)));
 
             // Act 
-            var eater = container.GetInstance<Eater>();
+            var eater = container.GetInstance<IEater>() as Eater;
 
             // Assert 
             Assert.DoesNotThrow(() => eater.GetEater(Mock.Of<IBlock>()));

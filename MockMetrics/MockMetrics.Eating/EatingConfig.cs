@@ -14,7 +14,7 @@ namespace MockMetrics.Eating
         public EatingConfig(Assembly assembly, IContainer container)
         {
             For<IContainer>().Use(() => container);
-            For<Eater>().Use<Eater>().AsSingleton();
+            For<IEater>().Use<Eater>().AsSingleton();
             For<UnitTestEater>().Use<UnitTestEater>().AsSingleton();
             assembly.GetTypes()
                     .Where(type => type.GetInterfaces().Contains(typeof(IExpressionEater)) && !type.IsInterface && !type.IsAbstract)

@@ -4,9 +4,9 @@ namespace MockMetrics.Eating
 {
     public class UnitTestEater
     {
-        private readonly Eater _eater;
+        private readonly IEater _eater;
 
-        public UnitTestEater(Eater eater)
+        public UnitTestEater(IEater eater)
         {
             _eater = eater;
         }
