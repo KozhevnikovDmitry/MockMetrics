@@ -82,6 +82,7 @@
     <Compile Include="Statement\WhileStatementEater.cs" />
     <Compile Include="Statement\YieldStatementEater.cs" />
     <Compile Include="UnitTestEater.cs" />
+    <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\CatchVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\ForeachVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\IVariableDeclarationEater.cs" />
