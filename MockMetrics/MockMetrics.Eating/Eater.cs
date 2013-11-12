@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using HaveBox;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Statement;
 
 namespace MockMetrics.Eating
 {
     public interface IEater
     {
         ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression);
+        
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
     }
 

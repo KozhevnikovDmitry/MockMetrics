@@ -1,20 +1,8 @@
-﻿using System;
+using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
-namespace MockMetrics.Eating
+namespace MockMetrics.Eating.Expression
 {
-    public interface IExpressionEater
-    {
-        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement);
-
-        Type ExpressionType { get; }
-    }
-
-    public interface IExpressionEater<T> : IExpressionEater where T : ICSharpExpression
-    {
-        ExpressionKind Eat(ISnapshot snapshot, T expression);
-    }
-
     public abstract class ExpressionEater<T> : IExpressionEater where T : ICSharpExpression
     {
         protected readonly IEater Eater;

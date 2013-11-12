@@ -77,7 +77,7 @@ namespace MockMetrics.Eating
             //IQueryExpression
 
             //*IDeclarationStatement
-            //IExpressionStatement
+            //*IExpressionStatement
             //*IBlock
             //IIfStatement
             //IForStatement

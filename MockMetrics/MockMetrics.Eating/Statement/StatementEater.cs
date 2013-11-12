@@ -1,20 +1,8 @@
 ﻿using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
-namespace MockMetrics.Eating
+namespace MockMetrics.Eating.Statement
 {
-    public interface IStatementEater
-    {
-        void Eat(ISnapshot snapshot, ICSharpStatement statement);
-
-        Type StatementType { get; }
-    }
-
-    public interface IStatementEater<T> : IStatementEater where T : ICSharpStatement
-    {
-        void Eat(ISnapshot snapshot, T statement);
-    }
-
     public abstract class StatementEater<T> : IStatementEater where T : ICSharpStatement
     {
         protected readonly IEater Eater;
@@ -43,6 +31,4 @@ namespace MockMetrics.Eating
             get { return typeof (T); }
         }
     }
-
-   
 }

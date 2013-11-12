@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using HaveBox;
 using HaveBox.Configuration;
+using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Statement;
 
 namespace MockMetrics.Eating
 {

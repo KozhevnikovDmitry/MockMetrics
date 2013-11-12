@@ -51,19 +51,21 @@
     <Compile Include="Eater.cs" />
     <Compile Include="EatingConfig.cs" />
     <Compile Include="EatingRoot.cs" />
-    <Compile Include="ExpressionKind.cs" />
+    <Compile Include="Expression\ExpressionKind.cs" />
+    <Compile Include="Expression\ExpressionEater.cs" />
     <Compile Include="Expression\InvocationEater.cs" />
     <Compile Include="Expression\LiteralExpressionEater.cs" />
     <Compile Include="Expression\ObjectCreationEater.cs" />
     <Compile Include="Expression\ReferenceEater.cs" />
-    <Compile Include="IExpressionEater.cs" />
-    <Compile Include="IStatementEater.cs" />
+    <Compile Include="Expression\IExpressionEater.cs" />
+    <Compile Include="Statement\IStatementEater.cs" />
     <Compile Include="PostEater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Snapshot.cs" />
     <Compile Include="Statement\BlockStatementEater.cs" />
     <Compile Include="Statement\DeclarationStatementEater.cs" />
     <Compile Include="Statement\ExpressionStatementEater.cs" />
+    <Compile Include="Statement\StatementEater.cs" />
     <Compile Include="UnitTestEater.cs" />
   </ItemGroup>
   <ItemGroup>
