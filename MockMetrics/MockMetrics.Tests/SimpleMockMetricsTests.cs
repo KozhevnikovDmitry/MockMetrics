@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
 using MockMetrics.Eating;
@@ -39,31 +40,34 @@ namespace MockMetrics.Tests
         }
 
         [Test]
-        [TestCase(@"<Tested.Tests>\SimpleTests.cs")]
-        public void Test(string testName)
+        [TestCase(@"<Tested.Tests>\SimpleVariablesTests.cs")]
+        public void SimpleVariablesTests(string testName)
         {
             DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
 
-            Assert_SimpleVariablesTest(Enumerable.ToArray(FakesElementProcessor.Results.Values)[0]);
-            Assert_ExpressionVariablesTest(Enumerable.ToArray(FakesElementProcessor.Results.Values)[1]);
+            Assert.AreEqual(snapshot.Stubs.Count, 1, "Assert stubs");
+            Assert.AreEqual(snapshot.Results.Count, 1, "Assert results");
+            Assert.AreEqual(snapshot.Targets.Count, 1, "Assert targets");
+            Assert.AreEqual(snapshot.TargetCalls.Count, 1, "Assert targetCalls");
+            Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
         }
 
-        private void Assert_SimpleVariablesTest(Snapshot snapshot)
+        [Test]
+        [TestCase(@"<Tested.Tests>\ExpressionVariableTests.cs")]
+        public void ExpressionVariableTests(string testName)
         {
-            Assert.AreEqual(snapshot.Stubs.Count, 1);
-            Assert.AreEqual(snapshot.Targets.Count, 1);
-            Assert.AreEqual(snapshot.TargetCalls.Count, 1);
-            Assert.AreEqual(snapshot.Asserts.Count, 1);
-        }
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
 
-        private void Assert_ExpressionVariablesTest(Snapshot snapshot)
-        {
-            Assert.AreEqual(snapshot.Stubs.Count, 2);
-            Assert.AreEqual(snapshot.Targets.Count, 1);
-            Assert.AreEqual(snapshot.TargetCalls.Count, 1);
-            Assert.AreEqual(snapshot.Asserts.Count, 1);
+            Assert.AreEqual(snapshot.Stubs.Count, 2, "Assert stubs");
+            Assert.AreEqual(snapshot.Results.Count, 1, "Assert results");
+            Assert.AreEqual(snapshot.Targets.Count, 1, "Assert targets");
+            Assert.AreEqual(snapshot.TargetCalls.Count, 1, "Assert targetCalls");
+            Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
         }
-
     }
 
     //[TestReferences(TEST_DATA + @"\nunit.framework.dll")]

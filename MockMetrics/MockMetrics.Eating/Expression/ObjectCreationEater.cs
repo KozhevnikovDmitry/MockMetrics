@@ -31,7 +31,7 @@ namespace MockMetrics.Eating.Expression
                 return ExpressionKind.Mock;
             }
 
-            if (IsTargetCreation(expression))
+            if (IsTargetCreation(expression, snapshot))
             {
                 return ExpressionKind.Target;
             }
@@ -85,7 +85,7 @@ namespace MockMetrics.Eating.Expression
             return false;
         }
 
-        private bool IsTargetCreation(IObjectCreationExpression creationExpression)
+        private bool IsTargetCreation(IObjectCreationExpression creationExpression, ISnapshot snapshot)
         {
             if (creationExpression.Type().Classify == TypeClassification.REFERENCE_TYPE)
             {
@@ -103,15 +103,15 @@ namespace MockMetrics.Eating.Expression
                         return false;
                     }
 
-                    projectName = classElement.Module.DisplayName;
+                    projectName = classElement.Module.Name;
                 }
                 else
                 {
-                    projectName = classType.Module.DisplayName;
+                    projectName = classType.Module.Name;
                 }
 
 
-                return projectName != creationExpression.Parent.GetSourceFile().PsiModule.DisplayName;
+                return snapshot.IsInTestScope(projectName);
             }
 
             return false;

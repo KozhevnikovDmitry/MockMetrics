@@ -6,6 +6,7 @@
     public enum ExpressionKind
     {
         Stub,
+        Result,
         Mock,
         Target,
         TargetCall,

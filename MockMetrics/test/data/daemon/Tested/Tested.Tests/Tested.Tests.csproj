@@ -48,12 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ExpressionVariableTests.cs.gold" />
+    <Compile Include="ExpressionVariableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleTests.cs" />
+    <Compile Include="SimpleVariablesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SimpleTests.cs.gold" />
+    <None Include="SimpleVariablesTests.cs.gold" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tested\Tested.csproj">

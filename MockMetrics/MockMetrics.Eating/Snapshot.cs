@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
@@ -9,6 +11,7 @@ namespace MockMetrics.Eating
         List<ICSharpTreeNode> TargetCalls { get; }
         List<ICSharpTreeNode> Targets { get; }
         List<ICSharpTreeNode> Stubs { get; }
+        List<ICSharpTreeNode> Results { get; }
         List<ICSharpTreeNode> Mocks { get; }
         List<ICSharpTreeNode> Asserts { get; }
         List<IVariableDeclaration> Variables { get; }
@@ -16,15 +19,20 @@ namespace MockMetrics.Eating
         void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
         void AddVariable(IVariableDeclaration variableDeclaration);
         void AddLabel(ILabelStatement label);
+        bool IsInTestScope(string projectName);
     }
 
     public class Snapshot : ISnapshot
     {
-        public Snapshot(IMethodDeclaration unitTest)
+        private readonly IEnumerable<string> _testedProjectNames;
+
+        public Snapshot(IMethodDeclaration unitTest, IEnumerable<string> testedProjectNames)
         {
+            _testedProjectNames = testedProjectNames;
             UnitTest = unitTest;
             Targets = new List<ICSharpTreeNode>();
             Stubs = new List<ICSharpTreeNode>();
+            Results = new List<ICSharpTreeNode>();
             Mocks = new List<ICSharpTreeNode>();
             Asserts = new List<ICSharpTreeNode>();
             TargetCalls = new List<ICSharpTreeNode>();
@@ -39,6 +47,8 @@ namespace MockMetrics.Eating
         public List<ICSharpTreeNode> Targets { get; private set; }
 
         public List<ICSharpTreeNode> Stubs { get; private set; }
+
+        public List<ICSharpTreeNode> Results { get; private set; }
 
         public List<ICSharpTreeNode> Mocks { get; private set; }
 
@@ -55,6 +65,11 @@ namespace MockMetrics.Eating
                 case ExpressionKind.Stub:
                     {
                         Stubs.Add(sharpTreeNode);
+                        break;
+                    }
+                case ExpressionKind.Result:
+                    {
+                        Results.Add(sharpTreeNode);
                         break;
                     }
                 case ExpressionKind.Mock:
@@ -92,6 +107,19 @@ namespace MockMetrics.Eating
         public void AddLabel(ILabelStatement label)
         {
             Labels.Add(label);
+        }
+
+        public bool IsInTestScope(string projectName)
+        {
+            return _testedProjectNames.Contains(projectName);
+        }
+
+        public override string ToString()
+        {
+            return
+                string.Format(
+                    "Test [{0}];Stubs [{1}];Variables [{2}];Mocks [{3}];Targets [{4}];TargetCalls [{5}];Asserts [{6}];Labels [{7}];",
+                    UnitTest.NameIdentifier, Stubs.Count, Variables.Count, Mocks.Count, Targets.Count, TargetCalls.Count, Asserts.Count, Labels.Count);
         }
     }
 }

@@ -20,35 +20,51 @@ namespace MockMetrics.Eating.VariableDeclaration
         public ExpressionKind Eat(ISnapshot snapshot,
             IVariableInitializer initializer)
         {
-            if (initializer is IExpressionInitializer)
-            {
-                return _eater.Eat(snapshot, (initializer as IExpressionInitializer).Value);
-            }
-
             if (initializer is IArrayInitializer)
             {
-                foreach (
-                    IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
+                foreach (IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
                 {
                     ExpressionKind kind = Eat(snapshot, variableInitializer);
-
                     snapshot.AddTreeNode(kind, variableInitializer);
                 }
 
                 return ExpressionKind.Stub;
             }
 
+            ICSharpExpression initialExpression = null;
+
+            if (initializer is IExpressionInitializer)
+            {
+                initialExpression = (initializer as IExpressionInitializer).Value;
+            }
+
             if (initializer is IUnsafeCodeFixedPointerInitializer)
             {
-                return _eater.Eat(snapshot, (initializer as IUnsafeCodeFixedPointerInitializer).Value);
+                initialExpression = (initializer as IUnsafeCodeFixedPointerInitializer).Value;
             }
 
             if (initializer is IUnsafeCodeStackAllocInitializer)
             {
-                return _eater.Eat(snapshot, (initializer as IUnsafeCodeStackAllocInitializer).DimExpr);
+                initialExpression = (initializer as IUnsafeCodeStackAllocInitializer).DimExpr;
             }
 
-            throw new NotSupportedException();
+            return EatResults(snapshot, initialExpression);
+        }
+
+        private ExpressionKind EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
+        {
+            if (initialExpression == null)
+            {
+                throw new NotSupportedException();
+            }
+
+            ExpressionKind expressionKind = _eater.Eat(snapshot, initialExpression);
+            if (expressionKind == ExpressionKind.TargetCall)
+            {
+                return ExpressionKind.Result;
+            }
+
+            return expressionKind;
         }
     }
 }

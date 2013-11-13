@@ -9,7 +9,7 @@ namespace MockMetrics.Fake
 {
     public class FakesElementProcessor : IRecursiveElementProcessor
     {
-        public static Dictionary<IMethodDeclaration, Snapshot> Results = new Dictionary<IMethodDeclaration, Snapshot>();
+        public static Dictionary<IMethodDeclaration, ISnapshot> Results = new Dictionary<IMethodDeclaration, ISnapshot>();
 
         private readonly IDaemonProcess _process;
 

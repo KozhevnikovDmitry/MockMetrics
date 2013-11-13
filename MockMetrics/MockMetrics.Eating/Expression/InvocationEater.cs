@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.Impl.reflection2.elements.Context;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -17,26 +18,41 @@ namespace MockMetrics.Eating.Expression
                 ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
                 snapshot.AddTreeNode(kind, arg);
             }
-
-            IDeclaredElement invokedMethod =
+            
+            IDeclaredElement invoked =
                 expression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
 
-            if (invokedMethod.ToString().StartsWith("Method:Moq.Mock.Of()"))
+            if (invoked.ToString().StartsWith("Method:Moq.Mock.Of()"))
             {
                 return ExpressionKind.Stub;
             }
 
-            if (invokedMethod.ToString().StartsWith("Method:NUnit.Framework.Assert"))
+            if (invoked.ToString().StartsWith("Method:NUnit.Framework.Assert"))
             {
                 return ExpressionKind.Assert;
             }
 
-            if (invokedMethod.ToString().StartsWith("Method:Moq.Mock.Verify"))
+            if (invoked.ToString().StartsWith("Method:Moq.Mock.Verify"))
             {
                 return ExpressionKind.Assert;
             }
 
-            return ExpressionKind.TargetCall;
+            if (invoked is IMethod)
+            {
+                var invokedMethod = invoked as IMethod;
+                if (snapshot.IsInTestScope(invokedMethod.Module.Name))
+                {
+                    snapshot.AddTreeNode(ExpressionKind.TargetCall, expression);
+                    return ExpressionKind.TargetCall;
+                }
+                else
+                {
+                    return ExpressionKind.Stub;
+                }
+            }
+
+            return ExpressionKind.Stub;
+
         }
     }
 }
