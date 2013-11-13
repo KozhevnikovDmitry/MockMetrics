@@ -1,7 +1,6 @@
-using MockMetrics.Fake.Tested;
 using NUnit.Framework;
 
-namespace MockMetrics.Tests
+namespace Tested.Tests
 {
     [TestFixture]
     public class SimpleTests
@@ -35,3 +34,4 @@ namespace MockMetrics.Tests
         }
     }
 }
+---------------------------------------------------------

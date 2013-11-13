@@ -85,7 +85,7 @@ namespace MockMetrics.Eating
             //*IDeclarationStatement
             //*IExpressionStatement
             //*IBlock
-            //IIfStatement
+            //*IIfStatement
             //*IForStatement
             //*IForeachStatement
             //IUsingStatement
@@ -111,17 +111,17 @@ namespace MockMetrics.Eating
             #region VariableDeclarations to eat
             
             //*IAnonymousMethodParameterDeclaration
-            //ArglistParameterDeclaration
             //*ICatchVariableDeclaration
             //*IForeachVariableDeclaration
-            //ILambdaParameterDeclaration
+            //*ILambdaParameterDeclaration
             //*ILocalConstantDeclaration
             //*ILocalVariableDeclaration
             //*IRegularParameterDeclaration
             //*IUnsafeCodeFixedPointerDeclaration
 
-            // THINKING ABOUT IT. May be passed through in DeclarationStatementEater
-            //IMultipleDeclarationMember
+            // THINKING ABOUT IT. 
+            //IMultipleDeclarationMember ? May be passed through in DeclarationStatementEater
+            //ArglistParameterDeclaration ? Really rare to use
 
             // DO NOT EAT
             //IConstantDeclaration ? (not occurs id methods)

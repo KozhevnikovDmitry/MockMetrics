@@ -42,8 +42,6 @@ namespace MockMetrics.Eating.Test.Statement
 			eater.Verify(t => t.Eat(snapshot, body), Times.Once);
 		}
 
-
-
         [Test]
         public void NotEatNullElseTest()
         {

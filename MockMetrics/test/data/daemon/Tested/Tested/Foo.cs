@@ -1,4 +1,4 @@
-﻿namespace MockMetrics.Fake.Tested
+﻿namespace Tested
 {
     public class Foo
     {
