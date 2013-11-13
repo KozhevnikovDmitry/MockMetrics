@@ -5,9 +5,12 @@ namespace MockMetrics.Eating.Expression
 {
     public class ObjectCreationEater : ExpressionEater<IObjectCreationExpression>
     {
-        public ObjectCreationEater(IEater eater)
+        private readonly EatExpressionHelper _expressionHelper;
+
+        public ObjectCreationEater(IEater eater, EatExpressionHelper expressionHelper)
             : base(eater)
         {
+            _expressionHelper = expressionHelper;
         }
 
         public override ExpressionKind Eat(ISnapshot snapshot, IObjectCreationExpression expression)
@@ -45,9 +48,8 @@ namespace MockMetrics.Eating.Expression
                     return ExpressionKind.Mock;
                 }
 
-                if (expression.Type()
-                              .ToString()
-                              .StartsWith("Moq.Mock"))
+                if (_expressionHelper.GetCreationTypeName(expression)
+                                     .StartsWith("Moq.Mock"))
                 {
                     return ExpressionKind.Mock;
                 }
@@ -60,7 +62,7 @@ namespace MockMetrics.Eating.Expression
         {
             if (creationExpression.Type().Classify == TypeClassification.REFERENCE_TYPE)
             {
-                var classType = creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as IClass;
+                var classType = _expressionHelper.GetCreationClass(creationExpression);
 
                 if (classType != null)
                 {

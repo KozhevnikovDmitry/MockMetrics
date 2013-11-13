@@ -7,6 +7,7 @@ namespace MockMetrics.Eating.Statement
         public DeclarationStatementEater(IEater eater)
             : base(eater)
         {
+             
         }
 
         public override void Eat(ISnapshot snapshot, IDeclarationStatement statement)

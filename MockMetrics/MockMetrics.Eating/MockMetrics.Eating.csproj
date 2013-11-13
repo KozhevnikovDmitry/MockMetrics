@@ -51,6 +51,7 @@
     <Compile Include="Eater.cs" />
     <Compile Include="EatingConfig.cs" />
     <Compile Include="EatingRoot.cs" />
+    <Compile Include="Expression\EatExpressionHelper.cs" />
     <Compile Include="Expression\ExpressionKind.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />
     <Compile Include="Expression\InvocationEater.cs" />
