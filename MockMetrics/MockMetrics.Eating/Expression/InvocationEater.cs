@@ -1,14 +1,16 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Impl.reflection2.elements.Context;
 
 namespace MockMetrics.Eating.Expression
 {
     public class InvocationEater : ExpressionEater<IInvocationExpression>
     {
-        public InvocationEater(IEater eater)
+        private readonly EatExpressionHelper _expressionHelper;
+
+        public InvocationEater(IEater eater, EatExpressionHelper expressionHelper)
             : base(eater)
         {
+            _expressionHelper = expressionHelper;
         }
 
         public override ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression)
@@ -18,25 +20,25 @@ namespace MockMetrics.Eating.Expression
                 ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
                 snapshot.AddTreeNode(kind, arg);
             }
-            
-            IDeclaredElement invoked =
-                expression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
 
-            if (invoked.ToString().StartsWith("Method:Moq.Mock.Of()"))
+            var invokedName = _expressionHelper.GetInvokedElementName(expression);
+
+            if (invokedName.StartsWith("Method:Moq.Mock.Of()"))
             {
                 return ExpressionKind.Stub;
             }
 
-            if (invoked.ToString().StartsWith("Method:NUnit.Framework.Assert"))
+            if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {
                 return ExpressionKind.Assert;
             }
 
-            if (invoked.ToString().StartsWith("Method:Moq.Mock.Verify"))
+            if (invokedName.StartsWith("Method:Moq.Mock.Verify"))
             {
                 return ExpressionKind.Assert;
             }
 
+            var invoked = _expressionHelper.GetInvokedElement(expression);
             if (invoked is IMethod)
             {
                 var invokedMethod = invoked as IMethod;
@@ -44,10 +46,6 @@ namespace MockMetrics.Eating.Expression
                 {
                     snapshot.AddTreeNode(ExpressionKind.TargetCall, expression);
                     return ExpressionKind.TargetCall;
-                }
-                else
-                {
-                    return ExpressionKind.Stub;
                 }
             }
 

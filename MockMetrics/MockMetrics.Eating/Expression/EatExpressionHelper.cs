@@ -14,5 +14,16 @@ namespace MockMetrics.Eating.Expression
         {
             return creationExpression.Type().ToString();
         }
+
+        public virtual IDeclaredElement GetInvokedElement(IInvocationExpression expression)
+        {
+            return expression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+        }
+
+
+        public virtual string GetInvokedElementName(IInvocationExpression expression)
+        {
+            return expression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement.ToString();
+        }
     }
 }
