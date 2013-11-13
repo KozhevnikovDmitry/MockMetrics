@@ -7,4 +7,9 @@
             return !item;
         }
     }
+
+    public class Bar
+    {
+        public bool SomeBool { get; set; }
+    }
 }

@@ -51,7 +51,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SimpleMockMetricsTests.cs" />
+    <Compile Include="MockMetricsTests.cs" />
     <Compile Include="CSharpHighlightingWithinSolutionTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

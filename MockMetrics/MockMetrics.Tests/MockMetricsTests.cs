@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace MockMetrics.Tests
 {
     [TestFixture]
-    public class SimpleMockMetricsTests : CSharpHighlightingWithinSolutionTestBase
+    public class MockMetricsTests : CSharpHighlightingWithinSolutionTestBase
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting, IContextBoundSettingsStore settingsstore)
         {
@@ -63,6 +63,21 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count, 2, "Assert stubs");
+            Assert.AreEqual(snapshot.Results.Count, 1, "Assert results");
+            Assert.AreEqual(snapshot.Targets.Count, 1, "Assert targets");
+            Assert.AreEqual(snapshot.TargetCalls.Count, 1, "Assert targetCalls");
+            Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
+        }
+
+        [Test]
+        [TestCase(@"<Tested.Tests>\StubTests.cs")]
+        public void StubTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+
+            Assert.AreEqual(snapshot.Stubs.Count, 1, "Assert stubs");
             Assert.AreEqual(snapshot.Results.Count, 1, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count, 1, "Assert targets");
             Assert.AreEqual(snapshot.TargetCalls.Count, 1, "Assert targetCalls");

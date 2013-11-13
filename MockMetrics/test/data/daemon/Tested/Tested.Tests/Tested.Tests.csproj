@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="StubTests.cs.gold" />
+    <Compile Include="StubTests.cs" />
     <None Include="ExpressionVariableTests.cs.gold" />
     <Compile Include="ExpressionVariableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
