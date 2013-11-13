@@ -13,8 +13,8 @@ namespace MockMetrics.Eating.Test.Statement
 		{
 			// Arrange
 			var snapshot = Mock.Of<ISnapshot>();
-			var body = Mock.Of<ICSharpStatement>();
-			var ifStatement = Mock.Of<IIfStatement>(t => t.Then == body);
+			var thenBlock = Mock.Of<ICSharpStatement>();
+			var ifStatement = Mock.Of<IIfStatement>(t => t.Then == thenBlock);
 			var eater = new Mock<IEater>();
 			var ifStatementEater = new IfStatementEater(eater.Object);
 
@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Test.Statement
 			ifStatementEater.Eat(snapshot, ifStatement);
 
 			// Assert
-			eater.Verify(t => t.Eat(snapshot, body), Times.Once);
+			eater.Verify(t => t.Eat(snapshot, thenBlock), Times.Once);
 		}
 
 		[Test]
@@ -41,6 +41,25 @@ namespace MockMetrics.Eating.Test.Statement
 			// Assert
 			eater.Verify(t => t.Eat(snapshot, body), Times.Once);
 		}
+
+
+
+        [Test]
+        public void NotEatNullElseTest()
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var thenBlock = Mock.Of<ICSharpStatement>();
+            var ifStatement = Mock.Of<IIfStatement>(t => t.Then == thenBlock);
+            var eater = new Mock<IEater>();
+            var ifStatementEater = new IfStatementEater(eater.Object);
+
+            // Act
+            ifStatementEater.Eat(snapshot, ifStatement);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, It.Is<ICSharpStatement>(c => !c.Equals(thenBlock))), Times.Never);
+        }
 
 		[Test]
 		public void EatConditionTest()
