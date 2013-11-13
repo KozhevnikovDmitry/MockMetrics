@@ -18,7 +18,7 @@ namespace MockMetrics.Eating
         public Snapshot EatUnitTest(IMethodDeclaration unitTest)
         {
             // result snapshot
-            var snapshot = new Snapshot(unitTest, GetTestScope(unitTest));
+            var snapshot = new Snapshot(unitTest);
 
             // all parameters are stubs
             foreach (var parameterDeclaration in unitTest.ParameterDeclarations)
@@ -33,11 +33,6 @@ namespace MockMetrics.Eating
             return snapshot;
         }
 
-        private IEnumerable<string> GetTestScope(IMethodDeclaration unitTest)
-        {
-            var module = unitTest.GetPsiModule();
-            var project = module.ContainingProjectModule as ProjectImpl;
-            return project.GetProjectReferences().Select(t => t.Name);
-        }
+        
     }
 }

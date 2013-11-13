@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
@@ -20,15 +21,16 @@ namespace MockMetrics.Eating
         void AddVariable(IVariableDeclaration variableDeclaration);
         void AddLabel(ILabelStatement label);
         bool IsInTestScope(string projectName);
+        bool IsInTestProject(string projectName);
     }
 
     public class Snapshot : ISnapshot
     {
-        private readonly IEnumerable<string> _testedProjectNames;
+        public IEnumerable<string> TestedProjectNames { get; private set; }
+        public string TestProjectName { get; private set; }
 
-        public Snapshot(IMethodDeclaration unitTest, IEnumerable<string> testedProjectNames)
+        public Snapshot(IMethodDeclaration unitTest)
         {
-            _testedProjectNames = testedProjectNames;
             UnitTest = unitTest;
             Targets = new List<ICSharpTreeNode>();
             Stubs = new List<ICSharpTreeNode>();
@@ -38,6 +40,7 @@ namespace MockMetrics.Eating
             TargetCalls = new List<ICSharpTreeNode>();
             Variables = new List<IVariableDeclaration>();
             Labels = new List<ILabelStatement>();
+            GetTestScope(unitTest);
         }
         
         public IMethodDeclaration UnitTest { get; private set; }
@@ -111,7 +114,20 @@ namespace MockMetrics.Eating
 
         public bool IsInTestScope(string projectName)
         {
-            return _testedProjectNames.Contains(projectName);
+            return TestedProjectNames.Contains(projectName);
+        }
+
+        public bool IsInTestProject(string projectName)
+        {
+            return TestProjectName.Contains(projectName);
+        }
+
+        private void GetTestScope(IMethodDeclaration unitTest)
+        {
+            var module = unitTest.GetPsiModule();
+            var project = module.ContainingProjectModule as ProjectImpl;
+            TestProjectName = project.Name;
+            TestedProjectNames = project.GetProjectReferences().Select(t => t.Name);
         }
 
         public override string ToString()

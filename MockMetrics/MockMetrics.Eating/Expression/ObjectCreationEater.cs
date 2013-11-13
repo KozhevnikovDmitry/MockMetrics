@@ -1,8 +1,5 @@
-﻿using System;
-using JetBrains.ReSharper.Psi;
+﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
-using JetBrains.ReSharper.Psi.Impl.reflection2.elements.Context;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -21,100 +18,58 @@ namespace MockMetrics.Eating.Expression
                 snapshot.AddTreeNode(kind, arg);
             }
 
-            if (IsStubCreation(expression))
+            if (expression.Initializer != null)
             {
-                return ExpressionKind.Stub;
+                foreach (var initializerElement in expression.Initializer.InitializerElements)
+                {
+
+                }
             }
 
-            if (IsMockCreation(expression))
-            {
-                return ExpressionKind.Mock;
-            }
-
-            if (IsTargetCreation(expression, snapshot))
-            {
-                return ExpressionKind.Target;
-            }
-
-            throw new NotSupportedException();
+            return GetCreationObjectKind(snapshot, expression);
         }
 
-        private bool IsStubCreation(IObjectCreationExpression creationExpression)
+        private ExpressionKind GetCreationObjectKind(ISnapshot snapshot, IObjectCreationExpression expression)
         {
-            return creationExpression.Type().Classify == TypeClassification.VALUE_TYPE;
-        }
-
-        private bool IsMockCreation(IObjectCreationExpression creationExpression)
-        {
-            if (creationExpression.Type().Classify == TypeClassification.REFERENCE_TYPE)
+            if (expression.Type().Classify == TypeClassification.REFERENCE_TYPE)
             {
-                if (creationExpression.TypeReference
-                    .CurrentResolveResult
-                    .DeclaredElement
-                    .ToString()
-                    .StartsWith("Moq.Mock"))
+                var projectName = GetProjectName(expression);
+
+                if (snapshot.IsInTestScope(projectName))
                 {
-                    return true;
+                    return ExpressionKind.Target;
                 }
 
-                string projectName;
-
-                var classType = creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as Class;
-
-                if (classType == null)
+                if (snapshot.IsInTestProject(projectName))
                 {
-                    var classElement =
-                        creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as ClassElement;
-
-                    if (classElement == null)
-                    {
-                        return false;
-                    }
-
-                    projectName = classElement.Module.DisplayName;
-                }
-                else
-                {
-                    projectName = classType.Module.DisplayName;
+                    return ExpressionKind.Mock;
                 }
 
-
-                return projectName == creationExpression.Parent.GetSourceFile().PsiModule.DisplayName;
+                if (expression.Type()
+                              .ToString()
+                              .StartsWith("Moq.Mock"))
+                {
+                    return ExpressionKind.Mock;
+                }
             }
 
-            return false;
+            return ExpressionKind.Stub;
         }
 
-        private bool IsTargetCreation(IObjectCreationExpression creationExpression, ISnapshot snapshot)
+        private string GetProjectName(IObjectCreationExpression creationExpression)
         {
             if (creationExpression.Type().Classify == TypeClassification.REFERENCE_TYPE)
             {
-                string projectName;
+                var classType = creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as IClass;
 
-                var classType = creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as Class;
-
-                if (classType == null)
+                if (classType != null)
                 {
-                    var classElement =
-                        creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as ClassElement;
 
-                    if (classElement == null)
-                    {
-                        return false;
-                    }
-
-                    projectName = classElement.Module.Name;
+                    return classType.Module.Name;
                 }
-                else
-                {
-                    projectName = classType.Module.Name;
-                }
-
-
-                return snapshot.IsInTestScope(projectName);
             }
 
-            return false;
+            return string.Empty;
         }
     }
 }
