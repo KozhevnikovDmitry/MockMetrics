@@ -10,7 +10,7 @@ using NUnit.Framework;
 /// Test environment. Must be in the global namespace.
 /// </summary>
 [SetUpFixture]
-public class TestEnvironmentAssembly : ReSharperTestEnvironmentAssembly
+public class FunctionalTestAssembly : ReSharperTestEnvironmentAssembly
 {
     /// <summary>
     /// Gets the assemblies to load into test environment.
