@@ -58,9 +58,14 @@
     <Compile Include="Expression\AnonymousMethodExpressionEaterTests.cs" />
     <Compile Include="Expression\AnonymousObjectCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\ArrayCreationExpressionEaterTests.cs" />
+    <Compile Include="Expression\AsExpressionEaterTests.cs" />
     <Compile Include="Expression\AwaitExpressionEaterTests.cs" />
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
+    <Compile Include="Expression\CastExpressionEaterTests.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
+    <Compile Include="Expression\TypeUsageEaterTests.cs" />
+    <Compile Include="Expression\DefaultExpressionEaterTests.cs" />
+    <Compile Include="Expression\ExpressionKindHelperTests.cs" />
     <Compile Include="Expression\InvocationExpressionEaterTests.cs" />
     <Compile Include="Expression\IsExpressionEaterTests.cs" />
     <Compile Include="Expression\LiteralExpressionEaterTests.cs" />

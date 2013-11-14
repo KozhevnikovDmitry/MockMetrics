@@ -79,6 +79,8 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [TestCase(ExpressionKind.StubCandidate, ExpressionKind.StubCandidate, Result = ExpressionKind.StubCandidate)]
+        [TestCase(ExpressionKind.TargetCall, ExpressionKind.StubCandidate, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.Result, ExpressionKind.StubCandidate, Result = ExpressionKind.Result)]
         [TestCase(ExpressionKind.Target, ExpressionKind.StubCandidate, Result = ExpressionKind.Target)]
         [TestCase(ExpressionKind.StubCandidate, ExpressionKind.Target, Result = ExpressionKind.Target)]
         [TestCase(ExpressionKind.TargetCall, ExpressionKind.StubCandidate, Result = ExpressionKind.Result)]

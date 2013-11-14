@@ -16,14 +16,14 @@ namespace MockMetrics.Eating.Expression
             var rightKind = Eater.Eat(snapshot, expression.RightOperand);
             snapshot.AddTreeNode(rightKind, expression.RightOperand);
 
-            if (leftKind == ExpressionKind.Target || rightKind == ExpressionKind.Target)
-            {
-                return ExpressionKind.Target;
-            }
-
             if (leftKind == ExpressionKind.TargetCall || rightKind == ExpressionKind.TargetCall)
             {
                 return ExpressionKind.Result;
+            }
+
+            if (leftKind == ExpressionKind.Target || rightKind == ExpressionKind.Target)
+            {
+                return ExpressionKind.Target;
             }
 
             if (leftKind == ExpressionKind.Result || rightKind == ExpressionKind.Result)
