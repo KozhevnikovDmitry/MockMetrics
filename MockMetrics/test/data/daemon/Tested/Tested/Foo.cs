@@ -1,4 +1,6 @@
-﻿namespace Tested
+﻿using System;
+
+namespace Tested
 {
     public class Foo
     {

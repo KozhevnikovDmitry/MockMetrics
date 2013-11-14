@@ -14,7 +14,7 @@ namespace MockMetrics.Eating.Expression
 
         public override ExpressionKind Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
         {
-            return ExpressionKind.Stub;
+            return ExpressionKind.StubCandidate;
         }
     }
 }

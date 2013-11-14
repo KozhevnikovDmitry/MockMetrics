@@ -18,7 +18,10 @@ namespace MockMetrics.Eating.Expression
             foreach (ICSharpArgument arg in expression.Arguments)
             {
                 ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
-                snapshot.AddTreeNode(kind, arg);
+                if (kind != ExpressionKind.StubCandidate)
+                {
+                    snapshot.AddTreeNode(kind, arg);
+                }
             }
 
             if (expression.Initializer != null)
@@ -55,7 +58,7 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            return ExpressionKind.Stub;
+            return ExpressionKind.StubCandidate;
         }
 
         private string GetProjectName(IObjectCreationExpression creationExpression)

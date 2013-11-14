@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
+using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.VariableDeclaration;
 using NUnit.Framework;
 using Moq;
@@ -26,7 +27,7 @@ namespace MockMetrics.Eating.Test.VariableDeclaration
             var kind = initializerEater.Eat(snapshot, arrayInit);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Stub);
+            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
             eater.Verify(t => t.Eat(snapshot, expression));
         }
 
@@ -116,6 +117,23 @@ namespace MockMetrics.Eating.Test.VariableDeclaration
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Result);
+        }
+
+        [Test]
+        public void EatStubCandidateTest()
+        {
+            // Arrange
+            var expression = Mock.Of<ICSharpExpression>();
+            var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == ExpressionKind.StubCandidate);
+            var initializerEater = new VariableInitializerEater(eater);
+
+            // Act
+            var kind = initializerEater.Eat(snapshot, itemInitializer);
+
+            // Assert
+            Assert.AreEqual(kind, ExpressionKind.Stub);
         }
     }
 }

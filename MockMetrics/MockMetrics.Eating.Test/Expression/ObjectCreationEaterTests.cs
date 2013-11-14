@@ -51,6 +51,26 @@ namespace MockMetrics.Eating.Test.Expression
         }
 
         [Test]
+        public void AddStubCandidateArgumentToSnapshotTest()
+        {
+            // Arrange
+            var expression = Mock.Of<ICSharpExpression>();
+            var cSharpArgument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
+            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
+            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
+                .Returns(new TreeNodeCollection<ICSharpArgument>(new[] { cSharpArgument }));
+            var snapshot = new Mock<ISnapshot>();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.StubCandidate);
+            var objectCreationEater = new ObjectCreationEater(eater, Mock.Of<EatExpressionHelper>());
+
+            // Act
+            objectCreationEater.Eat(snapshot.Object, objectCreationExpression);
+
+            // Assert
+            snapshot.Verify(t => t.AddTreeNode(It.IsAny<ExpressionKind>(), It.IsAny<ICSharpArgument>()), Times.Never);
+        }
+
+        [Test]
         public void EatValueTypeTest()
         {   
             // Arrange
@@ -65,7 +85,7 @@ namespace MockMetrics.Eating.Test.Expression
             var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Stub);
+            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
         }
 
         [Test]
@@ -147,7 +167,7 @@ namespace MockMetrics.Eating.Test.Expression
             var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Stub);
+            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
         }
     }
 }

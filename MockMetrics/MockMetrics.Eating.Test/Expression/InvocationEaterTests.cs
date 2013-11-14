@@ -49,7 +49,28 @@ namespace MockMetrics.Eating.Test.Expression
             invocationEater.Eat(snapshot.Object, invocationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, cSharpArgument));
+            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, cSharpArgument), Times.Once);
+        }
+
+        [Test]
+        public void AddStubCandidateArgumentToSnapshotTest()
+        {
+            // Arrange
+            var expression = Mock.Of<ICSharpExpression>();
+            var cSharpArgument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
+            var invocationExpression = Mock.Of<IInvocationExpression>();
+            Mock.Get(invocationExpression).Setup(t => t.Arguments)
+                .Returns(new TreeNodeCollection<ICSharpArgument>(new[] { cSharpArgument }));
+            var snapshot = new Mock<ISnapshot>();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.StubCandidate);
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Of()");
+            var invocationEater = new InvocationEater(eater, helper);
+
+            // Act
+            invocationEater.Eat(snapshot.Object, invocationExpression);
+
+            // Assert
+            snapshot.Verify(t => t.AddTreeNode(It.IsAny<ExpressionKind>(), It.IsAny<ICSharpArgument>()), Times.Never);
         }
 
         [TestCase("Method:Moq.Mock.Of()", Result = ExpressionKind.Stub)]
@@ -132,7 +153,7 @@ namespace MockMetrics.Eating.Test.Expression
             var kind = invocationEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Stub);
+            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
         }
 
         [Test]
@@ -153,7 +174,7 @@ namespace MockMetrics.Eating.Test.Expression
             var kind = invocationEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Stub);
+            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
         }
     }
 }

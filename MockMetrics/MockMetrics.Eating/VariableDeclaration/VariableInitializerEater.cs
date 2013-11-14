@@ -1,5 +1,6 @@
 using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Expression;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
@@ -28,7 +29,7 @@ namespace MockMetrics.Eating.VariableDeclaration
                     snapshot.AddTreeNode(kind, variableInitializer);
                 }
 
-                return ExpressionKind.Stub;
+                return ExpressionKind.StubCandidate;
             }
 
             ICSharpExpression initialExpression = null;
@@ -59,6 +60,12 @@ namespace MockMetrics.Eating.VariableDeclaration
             }
 
             ExpressionKind expressionKind = _eater.Eat(snapshot, initialExpression);
+
+            if (expressionKind == ExpressionKind.StubCandidate)
+            {
+                return ExpressionKind.Stub;
+            }
+
             if (expressionKind == ExpressionKind.TargetCall)
             {
                 return ExpressionKind.Result;

@@ -1,4 +1,5 @@
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Statement;
 using Moq;
 using NUnit.Framework;
