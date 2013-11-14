@@ -1,5 +1,6 @@
 ﻿using System;
 using HaveBox;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
 {
@@ -27,62 +28,85 @@ namespace MockMetrics.Eating
             _container.Configure(config => config.MergeConfig(new EatingConfig(GetType().Assembly, _container)));
             
             #region Expressions to eat
-
-            //ILambdaExpression
-            //IAnonymousMethodExpression
-            //IAnonymousFunctionExpression
-            //IAnonymousObjectCreationExpression
-            //IArrayCreationExpression
+            
+            // - already implemented
+            //*ICSharpLiteralExpression
             //*IObjectCreationExpression
-            //ICreationExpression
+
+            // - to work with, eat call reference
+            //*IInvocationExpression
+
+            //- all binary expressions can be eat the same way- eat operand, return stub
+            // IBinaryExpression
+            //IConditionalAndExpression
+            //IConditionalOrExpression
             //IBitwiseAndExpression
             //IBitwiseExclusiveOrExpression
             //IBitwiseInclusiveOrExpression
-            //IConditionalAndExpression
-            //IConditionalOrExpression
-            //IAdditiveExpression
             //IEqualityExpression
             //IMultiplicativeExpression
             //INullCoalescingExpression
             //IRelationalExpression
             //IShiftExpression
-            //IBinaryExpression
-            //IAssignmentExpression
+            //IAdditiveExpression
+
+            // - nothing to eat, return none
+            //IThisExpression
+            //IBaseExpression
+            //IPredefinedTypeExpression
+            //IAnonymousFunctionExpression
+
+            // - simply eat containing expressions and return stub
+            //IIsExpression
+            //IAsExpression
+            //ITypeofExpression
+            //IConditionalTernaryExpression
+            //ICastExpression
+            //IArrayCreationExpression
+            //IAnonymousMethodExpression
+            //IAnonymousObjectCreationExpression
+
+            // - simply eat containing expression
             //IPostfixOperatorExpression
             //IPrefixOperatorExpression
+            //IAwaitExpression
             //IUnaryOperatorExpression
+            //IParenthesizedExpression
+            
+            // - simply eat containing expressions and return none
+            //IAssignmentExpression
+
+            // - depends of return type, may be stub, target, mock(after that simple eating)
+            //IDefaultExpression
+            //ILambdaExpression
+            //IReferenceExpression
+            //IElementAccessExpression
+
+            
+            // - commom expression interfaces, never eat
+            //IUnaryExpression
+            //IPrimaryExpression
             //IOperatorExpression
-            //IBaseExpression
+            //IPrimaryExpression
+            //ICreationExpression
+
+            // - no idea yet
+            //IQueryExpression
+
+            // - really rare using expressions
+            //I__ArglistExpression
+            //ICheckedExpression
+            //IUncheckedExpression
             //IUnsafeCodePointerAccessExpression
             //IUnsafeCodePointerIndirectionExpression
             //IUnsafeCodeSizeOfExpression
-            //I__ArglistExpression
-            //IParenthesizedExpression
-            //IPredefinedTypeExpression
-            //ICheckedExpression
-            //IUncheckedExpression
-            //*IReferenceExpression
-            //IThisExpression
-            //ITypeofExpression
-            //IElementAccessExpression
-            //*IInvocationExpression
-            //ICSharpLiteralExpression
-            //IDefaultExpression
-            //IPrimaryExpression
             //IUnsafeCodeAddressOfExpression
-            //IAwaitExpression
-            //ICastExpression
-            //IUnaryExpression
-            //IIsExpression
-            //IAsExpression
-            //IConditionalTernaryExpression
-            //IQueryExpression
             
             #endregion
 
             #region Statements to eat
 
-            //*IDeclarationStatement
+            //IDeclarationStatement
             //*IExpressionStatement
             //*IBlock
             //*IIfStatement
