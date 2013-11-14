@@ -63,6 +63,7 @@
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
     <Compile Include="Expression\CastExpressionEaterTests.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
+    <Compile Include="Expression\LambdaExpressionEaterTests.cs" />
     <Compile Include="Expression\ElementAccessExpressionEaterTests.cs" />
     <Compile Include="Expression\TypeUsageEaterTests.cs" />
     <Compile Include="Expression\DefaultExpressionEaterTests.cs" />

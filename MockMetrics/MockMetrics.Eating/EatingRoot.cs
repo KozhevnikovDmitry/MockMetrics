@@ -77,7 +77,7 @@ namespace MockMetrics.Eating
 
             // - depends of return type, may be stub, target, mock(after that simple eating)
             //*IDefaultExpression
-            //ILambdaExpression
+            //*ILambdaExpression
             //IReferenceExpression
             //*IElementAccessExpression
             //*IAsExpression
