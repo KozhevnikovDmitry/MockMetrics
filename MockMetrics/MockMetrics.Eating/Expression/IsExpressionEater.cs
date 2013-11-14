@@ -1,7 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
 
-namespace MockMetrics.Eating
+namespace MockMetrics.Eating.Expression
 {
     public class IsExpressionEater : ExpressionEater<IIsExpression>
     {

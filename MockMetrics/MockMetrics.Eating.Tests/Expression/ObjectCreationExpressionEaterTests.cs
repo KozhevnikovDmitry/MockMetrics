@@ -71,6 +71,50 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
+        public void EatMemberInitializersTest()
+        {
+            // Arrange
+            var expression = Mock.Of<ICSharpExpression>();
+            var memberInitializer = Mock.Of<IMemberInitializer>(t => t.Expression == expression);
+            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
+            Mock.Get(objectCreationExpression).Setup(t => t.Initializer.InitializerElements)
+                .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
+            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
+                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater.Object, Mock.Of<EatExpressionHelper>());
+
+            // Act
+            objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, expression));
+        }
+
+        [Test]
+        public void AddMemberInitializersToSnapshotTest()
+        {
+            // Arrange
+            var expression = Mock.Of<ICSharpExpression>();
+            var memberInitializer = Mock.Of<IMemberInitializer>(t => t.Expression == expression);
+            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
+            Mock.Get(objectCreationExpression).Setup(t => t.Initializer.InitializerElements)
+                .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
+            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
+                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
+            var snapshot = new Mock<ISnapshot>();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>());
+
+            // Act
+            objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
+
+            // Assert
+            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, memberInitializer));
+        }
+
+        [Test]
         public void EatValueTypeTest()
         {   
             // Arrange

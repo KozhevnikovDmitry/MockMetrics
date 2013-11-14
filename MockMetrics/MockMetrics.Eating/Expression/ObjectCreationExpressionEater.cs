@@ -1,6 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.VariableDeclaration;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -24,13 +23,13 @@ namespace MockMetrics.Eating.Expression
                     snapshot.AddTreeNode(kind, arg);
                 }
             }
-
+            
             if (expression.Initializer != null)
             {
-                foreach (var initializerElement in expression.Initializer.InitializerElements)
+                foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
                 {
-                    // TODO : what is initializerElement?
-
+                    var kind = Eater.Eat(snapshot, memberInitializer.Expression);
+                    snapshot.AddTreeNode(kind, memberInitializer);
                 }
             }
 
@@ -71,7 +70,6 @@ namespace MockMetrics.Eating.Expression
 
                 if (classType != null)
                 {
-
                     return classType.Module.Name;
                 }
             }

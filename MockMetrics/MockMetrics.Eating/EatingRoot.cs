@@ -61,7 +61,7 @@ namespace MockMetrics.Eating
             //*IIsExpression
             //*ITypeofExpression
             //*IConditionalTernaryExpression
-            //*IArrayCreationExpression (array of target?)
+            //*IArrayCreationExpression
             //IAnonymousMethodExpression
             //IAnonymousObjectCreationExpression
 

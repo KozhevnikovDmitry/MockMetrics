@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EaterTest.cs" />
+    <Compile Include="Expression\AnonymousObjectCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\ArrayCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\AwaitExpressionEaterTests.cs" />
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
@@ -62,7 +63,7 @@
     <Compile Include="Expression\InvocationExpressionEaterTests.cs" />
     <Compile Include="Expression\IsExpressionEaterTests.cs" />
     <Compile Include="Expression\LiteralExpressionEaterTests.cs" />
-    <Compile Include="Expression\ObjectCreationEaterTests.cs" />
+    <Compile Include="Expression\ObjectCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\ParenthesizedExpressionEaterTests.cs" />
     <Compile Include="Expression\PostfixOperatorExpressionEaterTests.cs" />
     <Compile Include="Expression\PrefixOperatorExpressionEaterTests.cs" />
