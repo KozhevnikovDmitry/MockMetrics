@@ -57,6 +57,7 @@
     <Compile Include="Expression\ArrayCreationExpressionEater.cs" />
     <Compile Include="Expression\AwaitExpressionEater.cs" />
     <Compile Include="Expression\BinaryExpressionEater.cs" />
+    <Compile Include="Expression\DefaultExpressionEater.cs" />
     <Compile Include="Expression\EatExpressionHelper.cs" />
     <Compile Include="Expression\ExpressionKind.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />

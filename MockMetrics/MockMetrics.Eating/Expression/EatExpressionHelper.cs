@@ -10,6 +10,11 @@ namespace MockMetrics.Eating.Expression
             return creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as IClass;
         }
 
+        public virtual IClass GetUserTypeUsageClass(IUserTypeUsage userTypeUsage)
+        {
+            return userTypeUsage.ScalarTypeName.Reference.CurrentResolveResult.DeclaredElement as IClass;
+        }
+
         public virtual string GetCreationTypeName(IObjectCreationExpression creationExpression)
         {
             return creationExpression.Type().ToString();

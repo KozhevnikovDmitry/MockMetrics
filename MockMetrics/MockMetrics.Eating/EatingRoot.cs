@@ -62,7 +62,7 @@ namespace MockMetrics.Eating
             //*ITypeofExpression
             //*IConditionalTernaryExpression
             //*IArrayCreationExpression
-            //IAnonymousMethodExpression
+            //*IAnonymousMethodExpression
             //*IAnonymousObjectCreationExpression
 
             // - simply eat containing expression
@@ -76,7 +76,7 @@ namespace MockMetrics.Eating
             //IAssignmentExpression (case: int i; i = 0;)
 
             // - depends of return type, may be stub, target, mock(after that simple eating)
-            //IDefaultExpression
+            //*IDefaultExpression
             //ILambdaExpression
             //IReferenceExpression
             //IElementAccessExpression
