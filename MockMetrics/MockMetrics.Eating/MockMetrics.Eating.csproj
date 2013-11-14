@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConditionalTernaryExpressionEater.cs" />
     <Compile Include="Eater.cs" />
     <Compile Include="EatingConfig.cs" />
     <Compile Include="EatingRoot.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="Expression\ObjectCreationExpressionEater.cs" />
     <Compile Include="Expression\ReferenceExpressionEater.cs" />
     <Compile Include="Expression\IExpressionEater.cs" />
+    <Compile Include="IsExpressionEater.cs" />
     <Compile Include="Statement\DoStatementEater.cs" />
     <Compile Include="Statement\EmptyStatementEater.cs" />
     <Compile Include="Statement\ForeachStatementEater.cs" />
@@ -86,6 +88,7 @@
     <Compile Include="Statement\YieldStatementEater.cs" />
     <Compile Include="Expression\StubExpressionEater.cs" />
     <Compile Include="Statement\StubStatementEater.cs" />
+    <Compile Include="TypeofExpressionEater.cs" />
     <Compile Include="VariableDeclaration\StubVariableDeclarationEater.cs" />
     <Compile Include="UnitTestEater.cs" />
     <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEater.cs" />

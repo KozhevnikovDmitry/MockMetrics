@@ -56,9 +56,12 @@
   <ItemGroup>
     <Compile Include="EaterTest.cs" />
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
+    <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
     <Compile Include="Expression\InvocationExpressionEaterTests.cs" />
+    <Compile Include="Expression\IsExpressionEaterTests.cs" />
     <Compile Include="Expression\LiteralExpressionEaterTests.cs" />
     <Compile Include="Expression\ObjectCreationEaterTests.cs" />
+    <Compile Include="Expression\TypeofExpressionEaterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Statement\BlockStatementEaterTests.cs" />
     <Compile Include="Statement\DeclarationStatementEaterTests.cs" />

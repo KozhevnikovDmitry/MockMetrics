@@ -1,5 +1,6 @@
 ﻿using System;
 using HaveBox;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
 {
@@ -50,17 +51,15 @@ namespace MockMetrics.Eating
             //*IAdditiveExpression
 
             // - nothing to eat, return none
-            //IThisExpression
-            //IBaseExpression
-            //IPredefinedTypeExpression
-            //IAnonymousFunctionExpression
+            //*IThisExpression
+            //*IBaseExpression
+            //*IPredefinedTypeExpression
+            //*IAnonymousFunctionExpression
 
-            // - simply eat containing expressions and return stub
+            // - simply eat containing expressions and return StubCandidate
             //IIsExpression
-            //IAsExpression
             //ITypeofExpression
             //IConditionalTernaryExpression
-            //ICastExpression
             //IArrayCreationExpression
             //IAnonymousMethodExpression
             //IAnonymousObjectCreationExpression
@@ -80,14 +79,16 @@ namespace MockMetrics.Eating
             //ILambdaExpression
             //IReferenceExpression
             //IElementAccessExpression
+            //IAsExpression
+            //ICastExpression
 
             
             // - commom expression interfaces, never eat
-            //IUnaryExpression
-            //IPrimaryExpression
-            //IOperatorExpression
-            //IPrimaryExpression
-            //ICreationExpression
+            //*IUnaryExpression
+            //*IPrimaryExpression
+            //*IOperatorExpression
+            //*IPrimaryExpression
+            //*ICreationExpression
 
             // - no idea yet
             //IQueryExpression

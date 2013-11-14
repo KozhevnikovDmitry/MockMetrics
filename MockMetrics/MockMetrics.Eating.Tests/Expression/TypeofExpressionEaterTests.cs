@@ -1,27 +1,27 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
-using Moq;
 using NUnit.Framework;
+using Moq;
 
 namespace MockMetrics.Eating.Tests.Expression
 {
     [TestFixture]
-    public class LiteralExpressionEaterTests
+    public class TypeofExpressionEaterTests
     {
         [Test]
-        public void EatStubTest()
+        public void ReturnStubCandidateTest()
         {
             // Arrange
-            var literalExpression = Mock.Of<ICSharpLiteralExpression>();
             var snapshot = Mock.Of<ISnapshot>();
+            var typeofExpression = Mock.Of<ITypeofExpression>();
             var eater = Mock.Of<IEater>();
-            var literalExpressionEater = new LiteralExpressionEater(eater);
+            var typeofExpressionEater = new TypeofExpressionEater(eater);
 
             // Act
-            var kind = literalExpressionEater.Eat(snapshot, literalExpression);
+            var kind = typeofExpressionEater.Eat(snapshot, typeofExpression);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-        }
+        } 
     }
 }
