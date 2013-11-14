@@ -57,22 +57,22 @@ namespace MockMetrics.Eating
             //*IAnonymousFunctionExpression
 
             // - simply eat containing expressions and return StubCandidate
-            //IIsExpression
-            //ITypeofExpression
-            //IConditionalTernaryExpression
+            //*IIsExpression
+            //*ITypeofExpression
+            //*IConditionalTernaryExpression
             //IArrayCreationExpression
             //IAnonymousMethodExpression
             //IAnonymousObjectCreationExpression
 
             // - simply eat containing expression
-            //IPostfixOperatorExpression
-            //IPrefixOperatorExpression
-            //IAwaitExpression
-            //IUnaryOperatorExpression
-            //IParenthesizedExpression
+            //*IPostfixOperatorExpression
+            //*IPrefixOperatorExpression
+            //*IAwaitExpression
+            //*IUnaryOperatorExpression
+            //*IParenthesizedExpression
             
             // - simply eat containing expressions and return none
-            //IAssignmentExpression
+            //IAssignmentExpression (case: int i; i = 0;)
 
             // - depends of return type, may be stub, target, mock(after that simple eating)
             //IDefaultExpression
