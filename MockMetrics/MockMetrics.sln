@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{1A8C
 		run-tests.cmd = run-tests.cmd
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Eating.Test", "MockMetrics.Eating.Test\MockMetrics.Eating.Test.csproj", "{C762A546-B95D-485C-8DEE-BE22B712D02B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MockMetrics.Eating.Tests", "MockMetrics.Eating.Tests\MockMetrics.Eating.Tests.csproj", "{C762A546-B95D-485C-8DEE-BE22B712D02B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "fortests", "fortests", "{658DE70E-38C7-4CF7-8F79-75F2748CBF15}"
 EndProject
