@@ -59,7 +59,7 @@ namespace MockMetrics.Eating
 
             if (eater == null)
             {
-                throw new NotSupportedException();
+                return new StubVariableDeclarationEater();
             }
 
             return eater;
@@ -73,7 +73,7 @@ namespace MockMetrics.Eating
 
             if (eater == null)
             {
-                throw new NotSupportedException();
+                return new StubExpressionEater();
             }
 
             return eater;
@@ -87,7 +87,7 @@ namespace MockMetrics.Eating
 
             if (eater == null)
             {
-                throw new NotSupportedException();
+                return new StubStatementEater();
             }
 
             return eater;

@@ -84,6 +84,9 @@
     <Compile Include="Statement\UncheckedStatementEater.cs" />
     <Compile Include="Statement\WhileStatementEater.cs" />
     <Compile Include="Statement\YieldStatementEater.cs" />
+    <Compile Include="Expression\StubExpressionEater.cs" />
+    <Compile Include="Statement\StubStatementEater.cs" />
+    <Compile Include="VariableDeclaration\StubVariableDeclarationEater.cs" />
     <Compile Include="UnitTestEater.cs" />
     <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\CatchVariableDeclarationEater.cs" />
