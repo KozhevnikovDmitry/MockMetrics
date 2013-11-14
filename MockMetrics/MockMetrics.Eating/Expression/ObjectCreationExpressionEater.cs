@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.VariableDeclaration;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -28,6 +29,7 @@ namespace MockMetrics.Eating.Expression
             {
                 foreach (var initializerElement in expression.Initializer.InitializerElements)
                 {
+                    // TODO : what is initializerElement?
 
                 }
             }

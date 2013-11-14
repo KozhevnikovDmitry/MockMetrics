@@ -26,9 +26,12 @@ namespace MockMetrics.Eating.VariableDeclaration
                 foreach (IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
                 {
                     ExpressionKind kind = Eat(snapshot, variableInitializer);
+
+                    // TODO : what if stubcandidate
                     snapshot.AddTreeNode(kind, variableInitializer);
                 }
 
+                // TODO : array of target?
                 return ExpressionKind.StubCandidate;
             }
 

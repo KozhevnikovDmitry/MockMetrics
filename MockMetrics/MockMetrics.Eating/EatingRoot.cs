@@ -31,10 +31,11 @@ namespace MockMetrics.Eating
             
             // - already implemented
             //*ICSharpLiteralExpression
-            //*IObjectCreationExpression
 
             // - to work with, eat call reference
             //*IInvocationExpression
+            //*IObjectCreationExpression
+            //*IVariableInitializer
 
             //- all binary expressions can be eat the same way- eat operand, return stub
             //*IBinaryExpression
@@ -60,7 +61,7 @@ namespace MockMetrics.Eating
             //*IIsExpression
             //*ITypeofExpression
             //*IConditionalTernaryExpression
-            //IArrayCreationExpression
+            //*IArrayCreationExpression (array of target?)
             //IAnonymousMethodExpression
             //IAnonymousObjectCreationExpression
 
