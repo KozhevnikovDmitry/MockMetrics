@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
 {
@@ -32,7 +28,5 @@ namespace MockMetrics.Eating
 
             return snapshot;
         }
-
-        
     }
 }

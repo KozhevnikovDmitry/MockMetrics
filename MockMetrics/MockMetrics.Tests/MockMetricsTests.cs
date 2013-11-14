@@ -2,7 +2,6 @@
 using System.Linq;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
-using MockMetrics.Eating;
 using MockMetrics.Fake;
 using NUnit.Framework;
 
