@@ -95,6 +95,10 @@ namespace MockMetrics.Eating
                         Asserts.Add(sharpTreeNode);
                         break;
                     }
+                case ExpressionKind.StubCandidate:
+                    {
+                        break;
+                    }
                 case ExpressionKind.None:
                     {
                         break;

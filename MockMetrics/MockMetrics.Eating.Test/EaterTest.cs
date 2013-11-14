@@ -50,5 +50,30 @@ namespace MockMetrics.Eating.Tests
             Assert.DoesNotThrow(() => eater.GetEater(Mock.Of<IObjectCreationExpression>()));
             Assert.DoesNotThrow(() => eater.GetEater(Mock.Of<IReferenceExpression>()));
         }
+
+
+        [Test]
+        public void GetBinaryEatersFromEaterTest()
+        {
+            // Arrange
+            var container = new Container();
+            container.Configure(config => config.MergeConfig(new EatingConfig(typeof(EatingConfig).Assembly, container)));
+
+            // Act 
+            var eater = container.GetInstance<IEater>() as Eater;
+
+            // Assert 
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IConditionalAndExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IConditionalOrExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IBitwiseAndExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IBitwiseExclusiveOrExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IBitwiseInclusiveOrExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IEqualityExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IMultiplicativeExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<INullCoalescingExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IRelationalExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IShiftExpression>()));
+            Assert.IsInstanceOf<BinaryExpressionEater>(eater.GetEater(Mock.Of<IAdditiveExpression>()));
+        }
     }
 }

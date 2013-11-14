@@ -37,18 +37,18 @@ namespace MockMetrics.Eating
             //*IInvocationExpression
 
             //- all binary expressions can be eat the same way- eat operand, return stub
-            // IBinaryExpression
-            //IConditionalAndExpression
-            //IConditionalOrExpression
-            //IBitwiseAndExpression
-            //IBitwiseExclusiveOrExpression
-            //IBitwiseInclusiveOrExpression
-            //IEqualityExpression
-            //IMultiplicativeExpression
-            //INullCoalescingExpression
-            //IRelationalExpression
-            //IShiftExpression
-            //IAdditiveExpression
+            //*IBinaryExpression
+            //*IConditionalAndExpression
+            //*IConditionalOrExpression
+            //*IBitwiseAndExpression
+            //*IBitwiseExclusiveOrExpression
+            //*IBitwiseInclusiveOrExpression
+            //*IEqualityExpression
+            //*IMultiplicativeExpression
+            //*INullCoalescingExpression
+            //*IRelationalExpression
+            //*IShiftExpression
+            //*IAdditiveExpression
 
             // - nothing to eat, return none
             //IThisExpression
