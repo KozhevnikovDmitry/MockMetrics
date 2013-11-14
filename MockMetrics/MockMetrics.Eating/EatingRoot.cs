@@ -79,9 +79,9 @@ namespace MockMetrics.Eating
             //*IDefaultExpression
             //ILambdaExpression
             //IReferenceExpression
-            //IElementAccessExpression
-            //IAsExpression
-            //ICastExpression
+            //*IElementAccessExpression
+            //*IAsExpression
+            //*ICastExpression
 
             
             // - commom expression interfaces, never eat

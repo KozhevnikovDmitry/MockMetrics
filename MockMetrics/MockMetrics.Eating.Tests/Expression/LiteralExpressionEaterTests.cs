@@ -9,7 +9,7 @@ namespace MockMetrics.Eating.Tests.Expression
     public class LiteralExpressionEaterTests
     {
         [Test]
-        public void EatStubTest()
+        public void ReturnStubCandidateTest()
         {
             // Arrange
             var literalExpression = Mock.Of<ICSharpLiteralExpression>();
