@@ -2,9 +2,9 @@
 
 namespace MockMetrics.Eating.Expression
 {
-    public class ReferenceEater : ExpressionEater<IReferenceExpression>
+    public class ReferenceExpressionEater : ExpressionEater<IReferenceExpression>
     {
-        public ReferenceEater(IEater eater)
+        public ReferenceExpressionEater(IEater eater)
             : base(eater)
         {
         }

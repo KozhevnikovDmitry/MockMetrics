@@ -3,11 +3,11 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Expression
 {
-    public class ObjectCreationEater : ExpressionEater<IObjectCreationExpression>
+    public class ObjectCreationExpressionEater : ExpressionEater<IObjectCreationExpression>
     {
         private readonly EatExpressionHelper _expressionHelper;
 
-        public ObjectCreationEater(IEater eater, EatExpressionHelper expressionHelper)
+        public ObjectCreationExpressionEater(IEater eater, EatExpressionHelper expressionHelper)
             : base(eater)
         {
             _expressionHelper = expressionHelper;

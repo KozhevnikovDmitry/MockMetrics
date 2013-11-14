@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace MockMetrics.Eating.Test.Expression
 {
     [TestFixture]
-    public class InvocationEaterTests
+    public class InvocationExpressionEaterTests
     {
         [Test]
         public void EatArgumentsTest()
@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Test.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var eater = new Mock<IEater>();
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Of()");
-            var invocationEater = new InvocationEater(eater.Object, helper);
+            var invocationEater = new InvocationExpressionEater(eater.Object, helper);
 
             // Act
             invocationEater.Eat(snapshot, invocationExpression);
@@ -43,7 +43,7 @@ namespace MockMetrics.Eating.Test.Expression
             var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Of()");
-            var invocationEater = new InvocationEater(eater, helper);
+            var invocationEater = new InvocationExpressionEater(eater, helper);
 
             // Act
             invocationEater.Eat(snapshot.Object, invocationExpression);
@@ -64,7 +64,7 @@ namespace MockMetrics.Eating.Test.Expression
             var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.StubCandidate);
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Of()");
-            var invocationEater = new InvocationEater(eater, helper);
+            var invocationEater = new InvocationExpressionEater(eater, helper);
 
             // Act
             invocationEater.Eat(snapshot.Object, invocationExpression);
@@ -85,7 +85,7 @@ namespace MockMetrics.Eating.Test.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>();
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == invokedElementName);
-            var invocationEater = new InvocationEater(eater, helper);
+            var invocationEater = new InvocationExpressionEater(eater, helper);
 
             // Assert
             return invocationEater.Eat(snapshot, invocationExpression);
@@ -104,7 +104,7 @@ namespace MockMetrics.Eating.Test.Expression
             var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
                                                         && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationEater(eater, helper);
+            var invocationEater = new InvocationExpressionEater(eater, helper);
 
             // Act
             var kind = invocationEater.Eat(snapshot, invocationExpression);
@@ -126,7 +126,7 @@ namespace MockMetrics.Eating.Test.Expression
             var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
                                                         && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationEater(eater, helper);
+            var invocationEater = new InvocationExpressionEater(eater, helper);
 
             // Act
             invocationEater.Eat(snapshot.Object, invocationExpression);
@@ -147,7 +147,7 @@ namespace MockMetrics.Eating.Test.Expression
             var invoked = Mock.Of<IDeclaredElement>();
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invoked
                                                         && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationEater(eater, helper);
+            var invocationEater = new InvocationExpressionEater(eater, helper);
 
             // Act
             var kind = invocationEater.Eat(snapshot, invocationExpression);
@@ -168,7 +168,7 @@ namespace MockMetrics.Eating.Test.Expression
             var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
                                                         && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationEater(eater, helper);
+            var invocationEater = new InvocationExpressionEater(eater, helper);
 
             // Act
             var kind = invocationEater.Eat(snapshot, invocationExpression);

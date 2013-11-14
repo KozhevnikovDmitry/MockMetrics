@@ -55,10 +55,10 @@
     <Compile Include="Expression\EatExpressionHelper.cs" />
     <Compile Include="Expression\ExpressionKind.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />
-    <Compile Include="Expression\InvocationEater.cs" />
+    <Compile Include="Expression\InvocationExpressionEater.cs" />
     <Compile Include="Expression\LiteralExpressionEater.cs" />
-    <Compile Include="Expression\ObjectCreationEater.cs" />
-    <Compile Include="Expression\ReferenceEater.cs" />
+    <Compile Include="Expression\ObjectCreationExpressionEater.cs" />
+    <Compile Include="Expression\ReferenceExpressionEater.cs" />
     <Compile Include="Expression\IExpressionEater.cs" />
     <Compile Include="Statement\DoStatementEater.cs" />
     <Compile Include="Statement\EmptyStatementEater.cs" />

@@ -56,7 +56,7 @@
   <ItemGroup>
     <Compile Include="EaterTest.cs" />
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
-    <Compile Include="Expression\InvocationEaterTests.cs" />
+    <Compile Include="Expression\InvocationExpressionEaterTests.cs" />
     <Compile Include="Expression\LiteralExpressionEaterTests.cs" />
     <Compile Include="Expression\ObjectCreationEaterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
