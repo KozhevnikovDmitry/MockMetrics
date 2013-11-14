@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EaterTest.cs" />
+    <Compile Include="Expression\AnonymousMethodExpressionEaterTests.cs" />
     <Compile Include="Expression\AnonymousObjectCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\ArrayCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\AwaitExpressionEaterTests.cs" />
