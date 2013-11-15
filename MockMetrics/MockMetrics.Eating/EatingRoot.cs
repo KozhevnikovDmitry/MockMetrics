@@ -1,6 +1,5 @@
 ﻿using System;
 using HaveBox;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating
 {
@@ -78,7 +77,7 @@ namespace MockMetrics.Eating
             // - depends of return type, may be stub, target, mock(after that simple eating)
             //*IDefaultExpression
             //*ILambdaExpression
-            //IReferenceExpression
+            //*IReferenceExpression
             //*IElementAccessExpression
             //*IAsExpression
             //*ICastExpression
@@ -107,7 +106,7 @@ namespace MockMetrics.Eating
 
             #region Statements to eat
 
-            //IDeclarationStatement
+            //*IDeclarationStatement
             //*IExpressionStatement
             //*IBlock
             //*IIfStatement

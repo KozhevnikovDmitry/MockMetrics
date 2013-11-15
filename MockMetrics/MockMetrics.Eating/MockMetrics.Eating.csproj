@@ -68,6 +68,7 @@
     <Compile Include="Expression\ExpressionKindHelper.cs" />
     <Compile Include="Expression\InvocationExpressionEater.cs" />
     <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
+    <Compile Include="Expression\ParentReferenceEater.cs" />
     <Compile Include="Expression\TypeUsageEater.cs" />
     <Compile Include="Expression\UnaryOperatorExpressionEater.cs" />
     <Compile Include="Expression\LiteralExpressionEater.cs" />

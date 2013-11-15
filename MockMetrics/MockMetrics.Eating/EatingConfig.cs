@@ -19,6 +19,7 @@ namespace MockMetrics.Eating
             For<EatExpressionHelper>().Use<EatExpressionHelper>().AsSingleton();
             For<ExpressionKindHelper>().Use<ExpressionKindHelper>().AsSingleton();
             For<ITypeUsageEater>().Use<TypeUsageEater>().AsSingleton();
+            For<IParentReferenceEater>().Use<ParentReferenceEater>().AsSingleton();
             For<IVariableInitializerEater>().Use<VariableInitializerEater>().AsSingleton();
             For<UnitTestEater>().Use<UnitTestEater>().AsSingleton();
             assembly.GetTypes()

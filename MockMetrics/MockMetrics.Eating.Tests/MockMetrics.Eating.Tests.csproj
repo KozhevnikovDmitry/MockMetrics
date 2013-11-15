@@ -65,6 +65,8 @@
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
     <Compile Include="Expression\LambdaExpressionEaterTests.cs" />
     <Compile Include="Expression\ElementAccessExpressionEaterTests.cs" />
+    <Compile Include="Expression\ParentReferenceEaterTests.cs" />
+    <Compile Include="Expression\ReferenceExpressionEaterTests.cs" />
     <Compile Include="Expression\TypeUsageEaterTests.cs" />
     <Compile Include="Expression\DefaultExpressionEaterTests.cs" />
     <Compile Include="Expression\ExpressionKindHelperTests.cs" />

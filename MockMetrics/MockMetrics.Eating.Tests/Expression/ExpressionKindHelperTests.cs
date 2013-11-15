@@ -1,7 +1,5 @@
-﻿using JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2;
-using MockMetrics.Eating.Expression;
+﻿using MockMetrics.Eating.Expression;
 using NUnit.Framework;
-using Moq;
 using Enum = System.Enum;
 
 namespace MockMetrics.Eating.Tests.Expression
@@ -10,7 +8,7 @@ namespace MockMetrics.Eating.Tests.Expression
     public class ExpressionKindHelperTests
     {
         [Test]
-        public void EatTargetCallTest()
+        public void ValueOfKindAsTypeOfKind_EatTargetCallTest()
         {
             // Arrange
             var helper = new ExpressionKindHelper();
@@ -23,7 +21,7 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void EatResultTest()
+        public void ValueOfKindAsTypeOfKind_EatResultTest()
         {
             // Arrange
             var helper = new ExpressionKindHelper();
@@ -37,7 +35,7 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void EatMockTest()
+        public void ValueOfKindAsTypeOfKind_EatMockTest()
         {
             // Arrange
             var helper = new ExpressionKindHelper();
@@ -51,7 +49,7 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void EatTargetTest()
+        public void ValueOfKindAsTypeOfKind_EatTargetTest()
         {
             // Arrange
             var helper = new ExpressionKindHelper();
@@ -74,7 +72,7 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void EatAnyValueKindTest()
+        public void ValueOfKindAsTypeOfKind_EatAnyValueKindTest()
         {
             // Arrange
             var helper = new ExpressionKindHelper();
@@ -91,6 +89,47 @@ namespace MockMetrics.Eating.Tests.Expression
                     if (typeKind != ExpressionKind.Target)
                         Assert.AreEqual(helper.ValueOfKindAsTypeOfKind(valueKind, typeKind), valueKind);
                 }
+            }
+        }
+
+        [Test]
+        public void InvocationKindByParentReferenceKind_EatTargetCallTest()
+        {
+            // Arrange
+            var helper = new ExpressionKindHelper();
+
+            // Act
+            var kind = helper.InvocationKindByParentReferenceKind(ExpressionKind.TargetCall);
+
+            // Assert
+            Assert.AreEqual(kind, ExpressionKind.Result);
+
+        }
+
+        [Test]
+        public void InvocationKindByParentReferenceKind_EatTargetTest()
+        {
+            // Arrange
+            var helper = new ExpressionKindHelper();
+
+            // Act
+            var kind = helper.InvocationKindByParentReferenceKind(ExpressionKind.Target);
+
+            // Assert
+            Assert.AreEqual(kind, ExpressionKind.TargetCall);
+        }
+
+        [Test]
+        public void InvocationKindByParentReferenceKindTest()
+        {
+            // Arrange
+            var helper = new ExpressionKindHelper();
+
+            // Assert
+            foreach (ExpressionKind kind in Enum.GetValues(typeof(ExpressionKind)))
+            {
+                if (kind != ExpressionKind.TargetCall && kind != ExpressionKind.Target)
+                    Assert.AreEqual(helper.InvocationKindByParentReferenceKind(kind), kind);
             }
         }
     }

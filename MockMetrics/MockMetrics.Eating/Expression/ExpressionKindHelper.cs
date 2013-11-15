@@ -26,5 +26,24 @@
 
             return valueKind;
         }
+
+        public virtual ExpressionKind InvocationKindByParentReferenceKind(ExpressionKind parentKind)
+        {
+            switch (parentKind)
+            {
+                case ExpressionKind.TargetCall:
+                    {
+                        return ExpressionKind.Result;
+                        break;
+                    }
+                case ExpressionKind.Target:
+                    {
+                        return ExpressionKind.TargetCall;
+                        break;
+                    }
+            }
+
+            return parentKind;
+        }
     }
 }

@@ -5,6 +5,8 @@ namespace Tested.Tests
     [TestFixture]
     public class SimpleVariablesTests
     {
+        public Foo foo1 { get; set; }
+
         [Test]
         public void SimpleVariablesTest()
         {

@@ -17,6 +17,8 @@ namespace MockMetrics.Eating.VariableDeclaration
         {
             ExpressionKind kind = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
 
+            // TODO : cover by unit test
+            // TODO : what it stub candidate
             if (kind == ExpressionKind.TargetCall)
             {
                 snapshot.AddTreeNode(kind, variableDeclaration);
