@@ -57,7 +57,6 @@
     </Compile>
     <Compile Include="MockMetricsSettings.cs" />
     <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="UnitTestProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MM alg.txt" />

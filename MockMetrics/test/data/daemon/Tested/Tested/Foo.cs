@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Linq;
 
 namespace Tested
 {
     public class Foo
     {
-        public Foo()
-        {
-           
-        }
-
         public bool GetBool(bool item)
         {
-            var t = new Foo() {StringProperty = "sdf"};
-
             return !item;
         }
 
