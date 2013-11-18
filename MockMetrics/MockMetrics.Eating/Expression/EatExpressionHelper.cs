@@ -25,6 +25,10 @@ namespace MockMetrics.Eating.Expression
             return expression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
         }
 
+        public virtual IDeclaredElement GetReferenceElement(IReferenceExpression expression)
+        {
+            return expression.Reference.CurrentResolveResult.DeclaredElement;
+        }
 
         public virtual string GetInvokedElementName(IInvocationExpression expression)
         {

@@ -132,5 +132,22 @@ namespace MockMetrics.Eating.Tests.Expression
                     Assert.AreEqual(helper.InvocationKindByParentReferenceKind(kind), kind);
             }
         }
+
+        [TestCase(ExpressionKind.Target, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.TargetCall, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.Mock, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.Result, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.Stub, Result = ExpressionKind.Stub)]
+        [TestCase(ExpressionKind.StubCandidate, Result = ExpressionKind.StubCandidate)]
+        [TestCase(ExpressionKind.Assert, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.None, Result = ExpressionKind.None)]
+        public ExpressionKind ReferenceKindByParentReferenceKindTest(ExpressionKind kind)
+        {
+            // Arrange
+            var helper = new ExpressionKindHelper();
+            
+            // Assert
+            return helper.ReferenceKindByParentReferenceKind(kind);
+        }
     }
 }

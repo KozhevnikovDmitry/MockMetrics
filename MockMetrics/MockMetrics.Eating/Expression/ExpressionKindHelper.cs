@@ -1,4 +1,6 @@
-﻿namespace MockMetrics.Eating.Expression
+﻿using System;
+
+namespace MockMetrics.Eating.Expression
 {
     public class ExpressionKindHelper
     {
@@ -44,6 +46,55 @@
             }
 
             return parentKind;
+        }
+
+        public virtual ExpressionKind ReferenceKindByParentReferenceKind(ExpressionKind parentKind)
+        {
+            switch (parentKind)
+            {
+                case ExpressionKind.TargetCall:
+                    {
+                        return ExpressionKind.Result;
+                        break;
+                    }
+                case ExpressionKind.Target:
+                    {
+                        return ExpressionKind.Result;
+                        break;
+                    }
+                case ExpressionKind.Stub:
+                    {
+                        return ExpressionKind.Stub;
+                        break;
+                    }
+                case ExpressionKind.Mock:
+                    {
+                        return ExpressionKind.Result;
+                        break;
+                    }
+                case ExpressionKind.StubCandidate:
+                    {
+                        return ExpressionKind.StubCandidate;
+                        break;
+                    }
+                case ExpressionKind.Assert:
+                    {
+                        return ExpressionKind.Result;
+                        break;
+                    }
+                case ExpressionKind.None:
+                    {
+                        return ExpressionKind.None;
+                        break;
+                    }
+                case ExpressionKind.Result:
+                    {
+                        return ExpressionKind.Result;
+                        break;
+                    }
+            }
+
+            throw new NotSupportedException();
         }
     }
 }

@@ -8,28 +8,24 @@ namespace MockMetrics.Eating.Expression
         private readonly EatExpressionHelper _expressionHelper;
         private readonly ExpressionKindHelper _expressionKindHelper;
         private readonly IParentReferenceEater _parentReferenceEater;
+        private readonly IArgumentsEater _argumentsEater;
 
         public InvocationExpressionEater(IEater eater, 
                                          EatExpressionHelper expressionHelper, 
                                          ExpressionKindHelper expressionKindHelper,
-                                         IParentReferenceEater parentReferenceEater)
+                                         IParentReferenceEater parentReferenceEater,
+                                         IArgumentsEater argumentsEater)
             : base(eater)
         {
             _expressionHelper = expressionHelper;
             _expressionKindHelper = expressionKindHelper;
             _parentReferenceEater = parentReferenceEater;
+            _argumentsEater = argumentsEater;
         }
 
         public override ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
-            foreach (ICSharpArgument arg in expression.Arguments)
-            {
-                ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
-                if (kind != ExpressionKind.StubCandidate)
-                {
-                    snapshot.AddTreeNode(kind, arg);
-                }
-            }
+            _argumentsEater.Eat(snapshot, expression.Arguments);
 
             var parentKind = _parentReferenceEater.Eat(snapshot, expression);
 

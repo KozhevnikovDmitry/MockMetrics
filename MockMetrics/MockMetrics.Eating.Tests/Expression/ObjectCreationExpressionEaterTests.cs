@@ -14,60 +14,20 @@ namespace MockMetrics.Eating.Tests.Expression
         public void EatArgumentsTest()
         {
             // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var cSharpArgument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
+            var args = new TreeNodeCollection<ICSharpArgument>();
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
             Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new[] { cSharpArgument }));
+                .Returns(args); 
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = new Mock<IEater>();
-            var objectCreationEater = new ObjectCreationExpressionEater(eater.Object, Mock.Of<EatExpressionHelper>());
+            var eater = Mock.Of<IEater>();
+            var argsEater = new Mock<IArgumentsEater>();
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>(), argsEater.Object);
 
             // Act
-            objectCreationEater.Eat(snapshot, objectCreationExpression);
+            objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression));
-        }
-
-        [Test]
-        public void AddArgumentToSnapshotTest()
-        {
-            // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var cSharpArgument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
-            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new[] { cSharpArgument }));
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
-            var objectCreationEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>());
-
-            // Act
-            objectCreationEater.Eat(snapshot.Object, objectCreationExpression);
-
-            // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, cSharpArgument));
-        }
-
-        [Test]
-        public void AddStubCandidateArgumentToSnapshotTest()
-        {
-            // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var cSharpArgument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
-            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new[] { cSharpArgument }));
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.StubCandidate);
-            var objectCreationEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>());
-
-            // Act
-            objectCreationEater.Eat(snapshot.Object, objectCreationExpression);
-
-            // Assert
-            snapshot.Verify(t => t.AddTreeNode(It.IsAny<ExpressionKind>(), It.IsAny<ICSharpArgument>()), Times.Never);
+            argsEater.Verify(t => t.Eat(snapshot, args), Times.Once);
         }
 
         [Test]
@@ -79,11 +39,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
             Mock.Get(objectCreationExpression).Setup(t => t.Initializer.InitializerElements)
                 .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
+            var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = Mock.Of<ISnapshot>();
             var eater = new Mock<IEater>();
-            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater.Object, Mock.Of<EatExpressionHelper>());
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater.Object, Mock.Of<EatExpressionHelper>(), argsEater);
 
             // Act
             objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
@@ -101,11 +60,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
             Mock.Get(objectCreationExpression).Setup(t => t.Initializer.InitializerElements)
                 .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
+            var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
-            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>());
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>(), argsEater);
 
             // Act
             objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
@@ -119,11 +77,10 @@ namespace MockMetrics.Eating.Tests.Expression
         {   
             // Arrange
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.VALUE_TYPE);
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
+            var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>();
-            var objectCreationEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>());
+            var objectCreationEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>(), argsEater);
 
             // Act
             var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
@@ -138,12 +95,11 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var classType = Mock.Of<IClass>(t => t.Module.Name == "Project");
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.REFERENCE_TYPE);
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetCreationClass(objectCreationExpression) == classType);
+            var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("Project") == true);
             var eater = Mock.Of<IEater>();
-            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper);
+            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
             var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
@@ -158,12 +114,11 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var classType = Mock.Of<IClass>(t => t.Module.Name == "ProjectTest");
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.REFERENCE_TYPE);
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetCreationClass(objectCreationExpression) == classType);
+            var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestProject("ProjectTest") == true);
             var eater = Mock.Of<IEater>();
-            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper);
+            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
             var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
@@ -178,13 +133,12 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var classType = Mock.Of<IClass>(t => t.Module.Name == "ProjectTest");
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.REFERENCE_TYPE);
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetCreationClass(objectCreationExpression) == classType
                                                         && t.GetCreationTypeName(objectCreationExpression) == "Moq.Mock OLOLO");
+            var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>();
-            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper);
+            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
             var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
@@ -199,13 +153,12 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var classType = Mock.Of<IClass>(t => t.Module.Name == "ProjectTest");
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type().Classify == TypeClassification.REFERENCE_TYPE);
-            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
-                .Returns(new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]));
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetCreationClass(objectCreationExpression) == classType
                                                         && t.GetCreationTypeName(objectCreationExpression) == "OLOLO");
+            var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>();
-            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper);
+            var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
             var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);

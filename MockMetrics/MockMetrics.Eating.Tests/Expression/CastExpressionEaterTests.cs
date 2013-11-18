@@ -19,22 +19,22 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = new Mock<IEater>();
             eater.Setup(t => t.Eat(snapshot, castExpression.Op)).Returns(ExpressionKind.None).Verifiable();
 
-            var typeUsageEater = new Mock<ITypeUsageEater>();
-            typeUsageEater.Setup(t => t.Eat(snapshot, targetType)).Returns(ExpressionKind.Mock).Verifiable();
+            var typeEater = new Mock<ITypeEater>();
+            typeEater.Setup(t => t.EatCastType(snapshot, targetType)).Returns(ExpressionKind.Mock).Verifiable();
 
             var kindHelper = new Mock<ExpressionKindHelper>();
             kindHelper.Setup(t => t.ValueOfKindAsTypeOfKind(ExpressionKind.None, ExpressionKind.Mock))
                 .Returns(ExpressionKind.Result)
                 .Verifiable();
 
-            var castExpressionEater = new CastExpressionEater(eater.Object, typeUsageEater.Object, kindHelper.Object);
+            var castExpressionEater = new CastExpressionEater(eater.Object, typeEater.Object, kindHelper.Object);
 
             // Act
             var kind = castExpressionEater.Eat(snapshot, castExpression);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Result);
-            typeUsageEater.VerifyAll();
+            typeEater.VerifyAll();
             kindHelper.VerifyAll();
             eater.VerifyAll();
         }  

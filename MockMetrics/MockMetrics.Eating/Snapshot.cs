@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.ProjectModel;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
 
@@ -22,6 +24,7 @@ namespace MockMetrics.Eating
         void AddLabel(ILabelStatement label);
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
+        ExpressionKind GetVariableKind(ILocalVariable localVariable, ITypeEater typeEater);
     }
 
     public class Snapshot : ISnapshot
@@ -124,6 +127,36 @@ namespace MockMetrics.Eating
         public bool IsInTestProject(string projectName)
         {
             return TestProjectName.Contains(projectName);
+        }
+
+        public ExpressionKind GetVariableKind(ILocalVariable localVariable, ITypeEater typeEater)
+        {
+            if (Targets.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            {
+                return ExpressionKind.Target;
+            }
+
+            if (Stubs.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            {
+                return ExpressionKind.Stub;
+            }
+
+            if (Mocks.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            {
+                return ExpressionKind.Mock;
+            }
+
+            if (Results.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            {
+                return ExpressionKind.Result;
+            }
+
+            if (Variables.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            {
+                return typeEater.EatVariableType(this, localVariable.Type);
+            }
+
+            throw new NotSupportedException();
         }
 
         private void GetTestScope(IMethodDeclaration unitTest)

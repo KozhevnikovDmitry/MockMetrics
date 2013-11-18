@@ -4,20 +4,18 @@ namespace MockMetrics.Eating.Expression
 {
     public class ElementAccessExpressionEater : ExpressionEater<IElementAccessExpression>
     {
-        public ElementAccessExpressionEater(IEater eater) : base(eater)
+        private readonly IArgumentsEater _argumentsEater;
+
+        public ElementAccessExpressionEater(IEater eater,
+                                            IArgumentsEater argumentsEater)
+            : base(eater)
         {
+            _argumentsEater = argumentsEater;
         }
 
         public override ExpressionKind Eat(ISnapshot snapshot, IElementAccessExpression expression)
         {
-            foreach (ICSharpArgument arg in expression.Arguments)
-            {
-                ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
-                if (kind != ExpressionKind.StubCandidate)
-                {
-                    snapshot.AddTreeNode(kind, arg);
-                }
-            }
+            _argumentsEater.Eat(snapshot, expression.Arguments);
 
             // TODO : cover by functional tests
             // TODO : what if array of results or targets

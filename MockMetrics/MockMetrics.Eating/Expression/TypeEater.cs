@@ -1,22 +1,25 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Expression
 {
-    public interface ITypeUsageEater
+    public interface ITypeEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, ITypeUsage typeUsage);
+        ExpressionKind EatCastType(ISnapshot snapshot, ITypeUsage typeUsage);
+
+        ExpressionKind EatVariableType(ISnapshot snapshot, IType type);
     }
 
-    public class TypeUsageEater : ITypeUsageEater
+    public class TypeEater : ITypeEater
     {
         private readonly EatExpressionHelper _eatExpressionHelper;
 
-        public TypeUsageEater(EatExpressionHelper eatExpressionHelper)
+        public TypeEater(EatExpressionHelper eatExpressionHelper)
         {
             _eatExpressionHelper = eatExpressionHelper;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, ITypeUsage typeUsage)
+        public ExpressionKind EatCastType(ISnapshot snapshot, ITypeUsage typeUsage)
         {
             if (typeUsage is IDynamicTypeUsage)
             {
@@ -42,6 +45,21 @@ namespace MockMetrics.Eating.Expression
                 {
                     return ExpressionKind.Mock;
                 }
+            }
+
+            return ExpressionKind.StubCandidate;
+        }
+
+        public ExpressionKind EatVariableType(ISnapshot snapshot, IType type)
+        {
+            if (snapshot.IsInTestScope(type.Module.Name))
+            {
+                return ExpressionKind.Target;
+            }
+
+            if (snapshot.IsInTestProject(type.Module.Name))
+            {
+                return ExpressionKind.Mock;
             }
 
             return ExpressionKind.StubCandidate;

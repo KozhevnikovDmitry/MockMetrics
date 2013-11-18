@@ -6,23 +6,18 @@ namespace MockMetrics.Eating.Expression
     public class ObjectCreationExpressionEater : ExpressionEater<IObjectCreationExpression>
     {
         private readonly EatExpressionHelper _expressionHelper;
+        private readonly IArgumentsEater _argumentsEater;
 
-        public ObjectCreationExpressionEater(IEater eater, EatExpressionHelper expressionHelper)
+        public ObjectCreationExpressionEater(IEater eater, EatExpressionHelper expressionHelper, IArgumentsEater argumentsEater)
             : base(eater)
         {
             _expressionHelper = expressionHelper;
+            _argumentsEater = argumentsEater;
         }
 
         public override ExpressionKind Eat(ISnapshot snapshot, IObjectCreationExpression expression)
         {
-            foreach (ICSharpArgument arg in expression.Arguments)
-            {
-                ExpressionKind kind = Eater.Eat(snapshot, arg.Value);
-                if (kind != ExpressionKind.StubCandidate)
-                {
-                    snapshot.AddTreeNode(kind, arg);
-                }
-            }
+            _argumentsEater.Eat(snapshot, expression.Arguments);
             
             if (expression.Initializer != null)
             {

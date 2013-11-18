@@ -16,17 +16,17 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var typeUsage = Mock.Of<IDynamicTypeUsage>();
             var defaultExpression = Mock.Of<IDefaultExpression>(t => t.TypeName == typeUsage);
-            var typeUsageEater = new Mock<ITypeUsageEater>();
-            typeUsageEater.Setup(t => t.Eat(snapshot, typeUsage)).Returns(ExpressionKind.Stub).Verifiable();
+            var typeEater = new Mock<ITypeEater>();
+            typeEater.Setup(t => t.EatCastType(snapshot, typeUsage)).Returns(ExpressionKind.Stub).Verifiable();
             var eater = Mock.Of<IEater>();
-            var defaultExpressionEater = new DefaultExpressionEater(eater, typeUsageEater.Object);
+            var defaultExpressionEater = new DefaultExpressionEater(eater, typeEater.Object);
 
             // Act
             var kind = defaultExpressionEater.Eat(snapshot, defaultExpression);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Stub);
-            typeUsageEater.VerifyAll();
+            typeEater.VerifyAll();
         }
     }
 }

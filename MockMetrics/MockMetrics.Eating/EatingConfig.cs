@@ -18,7 +18,8 @@ namespace MockMetrics.Eating
             For<IEater>().Use<Eater>().AsSingleton();
             For<EatExpressionHelper>().Use<EatExpressionHelper>().AsSingleton();
             For<ExpressionKindHelper>().Use<ExpressionKindHelper>().AsSingleton();
-            For<ITypeUsageEater>().Use<TypeUsageEater>().AsSingleton();
+            For<ITypeEater>().Use<TypeEater>().AsSingleton();
+            For<IArgumentsEater>().Use<ArgumentsEater>().AsSingleton();
             For<IParentReferenceEater>().Use<ParentReferenceEater>().AsSingleton();
             For<IVariableInitializerEater>().Use<VariableInitializerEater>().AsSingleton();
             For<UnitTestEater>().Use<UnitTestEater>().AsSingleton();
