@@ -38,8 +38,7 @@ namespace MockMetrics.Tests
             get { return @"Tested.sln"; }
         }
 
-        [Test]
-        [TestCase(@"<Tested.Tests>\SimpleVariablesTests.cs")]
+        [TestCase(@"<Tested.Tests>\Foo\SimpleVariablesTests.cs")]
         public void SimpleVariablesTests(string testName)
         {
             DoTestFiles(testName);
@@ -53,8 +52,7 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
         }
 
-        [Test]
-        [TestCase(@"<Tested.Tests>\ExpressionVariableTests.cs")]
+        [TestCase(@"<Tested.Tests>\Foo\ExpressionVariableTests.cs")]
         public void ExpressionVariableTests(string testName)
         {
             DoTestFiles(testName);
@@ -68,8 +66,7 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
         }
 
-        [Test]
-        [TestCase(@"<Tested.Tests>\StubTests.cs")]
+        [TestCase(@"<Tested.Tests>\Foo\StubTests.cs")]
         public void StubTests(string testName)
         {
             DoTestFiles(testName);
@@ -81,6 +78,20 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Targets.Count, 1, "Assert targets");
             Assert.AreEqual(snapshot.TargetCalls.Count, 1, "Assert targetCalls");
             Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
+        }
+
+        [TestCase(@"<Tested.Tests>\AggregatorTests\MoqStubTests.cs")]
+        public void MoqStubTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+
+            Assert.AreEqual(snapshot.Stubs.Count, 2, "Assert stubs");
+            Assert.AreEqual(snapshot.Results.Count, 2, "Assert results");
+            Assert.AreEqual(snapshot.Targets.Count, 1, "Assert targets");
+            Assert.AreEqual(snapshot.TargetCalls.Count, 2, "Assert targetCalls");
+            Assert.AreEqual(snapshot.Asserts.Count, 2, "Assert asserts");
         }
     }
 }

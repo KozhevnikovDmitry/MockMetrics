@@ -23,9 +23,10 @@ namespace Tested
             return service.Details;
         }
 
-        public void Aggregate()
+        public int Aggregate(string intoCalabanga)
         {
             _depend.Caramba(_another);
+            return _another.Calabanga(intoCalabanga);
         }
 
         public Master GetMaster(Detail detail)
