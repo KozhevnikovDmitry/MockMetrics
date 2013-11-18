@@ -4,6 +4,7 @@ using System.Linq;
 using HaveBox;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.QueryClause;
 using MockMetrics.Eating.Statement;
 using MockMetrics.Eating.VariableDeclaration;
 
@@ -16,6 +17,8 @@ namespace MockMetrics.Eating
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
 
         void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
+
+        ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause);
     }
 
     public class Eater : IEater
@@ -41,6 +44,14 @@ namespace MockMetrics.Eating
                 throw new ArgumentNullException("statement");
 
             GetEater(statement).Eat(snapshot, statement);
+        }
+
+        public ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause)
+        {
+            if (queryClause == null)
+                throw new ArgumentNullException("queryClause");
+
+            return GetEater(queryClause).Eat(snapshot, queryClause);
         }
 
         public void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
@@ -88,6 +99,20 @@ namespace MockMetrics.Eating
             if (eater == null)
             {
                 return new StubStatementEater();
+            }
+
+            return eater;
+        }
+
+        public IQueryClauseEater GetEater(IQueryClause queryClause)
+        {
+            var eater =
+                _container.GetInstance<IEnumerable<IQueryClauseEater>>()
+                    .SingleOrDefault(t => t.QueryClauseType.IsInstanceOfType(queryClause));
+
+            if (eater == null)
+            {
+                return new StubClauseEater();
             }
 
             return eater;

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 
 namespace Tested.Tests
@@ -23,6 +24,13 @@ namespace Tested.Tests
         [Test]
         public void SimpleVariablesTest()
         {
+            var d = from t1 in "sdfsdf"
+                    from t3 in "sdfsdf"
+                    where t1 != 'c'
+                    orderby t1
+                    join t2 in "sdfsdf" on t1 equals t2
+                    select t1;
+
             // Arrange
             var item = true;
             var foo = new Foo();

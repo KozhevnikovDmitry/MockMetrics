@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Tested
 {
@@ -6,7 +7,7 @@ namespace Tested
     {
         public Foo()
         {
-            Act += () => { };
+           
         }
 
         public bool GetBool(bool item)

@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 
 namespace Tested.Tests
@@ -23,6 +24,15 @@ namespace Tested.Tests
         [Test]
         public void SimpleVariablesTest()
         {
+            var d = from t1 in new String[10]
+                    let l = t1.Length
+                    group t1 by l
+                    into len
+                    group len by len.ToString().First()
+                    into f
+                    let ff = f.Key
+                    select new { f, ff };
+
             // Arrange
             var item = true;
             var foo = new Foo();

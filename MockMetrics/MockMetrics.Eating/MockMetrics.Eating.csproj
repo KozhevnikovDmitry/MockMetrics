@@ -80,6 +80,14 @@
     <Compile Include="Expression\ReferenceExpressionEater.cs" />
     <Compile Include="Expression\IExpressionEater.cs" />
     <Compile Include="Expression\IsExpressionEater.cs" />
+    <Compile Include="QueryClause\QueryClauseEater.cs" />
+    <Compile Include="QueryClause\QueryFromClause.cs" />
+    <Compile Include="QueryClause\QueryGroupClause.cs" />
+    <Compile Include="QueryClause\QueryJoinClause.cs" />
+    <Compile Include="QueryClause\QueryLetClause.cs" />
+    <Compile Include="QueryClause\QueryOrderByClause.cs" />
+    <Compile Include="QueryClause\QueryWhereClause.cs" />
+    <Compile Include="QueryClause\StubClauseEater.cs" />
     <Compile Include="Statement\DoStatementEater.cs" />
     <Compile Include="Statement\EmptyStatementEater.cs" />
     <Compile Include="Statement\ForeachStatementEater.cs" />
@@ -96,6 +104,7 @@
     <Compile Include="Statement\ExpressionStatementEater.cs" />
     <Compile Include="Statement\LabelStatementEater.cs" />
     <Compile Include="Statement\LockStatementEater.cs" />
+    <Compile Include="Expression\QueryExpressionEater.cs" />
     <Compile Include="Statement\ReturnStatementEater.cs" />
     <Compile Include="Statement\StatementEater.cs" />
     <Compile Include="Statement\SwitchLabelStatementEater.cs" />

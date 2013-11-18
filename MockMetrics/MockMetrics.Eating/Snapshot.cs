@@ -17,10 +17,10 @@ namespace MockMetrics.Eating
         List<ICSharpTreeNode> Results { get; }
         List<ICSharpTreeNode> Mocks { get; }
         List<ICSharpTreeNode> Asserts { get; }
-        List<IVariableDeclaration> Variables { get; }
+        List<ICSharpDeclaration> Variables { get; }
         List<ILabelStatement> Labels { get; }
         void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
-        void AddVariable(IVariableDeclaration variableDeclaration);
+        void AddVariable(ICSharpDeclaration variableDeclaration);
         void AddLabel(ILabelStatement label);
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
@@ -41,7 +41,7 @@ namespace MockMetrics.Eating
             Mocks = new List<ICSharpTreeNode>();
             Asserts = new List<ICSharpTreeNode>();
             TargetCalls = new List<ICSharpTreeNode>();
-            Variables = new List<IVariableDeclaration>();
+            Variables = new List<ICSharpDeclaration>();
             Labels = new List<ILabelStatement>();
             GetTestScope(unitTest);
         }
@@ -60,7 +60,7 @@ namespace MockMetrics.Eating
 
         public List<ICSharpTreeNode> Asserts { get; private set; }
 
-        public List<IVariableDeclaration> Variables { get; private set; }
+        public List<ICSharpDeclaration> Variables { get; private set; }
 
         public List<ILabelStatement> Labels { get; private set; }
 
@@ -109,7 +109,7 @@ namespace MockMetrics.Eating
             }
         }
 
-        public void AddVariable(IVariableDeclaration variableDeclaration)
+        public void AddVariable(ICSharpDeclaration variableDeclaration)
         {
             Variables.Add(variableDeclaration);
         }

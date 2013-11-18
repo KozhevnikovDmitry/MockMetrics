@@ -5,6 +5,7 @@ using System.Reflection;
 using HaveBox;
 using HaveBox.Configuration;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.QueryClause;
 using MockMetrics.Eating.Statement;
 using MockMetrics.Eating.VariableDeclaration;
 
@@ -33,6 +34,10 @@ namespace MockMetrics.Eating
 
             assembly.GetTypes()
                     .Where(type => type.GetInterfaces().Contains(typeof(IVariableDeclarationEater)) && !type.IsInterface && !type.IsAbstract)
+                    .Each(type => type.GetInterfaces().Each(interfaze => For(interfaze).Use(type).AsSingleton()));
+
+            assembly.GetTypes()
+                    .Where(type => type.GetInterfaces().Contains(typeof(IQueryClauseEater)) && !type.IsInterface && !type.IsAbstract)
                     .Each(type => type.GetInterfaces().Each(interfaze => For(interfaze).Use(type).AsSingleton()));
 
         }
