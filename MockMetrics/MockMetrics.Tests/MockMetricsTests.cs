@@ -38,6 +38,9 @@ namespace MockMetrics.Tests
             get { return @"Tested.sln"; }
         }
 
+        /// <summary>
+        /// Test#1
+        /// </summary>
         [TestCase(@"<Tested.Tests>\Foo\SimpleVariablesTests.cs")]
         public void SimpleVariablesTests(string testName)
         {
@@ -52,6 +55,9 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
         }
 
+        /// <summary>
+        /// Test#2
+        /// </summary>
         [TestCase(@"<Tested.Tests>\Foo\ExpressionVariableTests.cs")]
         public void ExpressionVariableTests(string testName)
         {
@@ -66,6 +72,9 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
         }
 
+        /// <summary>
+        /// Test#3
+        /// </summary>
         [TestCase(@"<Tested.Tests>\Foo\StubTests.cs")]
         public void StubTests(string testName)
         {
@@ -80,6 +89,9 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count, 1, "Assert asserts");
         }
 
+        /// <summary>
+        /// Test#4
+        /// </summary>
         [TestCase(@"<Tested.Tests>\AggregatorTests\MoqStubTests.cs")]
         public void MoqStubTests(string testName)
         {
