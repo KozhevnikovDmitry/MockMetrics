@@ -128,7 +128,8 @@ namespace MockMetrics.Eating
         {
             return TestProjectName.Contains(projectName);
         }
-
+        
+        // TODO: get kind of fields, properties and methods
         public ExpressionKind GetVariableKind(ILocalVariable localVariable, ITypeEater typeEater)
         {
             if (Targets.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))

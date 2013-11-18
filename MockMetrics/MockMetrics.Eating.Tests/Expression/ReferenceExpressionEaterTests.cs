@@ -1,6 +1,7 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Tests.SutbTypes;
 using Moq;
 using NUnit.Framework;
 
@@ -130,10 +131,5 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.AreEqual(kind, ExpressionKind.TargetCall);
         }
-    }
-
-    public interface ILocalConstantAndIDeclaredElement : ILocalConstantDeclaration, IDeclaredElement
-    {
-        
     }
 }

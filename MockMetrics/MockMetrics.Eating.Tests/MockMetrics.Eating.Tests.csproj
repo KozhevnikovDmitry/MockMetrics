@@ -61,10 +61,13 @@
     <Compile Include="Expression\ArgumentsEaterTests.cs" />
     <Compile Include="Expression\ArrayCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\AsExpressionEaterTests.cs" />
+    <Compile Include="Expression\AssignmentExpressionEaterTests.cs" />
     <Compile Include="Expression\AwaitExpressionEaterTests.cs" />
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
     <Compile Include="Expression\CastExpressionEaterTests.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
+    <Compile Include="SutbTypes\ILocalConstantAndIDeclaredElement.cs" />
+    <Compile Include="SutbTypes\ILocalVariableAndIDeclaredElement.cs" />
     <Compile Include="Expression\LambdaExpressionEaterTests.cs" />
     <Compile Include="Expression\ElementAccessExpressionEaterTests.cs" />
     <Compile Include="Expression\ParentReferenceEaterTests.cs" />
@@ -101,6 +104,7 @@
     <Compile Include="Statement\UnsafeCodeUnsafeStatementEaterTests.cs" />
     <Compile Include="Statement\WhileStatementEaterTests.cs" />
     <Compile Include="Statement\YieldStatementEaterTests.cs" />
+    <Compile Include="SutbTypes\IVariableDeclarationAndIDeclaredElement.cs" />
     <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\CatchVariableDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\ForeachVariableDeclarationEaterTests.cs" />

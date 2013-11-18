@@ -4,6 +4,11 @@ namespace Tested
 {
     public class Foo
     {
+        public Foo()
+        {
+            Act += () => { };
+        }
+
         public bool GetBool(bool item)
         {
             var t = new Foo() {StringProperty = "sdf"};
@@ -12,6 +17,8 @@ namespace Tested
         }
 
         public string StringProperty { get; set; }
+
+        public event Action Act;
     }
 
     public class Bar

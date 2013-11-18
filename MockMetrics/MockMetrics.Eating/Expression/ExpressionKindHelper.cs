@@ -36,12 +36,10 @@ namespace MockMetrics.Eating.Expression
                 case ExpressionKind.TargetCall:
                     {
                         return ExpressionKind.Result;
-                        break;
                     }
                 case ExpressionKind.Target:
                     {
                         return ExpressionKind.TargetCall;
-                        break;
                     }
             }
 
@@ -55,46 +53,61 @@ namespace MockMetrics.Eating.Expression
                 case ExpressionKind.TargetCall:
                     {
                         return ExpressionKind.Result;
-                        break;
                     }
                 case ExpressionKind.Target:
                     {
                         return ExpressionKind.Result;
-                        break;
                     }
                 case ExpressionKind.Stub:
                     {
                         return ExpressionKind.Stub;
-                        break;
                     }
                 case ExpressionKind.Mock:
                     {
                         return ExpressionKind.Result;
-                        break;
                     }
                 case ExpressionKind.StubCandidate:
                     {
                         return ExpressionKind.StubCandidate;
-                        break;
                     }
                 case ExpressionKind.Assert:
                     {
                         return ExpressionKind.Result;
-                        break;
                     }
                 case ExpressionKind.None:
                     {
                         return ExpressionKind.None;
-                        break;
                     }
                 case ExpressionKind.Result:
                     {
                         return ExpressionKind.Result;
-                        break;
                     }
             }
 
             throw new NotSupportedException();
+        }
+
+        public virtual ExpressionKind KindOfAssignment(ExpressionKind assignSourceKind)
+        {
+            switch (assignSourceKind)
+            {
+                case ExpressionKind.TargetCall:
+                    {
+                        return ExpressionKind.Result;
+                    }
+                case ExpressionKind.StubCandidate:
+                    {
+                        return ExpressionKind.Stub;
+                    }
+                case ExpressionKind.Assert:
+                    {
+                        return ExpressionKind.Result;
+                    }
+                default :
+                {
+                    return assignSourceKind;
+                }
+            }
         }
     }
 }

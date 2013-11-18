@@ -52,6 +52,7 @@
     <Compile Include="Expression\AnonymousObjectCreationExpressionEater.cs" />
     <Compile Include="Expression\ArgumentsEater.cs" />
     <Compile Include="Expression\AsExpressionEater.cs" />
+    <Compile Include="Expression\AssignmentExpressionEater.cs" />
     <Compile Include="Expression\CastExpressionEater.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEater.cs" />
     <Compile Include="Eater.cs" />

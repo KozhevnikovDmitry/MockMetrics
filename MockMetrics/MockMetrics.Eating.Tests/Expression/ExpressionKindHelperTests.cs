@@ -149,5 +149,22 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             return helper.ReferenceKindByParentReferenceKind(kind);
         }
+
+        [TestCase(ExpressionKind.Target, Result = ExpressionKind.Target)]
+        [TestCase(ExpressionKind.TargetCall, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.Mock, Result = ExpressionKind.Mock)]
+        [TestCase(ExpressionKind.Result, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.Stub, Result = ExpressionKind.Stub)]
+        [TestCase(ExpressionKind.StubCandidate, Result = ExpressionKind.Stub)]
+        [TestCase(ExpressionKind.Assert, Result = ExpressionKind.Result)]
+        [TestCase(ExpressionKind.None, Result = ExpressionKind.None)]
+        public ExpressionKind KindOfAssignmentTest(ExpressionKind kind)
+        {
+            // Arrange
+            var helper = new ExpressionKindHelper();
+
+            // Assert
+            return helper.KindOfAssignment(kind);
+        }
     }
 }

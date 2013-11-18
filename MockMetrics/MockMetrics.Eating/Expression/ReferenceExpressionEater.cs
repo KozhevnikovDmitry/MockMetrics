@@ -27,6 +27,8 @@ namespace MockMetrics.Eating.Expression
             if (parentKind == ExpressionKind.None)
             {
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
+
+                // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
                 {
                     return _typeEater.EatVariableType(snapshot, (declaredElement as IProperty).Type);

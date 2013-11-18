@@ -72,7 +72,7 @@ namespace MockMetrics.Eating
             //*IParenthesizedExpression
             
             // - simply eat containing expressions and return none
-            //IAssignmentExpression (case: int i; i = 0;)
+            //*IAssignmentExpression (case: int i; i = 0;)
 
             // - depends of return type, may be stub, target, mock(after that simple eating)
             //*IDefaultExpression
