@@ -13,8 +13,10 @@ namespace MockMetrics.Eating.Expression
 
         public override ExpressionKind Eat(ISnapshot snapshot, IQueryExpression expression)
         {
+           
             Eater.Eat(snapshot, expression.From.Expression);
             snapshot.AddVariable(expression.From.Declaration);
+
             IQuerySelectClause lastSelect;
             foreach (var queryClause in expression.Clauses)
             {
@@ -35,6 +37,8 @@ namespace MockMetrics.Eating.Expression
                 lastSelect = queryContinuation.Clauses.Last() as IQuerySelectClause;
             }
 
+            // the final query kind is provided based on type of last select clause
+            // so if it return stubs(for example), all query returns stubs
             return Eater.Eat(snapshot, lastSelect);
         }
     }

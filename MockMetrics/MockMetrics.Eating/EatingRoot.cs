@@ -91,7 +91,7 @@ namespace MockMetrics.Eating
             //*IPrimaryExpression
             //*ICreationExpression
 
-            // - no idea yet
+            // - have an idea!
             //IQueryExpression
 
             // - really rare using expressions
