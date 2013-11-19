@@ -1,10 +1,12 @@
 ﻿using System;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Expression;
 
 namespace MockMetrics.Eating.QueryClause
 {
-    public interface IQueryClauseEater
+    public interface IQueryClauseEater : ICSharpNodeEater
     {
         ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause);
 
@@ -25,15 +27,27 @@ namespace MockMetrics.Eating.QueryClause
             Eater = eater;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause)
+        public ExpressionKind Eat(ISnapshot snapshot, [NotNull] IQueryClause queryClause)
         {
-            if (queryClause is T)
+            if (queryClause == null) 
+                throw new ArgumentNullException("queryClause");
+
+            try
             {
-                return Eat(snapshot, (T)queryClause);
+                if (queryClause is T)
+                {
+                    return Eat(snapshot, (T)queryClause);
+                }
+
+                throw new UnexpectedTypeOfNodeToEatException(typeof(T), this, queryClause);
             }
-            else
+            catch (ApplicationException)
             {
-                throw new NotSupportedException();
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException("Unexpected exception", ex, this, queryClause);
             }
         }
 

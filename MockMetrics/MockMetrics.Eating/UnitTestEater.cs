@@ -13,18 +13,14 @@ namespace MockMetrics.Eating
 
         public Snapshot EatUnitTest(IMethodDeclaration unitTest)
         {
-            // result snapshot
             var snapshot = new Snapshot(unitTest);
 
-            // all parameters are stubs
             foreach (var parameterDeclaration in unitTest.ParameterDeclarations)
             {
                 _eater.Eat(snapshot, parameterDeclaration);
             }
 
             _eater.Eat(snapshot, unitTest.Body);
-
-            new PostEater().PostEat(snapshot);
 
             return snapshot;
         }

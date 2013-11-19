@@ -3,7 +3,7 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Expression
 {
-    public interface IExpressionEater
+    public interface IExpressionEater : ICSharpNodeEater
     {
         ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement);
 

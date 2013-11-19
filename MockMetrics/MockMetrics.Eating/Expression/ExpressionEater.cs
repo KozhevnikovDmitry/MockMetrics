@@ -1,5 +1,7 @@
 using System;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -17,14 +19,28 @@ namespace MockMetrics.Eating.Expression
             get { return typeof(T); }
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression)
+        public ExpressionKind Eat(ISnapshot snapshot, [NotNull] ICSharpExpression expression)
         {
-            if (expression is T)
-            {
-                return Eat(snapshot, (T)expression);
-            }
+            if (expression == null) 
+                throw new ArgumentNullException("expression");
 
-            throw new NotSupportedException();
+            try
+            {
+                if (expression is T)
+                {
+                    return Eat(snapshot, (T)expression);
+                }
+
+                throw new UnexpectedTypeOfNodeToEatException(typeof(T), this, expression);
+            }
+            catch (ApplicationException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException("Unexpected exception", ex, this, expression);
+            }
         }
 
         public abstract ExpressionKind Eat(ISnapshot snapshot, T expression);

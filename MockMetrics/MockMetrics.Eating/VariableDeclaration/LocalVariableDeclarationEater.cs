@@ -15,6 +15,7 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         public override void Eat(ISnapshot snapshot, ILocalVariableDeclaration variableDeclaration)
         {
+            // TODO : case: { Object obj; } // no initial expression
             ExpressionKind kind = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
 
             if (kind == ExpressionKind.StubCandidate)

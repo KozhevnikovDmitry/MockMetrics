@@ -1,5 +1,7 @@
 ﻿using System;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 
 namespace MockMetrics.Eating.Statement
 {
@@ -12,15 +14,29 @@ namespace MockMetrics.Eating.Statement
             Eater = eater;
         }
 
-        public void Eat(ISnapshot snapshot, ICSharpStatement statement)
+        public void Eat(ISnapshot snapshot, [NotNull] ICSharpStatement statement)
         {
-            if (statement is T)
+            if (statement == null) 
+                throw new ArgumentNullException("statement");
+
+            try
             {
-                Eat(snapshot, (T)statement);
+                if (statement is T)
+                {
+                    Eat(snapshot, (T) statement);
+                }
+                else
+                {
+                    throw new UnexpectedTypeOfNodeToEatException(typeof(T), this, statement);
+                }
             }
-            else
+            catch (ApplicationException)
             {
-                throw new NotSupportedException();
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException("Unexpected exception", ex, this, statement);
             }
         }
 

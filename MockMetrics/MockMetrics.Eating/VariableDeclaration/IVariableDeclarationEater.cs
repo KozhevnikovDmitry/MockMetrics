@@ -3,7 +3,7 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
-    public interface IVariableDeclarationEater
+    public interface IVariableDeclarationEater : ICSharpNodeEater
     {
         void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
 

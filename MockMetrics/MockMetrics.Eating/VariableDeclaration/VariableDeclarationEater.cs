@@ -1,5 +1,7 @@
 ﻿using System;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
@@ -12,15 +14,29 @@ namespace MockMetrics.Eating.VariableDeclaration
             Eater = eater;
         }
 
-        public void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
+        public void Eat(ISnapshot snapshot, [NotNull] IVariableDeclaration variableDeclaration)
         {
-            if (variableDeclaration is T)
+            if (variableDeclaration == null) 
+                throw new ArgumentNullException("variableDeclaration");
+
+            try
             {
-                Eat(snapshot, (T)variableDeclaration);
+                if (variableDeclaration is T)
+                {
+                    Eat(snapshot, (T)variableDeclaration);
+                }
+                else
+                {
+                    throw new UnexpectedTypeOfNodeToEatException(typeof(T), this, variableDeclaration);
+                }
             }
-            else
+            catch (ApplicationException)
             {
-                throw new NotSupportedException();
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException("Unexpected exception", ex, this, variableDeclaration);
             }
         }
 
