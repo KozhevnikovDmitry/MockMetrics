@@ -109,5 +109,23 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count, 2, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count, 0, "Mocks targets");
         }
+        
+        /// <summary>
+        /// Test#5
+        /// </summary>
+        [TestCase(@"<Tested.Tests>\AggregatorTests\MoqAssignmentStubsTests.cs")]
+        public void MoqAssignmentStubsTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+
+            Assert.AreEqual(snapshot.Stubs.Count, 2, "Assert stubs");
+            Assert.AreEqual(snapshot.Results.Count, 2, "Assert results");
+            Assert.AreEqual(snapshot.Targets.Count, 1, "Assert targets");
+            Assert.AreEqual(snapshot.TargetCalls.Count, 2, "Assert targetCalls");
+            Assert.AreEqual(snapshot.Asserts.Count, 2, "Assert asserts");
+            Assert.AreEqual(snapshot.Mocks.Count, 0, "Mocks targets");
+        }
     }
 }

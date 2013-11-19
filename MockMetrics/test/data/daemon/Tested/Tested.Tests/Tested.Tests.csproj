@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Foo\StubTests.cs.gold" />
+    <None Include="AggregatorTests\MoqAssignmentStubsTests.cs.gold" />
+    <Compile Include="AggregatorTests\MoqAssignmentStubsTests.cs" />
     <Compile Include="AggregatorTests\MoqStubTests.cs" />
     <None Include="AggregatorTests\MoqStubTests.cs.gold" />
     <Compile Include="Foo\StubTests.cs" />

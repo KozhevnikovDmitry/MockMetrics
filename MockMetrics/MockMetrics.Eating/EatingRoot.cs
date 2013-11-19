@@ -145,7 +145,7 @@ namespace MockMetrics.Eating
 
             // THINKING ABOUT IT. 
             //IMultipleDeclarationMember ? May be passed through in DeclarationStatementEater
-            //ArglistParameterDeclaration ? Really rare to use
+            //IArglistParameterDeclaration ? Really rare to use
 
             // DO NOT EAT
             //IConstantDeclaration ? (not occurs id methods)
