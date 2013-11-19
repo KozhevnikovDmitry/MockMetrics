@@ -50,9 +50,9 @@ namespace MockMetrics.Eating.Expression
                     return ExpressionKind.Stub;
                 }
 
-                if (declaredElement is ILocalVariable)
+                if (declaredElement is IVariableDeclaration)
                 {
-                    return snapshot.GetVariableKind(declaredElement as ILocalVariable, _typeEater);
+                    return snapshot.GetVariableKind(declaredElement as IVariableDeclaration, _typeEater);
                 }
 
                 if (declaredElement is IClass)

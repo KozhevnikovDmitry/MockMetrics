@@ -25,7 +25,7 @@ namespace MockMetrics.Eating
         void AddLabel(ILabelStatement label);
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
-        ExpressionKind GetVariableKind(ILocalVariable localVariable, ITypeEater typeEater);
+        ExpressionKind GetVariableKind(IVariableDeclaration localVariable, ITypeEater typeEater);
     }
 
     public class Snapshot : ISnapshot
@@ -134,7 +134,7 @@ namespace MockMetrics.Eating
         }
         
         // TODO: get kind of fields, properties and methods
-        public ExpressionKind GetVariableKind([NotNull] ILocalVariable localVariable, [NotNull] ITypeEater typeEater)
+        public ExpressionKind GetVariableKind([NotNull] IVariableDeclaration localVariable, [NotNull] ITypeEater typeEater)
         {
             if (localVariable == null) 
                 throw new ArgumentNullException("localVariable");
@@ -142,27 +142,27 @@ namespace MockMetrics.Eating
             if (typeEater == null)
                 throw new ArgumentNullException("typeEater");
 
-            if (Targets.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            if (Targets.OfType<IVariableDeclaration>().Contains(localVariable))
             {
                 return ExpressionKind.Target;
             }
 
-            if (Stubs.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            if (Stubs.OfType<IVariableDeclaration>().Contains(localVariable))
             {
                 return ExpressionKind.Stub;
             }
 
-            if (Mocks.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            if (Mocks.OfType<IVariableDeclaration>().Contains(localVariable))
             {
                 return ExpressionKind.Mock;
             }
 
-            if (Results.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            if (Results.OfType<IVariableDeclaration>().Contains(localVariable))
             {
                 return ExpressionKind.Result;
             }
 
-            if (Variables.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
+            if (Variables.OfType<IVariableDeclaration>().Contains(localVariable))
             {
                 return typeEater.EatVariableType(this, localVariable.Type);
             }

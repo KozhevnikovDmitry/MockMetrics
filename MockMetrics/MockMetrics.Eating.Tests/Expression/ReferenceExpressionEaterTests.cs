@@ -97,7 +97,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public void EatLocalVariableTest()
         {
             // Arrange
-            var refElement = Mock.Of<ILocalVariable>();
+            var refElement = Mock.Of<IVariableDeclarationAndIDeclaredElement>();
             var referenceExpression = Mock.Of<IReferenceExpression>();
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>();
