@@ -30,18 +30,41 @@ namespace MockMetrics.Eating.Expression
             }
         }
 
-        public virtual IClass GetUserTypeUsageClass([NotNull] IUserTypeUsage userTypeUsage)
+        public virtual ITypeElement GetUserTypeUsageClass([NotNull] IUserTypeUsage userTypeUsage)
         {
             if (userTypeUsage == null)
                 throw new ArgumentNullException("userTypeUsage");
 
             if (userTypeUsage.ScalarTypeName.Reference.CurrentResolveResult != null)
             {
-                return userTypeUsage.ScalarTypeName.Reference.CurrentResolveResult.DeclaredElement as IClass;
+                return userTypeUsage.ScalarTypeName.Reference.CurrentResolveResult.DeclaredElement as ITypeElement;
             }
             else
             {
                 throw new ExpressionHelperException("Null resolved result of type usage", userTypeUsage);
+            }
+        }
+
+        public virtual ITypeElement GetTypeClass([NotNull] IType type)
+        {
+            if (type == null)
+                throw new ArgumentNullException("type");
+
+            var scalarType = type.GetScalarType();
+            if (scalarType != null)
+            {
+                if (scalarType.GetTypeElement() != null)
+                {
+                    return scalarType.GetTypeElement();
+                }
+                else
+                {
+                    throw new ExpressionHelperException("Declared element type is not a class", type);
+                }
+            }
+            else
+            {
+                throw new ExpressionHelperException("Null scalara type for type", type);
             }
         }
 

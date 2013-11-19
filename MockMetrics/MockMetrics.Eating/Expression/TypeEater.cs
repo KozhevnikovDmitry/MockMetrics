@@ -68,13 +68,14 @@ namespace MockMetrics.Eating.Expression
 
             if (type == null) 
                 throw new ArgumentNullException("type");
-
-            if (snapshot.IsInTestScope(type.Module.Name))
+            
+            var classType = _eatExpressionHelper.GetTypeClass(type);
+            if (snapshot.IsInTestScope(classType.Module.Name))
             {
                 return ExpressionKind.Target;
             }
 
-            if (snapshot.IsInTestProject(type.Module.Name))
+            if (snapshot.IsInTestProject(classType.Module.Name))
             {
                 return ExpressionKind.Mock;
             }

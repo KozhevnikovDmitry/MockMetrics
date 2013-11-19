@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Exceptions
 {
@@ -7,9 +6,9 @@ namespace MockMetrics.Eating.Exceptions
     {
         public string Message { get; private set; }
 
-        public ICSharpTreeNode Source { get; private set; }
+        public object Source { get; private set; }
 
-        public ExpressionHelperException(string message, ICSharpTreeNode source)
+        public ExpressionHelperException(string message, object source)
         {
             Message = message;
             Source = source;

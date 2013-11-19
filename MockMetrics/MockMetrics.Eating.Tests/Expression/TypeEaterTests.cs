@@ -48,7 +48,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == true);
             var typeUsage = Mock.Of<IUserTypeUsage>();
-            var classType = Mock.Of<IClass>(t => t.Module.Name == "ModuleName");
+            var classType = Mock.Of<ITypeElement>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetUserTypeUsageClass(typeUsage) == classType);
             var typeEater = new TypeEater(helper);
 
@@ -65,7 +65,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == false && t.IsInTestProject("ModuleName") == true);
             var typeUsage = Mock.Of<IUserTypeUsage>();
-            var classType = Mock.Of<IClass>(t => t.Module.Name == "ModuleName");
+            var classType = Mock.Of<ITypeElement>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetUserTypeUsageClass(typeUsage) == classType);
             var typeEater = new TypeEater(helper);
 
@@ -82,7 +82,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == false && t.IsInTestProject("ModuleName") == false);
             var typeUsage = Mock.Of<IUserTypeUsage>();
-            var classType = Mock.Of<IClass>(t => t.Module.Name == "ModuleName");
+            var classType = Mock.Of<ITypeElement>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetUserTypeUsageClass(typeUsage) == classType);
             var typeEater = new TypeEater(helper);
 
@@ -98,8 +98,8 @@ namespace MockMetrics.Eating.Tests.Expression
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == true);
-            var type = Mock.Of<IType>(t => t.Module.Name == "ModuleName");
-            var helper = Mock.Of<EatExpressionHelper>();
+            var type = Mock.Of<IType>();
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetTypeClass(type) == Mock.Of<ITypeElement>(e => e.Module.Name == "ModuleName"));
             var typeEater = new TypeEater(helper);
 
             // Act
@@ -114,8 +114,8 @@ namespace MockMetrics.Eating.Tests.Expression
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == false && t.IsInTestProject("ModuleName") == true);
-            var type = Mock.Of<IType>(t => t.Module.Name == "ModuleName");
-            var helper = Mock.Of<EatExpressionHelper>();
+            var type = Mock.Of<IType>();
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetTypeClass(type) == Mock.Of<ITypeElement>(e => e.Module.Name == "ModuleName"));
             var typeEater = new TypeEater(helper);
 
             // Act
@@ -130,8 +130,8 @@ namespace MockMetrics.Eating.Tests.Expression
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == false && t.IsInTestProject("ModuleName") == false);
-            var type = Mock.Of<IType>(t => t.Module.Name == "ModuleName");
-            var helper = Mock.Of<EatExpressionHelper>();
+            var type = Mock.Of<IType>();
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetTypeClass(type) == Mock.Of<ITypeElement>(e => e.Module.Name == "ModuleName"));
             var typeEater = new TypeEater(helper);
 
             // Act

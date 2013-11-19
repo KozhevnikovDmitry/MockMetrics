@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using HaveBox;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
@@ -61,7 +62,8 @@ namespace MockMetrics.Eating
 
             GetEater(variableDeclaration).Eat(snapshot, variableDeclaration);
         }
-
+        
+        [DebuggerStepThrough]
         private IVariableDeclarationEater GetEater(IVariableDeclaration variableDeclaration)
         {
             var eater =
@@ -75,7 +77,8 @@ namespace MockMetrics.Eating
 
             return eater;
         }
-
+        
+        [DebuggerStepThrough]
         public IExpressionEater GetEater(ICSharpExpression expression)
         {
             var eater =
@@ -89,7 +92,8 @@ namespace MockMetrics.Eating
 
             return eater;
         }
-        
+
+        [DebuggerStepThrough]
         public IStatementEater GetEater(ICSharpStatement statement)
         {
             var eater =
@@ -104,6 +108,7 @@ namespace MockMetrics.Eating
             return eater;
         }
 
+        [DebuggerStepThrough]
         public IQueryClauseEater GetEater(IQueryClause queryClause)
         {
             var eater =
