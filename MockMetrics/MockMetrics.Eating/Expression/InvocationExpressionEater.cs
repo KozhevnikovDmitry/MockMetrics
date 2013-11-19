@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MoqStub;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -9,32 +10,36 @@ namespace MockMetrics.Eating.Expression
         private readonly ExpressionKindHelper _expressionKindHelper;
         private readonly IParentReferenceEater _parentReferenceEater;
         private readonly IArgumentsEater _argumentsEater;
+        private readonly IMockOfInvocationEater _mockOfInvocationEater;
 
         public InvocationExpressionEater(IEater eater, 
                                          EatExpressionHelper expressionHelper, 
                                          ExpressionKindHelper expressionKindHelper,
                                          IParentReferenceEater parentReferenceEater,
-                                         IArgumentsEater argumentsEater)
+                                         IArgumentsEater argumentsEater,
+                                         IMockOfInvocationEater mockOfInvocationEater)
             : base(eater)
         {
             _expressionHelper = expressionHelper;
             _expressionKindHelper = expressionKindHelper;
             _parentReferenceEater = parentReferenceEater;
             _argumentsEater = argumentsEater;
+            _mockOfInvocationEater = mockOfInvocationEater;
         }
 
         public override ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
+            var invokedName = _expressionHelper.GetInvokedElementName(expression);
+
+            if (invokedName.StartsWith("Method:Moq.Mock.Of"))
+            {
+                _mockOfInvocationEater.Eat(snapshot, expression);
+                return ExpressionKind.Stub;
+            }
+
             _argumentsEater.Eat(snapshot, expression.Arguments);
 
             var parentKind = _parentReferenceEater.Eat(snapshot, expression);
-
-            var invokedName = _expressionHelper.GetInvokedElementName(expression);
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Of()"))
-            {
-                return ExpressionKind.Stub;
-            }
 
             if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {

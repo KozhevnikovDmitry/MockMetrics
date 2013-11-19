@@ -6,6 +6,7 @@ using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MoqStub;
 
 namespace MockMetrics.Eating
 {
@@ -21,6 +22,7 @@ namespace MockMetrics.Eating
         List<ICSharpDeclaration> Variables { get; }
         List<ILabelStatement> Labels { get; }
         void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
+        void AddTreeNode(FakeOptionType fakeOptionType, ICSharpTreeNode sharpTreeNode);
         void AddVariable(ICSharpDeclaration variableDeclaration);
         void AddLabel(ILabelStatement label);
         bool IsInTestScope(string projectName);
@@ -35,7 +37,7 @@ namespace MockMetrics.Eating
 
         public Snapshot([NotNull] IMethodDeclaration unitTest)
         {
-            if (unitTest == null) 
+            if (unitTest == null)
                 throw new ArgumentNullException("unitTest");
 
             UnitTest = unitTest;
@@ -49,7 +51,7 @@ namespace MockMetrics.Eating
             Labels = new List<ILabelStatement>();
             GetTestScope(unitTest);
         }
-        
+
         public IMethodDeclaration UnitTest { get; private set; }
 
         public List<ICSharpTreeNode> TargetCalls { get; private set; }
@@ -67,6 +69,29 @@ namespace MockMetrics.Eating
         public List<ICSharpDeclaration> Variables { get; private set; }
 
         public List<ILabelStatement> Labels { get; private set; }
+
+        public void AddTreeNode(FakeOptionType fakeOptionType, ICSharpTreeNode sharpTreeNode)
+        {
+            switch (fakeOptionType)
+            {
+                case FakeOptionType.Property:
+                    {
+                        break;
+                    }
+                case FakeOptionType.Method:
+                    {
+                        break;
+                    }
+                case FakeOptionType.Event:
+                    {
+                        break;
+                    }
+                case FakeOptionType.CallBack:
+                    {
+                        break;
+                    }
+            }
+        }
 
         public void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode)
         {
@@ -132,11 +157,11 @@ namespace MockMetrics.Eating
         {
             return TestProjectName.Contains(projectName);
         }
-        
+
         // TODO: get kind of fields, properties and methods
         public ExpressionKind GetVariableKind([NotNull] IVariableDeclaration localVariable, [NotNull] ITypeEater typeEater)
         {
-            if (localVariable == null) 
+            if (localVariable == null)
                 throw new ArgumentNullException("localVariable");
 
             if (typeEater == null)

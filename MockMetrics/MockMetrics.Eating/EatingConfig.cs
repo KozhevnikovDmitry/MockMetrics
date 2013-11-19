@@ -5,9 +5,6 @@ using System.Reflection;
 using HaveBox;
 using HaveBox.Configuration;
 using MockMetrics.Eating.Expression;
-using MockMetrics.Eating.QueryClause;
-using MockMetrics.Eating.Statement;
-using MockMetrics.Eating.VariableDeclaration;
 
 namespace MockMetrics.Eating
 {
@@ -19,25 +16,9 @@ namespace MockMetrics.Eating
             For<IEater>().Use<Eater>().AsSingleton();
             For<EatExpressionHelper>().Use<EatExpressionHelper>().AsSingleton();
             For<ExpressionKindHelper>().Use<ExpressionKindHelper>().AsSingleton();
-            For<ITypeEater>().Use<TypeEater>().AsSingleton();
-            For<IArgumentsEater>().Use<ArgumentsEater>().AsSingleton();
-            For<IParentReferenceEater>().Use<ParentReferenceEater>().AsSingleton();
-            For<IVariableInitializerEater>().Use<VariableInitializerEater>().AsSingleton();
             For<UnitTestEater>().Use<UnitTestEater>().AsSingleton();
             assembly.GetTypes()
-                    .Where(type => type.GetInterfaces().Contains(typeof(IExpressionEater)) && !type.IsInterface && !type.IsAbstract)
-                    .Each(type => type.GetInterfaces().Each(interfaze => For(interfaze).Use(type).AsSingleton()));
-
-            assembly.GetTypes()
-                    .Where(type => type.GetInterfaces().Contains(typeof(IStatementEater)) && !type.IsInterface && !type.IsAbstract)
-                    .Each(type => type.GetInterfaces().Each(interfaze => For(interfaze).Use(type).AsSingleton()));
-
-            assembly.GetTypes()
-                    .Where(type => type.GetInterfaces().Contains(typeof(IVariableDeclarationEater)) && !type.IsInterface && !type.IsAbstract)
-                    .Each(type => type.GetInterfaces().Each(interfaze => For(interfaze).Use(type).AsSingleton()));
-
-            assembly.GetTypes()
-                    .Where(type => type.GetInterfaces().Contains(typeof(IQueryClauseEater)) && !type.IsInterface && !type.IsAbstract)
+                    .Where(type => type.GetInterfaces().Contains(typeof(ICSharpNodeEater)) && !type.IsInterface && !type.IsAbstract)
                     .Each(type => type.GetInterfaces().Each(interfaze => For(interfaze).Use(type).AsSingleton()));
 
         }

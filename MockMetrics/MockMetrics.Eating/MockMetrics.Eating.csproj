@@ -86,6 +86,12 @@
     <Compile Include="Expression\UnexpectedAssignDestinationException.cs" />
     <Compile Include="Expression\UnexpectedReferenceTypeException.cs" />
     <Compile Include="ICSharpNodeEater.cs" />
+    <Compile Include="MoqStub\FakeOptionType.cs" />
+    <Compile Include="MoqStub\MoqStubOptionsEater.cs" />
+    <Compile Include="MoqStub\MoqStubOptionTargetEater.cs" />
+    <Compile Include="MoqStub\MoqStubOptionWrongTypeException.cs" />
+    <Compile Include="MoqStub\MoqStubWrongSyntaxException.cs" />
+    <Compile Include="MoqStub\MockOfInvocationEater.cs" />
     <Compile Include="QueryClause\QueryClauseEater.cs" />
     <Compile Include="QueryClause\QueryFromClause.cs" />
     <Compile Include="QueryClause\QueryGroupClause.cs" />

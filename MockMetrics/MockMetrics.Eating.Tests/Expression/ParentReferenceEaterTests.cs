@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi.CSharp;
+﻿using System;
+using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Resolve.Managed;
@@ -60,6 +61,34 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
+        }
+
+        [Test]
+        public void NullEaterTest()
+        {
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => new ParentReferenceEater(null));
+        }
+
+        [Test]
+        public void NullSnapshotTest()
+        {
+            // Arrange
+            var parentReferenceEater = new ParentReferenceEater(Mock.Of<IEater>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => parentReferenceEater.Eat(null, Mock.Of<IInvocationExpression>()));
+        }
+
+        [Test]
+        public void NullInvocationExpressionTest()
+        {
+            // Arrange
+            var parentReferenceEater = new ParentReferenceEater(Mock.Of<IEater>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => parentReferenceEater.Eat(Mock.Of<ISnapshot>(), null));
         }
     }
 }

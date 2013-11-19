@@ -10,7 +10,7 @@ namespace MockMetrics.Eating.VariableDeclaration
         ExpressionKind Eat(ISnapshot snapshot, IVariableInitializer initializer);
     }
 
-    public class VariableInitializerEater : IVariableInitializerEater
+    public class VariableInitializerEater : IVariableInitializerEater, ICSharpNodeEater
     {
         private readonly IEater _eater;
 

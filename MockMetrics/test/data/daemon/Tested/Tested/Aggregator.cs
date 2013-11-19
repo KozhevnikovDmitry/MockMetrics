@@ -51,6 +51,8 @@ namespace Tested
 
         public string Name { get; set; }
 
+        public bool Flag { get; set; }
+
         public IList<Detail> Details { get; set; }
     }
 

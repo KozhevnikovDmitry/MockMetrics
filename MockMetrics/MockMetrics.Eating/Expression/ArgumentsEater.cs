@@ -10,7 +10,7 @@ namespace MockMetrics.Eating.Expression
         void Eat(ISnapshot snapshot, TreeNodeCollection<ICSharpArgument> arguements);
     }
 
-    public class ArgumentsEater : IArgumentsEater
+    public class ArgumentsEater : IArgumentsEater, ICSharpNodeEater
     {
         private readonly IEater _eater;
 

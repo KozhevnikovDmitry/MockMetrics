@@ -12,7 +12,7 @@ namespace MockMetrics.Eating.Expression
         ExpressionKind EatVariableType(ISnapshot snapshot, IType type);
     }
 
-    public class TypeEater : ITypeEater
+    public class TypeEater : ITypeEater, ICSharpNodeEater
     {
         private readonly EatExpressionHelper _eatExpressionHelper;
 
