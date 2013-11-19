@@ -9,13 +9,19 @@ namespace MockMetrics.Eating.VariableDeclaration
     {
         protected readonly IEater Eater;
 
-        protected VariableDeclarationEater(IEater eater)
+        protected VariableDeclarationEater([NotNull] IEater eater)
         {
+            if (eater == null) 
+                throw new ArgumentNullException("eater");
+
             Eater = eater;
         }
 
-        public void Eat(ISnapshot snapshot, [NotNull] IVariableDeclaration variableDeclaration)
+        public void Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableDeclaration variableDeclaration)
         {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
             if (variableDeclaration == null) 
                 throw new ArgumentNullException("variableDeclaration");
 

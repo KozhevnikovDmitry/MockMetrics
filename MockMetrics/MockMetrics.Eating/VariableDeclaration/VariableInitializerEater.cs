@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
 
@@ -18,9 +19,14 @@ namespace MockMetrics.Eating.VariableDeclaration
             _eater = eater;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot,
-            IVariableInitializer initializer)
+        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
         {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
+            if (initializer == null) 
+                throw new ArgumentNullException("initializer");
+
             if (initializer is IArrayInitializer)
             {
                 foreach (IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
@@ -57,11 +63,6 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         private ExpressionKind EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
         {
-            if (initialExpression == null)
-            {
-                throw new NotSupportedException();
-            }
-
             ExpressionKind expressionKind = _eater.Eat(snapshot, initialExpression);
 
             if (expressionKind == ExpressionKind.StubCandidate)

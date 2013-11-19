@@ -1,4 +1,6 @@
-﻿using JetBrains.ReSharper.Psi;
+﻿using System;
+using JetBrains.Annotations;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Expression
@@ -14,13 +16,22 @@ namespace MockMetrics.Eating.Expression
     {
         private readonly EatExpressionHelper _eatExpressionHelper;
 
-        public TypeEater(EatExpressionHelper eatExpressionHelper)
+        public TypeEater([NotNull] EatExpressionHelper eatExpressionHelper)
         {
+            if (eatExpressionHelper == null) 
+                throw new ArgumentNullException("eatExpressionHelper");
+
             _eatExpressionHelper = eatExpressionHelper;
         }
 
-        public ExpressionKind EatCastType(ISnapshot snapshot, ITypeUsage typeUsage)
+        public ExpressionKind EatCastType([NotNull] ISnapshot snapshot, [NotNull] ITypeUsage typeUsage)
         {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
+            if (typeUsage == null) 
+                throw new ArgumentNullException("typeUsage");
+
             if (typeUsage is IDynamicTypeUsage)
             {
                 return ExpressionKind.StubCandidate;
@@ -50,8 +61,14 @@ namespace MockMetrics.Eating.Expression
             return ExpressionKind.StubCandidate;
         }
 
-        public ExpressionKind EatVariableType(ISnapshot snapshot, IType type)
+        public ExpressionKind EatVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
         {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
+            if (type == null) 
+                throw new ArgumentNullException("type");
+
             if (snapshot.IsInTestScope(type.Module.Name))
             {
                 return ExpressionKind.Target;

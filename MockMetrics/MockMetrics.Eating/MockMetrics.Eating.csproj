@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\EatingException.cs" />
+    <Compile Include="Exceptions\ExpressionHelperException.cs" />
     <Compile Include="Exceptions\UnexpectedTypeOfNodeToEatException.cs" />
     <Compile Include="Expression\AnonymousMethodExpressionEater.cs" />
     <Compile Include="Expression\AnonymousObjectCreationExpressionEater.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="Expression\ReferenceExpressionEater.cs" />
     <Compile Include="Expression\IExpressionEater.cs" />
     <Compile Include="Expression\IsExpressionEater.cs" />
+    <Compile Include="Expression\UnexpectedAssignDestinationException.cs" />
+    <Compile Include="Expression\UnexpectedReferenceTypeException.cs" />
     <Compile Include="ICSharpNodeEater.cs" />
     <Compile Include="QueryClause\QueryClauseEater.cs" />
     <Compile Include="QueryClause\QueryFromClause.cs" />

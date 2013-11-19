@@ -28,6 +28,7 @@ namespace MockMetrics.Eating.Expression
             {
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
 
+                // TODO: declared element can be parameter
                 // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
                 {
@@ -59,7 +60,7 @@ namespace MockMetrics.Eating.Expression
                     return ExpressionKind.None;
                 }
 
-                throw new NotSupportedException();
+                throw new UnexpectedReferenceTypeException(declaredElement, this, expression);
             }
             else
             {

@@ -9,8 +9,11 @@ namespace MockMetrics.Eating.Expression
     {
         protected readonly IEater Eater;
 
-        protected ExpressionEater(IEater eater)
+        protected ExpressionEater([NotNull] IEater eater)
         {
+            if (eater == null) 
+                throw new ArgumentNullException("eater");
+
             Eater = eater;
         }
 
@@ -19,8 +22,11 @@ namespace MockMetrics.Eating.Expression
             get { return typeof(T); }
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, [NotNull] ICSharpExpression expression)
+        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpExpression expression)
         {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
             if (expression == null) 
                 throw new ArgumentNullException("expression");
 

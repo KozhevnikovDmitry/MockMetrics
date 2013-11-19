@@ -1,38 +1,108 @@
-﻿using JetBrains.ReSharper.Psi;
+﻿using System;
+using JetBrains.Annotations;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 
 namespace MockMetrics.Eating.Expression
 {
     public class EatExpressionHelper
     {
-        public virtual IClass GetCreationClass(IObjectCreationExpression creationExpression)
+        public virtual IClass GetCreationClass([NotNull] IObjectCreationExpression creationExpression)
         {
-            return creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as IClass;
+            if (creationExpression == null)
+                throw new ArgumentNullException("creationExpression");
+
+            if (creationExpression.TypeReference != null)
+            {
+                if (creationExpression.TypeReference.CurrentResolveResult != null)
+                {
+                    return creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as IClass;
+                }
+                else
+                {
+                    throw new ExpressionHelperException("Null type reference of creation expression", creationExpression);
+                }
+            }
+            else
+            {
+                throw new ExpressionHelperException("Null resolved result of creation expression", creationExpression);
+            }
         }
 
-        public virtual IClass GetUserTypeUsageClass(IUserTypeUsage userTypeUsage)
+        public virtual IClass GetUserTypeUsageClass([NotNull] IUserTypeUsage userTypeUsage)
         {
-            return userTypeUsage.ScalarTypeName.Reference.CurrentResolveResult.DeclaredElement as IClass;
+            if (userTypeUsage == null)
+                throw new ArgumentNullException("userTypeUsage");
+
+            if (userTypeUsage.ScalarTypeName.Reference.CurrentResolveResult != null)
+            {
+                return userTypeUsage.ScalarTypeName.Reference.CurrentResolveResult.DeclaredElement as IClass;
+            }
+            else
+            {
+                throw new ExpressionHelperException("Null resolved result of type usage", userTypeUsage);
+            }
         }
 
-        public virtual string GetCreationTypeName(IObjectCreationExpression creationExpression)
+        public virtual string GetCreationTypeName([NotNull] IObjectCreationExpression creationExpression)
         {
+            if (creationExpression == null)
+                throw new ArgumentNullException("creationExpression");
+
             return creationExpression.Type().ToString();
         }
 
-        public virtual IDeclaredElement GetInvokedElement(IInvocationExpression expression)
+        public virtual IDeclaredElement GetInvokedElement([NotNull] IInvocationExpression invocationExpression)
         {
-            return expression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+            if (invocationExpression == null)
+                throw new ArgumentNullException("invocationExpression");
+
+            if (invocationExpression.InvocationExpressionReference.CurrentResolveResult != null)
+            {
+                return invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+            }
+            else
+            {
+                throw new ExpressionHelperException("Null resolved result of invocation expression", invocationExpression);
+            }
         }
 
-        public virtual IDeclaredElement GetReferenceElement(IReferenceExpression expression)
+        public virtual IDeclaredElement GetReferenceElement([NotNull] IReferenceExpression referenceExpression)
         {
-            return expression.Reference.CurrentResolveResult.DeclaredElement;
+            if (referenceExpression == null)
+                throw new ArgumentNullException("referenceExpression");
+
+            if (referenceExpression.Reference.CurrentResolveResult != null)
+            {
+                return referenceExpression.Reference.CurrentResolveResult.DeclaredElement;
+            }
+            else
+            {
+                throw new ExpressionHelperException("Null resolved result of reference expression", referenceExpression);
+            }
         }
 
-        public virtual string GetInvokedElementName(IInvocationExpression expression)
+        public virtual string GetInvokedElementName([NotNull] IInvocationExpression invocationExpression)
         {
-            return expression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement.ToString();
+            if (invocationExpression == null)
+                throw new ArgumentNullException("invocationExpression");
+
+            if (invocationExpression.InvocationExpressionReference.CurrentResolveResult != null)
+            {
+                if (invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement != null)
+                {
+                    return invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement.ToString();
+                }
+                else
+                {
+                    throw new ExpressionHelperException("Null parent reference of invocation expression", invocationExpression);
+                }
+            }
+            else
+            {
+                throw new ExpressionHelperException("Null resolved result of invocation parent reference expression", invocationExpression);
+            }
         }
     }
 }

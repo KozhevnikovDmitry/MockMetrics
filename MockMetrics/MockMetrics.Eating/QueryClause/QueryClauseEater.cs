@@ -22,13 +22,19 @@ namespace MockMetrics.Eating.QueryClause
     {
         protected readonly IEater Eater;
 
-        protected QueryClauseEater(IEater eater)
+        protected QueryClauseEater([NotNull] IEater eater)
         {
+            if (eater == null)
+                throw new ArgumentNullException("eater");
+
             Eater = eater;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, [NotNull] IQueryClause queryClause)
+        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] IQueryClause queryClause)
         {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
             if (queryClause == null) 
                 throw new ArgumentNullException("queryClause");
 

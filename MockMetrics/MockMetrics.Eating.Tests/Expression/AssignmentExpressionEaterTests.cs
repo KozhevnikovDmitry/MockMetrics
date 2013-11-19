@@ -1,7 +1,8 @@
-﻿using JetBrains.ReSharper.Psi;
+﻿using System;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
-using MockMetrics.Eating.Tests.SutbTypes;
+using MockMetrics.Eating.Tests.StubTypes;
 using Moq;
 using NUnit.Framework;
 
@@ -91,6 +92,22 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Stub);
             snapshot.Verify(t => t.AddTreeNode(kind, dest));
+        }
+
+        [Test]
+        public void UnexpectedAssignDestinationTest()
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var dest = Mock.Of<ICSharpExpression>();
+            var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest);
+            var eater = Mock.Of<IEater>();
+            var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
+            var expressionKindHelper = Mock.Of<ExpressionKindHelper>();
+            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
+
+            // Assert
+            Assert.Throws<UnexpectedAssignDestinationException>(() => assignmentExpressionEater.Eat(snapshot, assignmentExpression));
         }
     }
 }

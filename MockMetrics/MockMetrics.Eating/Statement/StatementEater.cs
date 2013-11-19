@@ -9,13 +9,18 @@ namespace MockMetrics.Eating.Statement
     {
         protected readonly IEater Eater;
 
-        protected StatementEater(IEater eater)
+        protected StatementEater([NotNull] IEater eater)
         {
+            if (eater == null) 
+                throw new ArgumentNullException("eater");
             Eater = eater;
         }
 
-        public void Eat(ISnapshot snapshot, [NotNull] ICSharpStatement statement)
+        public void Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpStatement statement)
         {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
             if (statement == null) 
                 throw new ArgumentNullException("statement");
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
@@ -80,6 +81,16 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, argument), Times.Once);
+        }
+        
+        [Test]
+        public void NullSnapshotTest()
+        {
+            // Arrange
+            var argumentsEater = new ArgumentsEater(Mock.Of<IEater>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => argumentsEater.Eat(null, new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0])));
         }
     }
 }

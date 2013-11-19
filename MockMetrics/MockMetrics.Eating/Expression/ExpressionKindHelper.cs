@@ -82,9 +82,11 @@ namespace MockMetrics.Eating.Expression
                     {
                         return ExpressionKind.Result;
                     }
+                default:
+                    {
+                        return ExpressionKind.None;
+                    }
             }
-
-            throw new NotSupportedException();
         }
 
         public virtual ExpressionKind KindOfAssignment(ExpressionKind assignSourceKind)

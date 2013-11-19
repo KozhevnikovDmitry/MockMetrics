@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi;
+﻿using System;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
 using Moq;
@@ -138,6 +139,53 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
+        }
+
+        [Test]
+        public void NullEaterTest()
+        {
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => new TypeEater(null));
+        }
+        
+        [Test]
+        public void EatCastType_NullSnapshotTest()
+        {
+            // Arrange
+            var typeEater = new TypeEater(Mock.Of<EatExpressionHelper>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => typeEater.EatCastType(null, Mock.Of<ITypeUsage>()));
+        }
+
+        [Test]
+        public void EatCastType_NullTypeUsageTest()
+        {
+            // Arrange
+            var typeEater = new TypeEater(Mock.Of<EatExpressionHelper>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => typeEater.EatCastType(Mock.Of<ISnapshot>(), null));
+        }
+
+        [Test]
+        public void EatVariableType_NullSnapshotTest()
+        {
+            // Arrange
+            var typeEater = new TypeEater(Mock.Of<EatExpressionHelper>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => typeEater.EatVariableType(null, Mock.Of<IType>()));
+        }
+
+        [Test]
+        public void EatVariableType_NullTypeTest()
+        {
+            // Arrange
+            var typeEater = new TypeEater(Mock.Of<EatExpressionHelper>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => typeEater.EatVariableType(Mock.Of<ISnapshot>(), null));
         }
     }
 }

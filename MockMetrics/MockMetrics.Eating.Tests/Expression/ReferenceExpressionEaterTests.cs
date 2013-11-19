@@ -1,7 +1,8 @@
-﻿using JetBrains.ReSharper.Psi;
+﻿using System;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
-using MockMetrics.Eating.Tests.SutbTypes;
+using MockMetrics.Eating.Tests.StubTypes;
 using Moq;
 using NUnit.Framework;
 
@@ -130,6 +131,23 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.TargetCall);
+        }
+
+        [Test]
+        public void UnexpectedAssignDestinationTest()
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var refElement = Mock.Of<IDeclaredElement>();
+            var referenceExpression = Mock.Of<IReferenceExpression>();
+            var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
+            var typeEater = Mock.Of<ITypeEater>();
+            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>()) == ExpressionKind.None);
+            var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
+            
+            // Assert
+            Assert.Throws<UnexpectedReferenceTypeException>(() => referenceExpressionEater.Eat(snapshot, referenceExpression));
         }
     }
 }

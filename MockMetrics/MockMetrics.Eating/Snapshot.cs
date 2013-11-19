@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
@@ -32,8 +33,11 @@ namespace MockMetrics.Eating
         public IEnumerable<string> TestedProjectNames { get; private set; }
         public string TestProjectName { get; private set; }
 
-        public Snapshot(IMethodDeclaration unitTest)
+        public Snapshot([NotNull] IMethodDeclaration unitTest)
         {
+            if (unitTest == null) 
+                throw new ArgumentNullException("unitTest");
+
             UnitTest = unitTest;
             Targets = new List<ICSharpTreeNode>();
             Stubs = new List<ICSharpTreeNode>();
@@ -130,8 +134,14 @@ namespace MockMetrics.Eating
         }
         
         // TODO: get kind of fields, properties and methods
-        public ExpressionKind GetVariableKind(ILocalVariable localVariable, ITypeEater typeEater)
+        public ExpressionKind GetVariableKind([NotNull] ILocalVariable localVariable, [NotNull] ITypeEater typeEater)
         {
+            if (localVariable == null) 
+                throw new ArgumentNullException("localVariable");
+
+            if (typeEater == null)
+                throw new ArgumentNullException("typeEater");
+
             if (Targets.OfType<IVariableDeclaration>().Contains(localVariable as IVariableDeclaration))
             {
                 return ExpressionKind.Target;

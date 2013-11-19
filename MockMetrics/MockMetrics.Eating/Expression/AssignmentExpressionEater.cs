@@ -40,7 +40,7 @@ namespace MockMetrics.Eating.Expression
                 return assignmentKind;
             }
 
-            throw new NotSupportedException();
+            throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);
         }
     }
 }

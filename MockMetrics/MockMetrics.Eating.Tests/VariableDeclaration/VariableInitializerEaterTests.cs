@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using System;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.VariableDeclaration;
@@ -134,6 +135,26 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Stub);
+        }
+
+        [Test]
+        public void NullSnapshotTest()
+        {
+            // Arrange
+            var initializerEater = new VariableInitializerEater(Mock.Of<IEater>());
+
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => initializerEater.Eat(null, Mock.Of<IExpressionInitializer>()));
+        }
+
+        [Test]
+        public void NullInitializerTest()
+        {
+            // Arrange
+            var initializerEater = new VariableInitializerEater(Mock.Of<IEater>());
+            
+            // Assert
+            Assert.Throws<ArgumentNullException>(() => initializerEater.Eat(Mock.Of<ISnapshot>(), null));
         }
     }
 }
