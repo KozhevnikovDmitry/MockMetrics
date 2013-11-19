@@ -20,9 +20,6 @@ public class EatingUnitTestAssembly : ReSharperTestEnvironmentAssembly
   {
     // Test assembly
     yield return Assembly.GetExecutingAssembly();
-
-    #warning you need to replace 'object' below with a type from the assembly being tested
-    yield return typeof(object).Assembly;
   }
 
   public override void SetUp()
