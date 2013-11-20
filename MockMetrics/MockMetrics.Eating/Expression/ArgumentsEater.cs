@@ -30,7 +30,7 @@ namespace MockMetrics.Eating.Expression
 
                 if (kind != ExpressionKind.StubCandidate && !(arg.Value is IReferenceExpression))
                 {
-                    snapshot.AddTreeNode(kind, arg);
+                    snapshot.Add(kind, arg);
                 }
             }
         }

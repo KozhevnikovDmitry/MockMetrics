@@ -21,7 +21,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             lambdaParameterDeclarationEater.Eat(snapshot.Object, lambdaParameterDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(lambdaParameterDeclaration), Times.Once);
+            snapshot.Verify(t => t.Add(lambdaParameterDeclaration), Times.Once);
         }
     }
 }

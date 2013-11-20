@@ -83,7 +83,7 @@ namespace MockMetrics.Eating.Tests.Expression
         
         [TestCase("Method:NUnit.Framework.Assert", Result = ExpressionKind.Assert)]
         [TestCase("Method:Moq.Mock.Verify", Result = ExpressionKind.Assert)]
-        public ExpressionKind EatSpecialInvocationTest(string invokedElementName)
+        public ExpressionKind EatAssertationTest(string invokedElementName)
         {
             // Arrange
             var invocationExpression = Mock.Of<IInvocationExpression>();
@@ -100,6 +100,29 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             return invocationEater.Eat(snapshot, invocationExpression);
 
+        }
+
+        [TestCase("Method:NUnit.Framework.Assert")]
+        [TestCase("Method:Moq.Mock.Verify")]
+        public void AddAssertationToSnapshotTest(string invokedElementName)
+        {
+            // Arrange
+            var invocationExpression = Mock.Of<IInvocationExpression>();
+            var snapshot = new Mock<ISnapshot>();
+            var parentEater =
+                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression) == ExpressionKind.None);
+            var argsEater = Mock.Of<IArgumentsEater>();
+            var mockEater = Mock.Of<IMockOfInvocationEater>();
+            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var eater = Mock.Of<IEater>();
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == invokedElementName);
+            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
+
+            // Act
+            invocationEater.Eat(snapshot.Object, invocationExpression);
+
+            // Assert
+            snapshot.Verify(t => t.Add(ExpressionKind.Assert, invocationExpression));
         }
 
         [Test]
@@ -148,7 +171,7 @@ namespace MockMetrics.Eating.Tests.Expression
             invocationEater.Eat(snapshot.Object, invocationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.TargetCall, invocationExpression), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.TargetCall, invocationExpression), Times.Once);
         }
 
         [Test]
@@ -244,7 +267,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var kind = invocationEater.Eat(snapshot.Object, invocationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.TargetCall, invocationExpression), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.TargetCall, invocationExpression), Times.Once);
             Assert.AreEqual(kind, ExpressionKind.TargetCall);
         }
     }

@@ -12,7 +12,7 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         public override void Eat(ISnapshot snapshot, IRegularParameterDeclaration variableDeclaration)
         {
-            snapshot.AddTreeNode(ExpressionKind.Stub, variableDeclaration);
+            snapshot.Add(ExpressionKind.Stub, variableDeclaration);
         }
     }
 }

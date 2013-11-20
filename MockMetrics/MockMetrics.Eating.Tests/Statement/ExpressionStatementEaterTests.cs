@@ -1,5 +1,4 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Statement;
 using Moq;
 using NUnit.Framework;
@@ -15,15 +14,15 @@ namespace MockMetrics.Eating.Tests.Statement
             // Arrange
             var expression = Mock.Of<ICSharpExpression>();
             var statement = Mock.Of<IExpressionStatement>(t => t.Expression == expression);
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Assert);
-            var expressionStatementEater = new ExpressionStatementEater(eater);
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
+            var expressionStatementEater = new ExpressionStatementEater(eater.Object);
 
             // Act
-            expressionStatementEater.Eat(snapshot.Object, statement);
+            expressionStatementEater.Eat(snapshot, statement);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Assert, statement));
+            eater.Verify(t => t.Eat(snapshot, expression), Times.Once);
         }
     }
 }

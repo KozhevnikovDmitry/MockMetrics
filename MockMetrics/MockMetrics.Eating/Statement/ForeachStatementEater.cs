@@ -14,7 +14,7 @@ namespace MockMetrics.Eating.Statement
             Eater.Eat(snapshot, statement.IteratorDeclaration);
 
             var kind = Eater.Eat(snapshot, statement.Collection);
-            snapshot.AddTreeNode(kind, statement.Collection);
+            snapshot.Add(kind, statement.Collection);
         }
     }
 }

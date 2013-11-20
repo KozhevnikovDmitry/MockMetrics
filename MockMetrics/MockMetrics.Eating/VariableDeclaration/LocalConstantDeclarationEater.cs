@@ -11,7 +11,7 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         public override void Eat(ISnapshot snapshot, ILocalConstantDeclaration variableDeclaration)
         {
-            snapshot.AddTreeNode(ExpressionKind.Stub, variableDeclaration);
+            snapshot.Add(ExpressionKind.Stub, variableDeclaration);
         }
     }
 }

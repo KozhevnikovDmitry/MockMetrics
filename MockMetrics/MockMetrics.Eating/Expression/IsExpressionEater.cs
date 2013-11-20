@@ -11,7 +11,7 @@ namespace MockMetrics.Eating.Expression
         public override ExpressionKind Eat(ISnapshot snapshot, IIsExpression expression)
         {
             var kind = Eater.Eat(snapshot, expression.Operand);
-            snapshot.AddTreeNode(kind, expression.Operand);
+            snapshot.Add(kind, expression.Operand);
 
             return ExpressionKind.StubCandidate;
         }

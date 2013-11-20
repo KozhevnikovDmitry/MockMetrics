@@ -3,31 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ProjectModel;
-using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.MoqStub;
+using Delegate = JetBrains.ReSharper.Psi.ExtensionsAPI.Caches2.Delegate;
 
 namespace MockMetrics.Eating
 {
     public interface ISnapshot
     {
         IMethodDeclaration UnitTest { get; }
-        List<ICSharpTreeNode> TargetCalls { get; }
-        List<ICSharpTreeNode> Targets { get; }
-        List<ICSharpTreeNode> Stubs { get; }
-        List<ICSharpTreeNode> Results { get; }
-        List<ICSharpTreeNode> Mocks { get; }
-        List<ICSharpTreeNode> Asserts { get; }
-        List<ICSharpDeclaration> Variables { get; }
-        List<ILabelStatement> Labels { get; }
-        void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode);
-        void AddTreeNode(FakeOptionType fakeOptionType, ICSharpTreeNode sharpTreeNode);
-        void AddVariable(ICSharpDeclaration variableDeclaration);
-        void AddLabel(ILabelStatement label);
+        IEnumerable<ICSharpTreeNode> TargetCalls { get; }
+        IEnumerable<ICSharpTreeNode> Targets { get; }
+        IEnumerable<ICSharpTreeNode> Stubs { get; }
+        IEnumerable<ICSharpTreeNode> Results { get; }
+        IEnumerable<ICSharpTreeNode> Mocks { get; }
+        IEnumerable<ICSharpTreeNode> Asserts { get; }
+        IEnumerable<ICSharpTreeNode> Variables { get; }
+        IEnumerable<ICSharpTreeNode> Labels { get; }
+
+        void Add(ExpressionKind expressionKind, ICSharpStatement statement);
+        void Add(ExpressionKind expressionKind, ICSharpExpression expression);
+        void Add(FakeOptionType fakeOptionType, ICSharpExpression expression);
+        void Add(ExpressionKind expressionKind, IVariableDeclaration declaration);
+        void Add(ExpressionKind expressionKind, IInitializerElement variableInitializer);
+        void Add(ExpressionKind expressionKind, ICSharpArgument argument);
+        void Add(ILabelStatement label);
+        void Add(IVariableDeclaration variableDeclaration);
+        void Add(IQueryRangeVariableDeclaration variableDeclaration);
+
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
-        ExpressionKind GetVariableKind(IVariableDeclaration localVariable, ITypeEater typeEater);
+        ExpressionKind GetVariableKind(IVariableDeclaration localVariable);
+        void Except(IVariableDeclaration variableDeclaration);
     }
 
     public class Snapshot : ISnapshot
@@ -35,42 +43,94 @@ namespace MockMetrics.Eating
         public IEnumerable<string> TestedProjectNames { get; private set; }
         public string TestProjectName { get; private set; }
 
+        private List<SnapNode> SnapNodes;
+
         public Snapshot([NotNull] IMethodDeclaration unitTest)
         {
             if (unitTest == null)
                 throw new ArgumentNullException("unitTest");
-
+            SnapNodes = new List<SnapNode>();
             UnitTest = unitTest;
-            Targets = new List<ICSharpTreeNode>();
-            Stubs = new List<ICSharpTreeNode>();
-            Results = new List<ICSharpTreeNode>();
-            Mocks = new List<ICSharpTreeNode>();
-            Asserts = new List<ICSharpTreeNode>();
-            TargetCalls = new List<ICSharpTreeNode>();
-            Variables = new List<ICSharpDeclaration>();
-            Labels = new List<ILabelStatement>();
             GetTestScope(unitTest);
         }
 
         public IMethodDeclaration UnitTest { get; private set; }
 
-        public List<ICSharpTreeNode> TargetCalls { get; private set; }
+        public IEnumerable<ICSharpTreeNode> TargetCalls
+        {
+            get
+            {
+                return SnapNodes.Where(t => t.Kinds.Contains(ExpressionKind.TargetCall)).Select(t => t.Node);
+            }
+        }
 
-        public List<ICSharpTreeNode> Targets { get; private set; }
+        public IEnumerable<ICSharpTreeNode> Targets
+        {
+            get
+            {
+                return SnapNodes.Where(t => t.Kinds.Contains(ExpressionKind.Target)).Select(t => t.Node);
+            }
+        }
 
-        public List<ICSharpTreeNode> Stubs { get; private set; }
+        public IEnumerable<ICSharpTreeNode> Stubs
+        {
+            get
+            {
+                return SnapNodes.Where(t => t.Kinds.Contains(ExpressionKind.Stub)).Select(t => t.Node);
+            }
+        }
 
-        public List<ICSharpTreeNode> Results { get; private set; }
+        public IEnumerable<ICSharpTreeNode> Results
+        {
+            get
+            {
+                return SnapNodes.Where(t => t.Kinds.Contains(ExpressionKind.Result)).Select(t => t.Node);
+            }
+        }
 
-        public List<ICSharpTreeNode> Mocks { get; private set; }
+        public IEnumerable<ICSharpTreeNode> Mocks
+        {
+            get
+            {
+                return SnapNodes.Where(t => t.Kinds.Contains(ExpressionKind.Mock)).Select(t => t.Node);
+            }
+        }
 
-        public List<ICSharpTreeNode> Asserts { get; private set; }
+        public IEnumerable<ICSharpTreeNode> Asserts
+        {
+            get
+            {
+                return SnapNodes.Where(t => t.Kinds.Contains(ExpressionKind.Assert)).Select(t => t.Node);
+            }
+        }
 
-        public List<ICSharpDeclaration> Variables { get; private set; }
+        public IEnumerable<ICSharpTreeNode> Variables
+        {
+            get
+            {
+                return SnapNodes.Select(t => t.Node).OfType<ICSharpDeclaration>();
+            }
+        }
 
-        public List<ILabelStatement> Labels { get; private set; }
+        public IEnumerable<ICSharpTreeNode> Labels
+        {
+            get
+            {
+                return SnapNodes.Select(t => t.Node).OfType<ILabelStatement>();
+            }
+        }
 
-        public void AddTreeNode(FakeOptionType fakeOptionType, ICSharpTreeNode sharpTreeNode)
+        public void Add(ExpressionKind expressionKind, ICSharpStatement statement)
+        {
+            AddAny(expressionKind, statement);
+        }
+
+        public void Add(ExpressionKind expressionKind, ICSharpExpression expression)
+        {
+            AddAny(expressionKind, expression);
+        }
+
+        public void Add(FakeOptionType fakeOptionType, ICSharpExpression expression)
         {
             switch (fakeOptionType)
             {
@@ -93,59 +153,52 @@ namespace MockMetrics.Eating
             }
         }
 
-        public void AddTreeNode(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode)
+        public void Add(ExpressionKind expressionKind, IVariableDeclaration declaration)
         {
-            switch (expressionKind)
+            AddAny(expressionKind, declaration);
+        }
+
+        public void Add(ExpressionKind expressionKind, IInitializerElement variableInitializer)
+        {
+            AddAny(expressionKind, variableInitializer);
+        }
+
+        public void Add(ExpressionKind expressionKind, ICSharpArgument argument)
+        {
+            AddAny(expressionKind, argument);
+        }
+
+        private void AddAny(ExpressionKind expressionKind, ICSharpTreeNode sharpTreeNode)
+        {
+            if (expressionKind == ExpressionKind.None || expressionKind == ExpressionKind.StubCandidate)
             {
-                case ExpressionKind.Stub:
-                    {
-                        Stubs.Add(sharpTreeNode);
-                        break;
-                    }
-                case ExpressionKind.Result:
-                    {
-                        Results.Add(sharpTreeNode);
-                        break;
-                    }
-                case ExpressionKind.Mock:
-                    {
-                        Mocks.Add(sharpTreeNode);
-                        break;
-                    }
-                case ExpressionKind.Target:
-                    {
-                        Targets.Add(sharpTreeNode);
-                        break;
-                    }
-                case ExpressionKind.TargetCall:
-                    {
-                        TargetCalls.Add(sharpTreeNode);
-                        break;
-                    }
-                case ExpressionKind.Assert:
-                    {
-                        Asserts.Add(sharpTreeNode);
-                        break;
-                    }
-                case ExpressionKind.StubCandidate:
-                    {
-                        break;
-                    }
-                case ExpressionKind.None:
-                    {
-                        break;
-                    }
+                return;
+            }
+
+            var node = SnapNodes.SingleOrDefault(t => t.Node == sharpTreeNode);
+            if (node == null)
+            {
+                SnapNodes.Add(new SnapNode(sharpTreeNode, expressionKind));
+            }
+            else
+            {
+                node.AddKind(expressionKind);
             }
         }
 
-        public void AddVariable(ICSharpDeclaration variableDeclaration)
+        public void Add(IVariableDeclaration variableDeclaration)
         {
-            Variables.Add(variableDeclaration);
+            SnapNodes.Add(new SnapNode(variableDeclaration));
         }
 
-        public void AddLabel(ILabelStatement label)
+        public void Add(IQueryRangeVariableDeclaration variableDeclaration)
         {
-            Labels.Add(label);
+            SnapNodes.Add(new SnapNode(variableDeclaration));
+        }
+
+        public void Add(ILabelStatement label)
+        {
+            SnapNodes.Add(new SnapNode(label));
         }
 
         public bool IsInTestScope(string projectName)
@@ -159,40 +212,28 @@ namespace MockMetrics.Eating
         }
 
         // TODO: get kind of fields, properties and methods
-        public ExpressionKind GetVariableKind([NotNull] IVariableDeclaration localVariable, [NotNull] ITypeEater typeEater)
+        public ExpressionKind GetVariableKind([NotNull] IVariableDeclaration localVariable)
         {
             if (localVariable == null)
                 throw new ArgumentNullException("localVariable");
 
-            if (typeEater == null)
-                throw new ArgumentNullException("typeEater");
+            var variable = SnapNodes.SingleOrDefault(t => t.Node == localVariable);
 
-            if (Targets.OfType<IVariableDeclaration>().Contains(localVariable))
-            {
-                return ExpressionKind.Target;
-            }
+            if (variable == null) 
+                throw new VariableNotFoundInSnapshotException(localVariable, this);
 
-            if (Stubs.OfType<IVariableDeclaration>().Contains(localVariable))
-            {
-                return ExpressionKind.Stub;
-            }
+            var lastKind = variable.Kinds.Last();
+            return lastKind;
+        }
 
-            if (Mocks.OfType<IVariableDeclaration>().Contains(localVariable))
-            {
-                return ExpressionKind.Mock;
-            }
+        public void Except(IVariableDeclaration variableDeclaration)
+        {
+            var variable = SnapNodes.SingleOrDefault(t => t.Node == variableDeclaration);
 
-            if (Results.OfType<IVariableDeclaration>().Contains(localVariable))
-            {
-                return ExpressionKind.Result;
-            }
+            if (variable == null) 
+                throw new VariableNotFoundInSnapshotException(variableDeclaration, this);
 
-            if (Variables.OfType<IVariableDeclaration>().Contains(localVariable))
-            {
-                return typeEater.EatVariableType(this, localVariable.Type);
-            }
-
-            throw new NotSupportedException();
+            variable.ExceptInitialOccurence();
         }
 
         private void GetTestScope(IMethodDeclaration unitTest)
@@ -208,7 +249,70 @@ namespace MockMetrics.Eating
             return
                 string.Format(
                     "Test [{0}];Stubs [{1}];Variables [{2}];Mocks [{3}];Targets [{4}];TargetCalls [{5}];Asserts [{6}];Labels [{7}];",
-                    UnitTest.NameIdentifier, Stubs.Count, Variables.Count, Mocks.Count, Targets.Count, TargetCalls.Count, Asserts.Count, Labels.Count);
+                    UnitTest.NameIdentifier, Stubs.Count(), Variables.Count(), Mocks.Count(), Targets.Count(), TargetCalls.Count(), Asserts.Count(), Labels.Count());
+        }
+    }
+
+    internal class SnapNode
+    {
+        public ICSharpTreeNode Node { get; private set; }
+
+        public Dictionary<Guid, ExpressionKind> Occurences { get; private set; }
+
+        public IEnumerable<ExpressionKind> Kinds
+        {
+            get { return Occurences.Values; }
+        }
+
+        public Guid InitialOccurence { get; private set; }
+
+        public SnapNode([NotNull] ICSharpTreeNode node)
+        {
+            if (node == null)
+                throw new ArgumentNullException("node");
+
+            Node = node;
+            Occurences = new Dictionary<Guid, ExpressionKind>();
+            InitialOccurence = Guid.Empty;
+        }
+
+        public SnapNode(ICSharpTreeNode node, ExpressionKind kind)
+            : this(node)
+        {
+            AddKind(kind);
+        }
+
+        public void AddKind(ExpressionKind kind)
+        {
+            Occurences[Guid.NewGuid()] = kind;
+
+            if (Occurences.Count == 1)
+            {
+                InitialOccurence = Occurences.Single().Key;
+            }
+
+        }
+
+        public void ExceptInitialOccurence()
+        {
+            if (InitialOccurence != Guid.Empty &&
+                Occurences.ContainsKey(InitialOccurence))
+            {
+                Occurences.Remove(InitialOccurence);
+            }
+        }
+    }
+
+    public class VariableNotFoundInSnapshotException : ApplicationException
+    {
+        public IVariableDeclaration LocalVariable { get; private set; }
+        public Snapshot Snapshot { get; private set; }
+
+        public VariableNotFoundInSnapshotException(IVariableDeclaration localVariable, Snapshot snapshot)
+            :base("Variable is not found in snapshot")
+        {
+            LocalVariable = localVariable;
+            Snapshot = snapshot;
         }
     }
 }

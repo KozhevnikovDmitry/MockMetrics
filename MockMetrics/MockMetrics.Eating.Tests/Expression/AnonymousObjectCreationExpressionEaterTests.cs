@@ -46,7 +46,7 @@ namespace MockMetrics.Eating.Tests.Expression
             anonymousObjectCreationExpressionEater.Eat(snapshot.Object, anonymousObjectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, memberDeclaration));
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, memberDeclaration));
         }
 
         [Test]

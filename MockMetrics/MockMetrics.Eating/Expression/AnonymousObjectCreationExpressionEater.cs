@@ -15,7 +15,7 @@ namespace MockMetrics.Eating.Expression
             foreach (var memberDeclaration in expression.AnonymousInitializer.MemberInitializers)
             {
                 var kind = Eater.Eat(snapshot, memberDeclaration.Expression);
-                snapshot.AddTreeNode(kind, memberDeclaration);
+                snapshot.Add(kind, memberDeclaration);
             }
 
             return ExpressionKind.StubCandidate;

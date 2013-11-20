@@ -16,7 +16,7 @@ namespace MockMetrics.Eating.VariableDeclaration
         public override void Eat(ISnapshot snapshot, IUnsafeCodeFixedPointerDeclaration variableDeclaration)
         {
             ExpressionKind kind = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
-            snapshot.AddTreeNode(kind, variableDeclaration);
+            snapshot.Add(kind, variableDeclaration);
         }
     }
 }

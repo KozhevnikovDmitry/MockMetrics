@@ -12,7 +12,7 @@ namespace MockMetrics.Eating.Statement
         public override void Eat(ISnapshot snapshot, IReturnStatement statement)
         {
             var condKind = Eater.Eat(snapshot, statement.Value);
-            snapshot.AddTreeNode(condKind, statement.Value);
+            snapshot.Add(condKind, statement.Value);
         }
     }
 }

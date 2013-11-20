@@ -12,13 +12,13 @@ namespace MockMetrics.Eating.Expression
         public override ExpressionKind Eat(ISnapshot snapshot, IConditionalTernaryExpression expression)
         {
             var conditionKind = Eater.Eat(snapshot, expression.ConditionOperand);
-            snapshot.AddTreeNode(conditionKind, expression.ConditionOperand);
+            snapshot.Add(conditionKind, expression.ConditionOperand);
 
             var thenKind = Eater.Eat(snapshot, expression.ThenResult);
-            snapshot.AddTreeNode(thenKind, expression.ThenResult);
+            snapshot.Add(thenKind, expression.ThenResult);
 
             var elseKind = Eater.Eat(snapshot, expression.ElseResult);
-            snapshot.AddTreeNode(elseKind, expression.ElseResult);
+            snapshot.Add(elseKind, expression.ElseResult);
 
             return ExpressionKind.StubCandidate;
         }

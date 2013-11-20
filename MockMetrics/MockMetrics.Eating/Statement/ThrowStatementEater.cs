@@ -11,7 +11,7 @@ namespace MockMetrics.Eating.Statement
         public override void Eat(ISnapshot snapshot, IThrowStatement statement)
         {
             var condKind = Eater.Eat(snapshot, statement.Exception);
-            snapshot.AddTreeNode(condKind, statement.Exception);
+            snapshot.Add(condKind, statement.Exception);
         }
     }
 }

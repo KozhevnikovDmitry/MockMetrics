@@ -15,7 +15,7 @@ namespace MockMetrics.Eating.Expression
         {
            
             Eater.Eat(snapshot, expression.From.Expression);
-            snapshot.AddVariable(expression.From.Declaration);
+            snapshot.Add(expression.From.Declaration);
 
             IQuerySelectClause lastSelect;
             foreach (var queryClause in expression.Clauses)
@@ -27,7 +27,7 @@ namespace MockMetrics.Eating.Expression
 
             foreach (var queryContinuation in expression.Continuations)
             {
-                snapshot.AddVariable(queryContinuation.Declaration);
+                snapshot.Add(queryContinuation.Declaration);
 
                 foreach (var queryClause in queryContinuation.Clauses)
                 {

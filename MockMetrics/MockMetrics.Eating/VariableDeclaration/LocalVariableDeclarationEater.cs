@@ -20,7 +20,7 @@ namespace MockMetrics.Eating.VariableDeclaration
             if (variableDeclaration.Initial == null)
             {
                 var typeKind = _typeEater.EatVariableType(snapshot, variableDeclaration.Type);
-                snapshot.AddTreeNode(typeKind, variableDeclaration);
+                snapshot.Add(typeKind, variableDeclaration);
                 return;
             }
 
@@ -28,17 +28,17 @@ namespace MockMetrics.Eating.VariableDeclaration
 
             if (kind == ExpressionKind.StubCandidate)
             {
-                snapshot.AddTreeNode(ExpressionKind.Stub, variableDeclaration);
+                snapshot.Add(ExpressionKind.Stub, variableDeclaration);
                 return;
             }
 
             if (kind == ExpressionKind.TargetCall || kind == ExpressionKind.Assert)
             {
-                snapshot.AddTreeNode(ExpressionKind.Result, variableDeclaration);
+                snapshot.Add(ExpressionKind.Result, variableDeclaration);
                 return;
             }
 
-            snapshot.AddTreeNode(kind, variableDeclaration);
+            snapshot.Add(kind, variableDeclaration);
         }
     }
 }

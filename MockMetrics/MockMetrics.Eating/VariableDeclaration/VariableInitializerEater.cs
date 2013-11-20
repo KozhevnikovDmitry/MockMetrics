@@ -34,7 +34,7 @@ namespace MockMetrics.Eating.VariableDeclaration
                     ExpressionKind kind = Eat(snapshot, variableInitializer);
 
                     // TODO : what if stubcandidate
-                    snapshot.AddTreeNode(kind, variableInitializer);
+                    snapshot.Add(kind, variableInitializer);
                 }
 
                 // TODO : array of target?

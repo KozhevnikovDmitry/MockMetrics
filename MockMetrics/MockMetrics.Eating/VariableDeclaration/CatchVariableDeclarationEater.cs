@@ -10,7 +10,7 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         public override void Eat(ISnapshot snapshot, ICatchVariableDeclaration variableDeclaration)
         {
-            snapshot.AddVariable(variableDeclaration);
+            snapshot.Add(variableDeclaration);
         }
     }
 }

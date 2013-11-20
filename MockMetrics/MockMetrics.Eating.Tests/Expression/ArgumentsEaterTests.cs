@@ -44,7 +44,7 @@ namespace MockMetrics.Eating.Tests.Expression
             argumentsEater.Eat(snapshot.Object, args);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(It.IsAny<ExpressionKind>(), argument), Times.Never);
+            snapshot.Verify(t => t.Add(It.IsAny<ExpressionKind>(), argument), Times.Never);
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace MockMetrics.Eating.Tests.Expression
             argumentsEater.Eat(snapshot.Object, args);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(It.IsAny<ExpressionKind>(), argument), Times.Never);
+            snapshot.Verify(t => t.Add(It.IsAny<ExpressionKind>(), argument), Times.Never);
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace MockMetrics.Eating.Tests.Expression
             argumentsEater.Eat(snapshot.Object, args);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, argument), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, argument), Times.Once);
         }
         
         [Test]

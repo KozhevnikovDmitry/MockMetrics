@@ -72,6 +72,7 @@ namespace MockMetrics.Eating.Expression
             var classType = _eatExpressionHelper.GetTypeClass(type);
             if (snapshot.IsInTestScope(classType.Module.Name))
             {
+                //TODO if type is interface or abstract class return stub/mock?
                 return ExpressionKind.Target;
             }
 

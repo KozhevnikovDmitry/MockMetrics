@@ -42,7 +42,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             codeFixedPointerDeclarationEater.Eat(snapshot.Object, codeFixedPointerDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, codeFixedPointerDeclaration), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, codeFixedPointerDeclaration), Times.Once);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace MockMetrics.Eating.Tests.Expression
             binaryExpressionEater.Eat(snapshot.Object, binaryExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, left), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, left), Times.Once);
         }
         
         [Test]
@@ -75,7 +75,7 @@ namespace MockMetrics.Eating.Tests.Expression
             binaryExpressionEater.Eat(snapshot.Object, binaryExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, right), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, right), Times.Once);
         }
 
         [TestCase(ExpressionKind.StubCandidate, ExpressionKind.StubCandidate, Result = ExpressionKind.StubCandidate)]

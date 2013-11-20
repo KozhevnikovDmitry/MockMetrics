@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.Statement
             Eater.Eat(snapshot, statement.Body);
 
             var condKind = Eater.Eat(snapshot, statement.Monitor);
-            snapshot.AddTreeNode(condKind, statement.Monitor);
+            snapshot.Add(condKind, statement.Monitor);
         }
     }
 }

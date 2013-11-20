@@ -69,7 +69,7 @@ namespace MockMetrics.Eating.Tests.Expression
             objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, memberInitializer));
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, memberInitializer));
         }
 
         [Test]

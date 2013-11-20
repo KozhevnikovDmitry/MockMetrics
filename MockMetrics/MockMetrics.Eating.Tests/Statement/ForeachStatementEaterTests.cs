@@ -57,7 +57,7 @@ namespace MockMetrics.Eating.Tests.Statement
             foreachEater.Eat(snapshot.Object, foreachStatement);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, collection), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, collection), Times.Once);
         }
 
         [Test]

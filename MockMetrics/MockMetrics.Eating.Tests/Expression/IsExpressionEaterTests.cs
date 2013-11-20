@@ -57,7 +57,7 @@ namespace MockMetrics.Eating.Tests.Expression
             isExpressionEater.Eat(snapshot.Object, isExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, operand), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, operand), Times.Once);
         }
     }
 }

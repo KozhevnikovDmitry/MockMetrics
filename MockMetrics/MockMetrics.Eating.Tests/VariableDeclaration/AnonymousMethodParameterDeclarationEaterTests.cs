@@ -21,7 +21,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             anonymousParameterDeclarationEater.Eat(snapshot.Object, anonymousParameterDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(anonymousParameterDeclaration), Times.Once);
+            snapshot.Verify(t => t.Add(anonymousParameterDeclaration), Times.Once);
         }
     }
 }

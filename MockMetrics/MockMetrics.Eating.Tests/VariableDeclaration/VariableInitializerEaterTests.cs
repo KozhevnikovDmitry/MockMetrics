@@ -49,7 +49,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             initializerEater.Eat(snapshot.Object, arrayInit);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, itemInitializer));
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, itemInitializer));
         }
 
         [Test]

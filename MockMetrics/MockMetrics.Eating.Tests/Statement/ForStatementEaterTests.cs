@@ -76,7 +76,7 @@ namespace MockMetrics.Eating.Tests.Statement
             forEater.Eat(snapshot.Object, forStatement);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, condition), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, condition), Times.Once);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace MockMetrics.Eating.Tests.Statement
             forEater.Eat(snapshot.Object, forStatement);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, initilizer), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, initilizer), Times.Once);
         }
 
         [Test]
@@ -168,7 +168,7 @@ namespace MockMetrics.Eating.Tests.Statement
             forEater.Eat(snapshot.Object, forStatement);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, iterator), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, iterator), Times.Once);
         }
     }
 }

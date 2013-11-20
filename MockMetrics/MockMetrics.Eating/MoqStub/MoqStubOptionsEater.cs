@@ -40,14 +40,14 @@ namespace MockMetrics.Eating.MoqStub
             if (options is IInvocationExpression)
             {
                 var optType = _moqStubOptionTargetEater.EatOption(snapshot, options as IInvocationExpression);
-                snapshot.AddTreeNode(optType, options);
+                snapshot.Add(optType, options);
                 return;
             }
 
             if (options is IReferenceExpression)
             {
                 var optType = _moqStubOptionTargetEater.EatOption(snapshot, options as IReferenceExpression);
-                snapshot.AddTreeNode(optType, options);
+                snapshot.Add(optType, options);
                 return;
             }
 
@@ -59,7 +59,7 @@ namespace MockMetrics.Eating.MoqStub
             var addableKinds = new[] { ExpressionKind.Target, ExpressionKind.Stub, ExpressionKind.Mock };
             if (addableKinds.Contains(kind))
             {
-                snapshot.AddTreeNode(kind, optionValue);
+                snapshot.Add(kind, optionValue);
             }
         }
     }

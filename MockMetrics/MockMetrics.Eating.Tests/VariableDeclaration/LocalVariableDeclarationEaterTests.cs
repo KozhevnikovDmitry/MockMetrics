@@ -46,7 +46,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             localConstantDeclarationEater.Eat(snapshot.Object, localConstantDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, localConstantDeclaration), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, localConstantDeclaration), Times.Once);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             localConstantDeclarationEater.Eat(snapshot.Object, localConstantDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(variableKindMustBe, localConstantDeclaration), Times.Once);
+            snapshot.Verify(t => t.Add(variableKindMustBe, localConstantDeclaration), Times.Once);
         }
 
 

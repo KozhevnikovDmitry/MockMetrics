@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             regularParameterDeclarationEater.Eat(snapshot.Object, regularParameterDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, regularParameterDeclaration), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, regularParameterDeclaration), Times.Once);
         }
     }
 }

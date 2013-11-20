@@ -102,7 +102,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>();
             var kindHelper = Mock.Of<ExpressionKindHelper>();
-            var snapshot = Mock.Of<ISnapshot>(t => t.GetVariableKind(refElement, typeEater) == ExpressionKind.Target);
+            var snapshot = Mock.Of<ISnapshot>(t => t.GetVariableKind(refElement) == ExpressionKind.Target);
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>()) == ExpressionKind.None);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
 

@@ -24,7 +24,7 @@ namespace MockMetrics.Eating.Expression
                 foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
                 {
                     var kind = Eater.Eat(snapshot, memberInitializer.Expression);
-                    snapshot.AddTreeNode(kind, memberInitializer);
+                    snapshot.Add(kind, memberInitializer);
                 }
             }
 

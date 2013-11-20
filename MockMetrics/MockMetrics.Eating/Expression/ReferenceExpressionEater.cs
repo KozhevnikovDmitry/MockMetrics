@@ -28,6 +28,7 @@ namespace MockMetrics.Eating.Expression
             {
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
 
+                // TODO: declared element can be method: case: event += obj.Method;
                 // TODO: declared element can be parameter
                 // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
@@ -52,7 +53,7 @@ namespace MockMetrics.Eating.Expression
 
                 if (declaredElement is IVariableDeclaration)
                 {
-                    return snapshot.GetVariableKind(declaredElement as IVariableDeclaration, _typeEater);
+                    return snapshot.GetVariableKind(declaredElement as IVariableDeclaration);
                 }
 
                 if (declaredElement is IClass)

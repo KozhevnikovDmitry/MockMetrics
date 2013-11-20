@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.ReSharper.Psi;
+﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Expression
@@ -21,26 +20,44 @@ namespace MockMetrics.Eating.Expression
             var sourceKind = Eater.Eat(snapshot, expression.Source);
 
             if (expression.Dest is IReferenceExpression)
-            {
-                var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
-
-                if (declaredElement is IEvent )
-                {
-                    return ExpressionKind.None;
-                }
-
-                if (declaredElement is IVariableDeclaration && !(declaredElement is ILocalVariableDeclaration))
-                {
-                    return ExpressionKind.None;
-                }
-
+            { 
                 var assignmentKind = _expressionKindHelper.KindOfAssignment(sourceKind);
-                snapshot.AddTreeNode(assignmentKind, expression.Dest);
-
-                return assignmentKind;
+                var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
+                if (declaredElement is IVariableDeclaration)
+                {
+                    return EatVariableDeclaration(snapshot, declaredElement as IVariableDeclaration, assignmentKind);
+                }
             }
 
             throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);
+        }
+
+        private ExpressionKind EatVariableDeclaration(ISnapshot snapshot, IVariableDeclaration variableDeclaration, ExpressionKind assignmentKind)
+        {
+            // TODO : check on properties, fields, events, parameters
+            if (variableDeclaration is IEventDeclaration)
+            {
+                return ExpressionKind.None;
+            }
+
+            if (variableDeclaration is ILocalVariableDeclaration)
+            {
+                if ((variableDeclaration as ILocalVariableDeclaration).Initial == null)
+                {
+                    snapshot.Except(variableDeclaration);
+                }
+            }
+
+            if (variableDeclaration is IUnsafeCodeFixedPointerDeclaration)
+            {
+                if ((variableDeclaration as IUnsafeCodeFixedPointerDeclaration).Initial == null)
+                {
+                    snapshot.Except(variableDeclaration);
+                }
+            }
+
+            snapshot.Add(assignmentKind, variableDeclaration);
+            return assignmentKind;
         }
     }
 }

@@ -56,7 +56,7 @@ namespace MockMetrics.Eating.Tests.Expression
             binaryExpressionEater.Eat(snapshot.Object, ternaryExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, condition), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, condition), Times.Once);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace MockMetrics.Eating.Tests.Expression
             ternaryExpressionEater.Eat(snapshot.Object, ternaryExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, then), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, then), Times.Once);
         }
 
         [Test]
@@ -126,7 +126,7 @@ namespace MockMetrics.Eating.Tests.Expression
             ternaryExpressionEater.Eat(snapshot.Object, ternaryExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, elseOperand), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, elseOperand), Times.Once);
         }
     }
 }

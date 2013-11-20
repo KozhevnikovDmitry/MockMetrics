@@ -20,7 +20,7 @@ namespace MockMetrics.Eating.Expression
                 ExpressionKind kind = Eater.Eat(snapshot, size);
                 if (kind != ExpressionKind.StubCandidate)
                 {
-                    snapshot.AddTreeNode(kind, size);
+                    snapshot.Add(kind, size);
                 }
             }
 

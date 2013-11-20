@@ -21,7 +21,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             catchVariableDeclarationEater.Eat(snapshot.Object, catchVariableDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(catchVariableDeclaration), Times.Once);
+            snapshot.Verify(t => t.Add(catchVariableDeclaration), Times.Once);
         }
     }
 }

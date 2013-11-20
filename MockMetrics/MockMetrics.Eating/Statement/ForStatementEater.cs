@@ -13,18 +13,18 @@ namespace MockMetrics.Eating.Statement
             Eater.Eat(snapshot, statement.Body);
 
             var condKind = Eater.Eat(snapshot, statement.Condition);
-            snapshot.AddTreeNode(condKind, statement.Condition);
+            snapshot.Add(condKind, statement.Condition);
 
             foreach (var initializer in statement.Initializer.Expressions)
             {
                 var kind = Eater.Eat(snapshot, initializer);
-                snapshot.AddTreeNode(kind, initializer);
+                snapshot.Add(kind, initializer);
             }
 
             foreach (var iterator in statement.Iterators.Expressions)
             {
                 var kind = Eater.Eat(snapshot, iterator);
-                snapshot.AddTreeNode(kind, iterator);
+                snapshot.Add(kind, iterator);
             }
         }
     }

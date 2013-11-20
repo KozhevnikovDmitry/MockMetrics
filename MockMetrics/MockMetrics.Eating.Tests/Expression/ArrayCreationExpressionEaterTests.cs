@@ -45,7 +45,7 @@ namespace MockMetrics.Eating.Tests.Expression
             arrayCreationExpressionEater.Eat(snapshot.Object, arrayCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.Stub, size));
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, size));
         }
 
         [Test]

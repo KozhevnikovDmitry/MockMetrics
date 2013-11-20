@@ -43,11 +43,13 @@ namespace MockMetrics.Eating.Expression
 
             if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {
+                snapshot.Add(ExpressionKind.Assert, expression);
                 return ExpressionKind.Assert;
             }
 
             if (invokedName.StartsWith("Method:Moq.Mock.Verify"))
             {
+                snapshot.Add(ExpressionKind.Assert, expression);
                 return ExpressionKind.Assert;
             }
 
@@ -57,7 +59,7 @@ namespace MockMetrics.Eating.Expression
                 var invokedMethod = invoked as IMethod;
                 if (snapshot.IsInTestScope(invokedMethod.Module.Name))
                 {
-                    snapshot.AddTreeNode(ExpressionKind.TargetCall, expression);
+                    snapshot.Add(ExpressionKind.TargetCall, expression);
                     return ExpressionKind.TargetCall;
                 }
             }
@@ -70,7 +72,7 @@ namespace MockMetrics.Eating.Expression
             var basedOnParentKind = _expressionKindHelper.InvocationKindByParentReferenceKind(parentKind);
             if (basedOnParentKind == ExpressionKind.TargetCall)
             {
-                snapshot.AddTreeNode(ExpressionKind.TargetCall, expression);
+                snapshot.Add(ExpressionKind.TargetCall, expression);
                 return ExpressionKind.TargetCall;
             }
 

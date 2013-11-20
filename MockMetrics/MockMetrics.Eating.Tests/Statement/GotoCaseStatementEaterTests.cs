@@ -41,7 +41,7 @@ namespace MockMetrics.Eating.Tests.Statement
             gotoCaseStatementEater.Eat(snapshot.Object, gotoCaseStatement);
 
             // Assert
-            snapshot.Verify(t => t.AddTreeNode(ExpressionKind.None, value), Times.Once);
+            snapshot.Verify(t => t.Add(ExpressionKind.None, value), Times.Once);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.Statement
         public override void Eat(ISnapshot snapshot, IGotoCaseStatement statement)
         {
             ExpressionKind kind = Eater.Eat(snapshot, statement.ValueExpression);
-            snapshot.AddTreeNode(kind, statement.ValueExpression);
+            snapshot.Add(kind, statement.ValueExpression);
         }
     }
 }
