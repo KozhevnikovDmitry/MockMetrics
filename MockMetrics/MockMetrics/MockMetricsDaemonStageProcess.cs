@@ -21,21 +21,17 @@ namespace MockMetrics
 
         public void Execute(Action<DaemonStageResult> committer)
         {
-            // Getting PSI (AST) for the file being highlighted
             var sourceFile = _process.SourceFile;
             var file = sourceFile.GetPsiServices().Files.GetDominantPsiFile<CSharpLanguage>(sourceFile) as ICSharpFile;
             if (file == null)
                 return;
 
-            // Running visitor against the PSI
-            var elementProcessor = new MockMetricsElementProcessor(_process, _arrangeAmount);
+            var elementProcessor = new MockMetricsElementProcessor(_process);
             file.ProcessDescendants(elementProcessor);
 
-            // Checking if the daemon is interrupted by user activity
             if (_process.InterruptFlag)
                 throw new ProcessCancelledException();
 
-            // Commit the result into document
             committer(new DaemonStageResult(elementProcessor.Highlightings));
         }
 

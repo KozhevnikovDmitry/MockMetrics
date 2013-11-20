@@ -1,0 +1,26 @@
+﻿using Moq;
+using NUnit.Framework;
+
+namespace Tested.Tests.AggregatorTests
+{
+    [TestFixture]
+    public class MoqStubsTests
+    {
+        [Test]
+        public void MoqStubsTest()
+        {
+            // Arrange
+            var depend = Mock.Of<IDepend>();
+            var another = Mock.Of<IAnother>(t => t.Calabanga("WAKAWAKA") == 100500);
+            var aggr = new Aggregator(depend, another);
+
+            // Act
+            var result1 = aggr.Aggregate("WAKAWAKA");
+            var result2 = aggr.Aggregate("WAKAWAKA");
+
+            // Assert
+            Assert.AreEqual(result1, result2);
+            Assert.AreEqual(result1, 100500);
+        }
+    }
+}

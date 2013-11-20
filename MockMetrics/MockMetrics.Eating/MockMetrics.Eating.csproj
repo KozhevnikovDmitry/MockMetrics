@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A3988EE1-0AA7-414E-AC61-ED918058DED5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MockMetrics.Eating</RootNamespace>
+    <AssemblyName>MockMetrics.Eating</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HaveBox, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HaveBox.1.6.0\lib\net45\HaveBox.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Exceptions\EatingException.cs" />
+    <Compile Include="Exceptions\ExpressionHelperException.cs" />
+    <Compile Include="Exceptions\UnexpectedTypeOfNodeToEatException.cs" />
+    <Compile Include="Expression\AnonymousMethodExpressionEater.cs" />
+    <Compile Include="Expression\AnonymousObjectCreationExpressionEater.cs" />
+    <Compile Include="Expression\ArgumentsEater.cs" />
+    <Compile Include="Expression\AsExpressionEater.cs" />
+    <Compile Include="Expression\AssignmentExpressionEater.cs" />
+    <Compile Include="Expression\CastExpressionEater.cs" />
+    <Compile Include="Expression\ConditionalTernaryExpressionEater.cs" />
+    <Compile Include="Eater.cs" />
+    <Compile Include="EatingConfig.cs" />
+    <Compile Include="EatingRoot.cs" />
+    <Compile Include="Expression\ArrayCreationExpressionEater.cs" />
+    <Compile Include="Expression\AwaitExpressionEater.cs" />
+    <Compile Include="Expression\BinaryExpressionEater.cs" />
+    <Compile Include="Expression\LambdaExpressionEater.cs" />
+    <Compile Include="Expression\DefaultExpressionEater.cs" />
+    <Compile Include="Expression\EatExpressionHelper.cs" />
+    <Compile Include="Expression\ElementAccessExpressionEater.cs" />
+    <Compile Include="Expression\ExpressionKind.cs" />
+    <Compile Include="Expression\ExpressionEater.cs" />
+    <Compile Include="Expression\ExpressionKindHelper.cs" />
+    <Compile Include="Expression\InvocationExpressionEater.cs" />
+    <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
+    <Compile Include="Expression\ParentReferenceEater.cs" />
+    <Compile Include="Expression\TypeEater.cs" />
+    <Compile Include="Expression\UnaryOperatorExpressionEater.cs" />
+    <Compile Include="Expression\LiteralExpressionEater.cs" />
+    <Compile Include="Expression\ObjectCreationExpressionEater.cs" />
+    <Compile Include="Expression\PostfixOperatorExpressionEater.cs" />
+    <Compile Include="Expression\PrefixOperatorExpressionEater.cs" />
+    <Compile Include="Expression\ReferenceExpressionEater.cs" />
+    <Compile Include="Expression\IExpressionEater.cs" />
+    <Compile Include="Expression\IsExpressionEater.cs" />
+    <Compile Include="Expression\UnexpectedAssignDestinationException.cs" />
+    <Compile Include="Expression\UnexpectedReferenceTypeException.cs" />
+    <Compile Include="ICSharpNodeEater.cs" />
+    <Compile Include="MoqStub\FakeOptionType.cs" />
+    <Compile Include="MoqStub\MoqStubOptionsEater.cs" />
+    <Compile Include="MoqStub\MoqStubOptionTargetEater.cs" />
+    <Compile Include="MoqStub\MoqStubOptionWrongTypeException.cs" />
+    <Compile Include="MoqStub\MoqStubWrongSyntaxException.cs" />
+    <Compile Include="MoqStub\MockOfInvocationEater.cs" />
+    <Compile Include="QueryClause\QueryClauseEater.cs" />
+    <Compile Include="QueryClause\QueryFromClause.cs" />
+    <Compile Include="QueryClause\QueryGroupClause.cs" />
+    <Compile Include="QueryClause\QueryJoinClause.cs" />
+    <Compile Include="QueryClause\QueryLetClause.cs" />
+    <Compile Include="QueryClause\QueryOrderByClause.cs" />
+    <Compile Include="QueryClause\QueryWhereClause.cs" />
+    <Compile Include="QueryClause\StubClauseEater.cs" />
+    <Compile Include="Statement\DoStatementEater.cs" />
+    <Compile Include="Statement\EmptyStatementEater.cs" />
+    <Compile Include="Statement\ForeachStatementEater.cs" />
+    <Compile Include="Statement\ForStatementEater.cs" />
+    <Compile Include="Statement\GotoCaseStatementEater.cs" />
+    <Compile Include="Statement\GotoStatementEater.cs" />
+    <Compile Include="Statement\IfStatementEater.cs" />
+    <Compile Include="Statement\IStatementEater.cs" />
+    <Compile Include="PostEater.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Snapshot.cs" />
+    <Compile Include="Statement\BlockStatementEater.cs" />
+    <Compile Include="Statement\DeclarationStatementEater.cs" />
+    <Compile Include="Statement\ExpressionStatementEater.cs" />
+    <Compile Include="Statement\LabelStatementEater.cs" />
+    <Compile Include="Statement\LockStatementEater.cs" />
+    <Compile Include="Expression\QueryExpressionEater.cs" />
+    <Compile Include="Statement\ReturnStatementEater.cs" />
+    <Compile Include="Statement\StatementEater.cs" />
+    <Compile Include="Statement\SwitchLabelStatementEater.cs" />
+    <Compile Include="Statement\SwitchStatementEater.cs" />
+    <Compile Include="Statement\ThrowStatementEater.cs" />
+    <Compile Include="Statement\TryCatchStatementEater.cs" />
+    <Compile Include="Statement\UncheckedStatementEater.cs" />
+    <Compile Include="Statement\UsingStatementEater.cs" />
+    <Compile Include="Statement\WhileStatementEater.cs" />
+    <Compile Include="Statement\YieldStatementEater.cs" />
+    <Compile Include="Expression\StubExpressionEater.cs" />
+    <Compile Include="Statement\StubStatementEater.cs" />
+    <Compile Include="Expression\TypeofExpressionEater.cs" />
+    <Compile Include="VariableDeclaration\StubVariableDeclarationEater.cs" />
+    <Compile Include="UnitTestEater.cs" />
+    <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\CatchVariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\ForeachVariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\IVariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\LambdaParameterDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\LocalConstantDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\LocalVariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\RegularParameterDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\UnsafeCodePointerDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\VariableDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\VariableInitializerEater.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <ReSharperSdkTargets Condition=" '$(ReSharperSdkTargets)' == '' ">$(MSBuildExtensionsPath)\JetBrains\ReSharper.SDK\v8.0</ReSharperSdkTargets>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(ReSharperSdkTargets)\Plugin.Targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

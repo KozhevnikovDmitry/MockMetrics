@@ -3,6 +3,7 @@ using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
+using MockMetrics.Eating;
 
 namespace MockMetrics
 {
@@ -11,7 +12,7 @@ namespace MockMetrics
         private readonly IDaemonProcess _process;
 
         private List<HighlightingInfo> _highlightings;
-        private readonly UnitTestProcessor _processor;
+        private readonly UnitTestEater _eater;
 
         public List<HighlightingInfo> Highlightings
         {
@@ -21,11 +22,11 @@ namespace MockMetrics
             }
         }
 
-        public MockMetricsElementProcessor(IDaemonProcess process, int arrangeAmount)
+        public MockMetricsElementProcessor(IDaemonProcess process)
         {
+            _eater = EatingRoot.Instance.GetUnitTestEater();
             _process = process;
             _highlightings = new List<HighlightingInfo>();
-            _processor = new UnitTestProcessor();
         }
 
         public bool InteriorShouldBeProcessed(ITreeNode element)
@@ -41,16 +42,16 @@ namespace MockMetrics
         public void ProcessAfterInterior(ITreeNode element)
         {
             var methodDeclaration = element as IMethodDeclaration;
-
+            
             if (methodDeclaration == null)
                 return;
 
             if (methodDeclaration.IsAbstract)
                 return;
-
+            
             if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
-                var snapshot = _processor.EatUnitTest(methodDeclaration);
+                var snapshot = _eater.EatUnitTest(methodDeclaration);
                 Highlightings.Add(new HighlightingInfo(methodDeclaration.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
             }
         }
