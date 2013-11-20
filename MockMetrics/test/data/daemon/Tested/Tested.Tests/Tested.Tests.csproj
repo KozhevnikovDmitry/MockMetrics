@@ -50,9 +50,11 @@
   <ItemGroup>
     <None Include="Foo\StubTests.cs.gold" />
     <None Include="AggregatorTests\MoqAssignmentStubsTests.cs.gold" />
+    <None Include="AggregatorTests\VariablesWithInitializersTests.cs.gold" />
     <Compile Include="AggregatorTests\MoqAssignmentStubsTests.cs" />
     <Compile Include="AggregatorTests\MoqStubTests.cs" />
     <None Include="AggregatorTests\MoqStubTests.cs.gold" />
+    <Compile Include="AggregatorTests\VariablesWithInitializersTests.cs" />
     <Compile Include="Foo\StubTests.cs" />
     <None Include="Foo\ExpressionVariableTests.cs.gold" />
     <Compile Include="Foo\ExpressionVariableTests.cs" />

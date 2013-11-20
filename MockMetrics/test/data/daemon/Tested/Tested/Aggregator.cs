@@ -7,6 +7,10 @@ namespace Tested
         private readonly IDepend _depend;
         private readonly IAnother _another;
 
+        public IService Service { get; set; }
+
+        public int Serial { get; set; }
+
         public Aggregator(IDepend depend, IAnother another)
         {
             _depend = depend;
@@ -21,6 +25,11 @@ namespace Tested
         public IEnumerable<Detail> Aggregate(IService service)
         {
             return service.Details;
+        }
+
+        public IEnumerable<Detail> Aggregate()
+        {
+            return Service.Details;
         }
 
         public int Aggregate(string intoCalabanga)

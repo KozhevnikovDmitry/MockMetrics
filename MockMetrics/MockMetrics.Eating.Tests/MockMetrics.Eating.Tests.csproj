@@ -68,6 +68,7 @@
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
     <Compile Include="Expression\CastExpressionEaterTests.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
+    <Compile Include="StubTypes\IEventDeclarationAndIDeclaredElement.cs" />
     <Compile Include="StubTypes\ILocalConstantAndIDeclaredElement.cs" />
     <Compile Include="StubTypes\ILocalVariableAndIDeclaredElement.cs" />
     <Compile Include="Expression\LambdaExpressionEaterTests.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Statement\UnsafeCodeUnsafeStatementEaterTests.cs" />
     <Compile Include="Statement\WhileStatementEaterTests.cs" />
     <Compile Include="Statement\YieldStatementEaterTests.cs" />
+    <Compile Include="StubTypes\IUnsafeCodeFixedPointerAndIDeclaredElement.cs" />
     <Compile Include="StubTypes\IVariableDeclarationAndIDeclaredElement.cs" />
     <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\CatchVariableDeclarationEaterTests.cs" />
