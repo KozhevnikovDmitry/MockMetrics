@@ -122,7 +122,7 @@
     <Compile Include="Statement\SwitchLabelStatementEater.cs" />
     <Compile Include="Statement\SwitchStatementEater.cs" />
     <Compile Include="Statement\ThrowStatementEater.cs" />
-    <Compile Include="Statement\TryCatchStatementEater.cs" />
+    <Compile Include="Statement\TryStatementEater.cs" />
     <Compile Include="Statement\UncheckedStatementEater.cs" />
     <Compile Include="Statement\UsingStatementEater.cs" />
     <Compile Include="Statement\WhileStatementEater.cs" />

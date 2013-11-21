@@ -68,6 +68,7 @@
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
     <Compile Include="Expression\CastExpressionEaterTests.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
+    <Compile Include="Statement\TryStatementEaterTests.cs" />
     <Compile Include="Statement\UsingStatementEaterTests.cs" />
     <Compile Include="StubTypes\IEventDeclarationAndIDeclaredElement.cs" />
     <Compile Include="StubTypes\ILocalConstantAndIDeclaredElement.cs" />

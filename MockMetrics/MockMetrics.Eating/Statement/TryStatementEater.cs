@@ -3,9 +3,9 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Statement
 {
-    public class TryCatchStatementEater : StatementEater<ITryStatement>
+    public class TryStatementEater : StatementEater<ITryStatement>
     {
-        public TryCatchStatementEater(IEater eater) : base(eater)
+        public TryStatementEater(IEater eater) : base(eater)
         {
 
         }
