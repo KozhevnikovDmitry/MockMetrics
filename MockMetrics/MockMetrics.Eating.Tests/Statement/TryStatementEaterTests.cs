@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Statement;
 using Moq;
@@ -37,11 +36,12 @@ namespace MockMetrics.Eating.Tests.Statement
 			// Arrange
 			var snapshot = Mock.Of<ISnapshot>();
 			var eater = new Mock<IEater>();
-			var catchClause = Mock.Of<ICatchClause>();
+		    var body = Mock.Of<IBlock>();
+			var catchClause = Mock.Of<ICatchClause>(t => t.Body == body);
 			var tryStatement = Mock.Of<ITryStatement>();
 			Mock.Get(tryStatement)
 				.Setup(t => t.Catches)
-				.Returns(new TreeNodeCollection<ICatchClause>(new[] {catchClause}));
+				.Returns(new TreeNodeCollection<ICatchClause>(new[] {catchClause }));
 
 			var tryStatementEater = new TryStatementEater(eater.Object);
 
@@ -49,7 +49,7 @@ namespace MockMetrics.Eating.Tests.Statement
 			tryStatementEater.Eat(snapshot, tryStatement);
 
 			// Assert
-			eater.Verify(t => t.Eat(snapshot, catchClause.Body), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, body), Times.Once);
 		}
 
 		[Test]
@@ -58,7 +58,8 @@ namespace MockMetrics.Eating.Tests.Statement
 			// Arrange
 			var snapshot = Mock.Of<ISnapshot>();
 			var eater = new Mock<IEater>();
-			var catchClause = Mock.Of<ISpecificCatchClause>();
+		    var varDeclaration = Mock.Of<ICatchVariableDeclaration>();
+			var catchClause = Mock.Of<ISpecificCatchClause>(t => t.ExceptionDeclaration == varDeclaration);
 			var tryStatement = Mock.Of<ITryStatement>();
 			Mock.Get(tryStatement)
 				.Setup(t => t.Catches)
@@ -70,7 +71,7 @@ namespace MockMetrics.Eating.Tests.Statement
 			tryStatementEater.Eat(snapshot, tryStatement);
 
 			// Assert
-			eater.Verify(t => t.Eat(snapshot, catchClause.ExceptionDeclaration), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, varDeclaration), Times.Once);
 		}
 
 		[Test]

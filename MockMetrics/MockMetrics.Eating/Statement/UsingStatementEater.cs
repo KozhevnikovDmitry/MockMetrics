@@ -16,6 +16,11 @@ namespace MockMetrics.Eating.Statement
                 Eater.Eat(snapshot, localVariableDeclaration);
             }
 
+            foreach (var expression in statement.Expressions)
+            {
+                Eater.Eat(snapshot, expression);
+            }
+
             Eater.Eat(snapshot, statement.Body);
         }
     }

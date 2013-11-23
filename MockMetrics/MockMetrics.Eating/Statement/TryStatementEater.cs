@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Statement
 {
@@ -21,16 +20,12 @@ namespace MockMetrics.Eating.Statement
                 {
                     Eater.Eat(snapshot, (catchClause as ISpecificCatchClause).ExceptionDeclaration);
                 }
-                
             }
 
             if (statement.FinallyBlock != null)
             {
                 Eater.Eat(snapshot, statement.FinallyBlock);
             }
-
-
-            
         }
     }
 }
