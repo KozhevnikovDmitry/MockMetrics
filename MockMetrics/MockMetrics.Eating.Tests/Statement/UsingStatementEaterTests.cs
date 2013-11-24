@@ -54,7 +54,7 @@ namespace MockMetrics.Eating.Tests.Statement
             usingStatementEater.Eat(snapshot, usingStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, expression, false), Times.Once);
         }
 
         [Test]

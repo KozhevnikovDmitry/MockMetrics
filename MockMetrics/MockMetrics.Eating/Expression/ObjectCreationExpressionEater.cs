@@ -15,7 +15,7 @@ namespace MockMetrics.Eating.Expression
             _argumentsEater = argumentsEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IObjectCreationExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IObjectCreationExpression expression, bool innerEat)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
             
@@ -23,8 +23,7 @@ namespace MockMetrics.Eating.Expression
             {
                 foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
                 {
-                    var kind = Eater.Eat(snapshot, memberInitializer.Expression);
-                    snapshot.Add(kind, memberInitializer);
+                   Eater.Eat(snapshot, memberInitializer.Expression, true);
                 }
             }
 

@@ -9,15 +9,15 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IConditionalTernaryExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IConditionalTernaryExpression expression, bool innerEat)
         {
-            var conditionKind = Eater.Eat(snapshot, expression.ConditionOperand);
+            var conditionKind = Eater.Eat(snapshot, expression.ConditionOperand, innerEat);
             snapshot.Add(conditionKind, expression.ConditionOperand);
 
-            var thenKind = Eater.Eat(snapshot, expression.ThenResult);
+            var thenKind = Eater.Eat(snapshot, expression.ThenResult, innerEat);
             snapshot.Add(thenKind, expression.ThenResult);
 
-            var elseKind = Eater.Eat(snapshot, expression.ElseResult);
+            var elseKind = Eater.Eat(snapshot, expression.ElseResult, innerEat);
             snapshot.Add(elseKind, expression.ElseResult);
 
             return ExpressionKind.StubCandidate;

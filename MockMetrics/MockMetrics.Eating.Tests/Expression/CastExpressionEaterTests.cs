@@ -17,7 +17,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var castExpression = Mock.Of<ICastExpression>(t => t.Op == op && t.TargetType == targetType);
 
             var eater = new Mock<IEater>();
-            eater.Setup(t => t.Eat(snapshot, castExpression.Op)).Returns(ExpressionKind.None).Verifiable();
+            eater.Setup(t => t.Eat(snapshot, castExpression.Op, false)).Returns(ExpressionKind.None).Verifiable();
 
             var typeEater = new Mock<ITypeEater>();
             typeEater.Setup(t => t.EatCastType(snapshot, targetType)).Returns(ExpressionKind.Mock).Verifiable();
@@ -30,7 +30,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var castExpressionEater = new CastExpressionEater(eater.Object, typeEater.Object, kindHelper.Object);
 
             // Act
-            var kind = castExpressionEater.Eat(snapshot, castExpression);
+            var kind = castExpressionEater.Eat(snapshot, castExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Result);

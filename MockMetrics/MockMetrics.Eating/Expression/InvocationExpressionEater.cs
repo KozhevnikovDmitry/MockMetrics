@@ -27,7 +27,7 @@ namespace MockMetrics.Eating.Expression
             _mockOfInvocationEater = mockOfInvocationEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat)
         {
             var invokedName = _expressionHelper.GetInvokedElementName(expression);
 
@@ -39,7 +39,7 @@ namespace MockMetrics.Eating.Expression
 
             _argumentsEater.Eat(snapshot, expression.Arguments);
 
-            var parentKind = _parentReferenceEater.Eat(snapshot, expression);
+            var parentKind = _parentReferenceEater.Eat(snapshot, expression, innerEat);
 
             if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {

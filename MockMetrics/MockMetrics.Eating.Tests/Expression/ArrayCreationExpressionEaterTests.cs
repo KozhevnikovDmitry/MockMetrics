@@ -23,10 +23,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater.Object, Mock.Of<IVariableInitializerEater>());
 
             // Act
-            arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);
+            arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression, false);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, size));
+            eater.Verify(t => t.Eat(snapshot, size, false));
         }
 
         [Test]
@@ -38,11 +38,11 @@ namespace MockMetrics.Eating.Tests.Expression
             Mock.Get(arrayCreationExpression).Setup(t => t.Sizes)
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new[] { size }));
             var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, size) == ExpressionKind.Stub);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, size, false) == ExpressionKind.Stub);
             var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater, Mock.Of<IVariableInitializerEater>());
 
             // Act
-            arrayCreationExpressionEater.Eat(snapshot.Object, arrayCreationExpression);
+            arrayCreationExpressionEater.Eat(snapshot.Object, arrayCreationExpression, false);
 
             // Assert
             snapshot.Verify(t => t.Add(ExpressionKind.Stub, size));
@@ -62,7 +62,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater, initilizerEater.Object);
 
             // Act
-            arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);
+            arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression, false);
 
             // Assert
             initilizerEater.Verify(t => t.Eat(snapshot, initializer));
@@ -80,7 +80,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater, initilizerEater);
 
             // Act
-            var kind = arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);
+            var kind = arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);

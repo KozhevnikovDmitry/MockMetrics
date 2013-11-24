@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var defaultExpressionEater = new DefaultExpressionEater(eater, typeEater.Object);
 
             // Act
-            var kind = defaultExpressionEater.Eat(snapshot, defaultExpression);
+            var kind = defaultExpressionEater.Eat(snapshot, defaultExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Stub);

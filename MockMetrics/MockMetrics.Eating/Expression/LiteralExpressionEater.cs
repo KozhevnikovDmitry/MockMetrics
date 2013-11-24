@@ -12,7 +12,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, ICSharpLiteralExpression expression, bool innerEat)
         {
             return ExpressionKind.StubCandidate;
         }

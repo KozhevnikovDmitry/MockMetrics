@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Expression
             get { return typeof(T); }
         }
 
-        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpExpression expression)
+        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpExpression expression, bool innerEat)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -34,7 +34,7 @@ namespace MockMetrics.Eating.Expression
             {
                 if (expression is T)
                 {
-                    return Eat(snapshot, (T)expression);
+                    return Eat(snapshot, (T)expression, innerEat);
                 }
 
                 throw new UnexpectedTypeOfNodeToEatException(typeof(T), this, expression);
@@ -49,6 +49,6 @@ namespace MockMetrics.Eating.Expression
             }
         }
 
-        public abstract ExpressionKind Eat(ISnapshot snapshot, T expression);
+        public abstract ExpressionKind Eat(ISnapshot snapshot, T expression, bool innerEat);
     }
 }

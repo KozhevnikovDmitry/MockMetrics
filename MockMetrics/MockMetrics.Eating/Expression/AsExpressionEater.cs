@@ -14,9 +14,9 @@ namespace MockMetrics.Eating.Expression
             _kindHelper = kindHelper;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IAsExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IAsExpression expression, bool innerEat)
         {
-            var operandKind = Eater.Eat(snapshot, expression.Operand);
+            var operandKind = Eater.Eat(snapshot, expression.Operand, innerEat);
             var typeUsageKind = _typeEater.EatCastType(snapshot, expression.TypeOperand);
             return _kindHelper.ValueOfKindAsTypeOfKind(operandKind, typeUsageKind);
         }

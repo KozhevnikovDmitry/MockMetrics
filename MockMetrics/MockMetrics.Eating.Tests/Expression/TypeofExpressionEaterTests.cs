@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var typeofExpressionEater = new TypeofExpressionEater(eater);
 
             // Act
-            var kind = typeofExpressionEater.Eat(snapshot, typeofExpression);
+            var kind = typeofExpressionEater.Eat(snapshot, typeofExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);

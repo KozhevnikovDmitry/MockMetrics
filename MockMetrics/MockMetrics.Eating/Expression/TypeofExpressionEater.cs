@@ -9,7 +9,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, ITypeofExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, ITypeofExpression expression, bool innerEat)
         {
             return ExpressionKind.StubCandidate;
         }

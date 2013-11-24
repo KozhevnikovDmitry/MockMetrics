@@ -9,7 +9,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, ILambdaExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, ILambdaExpression expression, bool innerEat)
         {
             foreach (var anonymousMethodParameterDeclaration in expression.ParameterDeclarations)
             {
@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Expression
             }
             else
             {
-                Eater.Eat(snapshot, expression.BodyExpression);
+                Eater.Eat(snapshot, expression.BodyExpression, innerEat);
             }
 
             return ExpressionKind.StubCandidate;

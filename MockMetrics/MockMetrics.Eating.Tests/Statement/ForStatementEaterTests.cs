@@ -53,7 +53,7 @@ namespace MockMetrics.Eating.Tests.Statement
             forEater.Eat(snapshot, forStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, condition), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, condition, false), Times.Once);
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace MockMetrics.Eating.Tests.Statement
             Mock.Get(forStatement)
                 .Setup(t => t.Iterators.Expressions)
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new ICSharpExpression[0]));
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, condition) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, condition, false) == ExpressionKind.None);
             var forEater = new ForStatementEater(eater);
 
             // Act
@@ -99,7 +99,7 @@ namespace MockMetrics.Eating.Tests.Statement
             forEater.Eat(snapshot, forStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, initilizer), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, initilizer, false), Times.Once);
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace MockMetrics.Eating.Tests.Statement
             Mock.Get(forStatement)
                 .Setup(t => t.Iterators.Expressions)
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new ICSharpExpression[0]));
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, initilizer) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, initilizer, false) == ExpressionKind.None);
             var forEater = new ForStatementEater(eater);
 
             // Act
@@ -145,7 +145,7 @@ namespace MockMetrics.Eating.Tests.Statement
             forEater.Eat(snapshot, forStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, iterator), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, iterator, false), Times.Once);
         }
 
         [Test]
@@ -161,7 +161,7 @@ namespace MockMetrics.Eating.Tests.Statement
             Mock.Get(forStatement)
                 .Setup(t => t.Iterators.Expressions)
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new[] { iterator }));
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, iterator) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, iterator, false) == ExpressionKind.None);
             var forEater = new ForStatementEater(eater);
 
             // Act

@@ -138,7 +138,7 @@ namespace MockMetrics.Tests
             var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
-            Assert.AreEqual(snapshot.Stubs.Count(), 5, "Assert stubs");
+            Assert.AreEqual(snapshot.Stubs.Count(), 3, "Assert stubs");
             Assert.AreEqual(snapshot.Results.Count(), 1, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
             Assert.AreEqual(snapshot.TargetCalls.Count(), 1, "Assert targetCalls");

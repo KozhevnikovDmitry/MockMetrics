@@ -8,7 +8,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IAnonymousMethodExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IAnonymousMethodExpression expression, bool innerEat)
         {
             foreach (var anonymousMethodParameterDeclaration in expression.ParameterDeclarations)
             {

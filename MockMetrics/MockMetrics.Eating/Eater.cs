@@ -13,7 +13,7 @@ namespace MockMetrics.Eating
 {
     public interface IEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression);
+        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression, bool innerEat = false);
         
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
 
@@ -31,12 +31,12 @@ namespace MockMetrics.Eating
             _container = container;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression)
+        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression, bool innerEat = false)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
 
-            return GetEater(expression).Eat(snapshot, expression);
+            return GetEater(expression).Eat(snapshot, expression, innerEat);
         }
 
         public void Eat(ISnapshot snapshot, ICSharpStatement statement)

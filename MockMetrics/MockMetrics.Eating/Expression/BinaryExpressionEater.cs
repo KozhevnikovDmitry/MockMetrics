@@ -8,12 +8,12 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IBinaryExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IBinaryExpression expression, bool innerEat)
         {
-            var leftKind = Eater.Eat(snapshot, expression.LeftOperand);
+            var leftKind = Eater.Eat(snapshot, expression.LeftOperand, innerEat);
             snapshot.Add(leftKind, expression.LeftOperand);
 
-            var rightKind = Eater.Eat(snapshot, expression.RightOperand);
+            var rightKind = Eater.Eat(snapshot, expression.RightOperand, innerEat);
             snapshot.Add(rightKind, expression.RightOperand);
 
             if (leftKind == ExpressionKind.TargetCall || rightKind == ExpressionKind.TargetCall)

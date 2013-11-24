@@ -18,10 +18,10 @@ namespace MockMetrics.Eating.Expression
             _typeEater = typeEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IReferenceExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IReferenceExpression expression, bool innerEat)
         {
             var parentKind = expression.QualifierExpression != null
-                ? Eater.Eat(snapshot, expression.QualifierExpression)
+                ? Eater.Eat(snapshot, expression.QualifierExpression, innerEat)
                 : ExpressionKind.None;
 
             if (parentKind == ExpressionKind.None)

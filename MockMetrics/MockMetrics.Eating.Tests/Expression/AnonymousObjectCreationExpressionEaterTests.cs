@@ -23,10 +23,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater.Object);
 
             // Act
-            anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression);
+            anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression, false);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression));
+            eater.Verify(t => t.Eat(snapshot, expression, false));
         }
 
         [Test]
@@ -39,11 +39,11 @@ namespace MockMetrics.Eating.Tests.Expression
             Mock.Get(anonymousObjectCreationExpression).Setup(t => t.AnonymousInitializer.MemberInitializers)
                 .Returns(new TreeNodeCollection<IAnonymousMemberDeclaration>(new[] { memberDeclaration }));
             var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, false) == ExpressionKind.Stub);
             var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater);
 
             // Act
-            anonymousObjectCreationExpressionEater.Eat(snapshot.Object, anonymousObjectCreationExpression);
+            anonymousObjectCreationExpressionEater.Eat(snapshot.Object, anonymousObjectCreationExpression, false);
 
             // Assert
             snapshot.Verify(t => t.Add(ExpressionKind.Stub, memberDeclaration));
@@ -60,7 +60,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater);
 
             // Act
-            var kind = anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression);
+            var kind = anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);

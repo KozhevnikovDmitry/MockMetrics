@@ -8,9 +8,9 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IParenthesizedExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IParenthesizedExpression expression, bool innerEat)
         {
-            return Eater.Eat(snapshot, expression.Expression);
+            return Eater.Eat(snapshot, expression.Expression, innerEat);
         }
     }
 }

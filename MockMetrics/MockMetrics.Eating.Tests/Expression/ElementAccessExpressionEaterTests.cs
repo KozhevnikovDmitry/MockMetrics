@@ -23,7 +23,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var elementAccessExpressionEater = new ElementAccessExpressionEater(eater, argsEater.Object);
 
             // Act
-            elementAccessExpressionEater.Eat(snapshot, elementAccessExpression);
+            elementAccessExpressionEater.Eat(snapshot, elementAccessExpression, false);
 
             // Assert
             argsEater.Verify(t => t.Eat(snapshot, args), Times.Once);
@@ -40,7 +40,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var elementAccessExpressionEater = new ElementAccessExpressionEater(eater, argsEater);
 
             // Act
-            var kind = elementAccessExpressionEater.Eat(snapshot, elementAccessExpression);
+            var kind = elementAccessExpressionEater.Eat(snapshot, elementAccessExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);

@@ -26,7 +26,7 @@ namespace MockMetrics.Eating.Tests.Expression
             argumentsEater.Eat(snapshot, args);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression), Times.Exactly(10));
+            eater.Verify(t => t.Eat(snapshot, expression, true), Times.Exactly(10));
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var argument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
             var args = new TreeNodeCollection<ICSharpArgument>(new[] { argument });
             var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.StubCandidate);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, false) == ExpressionKind.StubCandidate);
             var argumentsEater = new ArgumentsEater(eater);
 
             // Act
@@ -73,7 +73,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var argument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
             var args = new TreeNodeCollection<ICSharpArgument>(new[] { argument });
             var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, true) == ExpressionKind.Stub);
             var argumentsEater = new ArgumentsEater(eater);
 
             // Act

@@ -19,10 +19,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var binaryExpressionEater = new BinaryExpressionEater(eater.Object);
 
             // Act
-            binaryExpressionEater.Eat(snapshot, binaryExpression);
+            binaryExpressionEater.Eat(snapshot, binaryExpression, false);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, left), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, left, false), Times.Once);
         }
 
         [Test]
@@ -33,11 +33,11 @@ namespace MockMetrics.Eating.Tests.Expression
             var left = Mock.Of<ICSharpExpression>();
             var binaryExpression = Mock.Of<IBinaryExpression>(t => t.LeftOperand == left);
 
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, left) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, left, false) == ExpressionKind.None);
             var binaryExpressionEater = new BinaryExpressionEater(eater);
 
             // Act
-            binaryExpressionEater.Eat(snapshot.Object, binaryExpression);
+            binaryExpressionEater.Eat(snapshot.Object, binaryExpression, false);
 
             // Assert
             snapshot.Verify(t => t.Add(ExpressionKind.None, left), Times.Once);
@@ -54,10 +54,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var binaryExpressionEater = new BinaryExpressionEater(eater.Object);
 
             // Act
-            binaryExpressionEater.Eat(snapshot, binaryExpression);
+            binaryExpressionEater.Eat(snapshot, binaryExpression, false);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, right), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, right, false), Times.Once);
         }
 
         [Test]
@@ -68,11 +68,11 @@ namespace MockMetrics.Eating.Tests.Expression
             var right = Mock.Of<ICSharpExpression>();
             var binaryExpression = Mock.Of<IBinaryExpression>(t => t.RightOperand == right);
 
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, right) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, right, false) == ExpressionKind.None);
             var binaryExpressionEater = new BinaryExpressionEater(eater);
 
             // Act
-            binaryExpressionEater.Eat(snapshot.Object, binaryExpression);
+            binaryExpressionEater.Eat(snapshot.Object, binaryExpression, false);
 
             // Assert
             snapshot.Verify(t => t.Add(ExpressionKind.None, right), Times.Once);
@@ -95,12 +95,12 @@ namespace MockMetrics.Eating.Tests.Expression
             var right = Mock.Of<ICSharpExpression>();
             var binaryExpression = Mock.Of<IBinaryExpression>(t => t.LeftOperand == left && t.RightOperand == right);
 
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, left) == leftKind
-                                          && t.Eat(snapshot, right) == rightKind);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, left, false) == leftKind
+                                          && t.Eat(snapshot, right, false) == rightKind);
             var binaryExpressionEater = new BinaryExpressionEater(eater);
 
             // Assert
-            return binaryExpressionEater.Eat(snapshot, binaryExpression);
+            return binaryExpressionEater.Eat(snapshot, binaryExpression, false);
         }
     }
 }

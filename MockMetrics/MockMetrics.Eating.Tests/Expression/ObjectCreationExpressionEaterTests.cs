@@ -24,7 +24,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>(), argsEater.Object);
 
             // Act
-            objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
+            objectCreationExpressionEater.Eat(snapshot, objectCreationExpression, false);
 
             // Assert
             argsEater.Verify(t => t.Eat(snapshot, args), Times.Once);
@@ -45,14 +45,14 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater.Object, Mock.Of<EatExpressionHelper>(), argsEater);
 
             // Act
-            objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
+            objectCreationExpressionEater.Eat(snapshot, objectCreationExpression, false);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression));
+            eater.Verify(t => t.Eat(snapshot, expression, true));
         }
 
         [Test]
-        public void AddMemberInitializersToSnapshotTest()
+        public void NotAddMemberInitializersToSnapshotTest()
         {
             // Arrange
             var expression = Mock.Of<ICSharpExpression>();
@@ -62,14 +62,14 @@ namespace MockMetrics.Eating.Tests.Expression
                 .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
             var argsEater = Mock.Of<IArgumentsEater>();
             var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, false) == ExpressionKind.Stub);
             var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>(), argsEater);
 
             // Act
-            objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
+            objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression, false);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, memberInitializer));
+            snapshot.Verify(t => t.Add(ExpressionKind.Stub, memberInitializer), Times.Never);
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationEater = new ObjectCreationExpressionEater(eater, Mock.Of<EatExpressionHelper>(), argsEater);
 
             // Act
-            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
+            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
@@ -102,7 +102,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
-            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
+            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Target);
@@ -121,7 +121,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
-            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
+            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Mock);
@@ -141,7 +141,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
-            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
+            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Mock);
@@ -161,7 +161,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationEater = new ObjectCreationExpressionEater(eater, helper, argsEater);
 
             // Act
-            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression);
+            var kind = objectCreationEater.Eat(snapshot, objectCreationExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);

@@ -40,7 +40,7 @@ namespace MockMetrics.Eating.Tests.Statement
             foreachEater.Eat(snapshot, foreachStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, collection), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, collection, false), Times.Once);
         }
 
         [Test]
@@ -50,7 +50,7 @@ namespace MockMetrics.Eating.Tests.Statement
             var snapshot = new Mock<ISnapshot>();
             var collection = Mock.Of<ICSharpExpression>();
             var foreachStatement = Mock.Of<IForeachStatement>(t => t.Collection == collection);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, collection) == ExpressionKind.Stub);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, collection, false) == ExpressionKind.Stub);
             var foreachEater = new ForeachStatementEater(eater);
 
             // Act

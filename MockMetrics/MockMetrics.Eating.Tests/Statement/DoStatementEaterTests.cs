@@ -41,7 +41,7 @@ namespace MockMetrics.Eating.Tests.Statement
             doStatementEater.Eat(snapshot, doStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, condition), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, condition, false), Times.Once);
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace MockMetrics.Eating.Tests.Statement
             var condition = Mock.Of<ICSharpExpression>();
             var doStatement = Mock.Of<IDoStatement>(t => t.Condition == condition);
 
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, condition) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, condition, false) == ExpressionKind.None);
             var doStatementEater = new DoStatementEater(eater);
 
             // Act

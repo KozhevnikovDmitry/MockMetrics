@@ -7,7 +7,7 @@ namespace MockMetrics.Eating.Expression
 {
     public interface IParentReferenceEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression);
+        ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat);
     }
 
     public class ParentReferenceEater : IParentReferenceEater, ICSharpNodeEater
@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Expression
             _eater = eater;
         }
 
-        public virtual ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] IInvocationExpression expression)
+        public virtual ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] IInvocationExpression expression, bool innerEat)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -38,7 +38,7 @@ namespace MockMetrics.Eating.Expression
             var mc = expression.ExtensionQualifier.ManagedConvertible;
             if (mc is ExtensionArgumentInfo)
             {
-                return _eater.Eat(snapshot, (mc as ExtensionArgumentInfo).Expression);
+                return _eater.Eat(snapshot, (mc as ExtensionArgumentInfo).Expression, innerEat);
             }
 
             return ExpressionKind.None;

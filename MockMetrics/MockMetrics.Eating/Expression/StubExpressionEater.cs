@@ -10,7 +10,7 @@ namespace MockMetrics.Eating.Expression
             ExpressionType = GetType();
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement)
+        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement, bool innerEat)
         {
             return ExpressionKind.None;
         }

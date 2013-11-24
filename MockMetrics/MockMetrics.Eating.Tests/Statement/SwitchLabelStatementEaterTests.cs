@@ -23,7 +23,7 @@ namespace MockMetrics.Eating.Tests.Statement
             switchStatementEater.Eat(snapshot, switchStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, valueExpression), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, valueExpression, false), Times.Once);
         }
 
         [Test]
@@ -34,7 +34,7 @@ namespace MockMetrics.Eating.Tests.Statement
             var valueExpression = Mock.Of<ICSharpExpression>();
             var switchStatement = Mock.Of<ISwitchLabelStatement>(t => t.ValueExpression == valueExpression);
 
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, valueExpression) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, valueExpression, false) == ExpressionKind.None);
             var switchStatementEater = new SwitchLabelStatementEater(eater);
 
             // Act

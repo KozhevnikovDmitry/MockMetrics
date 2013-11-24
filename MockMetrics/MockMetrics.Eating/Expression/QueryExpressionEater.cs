@@ -11,10 +11,10 @@ namespace MockMetrics.Eating.Expression
             _typeEater = typeEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IQueryExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IQueryExpression expression, bool innerEat)
         {
            
-            Eater.Eat(snapshot, expression.From.Expression);
+            Eater.Eat(snapshot, expression.From.Expression, innerEat);
             snapshot.Add(expression.From.Declaration);
 
             IQuerySelectClause lastSelect;

@@ -13,13 +13,13 @@ namespace MockMetrics.Eating.Expression
             _argumentsEater = argumentsEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IElementAccessExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IElementAccessExpression expression, bool innerEat)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
 
             // TODO : cover by functional tests
             // TODO : what if array of results or targets
-            Eater.Eat(snapshot, expression.Operand);
+            Eater.Eat(snapshot, expression.Operand, innerEat);
 
             return ExpressionKind.StubCandidate;
         }

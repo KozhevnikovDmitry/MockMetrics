@@ -12,7 +12,7 @@ namespace MockMetrics.Eating.Expression
             _typeEater = typeEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IDefaultExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IDefaultExpression expression, bool innerEat)
         {
             return _typeEater.EatCastType(snapshot, expression.TypeName);
         }

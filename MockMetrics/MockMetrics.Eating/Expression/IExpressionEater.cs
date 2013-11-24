@@ -5,13 +5,13 @@ namespace MockMetrics.Eating.Expression
 {
     public interface IExpressionEater : ICSharpNodeEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement);
+        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement, bool innerEat);
 
         Type ExpressionType { get; }
     }
 
     public interface IExpressionEater<T> : IExpressionEater where T : ICSharpExpression
     {
-        ExpressionKind Eat(ISnapshot snapshot, T expression);
+        ExpressionKind Eat(ISnapshot snapshot, T expression, bool innerEat);
     }
 }

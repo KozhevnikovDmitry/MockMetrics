@@ -12,12 +12,12 @@ namespace MockMetrics.Eating.Expression
             _variableInitializerEater = variableInitializerEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IArrayCreationExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IArrayCreationExpression expression, bool innerEat)
         {
             // TODO : check in functional tests
             foreach (ICSharpExpression size in expression.Sizes)
             {
-                ExpressionKind kind = Eater.Eat(snapshot, size);
+                ExpressionKind kind = Eater.Eat(snapshot, size, innerEat);
                 if (kind != ExpressionKind.StubCandidate)
                 {
                     snapshot.Add(kind, size);

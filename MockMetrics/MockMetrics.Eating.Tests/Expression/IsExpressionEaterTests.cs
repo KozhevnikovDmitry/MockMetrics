@@ -19,7 +19,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var isExpressionEater = new IsExpressionEater(eater);
 
             // Act
-            var kind = isExpressionEater.Eat(snapshot, isExpression);
+            var kind = isExpressionEater.Eat(snapshot, isExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
@@ -36,10 +36,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var isExpressionEater = new IsExpressionEater(eater.Object);
 
             // Act
-            isExpressionEater.Eat(snapshot, isExpression);
+            isExpressionEater.Eat(snapshot, isExpression, false);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, operand), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, operand, false), Times.Once);
         }
 
         [Test]
@@ -50,11 +50,11 @@ namespace MockMetrics.Eating.Tests.Expression
             var operand = Mock.Of<ICSharpExpression>();
             var isExpression = Mock.Of<IIsExpression>(t => t.Operand == operand);
 
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, operand) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, operand, false) == ExpressionKind.None);
             var isExpressionEater = new IsExpressionEater(eater);
 
             // Act
-            isExpressionEater.Eat(snapshot.Object, isExpression);
+            isExpressionEater.Eat(snapshot.Object, isExpression, false);
 
             // Assert
             snapshot.Verify(t => t.Add(ExpressionKind.None, operand), Times.Once);

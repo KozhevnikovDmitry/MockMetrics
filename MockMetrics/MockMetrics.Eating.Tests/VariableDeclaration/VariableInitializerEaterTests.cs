@@ -29,7 +29,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-            eater.Verify(t => t.Eat(snapshot, expression));
+            eater.Verify(t => t.Eat(snapshot, expression, false));
         }
 
         [Test]
@@ -42,7 +42,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             Mock.Get(arrayInit).Setup(t => t.ElementInitializers)
                 .Returns(new TreeNodeCollection<IVariableInitializer>(new[] { itemInitializer }));
             var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == ExpressionKind.Stub);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, false) == ExpressionKind.Stub);
             var initializerEater = new VariableInitializerEater(eater);
 
             // Act
@@ -59,7 +59,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var expression = Mock.Of<ICSharpExpression>();
             var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == ExpressionKind.Mock);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.Mock);
             var initializerEater = new VariableInitializerEater(eater);
 
             // Act
@@ -76,7 +76,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var expression = Mock.Of<ICSharpExpression>();
             var itemInitializer = Mock.Of<IUnsafeCodeFixedPointerInitializer>(t => t.Value == expression);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == ExpressionKind.Mock);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.Mock);
             var initializerEater = new VariableInitializerEater(eater);
 
             // Act
@@ -93,7 +93,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var expression = Mock.Of<ICSharpExpression>();
             var itemInitializer = Mock.Of<IUnsafeCodeStackAllocInitializer>(t => t.DimExpr == expression);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == ExpressionKind.Mock);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.Mock);
             var initializerEater = new VariableInitializerEater(eater);
 
             // Act
@@ -110,7 +110,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var expression = Mock.Of<ICSharpExpression>();
             var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == ExpressionKind.TargetCall);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.TargetCall);
             var initializerEater = new VariableInitializerEater(eater);
 
             // Act
@@ -127,7 +127,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var expression = Mock.Of<ICSharpExpression>();
             var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == ExpressionKind.StubCandidate);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.StubCandidate);
             var initializerEater = new VariableInitializerEater(eater);
 
             // Act

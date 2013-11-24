@@ -9,12 +9,12 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IAnonymousObjectCreationExpression expression)
+        public override ExpressionKind Eat(ISnapshot snapshot, IAnonymousObjectCreationExpression expression, bool innerEat)
         {
             // TODO: cover by functional tests
             foreach (var memberDeclaration in expression.AnonymousInitializer.MemberInitializers)
             {
-                var kind = Eater.Eat(snapshot, memberDeclaration.Expression);
+                var kind = Eater.Eat(snapshot, memberDeclaration.Expression, innerEat);
                 snapshot.Add(kind, memberDeclaration);
             }
 

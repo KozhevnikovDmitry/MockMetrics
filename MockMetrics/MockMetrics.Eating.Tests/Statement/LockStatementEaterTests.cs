@@ -40,7 +40,7 @@ namespace MockMetrics.Eating.Tests.Statement
             lockStatementEater.Eat(snapshot, lockStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, monitor), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, monitor, false), Times.Once);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace MockMetrics.Eating.Tests.Statement
             var monitor = Mock.Of<ICSharpExpression>();
             var lockStatement = Mock.Of<ILockStatement>(t => t.Monitor == monitor);
 
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, monitor) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, monitor, false) == ExpressionKind.None);
             var lockStatementEater = new LockStatementEater(eater);
 
             // Act

@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousMethodExpressionEater = new AnonymousMethodExpressionEater(eater.Object);
 
             // Act
-            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression);
+            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression, false);
 
             // Assert
             eater.Verify(t => t.Eat(snapshot, parameterDeclaration));
@@ -41,7 +41,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousMethodExpressionEater = new AnonymousMethodExpressionEater(eater.Object);
 
             // Act
-            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression);
+            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression, false);
 
             // Assert
             eater.Verify(t => t.Eat(snapshot, body));
@@ -59,7 +59,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousMethodExpressionEater = new AnonymousMethodExpressionEater(eater);
 
             // Act
-            var kind = anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression);
+            var kind = anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);

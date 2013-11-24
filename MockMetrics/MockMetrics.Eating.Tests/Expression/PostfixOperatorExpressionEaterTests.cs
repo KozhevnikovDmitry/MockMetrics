@@ -15,11 +15,11 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var operand = Mock.Of<IPrimaryExpression>();
             var postfixOperatorExpression = Mock.Of<IPostfixOperatorExpression>(t => t.Operand == operand);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand, false) == ExpressionKind.None);
             var postfixOperatorExpressionEater = new PostfixOperatorExpressionEater(eater);
 
             // Act
-            var kind = postfixOperatorExpressionEater.Eat(snapshot, postfixOperatorExpression);
+            var kind = postfixOperatorExpressionEater.Eat(snapshot, postfixOperatorExpression, false);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.None);
