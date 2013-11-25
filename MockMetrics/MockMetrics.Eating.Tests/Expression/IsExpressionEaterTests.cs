@@ -24,9 +24,10 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
         }
-
-        [Test]
-        public void EatLeftExpressionTest()
+        
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatLeftExpression_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -36,10 +37,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var isExpressionEater = new IsExpressionEater(eater.Object);
 
             // Act
-            isExpressionEater.Eat(snapshot, isExpression, false);
+            isExpressionEater.Eat(snapshot, isExpression, innerEat);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, operand, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, operand, innerEat), Times.Once);
         }
 
         [Test]

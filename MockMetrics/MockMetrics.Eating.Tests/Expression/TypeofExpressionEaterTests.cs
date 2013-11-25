@@ -22,6 +22,6 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-        } 
+        }
     }
 }

@@ -29,6 +29,27 @@ namespace MockMetrics.Eating.Tests.Expression
             argsEater.Verify(t => t.Eat(snapshot, args), Times.Once);
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatOperand_TranslateInnerEatTest(bool innerEat)
+        {
+            // Arrange
+            var operand = Mock.Of<IPrimaryExpression>();
+            var elementAccessExpression = Mock.Of<IElementAccessExpression>(t => t.Operand == operand);
+            Mock.Get(elementAccessExpression).Setup(t => t.Arguments)
+                .Returns(new TreeNodeCollection<ICSharpArgument>());
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
+            var argsEater = new Mock<IArgumentsEater>();
+            var elementAccessExpressionEater = new ElementAccessExpressionEater(eater.Object, argsEater.Object);
+
+            // Act
+            elementAccessExpressionEater.Eat(snapshot, elementAccessExpression, innerEat);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, operand, innerEat), Times.Once);
+        }
+
         [Test]
         public void ReturnStubCandidateTest()
         {

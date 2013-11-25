@@ -24,8 +24,9 @@ namespace MockMetrics.Eating.Tests.Expression
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
         }
 
-        [Test]
-        public void EatConditionExpressionTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatConditionExpressionTest_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -35,13 +36,12 @@ namespace MockMetrics.Eating.Tests.Expression
             var ternaryExpressionEater = new ConditionalTernaryExpressionEater(eater.Object);
 
             // Act
-            ternaryExpressionEater.Eat(snapshot, ternaryExpression, false);
+            ternaryExpressionEater.Eat(snapshot, ternaryExpression, innerEat);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, condition, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, condition, innerEat), Times.Once);
         }
 
-        [Test]
         public void AddConditionExpressionToSnapshotTest()
         {
             // Arrange
@@ -59,8 +59,9 @@ namespace MockMetrics.Eating.Tests.Expression
             snapshot.Verify(t => t.Add(ExpressionKind.None, condition), Times.Once);
         }
 
-        [Test]
-        public void EatThenExpressionTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatThenExpressionTest_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -70,10 +71,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var ternaryExpressionEater = new ConditionalTernaryExpressionEater(eater.Object);
 
             // Act
-            ternaryExpressionEater.Eat(snapshot, ternaryExpression, false);
+            ternaryExpressionEater.Eat(snapshot, ternaryExpression, innerEat);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, then, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, then, innerEat), Times.Once);
         }
 
         [Test]
@@ -94,8 +95,9 @@ namespace MockMetrics.Eating.Tests.Expression
             snapshot.Verify(t => t.Add(ExpressionKind.None, then), Times.Once);
         }
 
-        [Test]
-        public void EatElseExpressionTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatElseExpressionTest_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -105,10 +107,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var ternaryExpressionEater = new ConditionalTernaryExpressionEater(eater.Object);
 
             // Act
-            ternaryExpressionEater.Eat(snapshot, ternaryExpression, false);
+            ternaryExpressionEater.Eat(snapshot, ternaryExpression, innerEat);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, elseOperand, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, elseOperand, innerEat), Times.Once);
         }
 
         [Test]

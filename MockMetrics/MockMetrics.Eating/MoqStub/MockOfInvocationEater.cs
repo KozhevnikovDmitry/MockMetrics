@@ -6,7 +6,7 @@ namespace MockMetrics.Eating.MoqStub
 {
     public interface IMockOfInvocationEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression);
+        ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat);
     }
 
     // TODO : cover by unit tests
@@ -19,8 +19,13 @@ namespace MockMetrics.Eating.MoqStub
             _moqStubOptionsEater = moqStubOptionsEater;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression)
+        public ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat)
         {
+            if (innerEat)
+            {
+                snapshot.Add(ExpressionKind.Stub, expression);
+            }
+
             var predicate = expression.Arguments.Select(t => t.Value).OfType<ILambdaExpression>().SingleOrDefault();
             if (predicate != null)
             {

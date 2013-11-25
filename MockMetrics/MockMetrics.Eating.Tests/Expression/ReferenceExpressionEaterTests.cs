@@ -1,5 +1,4 @@
-﻿using System;
-using JetBrains.ReSharper.Psi;
+﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Tests.StubTypes;
@@ -148,6 +147,27 @@ namespace MockMetrics.Eating.Tests.Expression
             
             // Assert
             Assert.Throws<UnexpectedReferenceTypeException>(() => referenceExpressionEater.Eat(snapshot, referenceExpression, false));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatParentTranslateInnerEatTest(bool innerEat)
+        {
+            // Arrange
+            var qualifierExpression = Mock.Of<ICSharpExpression>();
+            var referenceExpression = Mock.Of<IReferenceExpression>(t => t.QualifierExpression == qualifierExpression);
+            var eatHelper = Mock.Of<EatExpressionHelper>();
+            var typeEater = Mock.Of<ITypeEater>();
+            var kindHelper = Mock.Of<ExpressionKindHelper>(t => t.ReferenceKindByParentReferenceKind(ExpressionKind.Target) == ExpressionKind.TargetCall);
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
+            var referenceExpressionEater = new ReferenceExpressionEater(eater.Object, kindHelper, eatHelper, typeEater);
+
+            // Act
+            referenceExpressionEater.Eat(snapshot, referenceExpression, innerEat);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, qualifierExpression, innerEat), Times.Once);
         }
     }
 }

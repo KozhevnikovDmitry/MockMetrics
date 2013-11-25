@@ -9,8 +9,9 @@ namespace MockMetrics.Eating.Tests.Expression
     [TestFixture]
     public class AnonymousObjectCreationExpressionEaterTests
     {
-        [Test]
-        public void EatMemberDeclarationsTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatMemberDeclarations_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var expression = Mock.Of<ICSharpExpression>();
@@ -23,10 +24,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater.Object);
 
             // Act
-            anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression, false);
+            anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression, innerEat);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression, false));
+            eater.Verify(t => t.Eat(snapshot, expression, innerEat));
         }
 
         [Test]

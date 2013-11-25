@@ -24,5 +24,23 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.AreEqual(kind, ExpressionKind.None);
         }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatContainingExpression_TranslateInnerEatTest(bool innerEat)
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var task = Mock.Of<IUnaryExpression>();
+            var awaitExpression = Mock.Of<IAwaitExpression>(t => t.Task == task);
+            var eater = new Mock<IEater>();
+            var awaitExpressionEater = new AwaitExpressionEater(eater.Object);
+
+            // Act
+            awaitExpressionEater.Eat(snapshot, awaitExpression, false);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, task, false), Times.Once);
+        }
     }
 }

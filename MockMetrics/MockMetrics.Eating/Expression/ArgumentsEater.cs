@@ -26,12 +26,7 @@ namespace MockMetrics.Eating.Expression
 
             foreach (ICSharpArgument arg in arguements)
             {
-                ExpressionKind kind = _eater.Eat(snapshot, arg.Value, true);
-
-                if (kind != ExpressionKind.StubCandidate && !(arg.Value is IReferenceExpression))
-                {
-                    snapshot.Add(kind, arg);
-                }
+                _eater.Eat(snapshot, arg.Value, true);
             }
         }
     }

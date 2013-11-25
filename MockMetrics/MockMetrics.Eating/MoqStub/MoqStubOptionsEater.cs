@@ -29,10 +29,11 @@ namespace MockMetrics.Eating.MoqStub
                 return;
             }
 
+            // TODO: option target can in the right operand of equility, checking is needed
             if (options is IEqualityExpression)
             {
                 EatStubOptions(snapshot, (options as IEqualityExpression).LeftOperand);
-                var kind = _eater.Eat(snapshot, (options as IEqualityExpression).RightOperand);
+                var kind = _eater.Eat(snapshot, (options as IEqualityExpression).RightOperand, true);
                 EatOptionValue(snapshot, kind, (options as IEqualityExpression).RightOperand);
                 return;
             }

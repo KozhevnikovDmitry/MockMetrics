@@ -31,7 +31,7 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void EatMemberInitializersTest()
+        public void EatMemberInitializersWithInnerEatTest()
         {
             // Arrange
             var expression = Mock.Of<ICSharpExpression>();

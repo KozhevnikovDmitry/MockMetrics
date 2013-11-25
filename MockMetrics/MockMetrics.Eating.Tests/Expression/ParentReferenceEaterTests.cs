@@ -63,6 +63,25 @@ namespace MockMetrics.Eating.Tests.Expression
             Assert.AreEqual(kind, ExpressionKind.StubCandidate);
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatQualifierReference_TranslateInnerEatTest(bool innerEat)
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var expression = Mock.Of<ICSharpExpression>();
+            var eater = new Mock<IEater>();
+            var managedConverible = new Mock<ExtensionArgumentInfo>(Mock.Of<ICSharpInvocationInfo>(), expression);
+            var invocationExpression = Mock.Of<IInvocationExpression>(t => t.ExtensionQualifier.ManagedConvertible == managedConverible.Object);
+            var parentReferenceEater = new ParentReferenceEater(eater.Object);
+
+            // Act
+            parentReferenceEater.Eat(snapshot, invocationExpression, innerEat);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, expression, innerEat), Times.Once);
+        }
+
         [Test]
         public void NullEaterTest()
         {

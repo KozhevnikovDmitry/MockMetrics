@@ -24,5 +24,23 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.AreEqual(kind, ExpressionKind.None);
         }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatContainingExpressionAndReturnItKindTest(bool innerEat)
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var expression = Mock.Of<ICSharpExpression>();
+            var parenthesizedExpression = Mock.Of<IParenthesizedExpression>(t => t.Expression == expression);
+            var eater = new Mock<IEater>();
+            var parenthesizedExpressionEater = new ParenthesizedExpressionEater(eater.Object);
+
+            // Act
+            parenthesizedExpressionEater.Eat(snapshot, parenthesizedExpression, innerEat);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, expression, innerEat), Times.Once);
+        }
     }
 }

@@ -30,60 +30,6 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void NotAddToSnapshotReferenseArgumentsTest()
-        {
-            // Arrange
-            var expression = Mock.Of<IReferenceExpression>();
-            var argument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
-            var args = new TreeNodeCollection<ICSharpArgument>(new[] { argument });
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>();
-            var argumentsEater = new ArgumentsEater(eater);
-
-            // Act
-            argumentsEater.Eat(snapshot.Object, args);
-
-            // Assert
-            snapshot.Verify(t => t.Add(It.IsAny<ExpressionKind>(), argument), Times.Never);
-        }
-
-        [Test]
-        public void NotAddToSnapshotStubCandidateArgumentsTest()
-        {
-            // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var argument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
-            var args = new TreeNodeCollection<ICSharpArgument>(new[] { argument });
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, false) == ExpressionKind.StubCandidate);
-            var argumentsEater = new ArgumentsEater(eater);
-
-            // Act
-            argumentsEater.Eat(snapshot.Object, args);
-
-            // Assert
-            snapshot.Verify(t => t.Add(It.IsAny<ExpressionKind>(), argument), Times.Never);
-        }
-
-        [Test]
-        public void AddArgumentToSnapshotTest()
-        {
-            // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var argument = Mock.Of<ICSharpArgument>(t => t.Value == expression);
-            var args = new TreeNodeCollection<ICSharpArgument>(new[] { argument });
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, true) == ExpressionKind.Stub);
-            var argumentsEater = new ArgumentsEater(eater);
-
-            // Act
-            argumentsEater.Eat(snapshot.Object, args);
-
-            // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, argument), Times.Once);
-        }
-        
-        [Test]
         public void NullSnapshotTest()
         {
             // Arrange

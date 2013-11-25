@@ -11,8 +11,9 @@ namespace MockMetrics.Eating.Tests.Expression
     [TestFixture]
     public class InvocationExpressionEaterTests
     {
-        [Test]
-        public void EatMockOfInvocationTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatMockOfInvocation_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var args = new TreeNodeCollection<ICSharpArgument>();
@@ -29,10 +30,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var invocationEater = new InvocationExpressionEater(eater, expressionHelper, kindHelper, parentEater, argsEater, mockEater.Object);
 
             // Act
-            invocationEater.Eat(snapshot, invocationExpression, false);
+            invocationEater.Eat(snapshot, invocationExpression, innerEat);
 
             // Assert
-            mockEater.Verify(t => t.Eat(snapshot, invocationExpression), Times.Once);
+            mockEater.Verify(t => t.Eat(snapshot, invocationExpression, innerEat), Times.Once);
         }
 
         [Test]

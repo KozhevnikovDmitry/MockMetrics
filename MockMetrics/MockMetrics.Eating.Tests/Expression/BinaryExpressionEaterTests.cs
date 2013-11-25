@@ -8,8 +8,9 @@ namespace MockMetrics.Eating.Tests.Expression
     [TestFixture]
     public class BinaryExpressionEaterTests
     {
-        [Test]
-        public void EatLeftExpressionTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatLeftExpressionTest_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -19,10 +20,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var binaryExpressionEater = new BinaryExpressionEater(eater.Object);
 
             // Act
-            binaryExpressionEater.Eat(snapshot, binaryExpression, false);
+            binaryExpressionEater.Eat(snapshot, binaryExpression, innerEat);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, left, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, left, innerEat), Times.Once);
         }
 
         [Test]
@@ -42,9 +43,10 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             snapshot.Verify(t => t.Add(ExpressionKind.None, left), Times.Once);
         }
-        
-        [Test]
-        public void EatRightExpressionTest()
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatRightExpressionTest_TranslateInnerEatTest(bool innerEat)
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -54,10 +56,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var binaryExpressionEater = new BinaryExpressionEater(eater.Object);
 
             // Act
-            binaryExpressionEater.Eat(snapshot, binaryExpression, false);
+            binaryExpressionEater.Eat(snapshot, binaryExpression, innerEat);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, right, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, right, innerEat), Times.Once);
         }
 
         [Test]

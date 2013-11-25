@@ -8,8 +8,9 @@ namespace MockMetrics.Eating.Tests.Expression
     [TestFixture]
     public class AsExpressionEaterTests
     {
-        [Test]
-        public void EatTest()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EatTest_TranslateInnerEatTest(bool innerEat)
         {
             var snapshot = Mock.Of<ISnapshot>();
             var operand = Mock.Of<ICSharpExpression>();
@@ -17,7 +18,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var asExpression = Mock.Of<IAsExpression>(t => t.Operand == operand && t.TypeOperand == typeOperand);
 
             var eater = new Mock<IEater>();
-            eater.Setup(t => t.Eat(snapshot, asExpression.Operand, false)).Returns(ExpressionKind.None).Verifiable();
+            eater.Setup(t => t.Eat(snapshot, asExpression.Operand, innerEat)).Returns(ExpressionKind.None).Verifiable();
             
             var typeEater = new Mock<ITypeEater>();
             typeEater.Setup(t => t.EatCastType(snapshot, typeOperand)).Returns(ExpressionKind.Mock).Verifiable();
@@ -30,7 +31,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var asExpressionEater = new AsExpressionEater(eater.Object, typeEater.Object, kindHelper.Object);
 
             // Act
-            var kind = asExpressionEater.Eat(snapshot, asExpression, false);
+            var kind = asExpressionEater.Eat(snapshot, asExpression, innerEat);
 
             // Assert
             Assert.AreEqual(kind, ExpressionKind.Result);

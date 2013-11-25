@@ -33,7 +33,7 @@ namespace MockMetrics.Eating.Expression
 
             if (invokedName.StartsWith("Method:Moq.Mock.Of"))
             {
-                _mockOfInvocationEater.Eat(snapshot, expression);
+                _mockOfInvocationEater.Eat(snapshot, expression, innerEat);
                 return ExpressionKind.Stub;
             }
 
@@ -41,12 +41,15 @@ namespace MockMetrics.Eating.Expression
 
             var parentKind = _parentReferenceEater.Eat(snapshot, expression, innerEat);
 
+
+            // TODO: special eater for nunit asserts, that will eat with inner eating
             if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {
                 snapshot.Add(ExpressionKind.Assert, expression);
                 return ExpressionKind.Assert;
             }
 
+            // TODO: special eater for moq mock verify, that will eat with inner eating
             if (invokedName.StartsWith("Method:Moq.Mock.Verify"))
             {
                 snapshot.Add(ExpressionKind.Assert, expression);
