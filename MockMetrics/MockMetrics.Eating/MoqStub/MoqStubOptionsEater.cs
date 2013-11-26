@@ -33,8 +33,7 @@ namespace MockMetrics.Eating.MoqStub
             if (options is IEqualityExpression)
             {
                 EatStubOptions(snapshot, (options as IEqualityExpression).LeftOperand);
-                var kind = _eater.Eat(snapshot, (options as IEqualityExpression).RightOperand, true);
-                EatOptionValue(snapshot, kind, (options as IEqualityExpression).RightOperand);
+                _eater.Eat(snapshot, (options as IEqualityExpression).RightOperand, true);
                 return;
             }
 
@@ -53,15 +52,6 @@ namespace MockMetrics.Eating.MoqStub
             }
 
             throw new MoqStubOptionWrongTypeException(this, options);
-        }
-
-        private void EatOptionValue(ISnapshot snapshot, ExpressionKind kind, ICSharpExpression optionValue)
-        {
-            var addableKinds = new[] { ExpressionKind.Target, ExpressionKind.Stub, ExpressionKind.Mock };
-            if (addableKinds.Contains(kind))
-            {
-                snapshot.Add(kind, optionValue);
-            }
         }
     }
 

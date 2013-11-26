@@ -131,10 +131,7 @@ namespace MockMetrics.Eating.Tests.MoqStub
             // Act
             Assert.Throws<MoqStubOptionTargetWrongTypeException>(() => stubTargetEater.EatOption(snapshot, invocationOption));
         }
-
-
-
-
+        
         [Test]
         public void NoParentForReferenceTest()
         {

@@ -134,31 +134,5 @@ namespace MockMetrics.Eating.Tests.MoqStub
             // Assert
             stubOptionsEater.Verify(t => t.EatStubOptions(snapshot, leftOption), Times.Once);
         }
-
-        [TestCase(ExpressionKind.Assert, 0)]
-        [TestCase(ExpressionKind.Mock, 1)]
-        [TestCase(ExpressionKind.None, 0)]
-        [TestCase(ExpressionKind.Result, 0)]
-        [TestCase(ExpressionKind.Stub, 1)]
-        [TestCase(ExpressionKind.StubCandidate, 0)]
-        [TestCase(ExpressionKind.Target, 1)]
-        [TestCase(ExpressionKind.TargetCall, 0)]
-        public void AddToSnapshotEquiilityRightOperandTest(ExpressionKind kind, int timesAdd)
-        {  
-            // Arrange
-            var snapshot = new Mock<ISnapshot>();
-            var leftOption = Mock.Of<IInvocationExpression>();
-            var rightOption = Mock.Of<IInvocationExpression>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, rightOption, true) == kind);
-            var conditionalOption = Mock.Of<IEqualityExpression>(t => t.LeftOperand == leftOption && t.RightOperand == rightOption);
-            var stubOptionTargetEater = new Mock<IMoqStubOptionTargetEater>();
-            var stubOptionsEater = new MoqStubOptionsEater(eater, stubOptionTargetEater.Object);
-
-            // Act
-            stubOptionsEater.EatStubOptions(snapshot.Object, conditionalOption);
-
-            // Assert
-            snapshot.Verify(t => t.Add(kind, rightOption), Times.Exactly(timesAdd));
-        }
     }
 }
