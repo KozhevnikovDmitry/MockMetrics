@@ -72,9 +72,11 @@
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
     <Compile Include="MoqStub\MockOfInvocationEaterTests.cs" />
     <Compile Include="MoqStub\MoqStubOptionsEaterTests.cs" />
+    <Compile Include="MoqStub\MoqStubOptionTargetEaterTests.cs" />
     <Compile Include="Statement\TryStatementEaterTests.cs" />
     <Compile Include="Statement\UsingStatementEaterTests.cs" />
     <Compile Include="StubTypes\IEventDeclarationAndIDeclaredElement.cs" />
+    <Compile Include="StubTypes\ILambdaParameterDeclarationAndIDeclaredElement.cs" />
     <Compile Include="StubTypes\ILocalConstantAndIDeclaredElement.cs" />
     <Compile Include="StubTypes\ILocalVariableAndIDeclaredElement.cs" />
     <Compile Include="Expression\LambdaExpressionEaterTests.cs" />

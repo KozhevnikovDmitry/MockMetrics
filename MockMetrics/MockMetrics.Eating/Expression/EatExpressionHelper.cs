@@ -1,6 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 
@@ -126,6 +127,27 @@ namespace MockMetrics.Eating.Expression
             {
                 throw new ExpressionHelperException("Null resolved result of invocation parent reference expression", invocationExpression);
             }
+        }
+
+        public virtual ICSharpExpression GetInvocationReference([NotNull] IInvocationExpression invocationExpression)
+        {
+            if (invocationExpression == null) 
+                throw new ArgumentNullException("invocationExpression");
+
+            if (invocationExpression.ExtensionQualifier == null)
+            {
+                return null;
+            }
+
+            var extensionArgumentInfo =
+               invocationExpression.ExtensionQualifier.ManagedConvertible as ExtensionArgumentInfo;
+
+            if (extensionArgumentInfo == null || extensionArgumentInfo.Expression == null)
+            {
+                return null;
+            }
+
+            return extensionArgumentInfo.Expression;
         }
     }
 }

@@ -22,25 +22,17 @@ namespace MockMetrics.Eating.MoqStub
             _argumentsEater = argumentsEater;
         }
 
-        public FakeOptionType EatOption(ISnapshot snapshot, IInvocationExpression invocationExpression)
+        public virtual FakeOptionType EatOption(ISnapshot snapshot, IInvocationExpression invocationExpression)
         {
             _argumentsEater.Eat(snapshot, invocationExpression.Arguments);
-
-            if (invocationExpression.ExtensionQualifier == null)
+            
+            var parentReference = _eatExpressionHelper.GetInvocationReference(invocationExpression);
+            if (parentReference == null)
             {
                 throw new MoqStubWrongSyntaxException("Moq-stub invocation-option has not parent reference", this,
                     invocationExpression);
             }
 
-            var extensionArgumentInfo =
-                invocationExpression.ExtensionQualifier.ManagedConvertible as ExtensionArgumentInfo;
-            if (extensionArgumentInfo == null || extensionArgumentInfo.Expression == null)
-            {
-                throw new MoqStubWrongSyntaxException("Moq-stub invocation-option has not parent reference", this,
-                    invocationExpression);
-            }
-
-            var parentReference = extensionArgumentInfo.Expression;
             if (parentReference is IInvocationExpression)
             {
                 return EatOption(snapshot, parentReference as IInvocationExpression);
@@ -60,14 +52,13 @@ namespace MockMetrics.Eating.MoqStub
             throw new MoqStubOptionTargetWrongTypeException(this, parentReference);
         }
 
-        public FakeOptionType EatOption(ISnapshot snapshot, IReferenceExpression referenceExpression)
+        public virtual FakeOptionType EatOption(ISnapshot snapshot, IReferenceExpression referenceExpression)
         {
             if (referenceExpression.QualifierExpression == null)
             {
                 throw new MoqStubWrongSyntaxException("Moq-stub property-option has not parent reference", this,
                     referenceExpression);
             }
-
 
             if (referenceExpression.QualifierExpression is IInvocationExpression)
             {
