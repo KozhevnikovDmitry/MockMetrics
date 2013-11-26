@@ -70,6 +70,7 @@
     <Compile Include="Expression\BinaryExpressionEaterTests.cs" />
     <Compile Include="Expression\CastExpressionEaterTests.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
+    <Compile Include="MoqStub\MockOfInvocationEaterTests.cs" />
     <Compile Include="Statement\TryStatementEaterTests.cs" />
     <Compile Include="Statement\UsingStatementEaterTests.cs" />
     <Compile Include="StubTypes\IEventDeclarationAndIDeclaredElement.cs" />
@@ -135,9 +136,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MoqStub\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\JetBrains.ReSharper.SDK.8.0.1243\build\JetBrains.ReSharper.SDK.Targets" Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.0.1243\build\JetBrains.ReSharper.SDK.Targets')" />
