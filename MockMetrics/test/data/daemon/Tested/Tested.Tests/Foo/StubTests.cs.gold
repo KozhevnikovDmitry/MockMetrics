@@ -3,6 +3,9 @@ using NUnit.Framework;
 
 namespace Tested.Tests
 {
+    /// <summary>
+    /// Test#2
+    /// </summary>
     [TestFixture]
     public class StubTests
     {

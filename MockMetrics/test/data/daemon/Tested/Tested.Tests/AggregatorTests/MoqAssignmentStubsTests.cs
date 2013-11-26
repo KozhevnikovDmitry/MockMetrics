@@ -3,6 +3,9 @@ using NUnit.Framework;
 
 namespace Tested.Tests.AggregatorTests
 {
+    /// <summary>
+    /// Test#5
+    /// </summary>
     [TestFixture]
     public class MoqAssignmentStubsTests
     {

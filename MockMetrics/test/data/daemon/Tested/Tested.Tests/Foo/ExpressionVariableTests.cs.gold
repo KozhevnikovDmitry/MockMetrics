@@ -2,6 +2,9 @@ using NUnit.Framework;
 
 namespace Tested.Tests
 {
+    /// <summary>
+    /// Test#3
+    /// </summary>
     [TestFixture]
     public class ExpressionVariableTests
     {

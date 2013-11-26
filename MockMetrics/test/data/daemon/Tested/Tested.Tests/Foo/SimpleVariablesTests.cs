@@ -2,6 +2,9 @@ using NUnit.Framework;
 
 namespace Tested.Tests
 {
+    /// <summary>
+    /// Test#1
+    /// </summary>
     [TestFixture]
     public class SimpleVariablesTests
     {

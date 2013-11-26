@@ -4,6 +4,9 @@ using NUnit.Framework;
 
 namespace Tested.Tests.AggregatorTests
 {
+    /// <summary>
+    /// Test#6
+    /// </summary>
     [TestFixture]
     public class VariablesWithInitializersTests
     {

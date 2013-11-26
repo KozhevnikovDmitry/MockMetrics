@@ -29,7 +29,7 @@ namespace MockMetrics.Eating.MoqStub
                 return;
             }
 
-            // TODO: option target can in the right operand of equility, checking is needed
+            // Option target (method or property) can be positioned only in the left side of equality expression
             if (options is IEqualityExpression)
             {
                 EatStubOptions(snapshot, (options as IEqualityExpression).LeftOperand);
