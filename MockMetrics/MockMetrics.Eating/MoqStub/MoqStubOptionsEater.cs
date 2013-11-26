@@ -20,7 +20,7 @@ namespace MockMetrics.Eating.MoqStub
             _moqStubOptionTargetEater = moqStubOptionTargetEater;
         }
 
-        public void EatStubOptions(ISnapshot snapshot, ICSharpExpression options)
+        public virtual void EatStubOptions(ISnapshot snapshot, ICSharpExpression options)
         {
             if (options is IConditionalAndExpression)
             {

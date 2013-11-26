@@ -71,6 +71,7 @@
     <Compile Include="Expression\CastExpressionEaterTests.cs" />
     <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs" />
     <Compile Include="MoqStub\MockOfInvocationEaterTests.cs" />
+    <Compile Include="MoqStub\MoqStubOptionsEaterTests.cs" />
     <Compile Include="Statement\TryStatementEaterTests.cs" />
     <Compile Include="Statement\UsingStatementEaterTests.cs" />
     <Compile Include="StubTypes\IEventDeclarationAndIDeclaredElement.cs" />
