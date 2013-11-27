@@ -65,14 +65,12 @@
     <Compile Include="Expression\ArrayCreationExpressionEater.cs" />
     <Compile Include="Expression\AwaitExpressionEater.cs" />
     <Compile Include="Expression\BinaryExpressionEater.cs" />
-    <Compile Include="Expression\EatInfo.cs" />
     <Compile Include="Expression\LambdaExpressionEater.cs" />
     <Compile Include="Expression\DefaultExpressionEater.cs" />
     <Compile Include="Expression\EatExpressionHelper.cs" />
     <Compile Include="Expression\ElementAccessExpressionEater.cs" />
-    <Compile Include="Expression\ExpressionKind.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />
-    <Compile Include="Expression\ExpressionKindHelper.cs" />
+    <Compile Include="Expression\VarTypeHelper.cs" />
     <Compile Include="Expression\InvocationExpressionEater.cs" />
     <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
     <Compile Include="Expression\ParentReferenceEater.cs" />
@@ -88,7 +86,8 @@
     <Compile Include="Expression\UnexpectedAssignDestinationException.cs" />
     <Compile Include="Expression\UnexpectedReferenceTypeException.cs" />
     <Compile Include="ICSharpNodeEater.cs" />
-    <Compile Include="MoqStub\FakeOptionType.cs" />
+    <Compile Include="MetricMeasure\MetricSnapshot.cs" />
+    <Compile Include="MetricMeasure\NodeKind.cs" />
     <Compile Include="MoqStub\MoqStubOptionsEater.cs" />
     <Compile Include="MoqStub\MoqStubOptionTargetEater.cs" />
     <Compile Include="MoqStub\MoqStubOptionWrongTypeException.cs" />

@@ -1,10 +1,8 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
-    /// <summary>
-    ///     All literals are stubs
-    /// </summary>
     public class LiteralExpressionEater : ExpressionEater<ICSharpLiteralExpression>
     {
         public LiteralExpressionEater(IEater eater)
@@ -12,9 +10,9 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, ICSharpLiteralExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
         {
-            return ExpressionKind.StubCandidate;
+            return VarType.Library;
         }
     }
 }

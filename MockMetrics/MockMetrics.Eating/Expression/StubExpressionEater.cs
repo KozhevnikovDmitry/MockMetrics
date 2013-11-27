@@ -1,5 +1,6 @@
 using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -10,9 +11,9 @@ namespace MockMetrics.Eating.Expression
             ExpressionType = GetType();
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression statement, bool innerEat)
+        public VarType Eat(ISnapshot snapshot, ICSharpExpression statement)
         {
-            return ExpressionKind.None;
+            return VarType.None;
         }
 
         public Type ExpressionType { get; private set; }

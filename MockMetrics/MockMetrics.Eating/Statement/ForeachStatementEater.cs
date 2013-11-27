@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Statement
 {
@@ -12,9 +13,7 @@ namespace MockMetrics.Eating.Statement
         {
             Eater.Eat(snapshot, statement.Body);
             Eater.Eat(snapshot, statement.IteratorDeclaration);
-
-            var kind = Eater.Eat(snapshot, statement.Collection);
-            snapshot.Add(kind, statement.Collection);
+            Eater.Eat(snapshot, statement.Collection);
         }
     }
 }

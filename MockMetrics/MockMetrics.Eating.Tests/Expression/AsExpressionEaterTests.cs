@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using NUnit.Framework;
 using Moq;
 
@@ -23,8 +24,8 @@ namespace MockMetrics.Eating.Tests.Expression
             var typeEater = new Mock<ITypeEater>();
             typeEater.Setup(t => t.EatCastType(snapshot, typeOperand)).Returns(ExpressionKind.Mock).Verifiable();
             
-            var kindHelper = new Mock<ExpressionKindHelper>();
-            kindHelper.Setup(t => t.ValueOfKindAsTypeOfKind(ExpressionKind.None, ExpressionKind.Mock))
+            var kindHelper = new Mock<VarTypeHelper>();
+            kindHelper.Setup(t => t.CastExpressionType(ExpressionKind.None, ExpressionKind.Mock))
                 .Returns(ExpressionKind.Result)
                 .Verifiable();
 

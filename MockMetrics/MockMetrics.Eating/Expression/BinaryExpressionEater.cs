@@ -1,37 +1,23 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class BinaryExpressionEater : ExpressionEater<IBinaryExpression>
     {
-        public BinaryExpressionEater(IEater eater) : base(eater)
+        private readonly VarTypeHelper _varTypeHelper;
+
+        public BinaryExpressionEater(IEater eater, VarTypeHelper varTypeHelper) : base(eater)
         {
+            _varTypeHelper = varTypeHelper;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IBinaryExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, IBinaryExpression expression)
         {
-            var leftKind = Eater.Eat(snapshot, expression.LeftOperand, innerEat);
-            snapshot.Add(leftKind, expression.LeftOperand);
+            var leftVarType = Eater.Eat(snapshot, expression.LeftOperand);
+            var rightVarType = Eater.Eat(snapshot, expression.RightOperand);
 
-            var rightKind = Eater.Eat(snapshot, expression.RightOperand, innerEat);
-            snapshot.Add(rightKind, expression.RightOperand);
-
-            if (leftKind == ExpressionKind.TargetCall || rightKind == ExpressionKind.TargetCall)
-            {
-                return ExpressionKind.Result;
-            }
-
-            if (leftKind == ExpressionKind.Target || rightKind == ExpressionKind.Target)
-            {
-                return ExpressionKind.Target;
-            }
-
-            if (leftKind == ExpressionKind.Result || rightKind == ExpressionKind.Result)
-            {
-                return ExpressionKind.Result;
-            }
-
-            return ExpressionKind.StubCandidate;
+            return _varTypeHelper.CastExpressionType(leftVarType, rightVarType);
         }
     }
 }

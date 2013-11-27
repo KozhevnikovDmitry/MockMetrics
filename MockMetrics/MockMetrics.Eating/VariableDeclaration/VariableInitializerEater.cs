@@ -2,12 +2,13 @@ using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
     public interface IVariableInitializerEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, IVariableInitializer initializer);
+        VarType Eat(ISnapshot snapshot, IVariableInitializer initializer);
     }
 
     public class VariableInitializerEater : IVariableInitializerEater, ICSharpNodeEater
@@ -19,7 +20,7 @@ namespace MockMetrics.Eating.VariableDeclaration
             _eater = eater;
         }
 
-        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
+        public VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -31,14 +32,14 @@ namespace MockMetrics.Eating.VariableDeclaration
             {
                 foreach (IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
                 {
-                    ExpressionKind kind = Eat(snapshot, variableInitializer);
+                    VarType varType = Eat(snapshot, variableInitializer);
 
                     // TODO : what if stubcandidate
-                    snapshot.Add(kind, variableInitializer);
+                    snapshot.Add(varType, variableInitializer);
                 }
 
                 // TODO : array of target?
-                return ExpressionKind.StubCandidate;
+                return VarType.Library;
             }
 
             ICSharpExpression initialExpression = null;
@@ -61,21 +62,21 @@ namespace MockMetrics.Eating.VariableDeclaration
             return EatResults(snapshot, initialExpression);
         }
 
-        private ExpressionKind EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
+        private VarType EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
         {
-            ExpressionKind expressionKind = _eater.Eat(snapshot, initialExpression);
+            VarType varType = _eater.Eat(snapshot, initialExpression);
 
-            if (expressionKind == ExpressionKind.StubCandidate)
+            if (varType == ExpressionKind.StubCandidate)
             {
                 return ExpressionKind.Stub;
             }
 
-            if (expressionKind == ExpressionKind.TargetCall)
+            if (varType == ExpressionKind.TargetCall)
             {
                 return ExpressionKind.Result;
             }
 
-            return expressionKind;
+            return varType;
         }
     }
 }

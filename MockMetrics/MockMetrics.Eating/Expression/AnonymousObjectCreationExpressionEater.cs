@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -9,16 +10,16 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IAnonymousObjectCreationExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, IAnonymousObjectCreationExpression expression)
         {
             // TODO: cover by functional tests
             foreach (var memberDeclaration in expression.AnonymousInitializer.MemberInitializers)
             {
-                var kind = Eater.Eat(snapshot, memberDeclaration.Expression, innerEat);
-                snapshot.Add(kind, memberDeclaration);
+                var varType = Eater.Eat(snapshot, memberDeclaration.Expression);
+                snapshot.AddVariable(memberDeclaration, Scope.Local, , varType);
             }
 
-            return ExpressionKind.StubCandidate;
+            return VarType.Library;
         }
     }
 }

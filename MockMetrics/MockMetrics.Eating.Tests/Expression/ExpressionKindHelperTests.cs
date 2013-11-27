@@ -11,12 +11,12 @@ namespace MockMetrics.Eating.Tests.Expression
         public void ValueOfKindAsTypeOfKind_EatTargetCallTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
             
             // Assert
             foreach (ExpressionKind kind in Enum.GetValues(typeof(ExpressionKind)))
             {
-                Assert.AreEqual(helper.ValueOfKindAsTypeOfKind(ExpressionKind.TargetCall, kind), ExpressionKind.Result);
+                Assert.AreEqual(helper.CastExpressionType(ExpressionKind.TargetCall, kind), ExpressionKind.Result);
             }
         }
 
@@ -24,13 +24,13 @@ namespace MockMetrics.Eating.Tests.Expression
         public void ValueOfKindAsTypeOfKind_EatResultTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Assert
             foreach (ExpressionKind kind in Enum.GetValues(typeof(ExpressionKind)))
             {
                 if (kind != ExpressionKind.TargetCall)
-                Assert.AreEqual(helper.ValueOfKindAsTypeOfKind(ExpressionKind.Result, kind), ExpressionKind.Result);
+                Assert.AreEqual(helper.CastExpressionType(ExpressionKind.Result, kind), ExpressionKind.Result);
             }
         }
 
@@ -38,13 +38,13 @@ namespace MockMetrics.Eating.Tests.Expression
         public void ValueOfKindAsTypeOfKind_EatMockTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Assert
             foreach (ExpressionKind kind in Enum.GetValues(typeof(ExpressionKind)))
             {
                 if (kind != ExpressionKind.TargetCall && kind != ExpressionKind.Result)
-                Assert.AreEqual(helper.ValueOfKindAsTypeOfKind(ExpressionKind.Mock, kind), ExpressionKind.Mock);
+                Assert.AreEqual(helper.CastExpressionType(ExpressionKind.Mock, kind), ExpressionKind.Mock);
             }
         }
 
@@ -52,7 +52,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public void ValueOfKindAsTypeOfKind_EatTargetTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Assert
             foreach (ExpressionKind kind in Enum.GetValues(typeof(ExpressionKind)))
@@ -60,14 +60,14 @@ namespace MockMetrics.Eating.Tests.Expression
                 if (kind != ExpressionKind.TargetCall &&
                     kind != ExpressionKind.Result &&
                     kind != ExpressionKind.Mock)
-                Assert.AreEqual(helper.ValueOfKindAsTypeOfKind(ExpressionKind.Target, kind), ExpressionKind.Target);
+                Assert.AreEqual(helper.CastExpressionType(ExpressionKind.Target, kind), ExpressionKind.Target);
             }
             foreach (ExpressionKind kind in Enum.GetValues(typeof(ExpressionKind)))
             {
                 if (kind != ExpressionKind.TargetCall &&
                     kind != ExpressionKind.Result &&
                     kind != ExpressionKind.Mock)
-                    Assert.AreEqual(helper.ValueOfKindAsTypeOfKind(kind, ExpressionKind.Target), ExpressionKind.Target);
+                    Assert.AreEqual(helper.CastExpressionType(kind, ExpressionKind.Target), ExpressionKind.Target);
             }
         }
 
@@ -75,7 +75,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public void ValueOfKindAsTypeOfKind_EatAnyValueKindTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Assert
             foreach (ExpressionKind valueKind in Enum.GetValues(typeof(ExpressionKind)))
@@ -87,7 +87,7 @@ namespace MockMetrics.Eating.Tests.Expression
                 foreach (ExpressionKind typeKind in Enum.GetValues(typeof(ExpressionKind)))
                 {
                     if (typeKind != ExpressionKind.Target)
-                        Assert.AreEqual(helper.ValueOfKindAsTypeOfKind(valueKind, typeKind), valueKind);
+                        Assert.AreEqual(helper.CastExpressionType(valueKind, typeKind), valueKind);
                 }
             }
         }
@@ -96,7 +96,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public void InvocationKindByParentReferenceKind_EatTargetCallTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Act
             var kind = helper.InvocationKindByParentReferenceKind(ExpressionKind.TargetCall);
@@ -110,7 +110,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public void InvocationKindByParentReferenceKind_EatTargetTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Act
             var kind = helper.InvocationKindByParentReferenceKind(ExpressionKind.Target);
@@ -123,7 +123,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public void InvocationKindByParentReferenceKindTest()
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Assert
             foreach (ExpressionKind kind in Enum.GetValues(typeof(ExpressionKind)))
@@ -144,7 +144,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public ExpressionKind ReferenceKindByParentReferenceKindTest(ExpressionKind kind)
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
             
             // Assert
             return helper.ReferenceKindByParentReferenceKind(kind);
@@ -161,7 +161,7 @@ namespace MockMetrics.Eating.Tests.Expression
         public ExpressionKind KindOfAssignmentTest(ExpressionKind kind)
         {
             // Arrange
-            var helper = new ExpressionKindHelper();
+            var helper = new VarTypeHelper();
 
             // Assert
             return helper.KindOfAssignment(kind);

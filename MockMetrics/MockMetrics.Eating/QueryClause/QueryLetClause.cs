@@ -1,6 +1,7 @@
 using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.QueryClause
 {
@@ -10,9 +11,9 @@ namespace MockMetrics.Eating.QueryClause
         {
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IQueryLetClause queryClause)
+        public override VarType Eat(ISnapshot snapshot, IQueryLetClause queryClause)
         {
-            return ExpressionKind.None;
+            return VarType.None;
         }
     }
 }

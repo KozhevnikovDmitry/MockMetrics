@@ -20,7 +20,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
             var eater = new Mock<IEater>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IVariableDeclarationAndIDeclaredElement>());
-            var expressionKindHelper = Mock.Of<ExpressionKindHelper>();
+            var expressionKindHelper = Mock.Of<VarTypeHelper>();
             var assignmentExpressionEater = new AssignmentExpressionEater(eater.Object, eatExpressionHelper, expressionKindHelper);
 
             // Act
@@ -40,7 +40,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
             var eater = Mock.Of<IEater>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IEventDeclarationAndIDeclaredElement>());
-            var expressionKindHelper = Mock.Of<ExpressionKindHelper>();
+            var expressionKindHelper = Mock.Of<VarTypeHelper>();
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
 
             // Act
@@ -60,7 +60,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, source, false) == ExpressionKind.StubCandidate);
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IVariableDeclarationAndIDeclaredElement>());
-            var expressionKindHelper = Mock.Of<ExpressionKindHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
+            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
 
             // Act
@@ -81,7 +81,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, source, false) == ExpressionKind.StubCandidate);
             var variableDeclaration = Mock.Of<IVariableDeclarationAndIDeclaredElement>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == variableDeclaration);
-            var expressionKindHelper = Mock.Of<ExpressionKindHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
+            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
 
             // Act
@@ -104,7 +104,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, source, false) == ExpressionKind.StubCandidate);
             var variableDeclaration = Mock.Of<ILocalVariableAndIDeclaredElement>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == variableDeclaration);
-            var expressionKindHelper = Mock.Of<ExpressionKindHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
+            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
 
             // Act
@@ -126,7 +126,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, source, false) == ExpressionKind.StubCandidate);
             var variableDeclaration = Mock.Of<IUnsafeCodeFixedPointerAndIDeclaredElement>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == variableDeclaration);
-            var expressionKindHelper = Mock.Of<ExpressionKindHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
+            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
 
             // Act
@@ -146,7 +146,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest);
             var eater = Mock.Of<IEater>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
-            var expressionKindHelper = Mock.Of<ExpressionKindHelper>();
+            var expressionKindHelper = Mock.Of<VarTypeHelper>();
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
 
             // Assert

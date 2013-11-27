@@ -1,15 +1,15 @@
 ﻿using System.Linq;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.MoqStub
 {
     public interface IMockOfInvocationEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat);
+        VarType Eat(ISnapshot snapshot, IInvocationExpression expression);
     }
 
-    // TODO : cover by unit tests
     public class MockOfInvocationEater : IMockOfInvocationEater, ICSharpNodeEater
     {
         private readonly IMoqStubOptionsEater _moqStubOptionsEater;
@@ -19,12 +19,9 @@ namespace MockMetrics.Eating.MoqStub
             _moqStubOptionsEater = moqStubOptionsEater;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat)
+        public VarType Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
-            if (innerEat)
-            {
-                snapshot.Add(ExpressionKind.Stub, expression);
-            }
+               // snapshot.Add(ExpressionKind.Stub, expression);
 
             var predicate = expression.Arguments.Select(t => t.Value).OfType<ILambdaExpression>().SingleOrDefault();
             if (predicate != null)
@@ -45,7 +42,7 @@ namespace MockMetrics.Eating.MoqStub
                 }
             }
 
-            return ExpressionKind.Stub;
+            return VarType.Stub;
         }
     }
 

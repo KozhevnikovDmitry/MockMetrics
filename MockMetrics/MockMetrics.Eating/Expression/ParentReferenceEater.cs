@@ -2,12 +2,13 @@ using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public interface IParentReferenceEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat);
+        VarType Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat);
     }
 
     public class ParentReferenceEater : IParentReferenceEater, ICSharpNodeEater
@@ -22,7 +23,7 @@ namespace MockMetrics.Eating.Expression
             _eater = eater;
         }
 
-        public virtual ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] IInvocationExpression expression, bool innerEat)
+        public virtual VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IInvocationExpression expression, bool innerEat)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -32,16 +33,16 @@ namespace MockMetrics.Eating.Expression
 
             if (expression.ExtensionQualifier == null)
             {
-                return ExpressionKind.None;
+                return VarType.None;
             }
 
             var mc = expression.ExtensionQualifier.ManagedConvertible;
             if (mc is ExtensionArgumentInfo)
             {
-                return _eater.Eat(snapshot, (mc as ExtensionArgumentInfo).Expression, innerEat);
+                return _eater.Eat(snapshot, (mc as ExtensionArgumentInfo).Expression);
             }
 
-            return ExpressionKind.None;
+            return VarType.None;
         }
     }
 }

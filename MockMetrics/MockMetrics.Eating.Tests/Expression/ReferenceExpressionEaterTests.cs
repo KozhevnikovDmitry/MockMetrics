@@ -20,7 +20,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>();
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>(t => t.EatVariableType(snapshot, propertyType) == ExpressionKind.Target);
-            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var kindHelper = Mock.Of<VarTypeHelper>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>(), false) == ExpressionKind.None);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
 
@@ -41,7 +41,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>();
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>(t => t.EatVariableType(snapshot, fieldType) == ExpressionKind.Target);
-            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var kindHelper = Mock.Of<VarTypeHelper>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>(), false) == ExpressionKind.None);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
 
@@ -61,7 +61,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>();
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>();
-            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var kindHelper = Mock.Of<VarTypeHelper>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>(), false) == ExpressionKind.None);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
 
@@ -81,7 +81,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>();
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>();
-            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var kindHelper = Mock.Of<VarTypeHelper>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>(), false) == ExpressionKind.None);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
 
@@ -100,7 +100,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>();
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>();
-            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var kindHelper = Mock.Of<VarTypeHelper>();
             var snapshot = Mock.Of<ISnapshot>(t => t.GetVariableKind(refElement) == ExpressionKind.Target);
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>(), false) == ExpressionKind.None);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
@@ -120,7 +120,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>(t => t.QualifierExpression == qualifierExpression);
             var eatHelper = Mock.Of<EatExpressionHelper>();
             var typeEater = Mock.Of<ITypeEater>();
-            var kindHelper = Mock.Of<ExpressionKindHelper>(t => t.ReferenceKindByParentReferenceKind(ExpressionKind.Target) == ExpressionKind.TargetCall);
+            var kindHelper = Mock.Of<VarTypeHelper>(t => t.ReferenceKindByParentReferenceKind(ExpressionKind.Target) == ExpressionKind.TargetCall);
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, qualifierExpression, false) == ExpressionKind.Target);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
@@ -141,7 +141,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>();
             var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == refElement);
             var typeEater = Mock.Of<ITypeEater>();
-            var kindHelper = Mock.Of<ExpressionKindHelper>();
+            var kindHelper = Mock.Of<VarTypeHelper>();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>(), false) == ExpressionKind.None);
             var referenceExpressionEater = new ReferenceExpressionEater(eater, kindHelper, eatHelper, typeEater);
             
@@ -158,7 +158,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var referenceExpression = Mock.Of<IReferenceExpression>(t => t.QualifierExpression == qualifierExpression);
             var eatHelper = Mock.Of<EatExpressionHelper>();
             var typeEater = Mock.Of<ITypeEater>();
-            var kindHelper = Mock.Of<ExpressionKindHelper>(t => t.ReferenceKindByParentReferenceKind(ExpressionKind.Target) == ExpressionKind.TargetCall);
+            var kindHelper = Mock.Of<VarTypeHelper>(t => t.ReferenceKindByParentReferenceKind(ExpressionKind.Target) == ExpressionKind.TargetCall);
             var snapshot = Mock.Of<ISnapshot>();
             var eater = new Mock<IEater>();
             var referenceExpressionEater = new ReferenceExpressionEater(eater.Object, kindHelper, eatHelper, typeEater);

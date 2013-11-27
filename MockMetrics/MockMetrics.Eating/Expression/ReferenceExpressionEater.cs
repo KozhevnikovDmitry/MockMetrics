@@ -1,16 +1,16 @@
-﻿using System;
-using JetBrains.ReSharper.Psi;
+﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class ReferenceExpressionEater : ExpressionEater<IReferenceExpression>
     {
-        private readonly ExpressionKindHelper _kindHelper;
+        private readonly VarTypeHelper _kindHelper;
         private readonly EatExpressionHelper _eatExpressionHelper;
         private readonly ITypeEater _typeEater;
 
-        public ReferenceExpressionEater(IEater eater, ExpressionKindHelper kindHelper, EatExpressionHelper eatExpressionHelper, ITypeEater typeEater)
+        public ReferenceExpressionEater(IEater eater, VarTypeHelper kindHelper, EatExpressionHelper eatExpressionHelper, ITypeEater typeEater)
             : base(eater)
         {
             _kindHelper = kindHelper;
@@ -18,13 +18,13 @@ namespace MockMetrics.Eating.Expression
             _typeEater = typeEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IReferenceExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, IReferenceExpression expression)
         {
             var parentKind = expression.QualifierExpression != null
-                ? Eater.Eat(snapshot, expression.QualifierExpression, innerEat)
-                : ExpressionKind.None;
+                ? Eater.Eat(snapshot, expression.QualifierExpression)
+                : VarType.None;
 
-            if (parentKind == ExpressionKind.None)
+            if (parentKind == VarType.None)
             {
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
 
@@ -43,22 +43,22 @@ namespace MockMetrics.Eating.Expression
 
                 if (declaredElement is IEvent)
                 {
-                    return ExpressionKind.Stub;
+                    return VarType.Stub;
                 }
 
                 if (declaredElement is ILocalConstantDeclaration)
                 {
-                    return ExpressionKind.Stub;
+                    return VarType.Stub;
                 }
 
                 if (declaredElement is IVariableDeclaration)
                 {
-                    return snapshot.GetVariableKind(declaredElement as IVariableDeclaration);
+                    return snapshot.GetVarType(declaredElement as IVariableDeclaration);
                 }
 
                 if (declaredElement is IClass)
                 {
-                    return ExpressionKind.None;
+                    return VarType.None;
                 }
 
                 throw new UnexpectedReferenceTypeException(declaredElement, this, expression);

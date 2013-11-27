@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.MoqStub
 {
@@ -33,21 +34,21 @@ namespace MockMetrics.Eating.MoqStub
             if (options is IEqualityExpression)
             {
                 EatStubOptions(snapshot, (options as IEqualityExpression).LeftOperand);
-                _eater.Eat(snapshot, (options as IEqualityExpression).RightOperand, true);
+                _eater.Eat(snapshot, (options as IEqualityExpression).RightOperand);
                 return;
             }
 
             if (options is IInvocationExpression)
             {
                 var optType = _moqStubOptionTargetEater.EatOption(snapshot, options as IInvocationExpression);
-                snapshot.Add(optType, options);
+                snapshot.AddFakeOption(options, optType);
                 return;
             }
 
             if (options is IReferenceExpression)
             {
                 var optType = _moqStubOptionTargetEater.EatOption(snapshot, options as IReferenceExpression);
-                snapshot.Add(optType, options);
+                snapshot.AddFakeOption(options, optType);
                 return;
             }
 

@@ -1,27 +1,27 @@
-﻿using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class AssignmentExpressionEater : ExpressionEater<IAssignmentExpression>
     {
         private readonly EatExpressionHelper _eatExpressionHelper;
-        private readonly ExpressionKindHelper _expressionKindHelper;
+        private readonly VarTypeHelper _varTypeHelper;
 
-        public AssignmentExpressionEater(IEater eater, EatExpressionHelper eatExpressionHelper, ExpressionKindHelper expressionKindHelper)
+        public AssignmentExpressionEater(IEater eater, EatExpressionHelper eatExpressionHelper, VarTypeHelper varTypeHelper)
             : base(eater)
         {
             _eatExpressionHelper = eatExpressionHelper;
-            _expressionKindHelper = expressionKindHelper;
+            _varTypeHelper = varTypeHelper;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IAssignmentExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, IAssignmentExpression expression)
         {
-            var sourceKind = Eater.Eat(snapshot, expression.Source, innerEat);
+            var sourceKind = Eater.Eat(snapshot, expression.Source);
 
             if (expression.Dest is IReferenceExpression)
             { 
-                var assignmentKind = _expressionKindHelper.KindOfAssignment(sourceKind);
+                var assignmentKind = _varTypeHelper.KindOfAssignment(sourceKind);
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 {
@@ -32,12 +32,12 @@ namespace MockMetrics.Eating.Expression
             throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);
         }
 
-        private ExpressionKind EatVariableDeclaration(ISnapshot snapshot, IVariableDeclaration variableDeclaration, ExpressionKind assignmentKind)
+        private VarType EatVariableDeclaration(ISnapshot snapshot, IVariableDeclaration variableDeclaration, VarType assignmentType)
         {
             // TODO : check on properties, fields, events, parameters
             if (variableDeclaration is IEventDeclaration)
             {
-                return ExpressionKind.None;
+                return VarType.None;
             }
 
             if (variableDeclaration is ILocalVariableDeclaration)
@@ -56,8 +56,8 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            snapshot.Add(assignmentKind, variableDeclaration);
-            return assignmentKind;
+            snapshot.AddVariable(variableDeclaration, , , assignmentType);
+            return assignmentType;
         }
     }
 }

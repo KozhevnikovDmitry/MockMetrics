@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -26,7 +27,7 @@ namespace MockMetrics.Eating.Expression
 
             foreach (ICSharpArgument arg in arguements)
             {
-                _eater.Eat(snapshot, arg.Value, true);
+                _eater.Eat(snapshot, arg.Value);
             }
         }
     }

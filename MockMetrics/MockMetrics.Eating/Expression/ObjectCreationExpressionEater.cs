@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -15,7 +16,7 @@ namespace MockMetrics.Eating.Expression
             _argumentsEater = argumentsEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IObjectCreationExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, IObjectCreationExpression expression)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
             
@@ -23,14 +24,14 @@ namespace MockMetrics.Eating.Expression
             {
                 foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
                 {
-                   Eater.Eat(snapshot, memberInitializer.Expression, true);
+                   Eater.Eat(snapshot, memberInitializer.Expression);
                 }
             }
 
             return GetCreationObjectKind(snapshot, expression);
         }
 
-        private ExpressionKind GetCreationObjectKind(ISnapshot snapshot, IObjectCreationExpression expression)
+        private VarType GetCreationObjectKind(ISnapshot snapshot, IObjectCreationExpression expression)
         {
             if (expression.Type().Classify == TypeClassification.REFERENCE_TYPE)
             {
@@ -38,22 +39,22 @@ namespace MockMetrics.Eating.Expression
 
                 if (snapshot.IsInTestScope(projectName))
                 {
-                    return ExpressionKind.Target;
+                    return VarType.Target;
                 }
 
                 if (snapshot.IsInTestProject(projectName))
                 {
-                    return ExpressionKind.Mock;
+                    return VarType.Mock;
                 }
 
                 if (_expressionHelper.GetCreationTypeName(expression)
                                      .StartsWith("Moq.Mock"))
                 {
-                    return ExpressionKind.Mock;
+                    return VarType.Mock;
                 }
             }
 
-            return ExpressionKind.StubCandidate;
+            return VarType.Library;
         }
 
         private string GetProjectName(IObjectCreationExpression creationExpression)

@@ -1,14 +1,15 @@
 ﻿using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.QueryClause
 {
     public class StubClauseEater : IQueryClauseEater
     {
-        public ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause)
+        public VarType Eat(ISnapshot snapshot, IQueryClause queryClause)
         {
-            return ExpressionKind.None;
+            return VarType.None;
         }
 
         public Type QueryClauseType { get; private set; }

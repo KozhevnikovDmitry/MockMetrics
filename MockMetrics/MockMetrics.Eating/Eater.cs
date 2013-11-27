@@ -5,6 +5,7 @@ using System.Linq;
 using HaveBox;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.QueryClause;
 using MockMetrics.Eating.Statement;
 using MockMetrics.Eating.VariableDeclaration;
@@ -13,13 +14,13 @@ namespace MockMetrics.Eating
 {
     public interface IEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression, bool innerEat = false);
+        VarType Eat(ISnapshot snapshot, ICSharpExpression expression);
         
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
 
         void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
 
-        ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause);
+        VarType Eat(ISnapshot snapshot, IQueryClause queryClause);
     }
 
     public class Eater : IEater
@@ -31,12 +32,12 @@ namespace MockMetrics.Eating
             _container = container;
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, ICSharpExpression expression, bool innerEat = false)
+        public VarType Eat(ISnapshot snapshot, ICSharpExpression expression)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
 
-            return GetEater(expression).Eat(snapshot, expression, innerEat);
+            return GetEater(expression).Eat(snapshot, expression);
         }
 
         public void Eat(ISnapshot snapshot, ICSharpStatement statement)
@@ -47,7 +48,7 @@ namespace MockMetrics.Eating
             GetEater(statement).Eat(snapshot, statement);
         }
 
-        public ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause)
+        public VarType Eat(ISnapshot snapshot, IQueryClause queryClause)
         {
             if (queryClause == null)
                 throw new ArgumentNullException("queryClause");

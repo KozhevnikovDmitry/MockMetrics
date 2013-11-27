@@ -3,19 +3,20 @@ using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.QueryClause
 {
     public interface IQueryClauseEater : ICSharpNodeEater
     {
-        ExpressionKind Eat(ISnapshot snapshot, IQueryClause queryClause);
+        VarType Eat(ISnapshot snapshot, IQueryClause queryClause);
 
         Type QueryClauseType { get; }
     }
 
     public interface IQueryClauseEater<T> : IQueryClauseEater where T : IQueryClause
     {
-        ExpressionKind Eat(ISnapshot snapshot, T queryClause);
+        VarType Eat(ISnapshot snapshot, T queryClause);
     }
 
     public abstract class QueryClauseEater<T> : IQueryClauseEater<T> where T : IQueryClause
@@ -30,7 +31,7 @@ namespace MockMetrics.Eating.QueryClause
             Eater = eater;
         }
 
-        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] IQueryClause queryClause)
+        public VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IQueryClause queryClause)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -57,7 +58,7 @@ namespace MockMetrics.Eating.QueryClause
             }
         }
 
-        public abstract ExpressionKind Eat(ISnapshot snapshot, T queryClause);
+        public abstract VarType Eat(ISnapshot snapshot, T queryClause);
 
         public Type QueryClauseType
         {

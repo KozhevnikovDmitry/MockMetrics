@@ -1,35 +1,19 @@
-﻿using System;
+﻿using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
-    public class ExpressionKindHelper
+    public class VarTypeHelper
     {
-        public virtual ExpressionKind ValueOfKindAsTypeOfKind(ExpressionKind valueKind, ExpressionKind typeKind)
+        public virtual VarType CastExpressionType(VarType valueType, VarType castType)
         {
-            if (valueKind == ExpressionKind.TargetCall)
+            if (valueType >= castType)
             {
-                return ExpressionKind.Result;
+                return valueType;
             }
-
-            if (valueKind == ExpressionKind.Result)
-            {
-                return ExpressionKind.Result;
-            }
-
-            if (valueKind == ExpressionKind.Mock)
-            {
-                return ExpressionKind.Mock;
-            }
-
-            if (valueKind == ExpressionKind.Target || typeKind == ExpressionKind.Target)
-            {
-                return ExpressionKind.Target;
-            }
-
-            return valueKind;
+            return castType;
         }
 
-        public virtual ExpressionKind InvocationKindByParentReferenceKind(ExpressionKind parentKind)
+        public virtual VarType InvocationKindByParentReferenceKind(VarType parentKind)
         {
             switch (parentKind)
             {
@@ -46,7 +30,7 @@ namespace MockMetrics.Eating.Expression
             return parentKind;
         }
 
-        public virtual ExpressionKind ReferenceKindByParentReferenceKind(ExpressionKind parentKind)
+        public virtual VarType ReferenceKindByParentReferenceKind(VarType parentKind)
         {
             switch (parentKind)
             {
@@ -89,7 +73,7 @@ namespace MockMetrics.Eating.Expression
             }
         }
 
-        public virtual ExpressionKind KindOfAssignment(ExpressionKind assignSourceKind)
+        public virtual VarType KindOfAssignment(VarType assignSourceKind)
         {
             switch (assignSourceKind)
             {

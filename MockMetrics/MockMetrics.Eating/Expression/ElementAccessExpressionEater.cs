@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -13,15 +14,15 @@ namespace MockMetrics.Eating.Expression
             _argumentsEater = argumentsEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IElementAccessExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, IElementAccessExpression expression)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
 
             // TODO : cover by functional tests
             // TODO : what if array of results or targets
-            Eater.Eat(snapshot, expression.Operand, innerEat);
+            Eater.Eat(snapshot, expression.Operand);
 
-            return ExpressionKind.StubCandidate;
+            return VarType.Library;
         }
     }
 }

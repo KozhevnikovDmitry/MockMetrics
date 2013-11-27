@@ -1,14 +1,15 @@
 using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.MoqStub
 {
     public interface IMoqStubOptionTargetEater
     {
-        FakeOptionType EatOption(ISnapshot snapshot, IInvocationExpression invocationExpression);
+        FakeOption EatOption(ISnapshot snapshot, IInvocationExpression invocationExpression);
 
-        FakeOptionType EatOption(ISnapshot snapshot, IReferenceExpression referenceExpression);
+        FakeOption EatOption(ISnapshot snapshot, IReferenceExpression referenceExpression);
     }
 
     public class MoqStubOptionTargetEater : IMoqStubOptionTargetEater, ICSharpNodeEater
@@ -22,7 +23,7 @@ namespace MockMetrics.Eating.MoqStub
             _argumentsEater = argumentsEater;
         }
 
-        public virtual FakeOptionType EatOption(ISnapshot snapshot, IInvocationExpression invocationExpression)
+        public virtual FakeOption EatOption(ISnapshot snapshot, IInvocationExpression invocationExpression)
         {
             _argumentsEater.Eat(snapshot, invocationExpression.Arguments);
             
@@ -43,7 +44,7 @@ namespace MockMetrics.Eating.MoqStub
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(parentReference as IReferenceExpression);
                 if (declaredElement is ILambdaParameterDeclaration)
                 {
-                    return FakeOptionType.Method;
+                    return FakeOption.Method;
                 }
 
                 return EatOption(snapshot, parentReference as IReferenceExpression);
@@ -52,7 +53,7 @@ namespace MockMetrics.Eating.MoqStub
             throw new MoqStubOptionTargetWrongTypeException(this, parentReference);
         }
 
-        public virtual FakeOptionType EatOption(ISnapshot snapshot, IReferenceExpression referenceExpression)
+        public virtual FakeOption EatOption(ISnapshot snapshot, IReferenceExpression referenceExpression)
         {
             if (referenceExpression.QualifierExpression == null)
             {
@@ -70,7 +71,7 @@ namespace MockMetrics.Eating.MoqStub
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(referenceExpression.QualifierExpression as IReferenceExpression);
                 if (declaredElement is ILambdaParameterDeclaration)
                 {
-                    return FakeOptionType.Property;
+                    return FakeOption.Property;
                 }
                 return EatOption(snapshot, referenceExpression.QualifierExpression as IReferenceExpression);
             }

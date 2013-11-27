@@ -2,14 +2,15 @@
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public interface ITypeEater
     {
-        ExpressionKind EatCastType(ISnapshot snapshot, ITypeUsage typeUsage);
+        VarType EatCastType(ISnapshot snapshot, ITypeUsage typeUsage);
 
-        ExpressionKind EatVariableType(ISnapshot snapshot, IType type);
+        VarType EatVariableType(ISnapshot snapshot, IType type);
     }
 
     public class TypeEater : ITypeEater, ICSharpNodeEater
@@ -24,7 +25,7 @@ namespace MockMetrics.Eating.Expression
             _eatExpressionHelper = eatExpressionHelper;
         }
 
-        public ExpressionKind EatCastType([NotNull] ISnapshot snapshot, [NotNull] ITypeUsage typeUsage)
+        public VarType EatCastType([NotNull] ISnapshot snapshot, [NotNull] ITypeUsage typeUsage)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -34,12 +35,12 @@ namespace MockMetrics.Eating.Expression
 
             if (typeUsage is IDynamicTypeUsage)
             {
-                return ExpressionKind.StubCandidate;
+                return VarType.Library;
             }
 
             if (typeUsage is IPredefinedTypeUsage)
             {
-                return ExpressionKind.StubCandidate;
+                return VarType.Library;
             }
 
             if (typeUsage is IUserTypeUsage)
@@ -49,19 +50,19 @@ namespace MockMetrics.Eating.Expression
 
                 if (snapshot.IsInTestScope(classType.Module.Name))
                 {
-                    return ExpressionKind.Target;
+                    return VarType.Target;
                 }
 
                 if (snapshot.IsInTestProject(classType.Module.Name))
                 {
-                    return ExpressionKind.Mock;
+                    return VarType.Mock;
                 }
             }
 
-            return ExpressionKind.StubCandidate;
+            return VarType.Library;
         }
 
-        public ExpressionKind EatVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        public VarType EatVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -73,15 +74,15 @@ namespace MockMetrics.Eating.Expression
             if (snapshot.IsInTestScope(classType.Module.Name))
             {
                 //TODO if type is interface or abstract class return stub/mock?
-                return ExpressionKind.Target;
+                return VarType.Target;
             }
 
             if (snapshot.IsInTestProject(classType.Module.Name))
             {
-                return ExpressionKind.Mock;
+                return VarType.Mock;
             }
 
-            return ExpressionKind.StubCandidate;
+            return VarType.Library;
         }
     }
 }

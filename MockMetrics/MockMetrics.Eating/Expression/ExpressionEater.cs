@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -22,7 +23,7 @@ namespace MockMetrics.Eating.Expression
             get { return typeof(T); }
         }
 
-        public ExpressionKind Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpExpression expression, bool innerEat)
+        public VarType Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpExpression expression)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -34,7 +35,7 @@ namespace MockMetrics.Eating.Expression
             {
                 if (expression is T)
                 {
-                    return Eat(snapshot, (T)expression, innerEat);
+                    return Eat(snapshot, (T)expression);
                 }
 
                 throw new UnexpectedTypeOfNodeToEatException(typeof(T), this, expression);
@@ -49,6 +50,6 @@ namespace MockMetrics.Eating.Expression
             }
         }
 
-        public abstract ExpressionKind Eat(ISnapshot snapshot, T expression, bool innerEat);
+        public abstract VarType Eat(ISnapshot snapshot, T expression);
     }
 }

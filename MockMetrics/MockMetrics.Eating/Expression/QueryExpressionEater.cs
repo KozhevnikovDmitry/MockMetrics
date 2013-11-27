@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -11,11 +12,11 @@ namespace MockMetrics.Eating.Expression
             _typeEater = typeEater;
         }
 
-        public override ExpressionKind Eat(ISnapshot snapshot, IQueryExpression expression, bool innerEat)
+        public override VarType Eat(ISnapshot snapshot, IQueryExpression expression)
         {
            
-            Eater.Eat(snapshot, expression.From.Expression, innerEat);
-            snapshot.Add(expression.From.Declaration);
+            Eater.Eat(snapshot, expression.From.Expression);
+            snapshot.AddVariable(expression.From.Declaration, Scope.Local, , );
 
             IQuerySelectClause lastSelect;
             foreach (var queryClause in expression.Clauses)
@@ -27,7 +28,7 @@ namespace MockMetrics.Eating.Expression
 
             foreach (var queryContinuation in expression.Continuations)
             {
-                snapshot.Add(queryContinuation.Declaration);
+               snapshot.AddVariable(queryContinuation.Declaration, Scope.Local, , );
 
                 foreach (var queryClause in queryContinuation.Clauses)
                 {

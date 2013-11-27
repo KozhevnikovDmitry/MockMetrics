@@ -1,5 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Statement
 {
@@ -12,8 +12,7 @@ namespace MockMetrics.Eating.Statement
 
         public override void Eat(ISnapshot snapshot, IGotoCaseStatement statement)
         {
-            ExpressionKind kind = Eater.Eat(snapshot, statement.ValueExpression);
-            snapshot.Add(kind, statement.ValueExpression);
+            Eater.Eat(snapshot, statement.ValueExpression);
         }
     }
 }
