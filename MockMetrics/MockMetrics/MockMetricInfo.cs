@@ -2,6 +2,7 @@
 using JetBrains.ReSharper.Psi.CSharp;
 using MockMetrics;
 using MockMetrics.Eating;
+using MockMetrics.Eating.MetricMeasure;
 
 [assembly: RegisterConfigurableSeverity(MockMetricInfo.SeverityId,
   null,
@@ -17,9 +18,9 @@ namespace MockMetrics
     {
         public const string SeverityId = "MockMetricInfo";
 
-        private readonly Snapshot _snapshot;
+        private readonly ISnapshot _snapshot;
 
-        public MockMetricInfo(Snapshot snapshot)
+        public MockMetricInfo(ISnapshot snapshot)
         {
             _snapshot = snapshot;
         }

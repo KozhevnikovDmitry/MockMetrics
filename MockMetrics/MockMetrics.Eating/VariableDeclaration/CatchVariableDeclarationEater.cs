@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
@@ -8,9 +9,10 @@ namespace MockMetrics.Eating.VariableDeclaration
         {
         }
 
-        public override void Eat(ISnapshot snapshot, ICatchVariableDeclaration variableDeclaration)
+        public override VarType Eat(ISnapshot snapshot, ICatchVariableDeclaration variableDeclaration)
         {
-            snapshot.Add(variableDeclaration);
+            snapshot.AddVariable(variableDeclaration, Scope.Local, Aim.Result, VarType.Stub);
+            return VarType.Stub;
         }
     }
 }

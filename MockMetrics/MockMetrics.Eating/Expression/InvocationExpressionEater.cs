@@ -8,21 +8,21 @@ namespace MockMetrics.Eating.Expression
     public class InvocationExpressionEater : ExpressionEater<IInvocationExpression>
     {
         private readonly EatExpressionHelper _expressionHelper;
-        private readonly VarTypeHelper _varTypeHelper;
+        private readonly MetricHelper _metric;
         private readonly IParentReferenceEater _parentReferenceEater;
         private readonly IArgumentsEater _argumentsEater;
         private readonly IMockOfInvocationEater _mockOfInvocationEater;
 
         public InvocationExpressionEater(IEater eater, 
-                                         EatExpressionHelper expressionHelper, 
-                                         VarTypeHelper varTypeHelper,
+                                         EatExpressionHelper expressionHelper,
+                                         MetricHelper metric,
                                          IParentReferenceEater parentReferenceEater,
                                          IArgumentsEater argumentsEater,
                                          IMockOfInvocationEater mockOfInvocationEater)
             : base(eater)
         {
             _expressionHelper = expressionHelper;
-            _varTypeHelper = varTypeHelper;
+            _metric = metric;
             _parentReferenceEater = parentReferenceEater;
             _argumentsEater = argumentsEater;
             _mockOfInvocationEater = mockOfInvocationEater;
@@ -46,15 +46,15 @@ namespace MockMetrics.Eating.Expression
             // TODO: special eater for nunit asserts, that will eat with inner eating
             if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {
-                snapshot.Add(ExpressionKind.Assert, expression);
-                return ExpressionKind.Assert;
+                snapshot.AddCall(expression, Call.Assert);
+                return ;
             }
 
             // TODO: special eater for moq mock verify, that will eat with inner eating
             if (invokedName.StartsWith("Method:Moq.Mock.Verify"))
             {
-                snapshot.Add(ExpressionKind.Assert, expression);
-                return ExpressionKind.Assert;
+                snapshot.AddCall(expression, Call.Assert);
+                return ;
             }
 
             var invoked = _expressionHelper.GetInvokedElement(expression);
@@ -63,17 +63,17 @@ namespace MockMetrics.Eating.Expression
                 var invokedMethod = invoked as IMethod;
                 if (snapshot.IsInTestScope(invokedMethod.Module.Name))
                 {
-                    snapshot.Add(ExpressionKind.TargetCall, expression);
-                    return ExpressionKind.TargetCall;
+                    snapshot.AddCall(expression, Call.TargetCall);
+                    return ;
                 }
             }
 
-            if (parentKind == ExpressionKind.None)
+            if (parentKind == VarType.None)
             {
-                return ExpressionKind.StubCandidate;
+                return VarType.StubCandidate;
             }
 
-            var basedOnParentKind = _varTypeHelper.InvocationKindByParentReferenceKind(parentKind);
+            var basedOnParentKind = _metric.InvocationKindByParentReferenceKind(parentKind);
             if (basedOnParentKind == ExpressionKind.TargetCall)
             {
                 snapshot.Add(ExpressionKind.TargetCall, expression);

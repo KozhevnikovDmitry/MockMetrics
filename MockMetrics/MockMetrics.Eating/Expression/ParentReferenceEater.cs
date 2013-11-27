@@ -8,7 +8,7 @@ namespace MockMetrics.Eating.Expression
 {
     public interface IParentReferenceEater
     {
-        VarType Eat(ISnapshot snapshot, IInvocationExpression expression, bool innerEat);
+        VarType Eat(ISnapshot snapshot, IInvocationExpression expression);
     }
 
     public class ParentReferenceEater : IParentReferenceEater, ICSharpNodeEater
@@ -23,7 +23,7 @@ namespace MockMetrics.Eating.Expression
             _eater = eater;
         }
 
-        public virtual VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IInvocationExpression expression, bool innerEat)
+        public virtual VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IInvocationExpression expression)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");

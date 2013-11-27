@@ -6,14 +6,14 @@ namespace MockMetrics.Eating.Expression
 {
     public class ReferenceExpressionEater : ExpressionEater<IReferenceExpression>
     {
-        private readonly VarTypeHelper _kindHelper;
+        private readonly MetricHelper _metricHelper;
         private readonly EatExpressionHelper _eatExpressionHelper;
         private readonly ITypeEater _typeEater;
 
-        public ReferenceExpressionEater(IEater eater, VarTypeHelper kindHelper, EatExpressionHelper eatExpressionHelper, ITypeEater typeEater)
+        public ReferenceExpressionEater(IEater eater, MetricHelper metricHelper, EatExpressionHelper eatExpressionHelper, ITypeEater typeEater)
             : base(eater)
         {
-            _kindHelper = kindHelper;
+            _metricHelper = metricHelper;
             _eatExpressionHelper = eatExpressionHelper;
             _typeEater = typeEater;
         }
@@ -33,12 +33,12 @@ namespace MockMetrics.Eating.Expression
                 // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
                 {
-                    return _typeEater.EatVariableType(snapshot, (declaredElement as IProperty).Type);
+                    return _typeEater.VarTypeVariableType(snapshot, (declaredElement as IProperty).Type);
                 }
 
                 if (declaredElement is IField)
                 {
-                    return _typeEater.EatVariableType(snapshot, (declaredElement as IField).Type);
+                    return _typeEater.VarTypeVariableType(snapshot, (declaredElement as IField).Type);
                 }
 
                 if (declaredElement is IEvent)
@@ -65,7 +65,7 @@ namespace MockMetrics.Eating.Expression
             }
             else
             {
-                return _kindHelper.ReferenceKindByParentReferenceKind(parentKind);
+                return _metricHelper.ReferenceKindByParentReferenceKind(parentKind);
             }
         }
     }

@@ -18,7 +18,7 @@ namespace MockMetrics.Eating
         
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
 
-        void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
+        VarType Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
 
         VarType Eat(ISnapshot snapshot, IQueryClause queryClause);
     }
@@ -56,12 +56,12 @@ namespace MockMetrics.Eating
             return GetEater(queryClause).Eat(snapshot, queryClause);
         }
 
-        public void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
+        public VarType Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
         {
             if (variableDeclaration == null)
                 throw new ArgumentNullException("variableDeclaration");
 
-            GetEater(variableDeclaration).Eat(snapshot, variableDeclaration);
+            return GetEater(variableDeclaration).Eat(snapshot, variableDeclaration);
         }
         
         [DebuggerStepThrough]

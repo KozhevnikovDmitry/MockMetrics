@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
@@ -8,37 +9,28 @@ namespace MockMetrics.Eating.VariableDeclaration
         private readonly IVariableInitializerEater _variableInitializerEater;
         private readonly ITypeEater _typeEater;
 
-        public LocalVariableDeclarationEater(IEater eater, IVariableInitializerEater variableInitializerEater, ITypeEater typeEater)
+        public LocalVariableDeclarationEater(IEater eater, 
+                                             IVariableInitializerEater variableInitializerEater, 
+                                             ITypeEater typeEater)
             : base(eater)
         {
             _variableInitializerEater = variableInitializerEater;
             _typeEater = typeEater;
         }
 
-        public override void Eat(ISnapshot snapshot, ILocalVariableDeclaration variableDeclaration)
+        public override VarType Eat(ISnapshot snapshot, ILocalVariableDeclaration variableDeclaration)
         {
             if (variableDeclaration.Initial == null)
             {
-                var typeKind = _typeEater.EatVariableType(snapshot, variableDeclaration.Type);
-                snapshot.Add(typeKind, variableDeclaration);
-                return;
+                var varType = _typeEater.VarTypeVariableType(snapshot, variableDeclaration.Type);
+                var aim = _typeEater.AimVariableType(snapshot, variableDeclaration.Type);
+                snapshot.AddVariable(variableDeclaration, Scope.Local, aim, varType);
+                return varType;
             }
 
-            ExpressionKind kind = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
-
-            if (kind == ExpressionKind.StubCandidate)
-            {
-                snapshot.Add(ExpressionKind.Stub, variableDeclaration);
-                return;
-            }
-
-            if (kind == ExpressionKind.TargetCall || kind == ExpressionKind.Assert)
-            {
-                snapshot.Add(ExpressionKind.Result, variableDeclaration);
-                return;
-            }
-
-            snapshot.Add(kind, variableDeclaration);
+            var metrics = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
+            snapshot.AddVariable(variableDeclaration, Scope.Local, metrics.First, metrics.Second);
+            return metrics.Second;
         }
     }
 }

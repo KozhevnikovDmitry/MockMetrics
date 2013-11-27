@@ -1,9 +1,22 @@
-﻿using MockMetrics.Eating.MetricMeasure;
+﻿using System;
+using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.Util;
 
-namespace MockMetrics.Eating.Expression
+namespace MockMetrics.Eating.MetricMeasure
 {
-    public class VarTypeHelper
+    public class MetricHelper
     {
+        public virtual Aim AimOfExpression(VarType varType, ICSharpExpression expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public virtual Pair<Aim, VarType> VarTypeAndAim(ISnapshot snapshot, IType type)
+        {
+            throw new NotImplementedException();
+        }
+
         public virtual VarType CastExpressionType(VarType valueType, VarType castType)
         {
             if (valueType >= castType)
@@ -13,17 +26,29 @@ namespace MockMetrics.Eating.Expression
             return castType;
         }
 
-        public virtual VarType InvocationKindByParentReferenceKind(VarType parentKind)
+        public virtual Call InvocationKindByParentReferenceKind(VarType parentKind)
         {
             switch (parentKind)
             {
-                case ExpressionKind.TargetCall:
+                case VarType.Target:
                     {
-                        return ExpressionKind.Result;
+                        return Call.TargetCall;
                     }
-                case ExpressionKind.Target:
+                case VarType.Mock:
                     {
-                        return ExpressionKind.TargetCall;
+                        return Call.TargetCall;
+                    }
+                case VarType.Library:
+                    {
+                        return Call.Library;
+                    }
+                case VarType.Internal:
+                    {
+                        return Call.Internal;
+                    }
+                case VarType.External:
+                    {
+                        return Call.External;
                     }
             }
 
@@ -89,10 +114,10 @@ namespace MockMetrics.Eating.Expression
                     {
                         return ExpressionKind.Result;
                     }
-                default :
-                {
-                    return assignSourceKind;
-                }
+                default:
+                    {
+                        return assignSourceKind;
+                    }
             }
         }
     }

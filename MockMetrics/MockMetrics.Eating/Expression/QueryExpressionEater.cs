@@ -14,9 +14,8 @@ namespace MockMetrics.Eating.Expression
 
         public override VarType Eat(ISnapshot snapshot, IQueryExpression expression)
         {
-           
-            Eater.Eat(snapshot, expression.From.Expression);
-            snapshot.AddVariable(expression.From.Declaration, Scope.Local, , );
+            var varType = Eater.Eat(snapshot, expression.From.Expression);
+            snapshot.AddVariable(expression.From.Declaration, Scope.Local,  , varType);
 
             IQuerySelectClause lastSelect;
             foreach (var queryClause in expression.Clauses)

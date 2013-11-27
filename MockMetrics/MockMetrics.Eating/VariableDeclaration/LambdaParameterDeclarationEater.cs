@@ -1,17 +1,23 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
     public class LambdaParameterDeclarationEater : VariableDeclarationEater<ILambdaParameterDeclaration>
     {
-        public LambdaParameterDeclarationEater(IEater eater)
+        private readonly MetricHelper _metricHelper;
+
+        public LambdaParameterDeclarationEater(IEater eater, MetricHelper metricHelper)
             : base(eater)
         {
+            _metricHelper = metricHelper;
         }
 
-        public override void Eat(ISnapshot snapshot, ILambdaParameterDeclaration variableDeclaration)
+        public override VarType Eat(ISnapshot snapshot, ILambdaParameterDeclaration variableDeclaration)
         {
-            snapshot.Add(variableDeclaration);
+            var metrics = _metricHelper.VarTypeAndAim(snapshot, variableDeclaration.Type);
+            snapshot.AddVariable(variableDeclaration, Scope.Local, metrics.First, metrics.Second);
+            return metrics.Second;
         }
     }
 }

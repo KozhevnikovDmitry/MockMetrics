@@ -1,5 +1,6 @@
 using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
@@ -10,9 +11,9 @@ namespace MockMetrics.Eating.VariableDeclaration
             VariableDecalrationType = GetType();
         }
 
-        public void Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
+        public VarType Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
         {
-            
+            return VarType.None;
         }
 
         public Type VariableDecalrationType { get; private set; }

@@ -3,6 +3,7 @@ using JetBrains.Threading;
 using System.Reflection;
 using System.Collections.Generic;
 using MockMetrics.Eating;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Fake;
 using NUnit.Framework;
 
@@ -22,7 +23,7 @@ public class FunctionalTestAssembly : ReSharperTestEnvironmentAssembly
         yield return Assembly.GetExecutingAssembly();
 
         yield return typeof(FakeHighlighting).Assembly;
-        yield return typeof(Snapshot).Assembly;
+        yield return typeof(ISnapshot).Assembly;
     }
 
     public override void SetUp()

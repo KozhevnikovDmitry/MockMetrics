@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.Util;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
@@ -10,7 +11,9 @@ namespace MockMetrics.Eating.Expression
     {
         VarType EatCastType(ISnapshot snapshot, ITypeUsage typeUsage);
 
-        VarType EatVariableType(ISnapshot snapshot, IType type);
+        VarType VarTypeVariableType(ISnapshot snapshot, IType type);
+
+        Aim AimVariableType(ISnapshot snapshot, IType type);
     }
 
     public class TypeEater : ITypeEater, ICSharpNodeEater
@@ -62,7 +65,7 @@ namespace MockMetrics.Eating.Expression
             return VarType.Library;
         }
 
-        public VarType EatVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        public VarType VarTypeVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -73,16 +76,63 @@ namespace MockMetrics.Eating.Expression
             var classType = _eatExpressionHelper.GetTypeClass(type);
             if (snapshot.IsInTestScope(classType.Module.Name))
             {
-                //TODO if type is interface or abstract class return stub/mock?
+                //TODO if type is interface or abstract class return stub/mock? enum struct delegate?
                 return VarType.Target;
             }
 
             if (snapshot.IsInTestProject(classType.Module.Name))
             {
+                return VarType.Internal;
+            }
+
+            if (classType.ToString().StartsWith("Moq.Mock"))
+            {
                 return VarType.Mock;
             }
 
             return VarType.Library;
+        }
+
+        // TODO : Cover by unit tests
+        public Aim AimVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
+            if (type == null) 
+                throw new ArgumentNullException("type");
+
+            var classType = _eatExpressionHelper.GetTypeClass(type);
+            if (snapshot.IsInTestScope(classType.Module.Name))
+            {
+                return Aim.Tested;
+            }
+
+            if (snapshot.IsInTestProject(classType.Module.Name))
+            {
+                return Aim.Data;
+            }
+            
+            if (classType.ToString().StartsWith("Moq.Mock"))
+            {
+                return Aim.Data;
+            }
+
+            if (classType.Module.Name.ToLower().StartsWith("nunit.framework") ||
+                classType.Module.Name.ToLower().StartsWith("moq"))
+            {
+                return Aim.Service;
+            }
+
+            return Aim.Data;
+        }
+
+        public Pair<Aim, VarType> VarTypeAndAim([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        {
+            if (snapshot == null) throw new ArgumentNullException("snapshot");
+            if (type == null) throw new ArgumentNullException("type");
+
+            return new Pair<Aim, VarType>(AimVariableType(snapshot, type), VarTypeVariableType(snapshot, type));
         }
     }
 }

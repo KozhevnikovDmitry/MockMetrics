@@ -12,6 +12,7 @@ namespace MockMetrics.Eating.Expression
 
         public override VarType Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
         {
+            snapshot.AddOperand(expression, Scope.Local, Aim.Data, VarType.Library);
             return VarType.Library;
         }
     }

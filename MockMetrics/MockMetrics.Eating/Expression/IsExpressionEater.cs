@@ -12,6 +12,7 @@ namespace MockMetrics.Eating.Expression
 
         public override VarType Eat(ISnapshot snapshot, IIsExpression expression)
         {
+            snapshot.AddOperand(expression.TypeOperand, Scope.Local, Aim.None, VarType.Library);
             Eater.Eat(snapshot, expression.Operand);
             return VarType.Library;
         }

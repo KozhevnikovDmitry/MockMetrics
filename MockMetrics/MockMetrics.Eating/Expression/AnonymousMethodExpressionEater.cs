@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.Expression
 
             Eater.Eat(snapshot, expression.Body);
 
-            return VarType.Library;
+            return VarType.Internal;
         }
     }
 }

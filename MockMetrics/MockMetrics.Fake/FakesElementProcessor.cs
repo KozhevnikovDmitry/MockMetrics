@@ -4,6 +4,7 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Fake
 {

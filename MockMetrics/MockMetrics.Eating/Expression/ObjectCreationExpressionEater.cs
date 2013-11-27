@@ -8,12 +8,17 @@ namespace MockMetrics.Eating.Expression
     {
         private readonly EatExpressionHelper _expressionHelper;
         private readonly IArgumentsEater _argumentsEater;
+        private readonly ITypeEater _typeEater;
 
-        public ObjectCreationExpressionEater(IEater eater, EatExpressionHelper expressionHelper, IArgumentsEater argumentsEater)
+        public ObjectCreationExpressionEater(IEater eater, 
+                                             EatExpressionHelper expressionHelper, 
+                                             IArgumentsEater argumentsEater,
+                                             ITypeEater typeEater)
             : base(eater)
         {
             _expressionHelper = expressionHelper;
             _argumentsEater = argumentsEater;
+            _typeEater = typeEater;
         }
 
         public override VarType Eat(ISnapshot snapshot, IObjectCreationExpression expression)
@@ -28,48 +33,7 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            return GetCreationObjectKind(snapshot, expression);
-        }
-
-        private VarType GetCreationObjectKind(ISnapshot snapshot, IObjectCreationExpression expression)
-        {
-            if (expression.Type().Classify == TypeClassification.REFERENCE_TYPE)
-            {
-                var projectName = GetProjectName(expression);
-
-                if (snapshot.IsInTestScope(projectName))
-                {
-                    return VarType.Target;
-                }
-
-                if (snapshot.IsInTestProject(projectName))
-                {
-                    return VarType.Mock;
-                }
-
-                if (_expressionHelper.GetCreationTypeName(expression)
-                                     .StartsWith("Moq.Mock"))
-                {
-                    return VarType.Mock;
-                }
-            }
-
-            return VarType.Library;
-        }
-
-        private string GetProjectName(IObjectCreationExpression creationExpression)
-        {
-            if (creationExpression.Type().Classify == TypeClassification.REFERENCE_TYPE)
-            {
-                var classType = _expressionHelper.GetCreationClass(creationExpression);
-
-                if (classType != null)
-                {
-                    return classType.Module.Name;
-                }
-            }
-
-            return string.Empty;
+            return _typeEater.VarTypeVariableType(snapshot, expression.Type());
         }
     }
 }

@@ -12,6 +12,8 @@ namespace MockMetrics.Eating.Expression
 
         public override VarType Eat(ISnapshot snapshot, ITypeofExpression expression)
         {
+            snapshot.AddCall(expression, Call.Library);
+
             return VarType.Library;
         }
     }

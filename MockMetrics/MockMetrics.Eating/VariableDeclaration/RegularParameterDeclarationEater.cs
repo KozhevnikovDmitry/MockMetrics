@@ -1,5 +1,6 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
+﻿using System;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
@@ -10,9 +11,10 @@ namespace MockMetrics.Eating.VariableDeclaration
         {
         }
 
-        public override void Eat(ISnapshot snapshot, IRegularParameterDeclaration variableDeclaration)
+        // TODO : investigate, what is IRegularParameterDeclaration
+        public override VarType Eat(ISnapshot snapshot, IRegularParameterDeclaration variableDeclaration)
         {
-            snapshot.Add(ExpressionKind.Stub, variableDeclaration);
+           return VarType.None;
         }
     }
 }

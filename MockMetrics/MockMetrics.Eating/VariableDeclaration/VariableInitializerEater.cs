@@ -1,26 +1,28 @@
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
+using JetBrains.Util;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
     public interface IVariableInitializerEater
     {
-        VarType Eat(ISnapshot snapshot, IVariableInitializer initializer);
+       Pair<Aim, VarType> Eat(ISnapshot snapshot, IVariableInitializer initializer);
     }
 
     public class VariableInitializerEater : IVariableInitializerEater, ICSharpNodeEater
     {
         private readonly IEater _eater;
+        private readonly MetricHelper _metricHelper;
 
-        public VariableInitializerEater(IEater eater)
+        public VariableInitializerEater(IEater eater, MetricHelper metricHelper)
         {
             _eater = eater;
+            _metricHelper = metricHelper;
         }
 
-        public VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
+        public Pair<Aim, VarType> Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -32,14 +34,10 @@ namespace MockMetrics.Eating.VariableDeclaration
             {
                 foreach (IVariableInitializer variableInitializer in (initializer as IArrayInitializer).ElementInitializers)
                 {
-                    VarType varType = Eat(snapshot, variableInitializer);
-
-                    // TODO : what if stubcandidate
-                    snapshot.Add(varType, variableInitializer);
+                    Eat(snapshot, variableInitializer);
                 }
 
-                // TODO : array of target?
-                return VarType.Library;
+                return new Pair<Aim, VarType>(Aim.Data, VarType.Library);
             }
 
             ICSharpExpression initialExpression = null;
@@ -62,21 +60,11 @@ namespace MockMetrics.Eating.VariableDeclaration
             return EatResults(snapshot, initialExpression);
         }
 
-        private VarType EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
+        private Pair<Aim, VarType> EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
         {
-            VarType varType = _eater.Eat(snapshot, initialExpression);
-
-            if (varType == ExpressionKind.StubCandidate)
-            {
-                return ExpressionKind.Stub;
-            }
-
-            if (varType == ExpressionKind.TargetCall)
-            {
-                return ExpressionKind.Result;
-            }
-
-            return varType;
+            var varType = _eater.Eat(snapshot, initialExpression);
+            var aim = _metricHelper.AimOfExpression(varType, initialExpression);
+            return new Pair<Aim, VarType>(aim, varType);
         }
     }
 }

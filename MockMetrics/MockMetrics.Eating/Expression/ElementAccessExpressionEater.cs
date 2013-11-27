@@ -20,9 +20,9 @@ namespace MockMetrics.Eating.Expression
 
             // TODO : cover by functional tests
             // TODO : what if array of results or targets
-            Eater.Eat(snapshot, expression.Operand);
+           var varType = Eater.Eat(snapshot, expression.Operand);
 
-            return VarType.Library;
+           return varType;
         }
     }
 }
