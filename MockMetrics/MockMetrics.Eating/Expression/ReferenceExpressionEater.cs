@@ -22,9 +22,9 @@ namespace MockMetrics.Eating.Expression
         {
             Metrics parentMetrics = expression.QualifierExpression != null
                 ? Eater.Eat(snapshot, expression.QualifierExpression)
-                : Metrics.Create(VarType.Internal);
+                : Metrics.Create(VarType.None);
 
-            if (parentMetrics.VarType == VarType.Internal)
+            if (parentMetrics.VarType == VarType.None)
             {
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
 
@@ -33,40 +33,36 @@ namespace MockMetrics.Eating.Expression
                 // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
                 {
-                    return _typeHelper.MetricVariable(snapshot, (declaredElement as IProperty).Type);
+                    Metrics result = _typeHelper.MetricVariable(snapshot, (declaredElement as IProperty).Type);
+                    result.Scope = Scope.Internal;
                 }
 
                 if (declaredElement is IField)
                 {
-                    return _typeHelper.MetricVariable(snapshot, (declaredElement as IField).Type);
+                    Metrics result = _typeHelper.MetricVariable(snapshot, (declaredElement as IField).Type);
+                    result.Scope = Scope.Internal;
                 }
 
                 if (declaredElement is IEvent)
                 {
-                    return VarType.Stub;
+                    return Metrics.Create(Scope.Internal, VarType.Internal);
                 }
-
-                if (declaredElement is ILocalConstantDeclaration)
-                {
-                    return VarType.Stub;
-                }
-
+                
                 if (declaredElement is IVariableDeclaration)
                 {
                     return snapshot.GetVarType(declaredElement as IVariableDeclaration);
                 }
-
+                
                 if (declaredElement is IClass)
                 {
-                    return VarType.None;
+                    // static members of class containing unit test are internal
+                    return Metrics.Create(Scope.External);
                 }
 
                 throw new UnexpectedReferenceTypeException(declaredElement, this, expression);
             }
-            else
-            {
-                return _metricHelper.ReferenceKindByParentReferenceKind(parentKind);
-            }
+            
+            return _metricHelper.RefMetricsByParentMetrics(parentMetrics);
         }
     }
 }

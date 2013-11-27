@@ -62,6 +62,14 @@ namespace MockMetrics.Eating.Expression
             return Metrics.Create(VarType.Library);
         }
 
+        public Metrics MetricVariable([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        {
+            if (snapshot == null) throw new ArgumentNullException("snapshot");
+            if (type == null) throw new ArgumentNullException("type");
+
+            return Metrics.Create(VarTypeVaribale(snapshot, type), AimVariableType(snapshot, type));
+        }
+
         private VarType VarTypeVaribale([NotNull] ISnapshot snapshot, [NotNull] IType type)
         {
             if (snapshot == null) 
@@ -121,14 +129,6 @@ namespace MockMetrics.Eating.Expression
             }
 
             return Aim.Data;
-        }
-
-        public Metrics MetricVariable([NotNull] ISnapshot snapshot, [NotNull] IType type)
-        {
-            if (snapshot == null) throw new ArgumentNullException("snapshot");
-            if (type == null) throw new ArgumentNullException("type");
-
-            return Metrics.Create(VarTypeVaribale(snapshot, type), AimVariableType(snapshot, type));
         }
     }
 }

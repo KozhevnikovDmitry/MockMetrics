@@ -21,7 +21,7 @@ namespace MockMetrics.Eating.Expression
 
             if (expression.Dest is IReferenceExpression)
             { 
-                var assignmentKind = _metricHelper.KindOfAssignment(sourceKind);
+                var assignmentKind = _metricHelper.MetricsOfAssignment(sourceKind);
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 {

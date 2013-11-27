@@ -1,7 +1,6 @@
 ﻿using System;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.Util;
 
 namespace MockMetrics.Eating.MetricMeasure
 {
@@ -55,70 +54,14 @@ namespace MockMetrics.Eating.MetricMeasure
             return Call.None;
         }
 
-        public virtual VarType ReferenceKindByParentReferenceKind(VarType parentKind)
+        public virtual Metrics RefMetricsByParentMetrics(Metrics parentMetrics)
         {
-            switch (parentKind)
-            {
-                case ExpressionKind.TargetCall:
-                    {
-                        return ExpressionKind.Result;
-                    }
-                case ExpressionKind.Target:
-                    {
-                        return ExpressionKind.Result;
-                    }
-                case ExpressionKind.Stub:
-                    {
-                        return ExpressionKind.Stub;
-                    }
-                case ExpressionKind.Mock:
-                    {
-                        return ExpressionKind.Result;
-                    }
-                case ExpressionKind.StubCandidate:
-                    {
-                        return ExpressionKind.StubCandidate;
-                    }
-                case ExpressionKind.Assert:
-                    {
-                        return ExpressionKind.Result;
-                    }
-                case ExpressionKind.None:
-                    {
-                        return ExpressionKind.None;
-                    }
-                case ExpressionKind.Result:
-                    {
-                        return ExpressionKind.Result;
-                    }
-                default:
-                    {
-                        return ExpressionKind.None;
-                    }
-            }
+            throw new NotImplementedException();
         }
 
-        public virtual VarType KindOfAssignment(VarType assignSourceKind)
+        public virtual Metrics MetricsOfAssignment(Metrics sourceMetrics)
         {
-            switch (assignSourceKind)
-            {
-                case ExpressionKind.TargetCall:
-                    {
-                        return ExpressionKind.Result;
-                    }
-                case ExpressionKind.StubCandidate:
-                    {
-                        return ExpressionKind.Stub;
-                    }
-                case ExpressionKind.Assert:
-                    {
-                        return ExpressionKind.Result;
-                    }
-                default:
-                    {
-                        return assignSourceKind;
-                    }
-            }
+            throw new NotImplementedException();
         }
     }
 }

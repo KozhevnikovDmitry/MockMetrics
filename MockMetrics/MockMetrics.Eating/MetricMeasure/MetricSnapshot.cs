@@ -63,7 +63,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
-        VarType GetVarType(IVariableDeclaration localVariable);
+        Metrics GetVarType(IVariableDeclaration variable);
         void Except(IVariableDeclaration variableDeclaration);
     }
 
@@ -131,7 +131,7 @@ namespace MockMetrics.Eating.MetricMeasure
             throw new NotImplementedException();
         }
 
-        public VarType GetVarType(IVariableDeclaration localVariable)
+        public Metrics GetVarType(IVariableDeclaration localVariable)
         {
             throw new NotImplementedException();
         }
