@@ -13,11 +13,12 @@ namespace MockMetrics.Eating.VariableDeclaration
             _metricHelper = metricHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IAnonymousMethodParameterDeclaration variableDeclaration)
+        public override Metrics Eat(ISnapshot snapshot, IAnonymousMethodParameterDeclaration variableDeclaration)
         {
-            var metrics = _metricHelper.VarTypeAndAim(snapshot, variableDeclaration.Type);
-            snapshot.AddVariable(variableDeclaration, Scope.Local, metrics.First, metrics.Second);
-            return metrics.Second;
+            var metrics = _metricHelper.MetricsForType(snapshot, variableDeclaration.Type);
+            metrics.Scope = Scope.Local;
+            snapshot.AddVariable(variableDeclaration, metrics);
+            return metrics;
         }
     }
 }

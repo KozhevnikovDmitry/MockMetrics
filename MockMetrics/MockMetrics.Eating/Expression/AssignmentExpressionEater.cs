@@ -15,7 +15,7 @@ namespace MockMetrics.Eating.Expression
             _metricHelper = metricHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IAssignmentExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IAssignmentExpression expression)
         {
             var sourceKind = Eater.Eat(snapshot, expression.Source);
 

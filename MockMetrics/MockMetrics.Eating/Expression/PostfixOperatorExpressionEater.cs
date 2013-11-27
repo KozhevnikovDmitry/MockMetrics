@@ -9,7 +9,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override VarType Eat(ISnapshot snapshot, IPostfixOperatorExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IPostfixOperatorExpression expression)
         {
             return Eater.Eat(snapshot, expression.Operand);
         }

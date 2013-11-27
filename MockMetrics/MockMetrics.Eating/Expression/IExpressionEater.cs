@@ -6,13 +6,13 @@ namespace MockMetrics.Eating.Expression
 {
     public interface IExpressionEater : ICSharpNodeEater
     {
-        VarType Eat(ISnapshot snapshot, ICSharpExpression statement);
+        Metrics Eat(ISnapshot snapshot, ICSharpExpression statement);
 
         Type ExpressionType { get; }
     }
 
     public interface IExpressionEater<T> : IExpressionEater where T : ICSharpExpression
     {
-        VarType Eat(ISnapshot snapshot, T expression);
+        Metrics Eat(ISnapshot snapshot, T expression);
     }
 }

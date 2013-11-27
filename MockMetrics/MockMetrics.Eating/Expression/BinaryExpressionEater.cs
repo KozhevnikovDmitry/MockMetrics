@@ -13,12 +13,12 @@ namespace MockMetrics.Eating.Expression
             _metricHelper = metricHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IBinaryExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IBinaryExpression expression)
         {
-            var leftVarType = Eater.Eat(snapshot, expression.LeftOperand);
-            var rightVarType = Eater.Eat(snapshot, expression.RightOperand);
+            var leftMetrics = Eater.Eat(snapshot, expression.LeftOperand);
+            var rightMetrics = Eater.Eat(snapshot, expression.RightOperand);
 
-            return _metricHelper.CastExpressionType(leftVarType, rightVarType);
+            return _metricHelper.CastExpressionType(leftMetrics, rightMetrics);
         }
     }
 }

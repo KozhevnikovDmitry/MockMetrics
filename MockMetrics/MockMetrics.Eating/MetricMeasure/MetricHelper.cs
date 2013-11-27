@@ -12,23 +12,23 @@ namespace MockMetrics.Eating.MetricMeasure
             throw new NotImplementedException();
         }
 
-        public virtual Pair<Aim, VarType> VarTypeAndAim(ISnapshot snapshot, IType type)
+        public virtual Metrics MetricsForType(ISnapshot snapshot, IType type)
         {
             throw new NotImplementedException();
         }
 
-        public virtual VarType CastExpressionType(VarType valueType, VarType castType)
+        public virtual Metrics CastExpressionType(Metrics valueMetrics, Metrics castMetrics)
         {
-            if (valueType >= castType)
+            if (valueMetrics.VarType >= castMetrics.VarType)
             {
-                return valueType;
+                valueMetrics.VarType = castMetrics.VarType;
             }
-            return castType;
+            return valueMetrics;
         }
 
-        public virtual Call InvocationKindByParentReferenceKind(VarType parentKind)
+        public virtual Call CallByParentVarType(VarType parentVarType)
         {
-            switch (parentKind)
+            switch (parentVarType)
             {
                 case VarType.Target:
                     {
@@ -44,15 +44,15 @@ namespace MockMetrics.Eating.MetricMeasure
                     }
                 case VarType.Internal:
                     {
-                        return Call.Internal;
+                        return Call.Service;
                     }
                 case VarType.External:
                     {
-                        return Call.External;
+                        return Call.Service;
                     }
             }
 
-            return parentKind;
+            return Call.None;
         }
 
         public virtual VarType ReferenceKindByParentReferenceKind(VarType parentKind)

@@ -71,11 +71,12 @@
     <Compile Include="Expression\ElementAccessExpressionEater.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />
     <Compile Include="MetricMeasure\MetricHelper.cs" />
+    <Compile Include="MetricMeasure\Metrics.cs" />
     <Compile Include="MetricMeasure\VarTypeHelper.cs" />
     <Compile Include="Expression\InvocationExpressionEater.cs" />
     <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
     <Compile Include="Expression\ParentReferenceEater.cs" />
-    <Compile Include="Expression\TypeEater.cs" />
+    <Compile Include="Expression\TypeHelper.cs" />
     <Compile Include="Expression\UnaryOperatorExpressionEater.cs" />
     <Compile Include="Expression\LiteralExpressionEater.cs" />
     <Compile Include="Expression\ObjectCreationExpressionEater.cs" />

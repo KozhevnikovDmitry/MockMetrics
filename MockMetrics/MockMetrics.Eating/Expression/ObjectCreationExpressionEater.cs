@@ -1,27 +1,23 @@
-﻿using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class ObjectCreationExpressionEater : ExpressionEater<IObjectCreationExpression>
     {
-        private readonly EatExpressionHelper _expressionHelper;
         private readonly IArgumentsEater _argumentsEater;
-        private readonly ITypeEater _typeEater;
+        private readonly ITypeHelper _typeHelper;
 
         public ObjectCreationExpressionEater(IEater eater, 
-                                             EatExpressionHelper expressionHelper, 
                                              IArgumentsEater argumentsEater,
-                                             ITypeEater typeEater)
+                                             ITypeHelper typeHelper)
             : base(eater)
         {
-            _expressionHelper = expressionHelper;
             _argumentsEater = argumentsEater;
-            _typeEater = typeEater;
+            _typeHelper = typeHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IObjectCreationExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IObjectCreationExpression expression)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
             
@@ -33,7 +29,7 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            return _typeEater.VarTypeVariableType(snapshot, expression.Type());
+            return _typeHelper.MetricVariable(snapshot, expression.Type());
         }
     }
 }

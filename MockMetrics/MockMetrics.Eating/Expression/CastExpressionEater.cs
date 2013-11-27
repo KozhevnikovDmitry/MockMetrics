@@ -5,23 +5,24 @@ namespace MockMetrics.Eating.Expression
 {
     public class CastExpressionEater : ExpressionEater<ICastExpression>
     {
-        private readonly ITypeEater _typeEater;
+        private readonly ITypeHelper _typeHelper;
         private readonly MetricHelper _metricHelper;
 
-        public CastExpressionEater(IEater eater, ITypeEater typeEater, MetricHelper metricHelper)
+        public CastExpressionEater(IEater eater, ITypeHelper typeHelper, MetricHelper metricHelper)
             : base(eater)
         {
-            _typeEater = typeEater;
+            _typeHelper = typeHelper;
             _metricHelper = metricHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, ICastExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, ICastExpression expression)
         {
-            snapshot.AddOperand(expression.TargetType, Scope.Local, Aim.None, VarType.Library);
+            snapshot.AddOperand(expression.TargetType, Metrics.Create(Scope.Local, VarType.Library));
 
-            var operandKind = Eater.Eat(snapshot, expression.Op);
-            var typeUsageKind = _typeEater.EatCastType(snapshot, expression.TargetType);
-            return _metricHelper.CastExpressionType(operandKind, typeUsageKind);
+            var operandMetrics = Eater.Eat(snapshot, expression.Op);
+            var typeVarType = _typeHelper.MetricCastType(snapshot, expression.TargetType);
+
+            return Metrics.Create(_metricHelper.CastExpressionType(operandMetrics, typeVarType));
         }
     }
 }

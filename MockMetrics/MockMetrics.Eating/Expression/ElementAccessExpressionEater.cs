@@ -14,15 +14,15 @@ namespace MockMetrics.Eating.Expression
             _argumentsEater = argumentsEater;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IElementAccessExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IElementAccessExpression expression)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
 
             // TODO : cover by functional tests
             // TODO : what if array of results or targets
-           var varType = Eater.Eat(snapshot, expression.Operand);
+           var metrics = Eater.Eat(snapshot, expression.Operand);
 
-           return varType;
+           return metrics;
         }
     }
 }

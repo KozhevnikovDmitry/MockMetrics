@@ -8,7 +8,7 @@ namespace MockMetrics.Eating.VariableDeclaration
 {
     public interface IVariableInitializerEater
     {
-       Pair<Aim, VarType> Eat(ISnapshot snapshot, IVariableInitializer initializer);
+        Metrics Eat(ISnapshot snapshot, IVariableInitializer initializer);
     }
 
     public class VariableInitializerEater : IVariableInitializerEater, ICSharpNodeEater
@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.VariableDeclaration
             _metricHelper = metricHelper;
         }
 
-        public Pair<Aim, VarType> Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
+        public Metrics Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -37,7 +37,7 @@ namespace MockMetrics.Eating.VariableDeclaration
                     Eat(snapshot, variableInitializer);
                 }
 
-                return new Pair<Aim, VarType>(Aim.Data, VarType.Library);
+                return Metrics.Create(Scope.Local, VarType.Library, Aim.Data);
             }
 
             ICSharpExpression initialExpression = null;
@@ -60,11 +60,12 @@ namespace MockMetrics.Eating.VariableDeclaration
             return EatResults(snapshot, initialExpression);
         }
 
-        private Pair<Aim, VarType> EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
+        private Metrics EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
         {
-            var varType = _eater.Eat(snapshot, initialExpression);
-            var aim = _metricHelper.AimOfExpression(varType, initialExpression);
-            return new Pair<Aim, VarType>(aim, varType);
+            var initialMetrics = _eater.Eat(snapshot, initialExpression);
+            var resultMetrics = initialMetrics.AcceptorMetrics();
+            resultMetrics.Scope = Scope.Local;
+            return resultMetrics;
         }
     }
 }

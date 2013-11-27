@@ -2,25 +2,22 @@
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.Util;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
-    public interface ITypeEater
+    public interface ITypeHelper
     {
-        VarType EatCastType(ISnapshot snapshot, ITypeUsage typeUsage);
+        Metrics MetricCastType(ISnapshot snapshot, ITypeUsage typeUsage);
 
-        VarType VarTypeVariableType(ISnapshot snapshot, IType type);
-
-        Aim AimVariableType(ISnapshot snapshot, IType type);
+        Metrics MetricVariable(ISnapshot snapshot, IType type);
     }
 
-    public class TypeEater : ITypeEater, ICSharpNodeEater
+    public class TypeHelper : ITypeHelper, ICSharpNodeEater
     {
         private readonly EatExpressionHelper _eatExpressionHelper;
 
-        public TypeEater([NotNull] EatExpressionHelper eatExpressionHelper)
+        public TypeHelper([NotNull] EatExpressionHelper eatExpressionHelper)
         {
             if (eatExpressionHelper == null) 
                 throw new ArgumentNullException("eatExpressionHelper");
@@ -28,7 +25,7 @@ namespace MockMetrics.Eating.Expression
             _eatExpressionHelper = eatExpressionHelper;
         }
 
-        public VarType EatCastType([NotNull] ISnapshot snapshot, [NotNull] ITypeUsage typeUsage)
+        public Metrics MetricCastType([NotNull] ISnapshot snapshot, [NotNull] ITypeUsage typeUsage)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -38,12 +35,12 @@ namespace MockMetrics.Eating.Expression
 
             if (typeUsage is IDynamicTypeUsage)
             {
-                return VarType.Library;
+                return Metrics.Create(VarType.Library);
             }
 
             if (typeUsage is IPredefinedTypeUsage)
             {
-                return VarType.Library;
+                return Metrics.Create(VarType.Library);
             }
 
             if (typeUsage is IUserTypeUsage)
@@ -53,19 +50,19 @@ namespace MockMetrics.Eating.Expression
 
                 if (snapshot.IsInTestScope(classType.Module.Name))
                 {
-                    return VarType.Target;
+                    return Metrics.Create(VarType.Target);
                 }
 
                 if (snapshot.IsInTestProject(classType.Module.Name))
                 {
-                    return VarType.Mock;
+                    return Metrics.Create(VarType.Mock);
                 }
             }
 
-            return VarType.Library;
+            return Metrics.Create(VarType.Library);
         }
 
-        public VarType VarTypeVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        private VarType VarTypeVaribale([NotNull] ISnapshot snapshot, [NotNull] IType type)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -93,8 +90,7 @@ namespace MockMetrics.Eating.Expression
             return VarType.Library;
         }
 
-        // TODO : Cover by unit tests
-        public Aim AimVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        private Aim AimVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -127,12 +123,12 @@ namespace MockMetrics.Eating.Expression
             return Aim.Data;
         }
 
-        public Pair<Aim, VarType> VarTypeAndAim([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        public Metrics MetricVariable([NotNull] ISnapshot snapshot, [NotNull] IType type)
         {
             if (snapshot == null) throw new ArgumentNullException("snapshot");
             if (type == null) throw new ArgumentNullException("type");
 
-            return new Pair<Aim, VarType>(AimVariableType(snapshot, type), VarTypeVariableType(snapshot, type));
+            return Metrics.Create(VarTypeVaribale(snapshot, type), AimVariableType(snapshot, type));
         }
     }
 }

@@ -14,11 +14,11 @@ namespace MockMetrics.Eating
 {
     public interface IEater
     {
-        VarType Eat(ISnapshot snapshot, ICSharpExpression expression);
+        Metrics Eat(ISnapshot snapshot, ICSharpExpression expression);
         
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
 
-        VarType Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
+        Metrics Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
 
         VarType Eat(ISnapshot snapshot, IQueryClause queryClause);
     }
@@ -32,7 +32,7 @@ namespace MockMetrics.Eating
             _container = container;
         }
 
-        public VarType Eat(ISnapshot snapshot, ICSharpExpression expression)
+        public Metrics Eat(ISnapshot snapshot, ICSharpExpression expression)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
@@ -56,7 +56,7 @@ namespace MockMetrics.Eating
             return GetEater(queryClause).Eat(snapshot, queryClause);
         }
 
-        public VarType Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
+        public Metrics Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
         {
             if (variableDeclaration == null)
                 throw new ArgumentNullException("variableDeclaration");

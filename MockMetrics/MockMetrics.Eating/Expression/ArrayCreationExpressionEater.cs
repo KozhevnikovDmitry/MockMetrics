@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.Expression
             _variableInitializerEater = variableInitializerEater;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IArrayCreationExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IArrayCreationExpression expression)
         {
             // TODO : check in functional tests
             foreach (ICSharpExpression size in expression.Sizes)
@@ -23,7 +23,7 @@ namespace MockMetrics.Eating.Expression
 
             _variableInitializerEater.Eat(snapshot, expression.ArrayInitializer);
 
-            return VarType.Library;
+            return Metrics.Create(Scope.Local, VarType.Library);
         }
     }
 }

@@ -47,8 +47,8 @@ namespace MockMetrics.Eating.MetricMeasure
         void AddOperand(ICSharpTreeNode operand, Scope scope, Aim aim, VarType varType);
         void AddOperand(ICSharpTreeNode operand, Metrics metrics);
 
-        void AddCall(IInvocationExpression invocation, Call call);
-        void AddCall(ITypeofExpression invocation, Call call);
+        void AddCall(IInvocationExpression invocation, Metrics metrics);
+        void AddCall(ITypeofExpression invocation, Metrics metrics);
 
         void AddFakeOption(ICSharpExpression opton, FakeOption fakeOption);
 
@@ -80,17 +80,27 @@ namespace MockMetrics.Eating.MetricMeasure
             throw new NotImplementedException();
         }
 
+        public void AddVariable(ICSharpDeclaration variable, Metrics metrics)
+        {
+            throw new NotImplementedException();
+        }
+
         public void AddOperand(ICSharpTreeNode operand, Scope scope, Aim aim, VarType varType)
         {
             throw new NotImplementedException();
         }
 
-        public void AddCall(IInvocationExpression invocation, Call call)
+        public void AddOperand(ICSharpTreeNode operand, Metrics metrics)
         {
             throw new NotImplementedException();
         }
 
-        public void AddCall(ITypeofExpression invocation, Call call)
+        public void AddCall(IInvocationExpression invocation, Metrics metrics)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddCall(ITypeofExpression invocation, Metrics metrics)
         {
             throw new NotImplementedException();
         }

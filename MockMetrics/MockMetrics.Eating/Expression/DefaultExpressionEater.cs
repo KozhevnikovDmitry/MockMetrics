@@ -5,17 +5,17 @@ namespace MockMetrics.Eating.Expression
 {
     public class DefaultExpressionEater : ExpressionEater<IDefaultExpression>
     {
-        private readonly ITypeEater _typeEater;
+        private readonly ITypeHelper _typeHelper;
 
-        public DefaultExpressionEater(IEater eater, ITypeEater typeEater)
+        public DefaultExpressionEater(IEater eater, ITypeHelper typeHelper)
             : base(eater)
         {
-            _typeEater = typeEater;
+            _typeHelper = typeHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IDefaultExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IDefaultExpression expression)
         {
-            return _typeEater.EatCastType(snapshot, expression.TypeName);
+            return Metrics.Create(_typeHelper.MetricCastType(snapshot, expression.TypeName));
         }
     }
 }

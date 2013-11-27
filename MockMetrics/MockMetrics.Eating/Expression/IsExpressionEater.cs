@@ -10,11 +10,11 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override VarType Eat(ISnapshot snapshot, IIsExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IIsExpression expression)
         {
-            snapshot.AddOperand(expression.TypeOperand, Scope.Local, Aim.None, VarType.Library);
+            snapshot.AddOperand(expression.TypeOperand, Metrics.Create(Scope.Local, VarType.Library));
             Eater.Eat(snapshot, expression.Operand);
-            return VarType.Library;
+            return Metrics.Create(VarType.Library);
         }
     }
 }

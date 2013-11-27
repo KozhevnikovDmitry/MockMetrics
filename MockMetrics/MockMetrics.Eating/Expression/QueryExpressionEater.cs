@@ -5,14 +5,14 @@ namespace MockMetrics.Eating.Expression
 {
     public class QueryExpressionEater : ExpressionEater<IQueryExpression>
     {
-        private readonly ITypeEater _typeEater;
+        private readonly ITypeHelper _typeHelper;
 
-        public QueryExpressionEater(IEater eater, ITypeEater typeEater) : base(eater)
+        public QueryExpressionEater(IEater eater, ITypeHelper typeHelper) : base(eater)
         {
-            _typeEater = typeEater;
+            _typeHelper = typeHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IQueryExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IQueryExpression expression)
         {
             var varType = Eater.Eat(snapshot, expression.From.Expression);
             snapshot.AddVariable(expression.From.Declaration, Scope.Local,  , varType);

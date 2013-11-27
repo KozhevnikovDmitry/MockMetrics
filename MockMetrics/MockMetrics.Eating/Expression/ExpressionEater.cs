@@ -23,7 +23,7 @@ namespace MockMetrics.Eating.Expression
             get { return typeof(T); }
         }
 
-        public VarType Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpExpression expression)
+        public Metrics Eat([NotNull] ISnapshot snapshot, [NotNull] ICSharpExpression expression)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -50,6 +50,6 @@ namespace MockMetrics.Eating.Expression
             }
         }
 
-        public abstract VarType Eat(ISnapshot snapshot, T expression);
+        public abstract Metrics Eat(ISnapshot snapshot, T expression);
     }
 }

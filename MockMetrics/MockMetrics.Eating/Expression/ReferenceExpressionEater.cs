@@ -8,23 +8,23 @@ namespace MockMetrics.Eating.Expression
     {
         private readonly MetricHelper _metricHelper;
         private readonly EatExpressionHelper _eatExpressionHelper;
-        private readonly ITypeEater _typeEater;
+        private readonly ITypeHelper _typeHelper;
 
-        public ReferenceExpressionEater(IEater eater, MetricHelper metricHelper, EatExpressionHelper eatExpressionHelper, ITypeEater typeEater)
+        public ReferenceExpressionEater(IEater eater, MetricHelper metricHelper, EatExpressionHelper eatExpressionHelper, ITypeHelper typeHelper)
             : base(eater)
         {
             _metricHelper = metricHelper;
             _eatExpressionHelper = eatExpressionHelper;
-            _typeEater = typeEater;
+            _typeHelper = typeHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IReferenceExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IReferenceExpression expression)
         {
-            var parentKind = expression.QualifierExpression != null
+            Metrics parentMetrics = expression.QualifierExpression != null
                 ? Eater.Eat(snapshot, expression.QualifierExpression)
-                : VarType.None;
+                : Metrics.Create(VarType.Internal);
 
-            if (parentKind == VarType.None)
+            if (parentMetrics.VarType == VarType.Internal)
             {
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
 
@@ -33,12 +33,12 @@ namespace MockMetrics.Eating.Expression
                 // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
                 {
-                    return _typeEater.VarTypeVariableType(snapshot, (declaredElement as IProperty).Type);
+                    return _typeHelper.MetricVariable(snapshot, (declaredElement as IProperty).Type);
                 }
 
                 if (declaredElement is IField)
                 {
-                    return _typeEater.VarTypeVariableType(snapshot, (declaredElement as IField).Type);
+                    return _typeHelper.MetricVariable(snapshot, (declaredElement as IField).Type);
                 }
 
                 if (declaredElement is IEvent)

@@ -13,16 +13,18 @@ namespace MockMetrics.Eating.Expression
             _metricHelper = metricHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, IAnonymousObjectCreationExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IAnonymousObjectCreationExpression expression)
         {
             // TODO: cover by functional tests
             foreach (var memberDeclaration in expression.AnonymousInitializer.MemberInitializers)
             {
-                var varType = Eater.Eat(snapshot, memberDeclaration.Expression);
-                snapshot.AddOperand(memberDeclaration, Scope.Local, Aim.Data, varType);
+                var metrics = Eater.Eat(snapshot, memberDeclaration.Expression);
+                var resultMetrics = metrics.AcceptorMetrics();
+                resultMetrics.Scope = Scope.Local;
+                snapshot.AddOperand(memberDeclaration, resultMetrics);
             }
 
-            return VarType.Internal;
+            return Metrics.Create(VarType.Internal);
         }
     }
 }

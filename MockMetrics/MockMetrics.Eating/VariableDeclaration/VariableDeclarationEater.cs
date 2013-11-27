@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.VariableDeclaration
             Eater = eater;
         }
 
-        public VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableDeclaration variableDeclaration)
+        public Metrics Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableDeclaration variableDeclaration)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -47,7 +47,7 @@ namespace MockMetrics.Eating.VariableDeclaration
             }
         }
 
-        public abstract VarType Eat(ISnapshot snapshot, T variableDeclaration);
+        public abstract Metrics Eat(ISnapshot snapshot, T variableDeclaration);
 
         public Type VariableDecalrationType
         {

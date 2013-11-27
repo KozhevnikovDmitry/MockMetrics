@@ -7,30 +7,30 @@ namespace MockMetrics.Eating.VariableDeclaration
     public class LocalVariableDeclarationEater : VariableDeclarationEater<ILocalVariableDeclaration>
     {
         private readonly IVariableInitializerEater _variableInitializerEater;
-        private readonly ITypeEater _typeEater;
+        private readonly ITypeHelper _typeHelper;
 
         public LocalVariableDeclarationEater(IEater eater, 
                                              IVariableInitializerEater variableInitializerEater, 
-                                             ITypeEater typeEater)
+                                             ITypeHelper typeHelper)
             : base(eater)
         {
             _variableInitializerEater = variableInitializerEater;
-            _typeEater = typeEater;
+            _typeHelper = typeHelper;
         }
 
-        public override VarType Eat(ISnapshot snapshot, ILocalVariableDeclaration variableDeclaration)
+        public override Metrics Eat(ISnapshot snapshot, ILocalVariableDeclaration variableDeclaration)
         {
             if (variableDeclaration.Initial == null)
             {
-                var varType = _typeEater.VarTypeVariableType(snapshot, variableDeclaration.Type);
-                var aim = _typeEater.AimVariableType(snapshot, variableDeclaration.Type);
-                snapshot.AddVariable(variableDeclaration, Scope.Local, aim, varType);
-                return varType;
+                var typeMetric = _typeHelper.MetricVariable(snapshot, variableDeclaration.Type);
+                var result = Metrics.Create(typeMetric, Scope.Local);
+                snapshot.AddVariable(variableDeclaration, result);
+                return result;
             }
 
             var metrics = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
-            snapshot.AddVariable(variableDeclaration, Scope.Local, metrics.First, metrics.Second);
-            return metrics.Second;
+            snapshot.AddVariable(variableDeclaration, metrics);
+            return metrics;
         }
     }
 }

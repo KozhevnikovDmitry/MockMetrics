@@ -9,7 +9,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override VarType Eat(ISnapshot snapshot, IAnonymousMethodExpression expression)
+        public override Metrics Eat(ISnapshot snapshot, IAnonymousMethodExpression expression)
         {
             foreach (var anonymousMethodParameterDeclaration in expression.ParameterDeclarations)
             {
@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.Expression
 
             Eater.Eat(snapshot, expression.Body);
 
-            return VarType.Internal;
+            return Metrics.Create(VarType.Internal);
         }
     }
 }
