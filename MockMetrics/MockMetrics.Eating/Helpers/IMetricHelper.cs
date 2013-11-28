@@ -48,5 +48,17 @@ namespace MockMetrics.Eating.Helpers
         /// <param name="sourceMetrics">Metrics of assignment source</param>
         /// <returns></returns>
         Metrics MetricsForAssignee(Metrics sourceMetrics);
+
+        /// <summary>
+        /// Metrics for acceptor of result of source expression by source expression metrics
+        /// </summary>
+        /// <param name="sourceMetrics">Metrics for source expression</param>
+        Metrics AcceptorMetrics(Metrics sourceMetrics);
+
+        /// <summary>
+        /// Metrics for cnild reference of source expression by source expression metrics
+        /// </summary>
+        /// <param name="sourceMetrics">Metrics for source expression</param>
+        Metrics ChildMetric(Metrics sourceMetrics);
     }
 }

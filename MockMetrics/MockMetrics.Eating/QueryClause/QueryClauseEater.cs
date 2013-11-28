@@ -2,7 +2,6 @@
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
-using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.QueryClause

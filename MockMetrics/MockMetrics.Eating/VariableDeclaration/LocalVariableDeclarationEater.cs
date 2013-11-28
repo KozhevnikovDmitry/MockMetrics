@@ -1,5 +1,4 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
@@ -24,9 +23,9 @@ namespace MockMetrics.Eating.VariableDeclaration
             if (variableDeclaration.Initial == null)
             {
                 var typeMetric = _metricHelper.MetricsForType(snapshot, variableDeclaration.Type);
-                var result = Metrics.Create(typeMetric, Scope.Local);
-                snapshot.AddVariable(variableDeclaration, result);
-                return result;
+                typeMetric.Scope = Scope.Local;
+                snapshot.AddVariable(variableDeclaration, typeMetric);
+                return typeMetric;
             }
 
             var metrics = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);

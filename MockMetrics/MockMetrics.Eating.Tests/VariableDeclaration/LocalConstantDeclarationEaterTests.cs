@@ -1,5 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.VariableDeclaration;
 using Moq;
 using NUnit.Framework;
@@ -10,19 +10,22 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
     public class LocalConstantDeclarationEaterTests
     {
         [Test]
-        public void AddConstantToSnapshotAsStubTest()
+        public void AddConstantToSnapshotTest()
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
             var localConstantDeclaration = Mock.Of<ILocalConstantDeclaration>();
             var eater = Mock.Of<IEater>();
-            var localConstantDeclarationEater = new LocalConstantDeclarationEater(eater);
+            var constantDeclarationEater = new LocalConstantDeclarationEater(eater);
 
             // Act
-            localConstantDeclarationEater.Eat(snapshot.Object, localConstantDeclaration);
+            var result = constantDeclarationEater.Eat(snapshot.Object, localConstantDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, localConstantDeclaration), Times.Once);
+            snapshot.Verify(t =>
+                t.AddVariable(localConstantDeclaration,
+                It.Is<Metrics>(m => m.Scope == Scope.Local && m.VarType == VarType.Stub && m.Aim == Aim.Result && m.Equals(result))),
+                Times.Once);
         }
     }
 }

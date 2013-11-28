@@ -1,9 +1,12 @@
-﻿using System;
-
-namespace MockMetrics.Eating.MetricMeasure
+﻿namespace MockMetrics.Eating.MetricMeasure
 {
     public struct Metrics
     {
+        public static Metrics Create()
+        {
+            return new Metrics();
+        }
+
         public static Metrics Create(Call call)
         {
             return new Metrics
@@ -101,16 +104,5 @@ namespace MockMetrics.Eating.MetricMeasure
             }
         }
 
-        public Metrics AcceptorMetrics()
-        {
-            // TODO:
-            throw new NotImplementedException();
-        }
-
-        public Metrics ChildMetric()
-        {
-            // TODO:
-            throw new NotImplementedException();
-        }
     }
 }

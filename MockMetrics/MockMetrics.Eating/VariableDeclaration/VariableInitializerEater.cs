@@ -1,7 +1,6 @@
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.Util;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
@@ -64,7 +63,7 @@ namespace MockMetrics.Eating.VariableDeclaration
         private Metrics EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
         {
             var initialMetrics = _eater.Eat(snapshot, initialExpression);
-            var resultMetrics = initialMetrics.AcceptorMetrics();
+            var resultMetrics = _metricHelper.AcceptorMetrics(initialMetrics);
             resultMetrics.Scope = Scope.Local;
             return resultMetrics;
         }

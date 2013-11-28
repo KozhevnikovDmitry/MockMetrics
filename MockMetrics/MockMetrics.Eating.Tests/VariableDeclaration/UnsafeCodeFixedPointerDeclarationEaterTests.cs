@@ -1,5 +1,5 @@
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.VariableDeclaration;
 using Moq;
 using NUnit.Framework;
@@ -10,39 +10,25 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
     public class UnsafeCodeFixedPointerDeclarationEaterTests
     {
         [Test]
-        public void EatPointerInitializerTest()
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var initializer = Mock.Of<IVariableInitializer>();
-            var codeFixedPointerDeclaration = Mock.Of<IUnsafeCodeFixedPointerDeclaration>(t => t.Initial == initializer);
-            var eater = Mock.Of<IEater>();
-            var initializerEater = new Mock<IVariableInitializerEater>();
-            var codeFixedPointerDeclarationEater = new UnsafeCodeFixedPointerDeclarationEater(eater, initializerEater.Object);
-
-            // Act
-            codeFixedPointerDeclarationEater.Eat(snapshot, codeFixedPointerDeclaration);
-
-            // Assert
-            initializerEater.Verify(t => t.Eat(snapshot, initializer), Times.Once);
-        }
-
-        [Test]
-        public void AddPointerVariableToSnapshotTest()
+        public void AddUnsafeCodeFixedPointerToSnapshotTest()
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
-            var initializer = Mock.Of<IVariableInitializer>();
-            var codeFixedPointerDeclaration = Mock.Of<IUnsafeCodeFixedPointerDeclaration>(t => t.Initial == initializer);
+            var initial = Mock.Of<IVariableInitializer>();
+            var codeFixedPointerDeclaration = Mock.Of<IUnsafeCodeFixedPointerDeclaration>(t => t.Initial == initial);
             var eater = Mock.Of<IEater>();
-            var initializerEater = Mock.Of<IVariableInitializerEater>(t => t.Eat(snapshot.Object, initializer) == ExpressionKind.Stub);
-            var codeFixedPointerDeclarationEater = new UnsafeCodeFixedPointerDeclarationEater(eater, initializerEater);
+            var variableInitializerEater = Mock.Of<IVariableInitializerEater>();
+            var metrics = Metrics.Create();
+            Mock.Get(variableInitializerEater).Setup(t => t.Eat(snapshot.Object, initial)).Returns(metrics);
+            var codeFixedPointerDeclarationEater = new UnsafeCodeFixedPointerDeclarationEater(eater, variableInitializerEater);
 
             // Act
-            codeFixedPointerDeclarationEater.Eat(snapshot.Object, codeFixedPointerDeclaration);
+            var result = codeFixedPointerDeclarationEater.Eat(snapshot.Object, codeFixedPointerDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, codeFixedPointerDeclaration), Times.Once);
+            snapshot.Verify(t => t.AddVariable(codeFixedPointerDeclaration, metrics), Times.Once);
+            Assert.AreEqual(result, metrics);
+            Assert.AreEqual(result.Scope, Scope.Local);
         }
     }
 }

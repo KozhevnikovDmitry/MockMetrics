@@ -1,7 +1,4 @@
-﻿using System;
-using System.Security.Cryptography;
-using JetBrains.ReSharper.Psi.CSharp;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.MoqStub;

@@ -144,5 +144,17 @@ namespace MockMetrics.Eating.Helpers
 
             return Aim.Data;
         }
+
+        // TODO : implement!
+        public Metrics AcceptorMetrics(Metrics sourceMetrics)
+        {
+            throw new NotImplementedException();
+        }
+
+        // TODO : implement!
+        public Metrics ChildMetric(Metrics sourceMetrics)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

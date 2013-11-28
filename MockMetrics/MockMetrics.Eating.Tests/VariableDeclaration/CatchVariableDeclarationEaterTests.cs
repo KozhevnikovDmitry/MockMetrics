@@ -1,4 +1,5 @@
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.VariableDeclaration;
 using Moq;
 using NUnit.Framework;
@@ -9,7 +10,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
     public class CatchVariableDeclarationEaterTests
     {
         [Test]
-        public void AddCatchVariableToSnapshotAsVariableTest()
+        public void AddCatchVariableToSnapshotTest()
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
@@ -18,10 +19,13 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var catchVariableDeclarationEater = new CatchVariableDeclarationEater(eater);
 
             // Act
-            catchVariableDeclarationEater.Eat(snapshot.Object, catchVariableDeclaration);
+            var result = catchVariableDeclarationEater.Eat(snapshot.Object, catchVariableDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.Add(catchVariableDeclaration), Times.Once);
+            snapshot.Verify(t => 
+                t.AddVariable(catchVariableDeclaration, 
+                It.Is<Metrics>(m => m.Scope == Scope.Local && m.VarType == VarType.Stub && m.Aim == Aim.Result && m.Equals(result))), 
+                Times.Once);
         }
     }
 }

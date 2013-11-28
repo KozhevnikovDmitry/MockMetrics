@@ -1,5 +1,4 @@
-﻿using MockMetrics.Eating.Expression;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Enum = System.Enum;
 
 namespace MockMetrics.Eating.Tests.Expression

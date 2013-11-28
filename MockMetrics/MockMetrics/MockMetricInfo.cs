@@ -1,7 +1,6 @@
 ﻿using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Psi.CSharp;
 using MockMetrics;
-using MockMetrics.Eating;
 using MockMetrics.Eating.MetricMeasure;
 
 [assembly: RegisterConfigurableSeverity(MockMetricInfo.SeverityId,

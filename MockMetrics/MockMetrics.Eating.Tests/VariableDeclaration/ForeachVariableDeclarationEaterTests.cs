@@ -1,4 +1,7 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.VariableDeclaration;
 using Moq;
 using NUnit.Framework;
@@ -9,19 +12,25 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
     public class ForeachVariableDeclarationEaterTests
     {
         [Test]
-        public void AddForeachVariableToSnapshotAsVariableTest()
+        public void AddForeachVariableToSnapshotTest()
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
-            var foreachVariableDeclaration = Mock.Of<IForeachVariableDeclaration>();
+            var type = Mock.Of<IType>();
+            var foreachVariableDeclaration = Mock.Of<IForeachVariableDeclaration>(t => t.Type == type);
             var eater = Mock.Of<IEater>();
-            var foreachVariableDeclarationEater = new ForeachVariableDeclarationEater(eater);
+            var helper = Mock.Of<IMetricHelper>();
+            var metrics = Metrics.Create();
+            Mock.Get(helper).Setup(t => t.MetricsForType(snapshot.Object, type)).Returns(metrics);
+            var foreachVariableDeclarationEater = new ForeachVariableDeclarationEater(eater, helper);
 
             // Act
-            foreachVariableDeclarationEater.Eat(snapshot.Object, foreachVariableDeclaration);
+            var result = foreachVariableDeclarationEater.Eat(snapshot.Object, foreachVariableDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.Add(foreachVariableDeclaration), Times.Once);
+            snapshot.Verify(t => t.AddVariable(foreachVariableDeclaration, metrics), Times.Once);
+            Assert.AreEqual(result, metrics);
+            Assert.AreEqual(result.Scope, Scope.Local);
         }
     }
 }

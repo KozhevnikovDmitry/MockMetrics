@@ -1,7 +1,8 @@
 ﻿using System;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
-using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Helpers;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.VariableDeclaration;
 using NUnit.Framework;
 using Moq;
@@ -16,20 +17,20 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
         {
             // Arrange
             var expression = Mock.Of<ICSharpExpression>();
-            var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
             var arrayInit = Mock.Of<IArrayInitializer>();
             Mock.Get(arrayInit).Setup(t => t.ElementInitializers)
-                .Returns(new TreeNodeCollection<IVariableInitializer>(new[] {itemInitializer}));
+                .Returns(new TreeNodeCollection<IVariableInitializer>(new IVariableInitializer[0]));
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = new Mock<IEater>();
-            var initializerEater = new VariableInitializerEater(eater.Object);
+            var eater = Mock.Of<IEater>();
+            var initializerEater = new VariableInitializerEater(eater, Mock.Of<IMetricHelper>());
 
             // Act
-            var kind = initializerEater.Eat(snapshot, arrayInit);
+            var metrics = initializerEater.Eat(snapshot, arrayInit);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-            eater.Verify(t => t.Eat(snapshot, expression, false));
+            Assert.AreEqual(metrics.Scope, Scope.Local);
+            Assert.AreEqual(metrics.Aim, Aim.Data);
+            Assert.AreEqual(metrics.VarType, VarType.Library);
         }
 
         [Test]
@@ -41,107 +42,91 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var arrayInit = Mock.Of<IArrayInitializer>();
             Mock.Get(arrayInit).Setup(t => t.ElementInitializers)
                 .Returns(new TreeNodeCollection<IVariableInitializer>(new[] { itemInitializer }));
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, false) == ExpressionKind.Stub);
-            var initializerEater = new VariableInitializerEater(eater);
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = Mock.Of<IEater>();
+            var initializerEater = new Mock<VariableInitializerEater>(eater);
 
             // Act
-            initializerEater.Eat(snapshot.Object, arrayInit);
+            initializerEater.Object.Eat(snapshot, arrayInit);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, itemInitializer));
+            initializerEater.Verify(t => t.Eat(snapshot, itemInitializer), Times.Once());
         }
 
         [Test]
         public void EatExpressionInitializerTest()
         {
             // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
+            var initial = Mock.Of<ICSharpExpression>();
+            var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == initial);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.Mock);
-            var initializerEater = new VariableInitializerEater(eater);
+            var initialMetrics = Metrics.Create();
+            var resultMetrics = Metrics.Create();
+            var eater = Mock.Of<IEater>();
+            Mock.Get(eater).Setup(t => t.Eat(snapshot, initial)).Returns(initialMetrics);
+            var helper = Mock.Of<IMetricHelper>();
+            Mock.Get(helper).Setup(t => t.AcceptorMetrics(initialMetrics)).Returns(resultMetrics);
+            var initializerEater = new VariableInitializerEater(eater, helper);
 
             // Act
-            var kind = initializerEater.Eat(snapshot, itemInitializer);
+            var result = initializerEater.Eat(snapshot, itemInitializer);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Mock);
+            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result.Scope, Scope.Local);
         }
 
         [Test]
         public void EatUnsafeCodeFixedPointerInitializerTest()
-        {
+        { 
             // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var itemInitializer = Mock.Of<IUnsafeCodeFixedPointerInitializer>(t => t.Value == expression);
+            var initial = Mock.Of<ICSharpExpression>();
+            var itemInitializer = Mock.Of<IUnsafeCodeFixedPointerInitializer>(t => t.Value == initial);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.Mock);
-            var initializerEater = new VariableInitializerEater(eater);
+            var initialMetrics = Metrics.Create();
+            var resultMetrics = Metrics.Create();
+            var eater = Mock.Of<IEater>();
+            Mock.Get(eater).Setup(t => t.Eat(snapshot, initial)).Returns(initialMetrics);
+            var helper = Mock.Of<IMetricHelper>();
+            Mock.Get(helper).Setup(t => t.AcceptorMetrics(initialMetrics)).Returns(resultMetrics);
+            var initializerEater = new VariableInitializerEater(eater, helper);
 
             // Act
-            var kind = initializerEater.Eat(snapshot, itemInitializer);
+            var result = initializerEater.Eat(snapshot, itemInitializer);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Mock);
+            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result.Scope, Scope.Local);
         }
 
         [Test]
         public void EatUnsafeCodeStackAllocInitializerTest()
         {
             // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var itemInitializer = Mock.Of<IUnsafeCodeStackAllocInitializer>(t => t.DimExpr == expression);
+            var initial = Mock.Of<ICSharpExpression>();
+            var itemInitializer = Mock.Of<IUnsafeCodeStackAllocInitializer>(t => t.DimExpr == initial);
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.Mock);
-            var initializerEater = new VariableInitializerEater(eater);
+            var initialMetrics = Metrics.Create();
+            var resultMetrics = Metrics.Create();
+            var eater = Mock.Of<IEater>();
+            Mock.Get(eater).Setup(t => t.Eat(snapshot, initial)).Returns(initialMetrics);
+            var helper = Mock.Of<IMetricHelper>();
+            Mock.Get(helper).Setup(t => t.AcceptorMetrics(initialMetrics)).Returns(resultMetrics);
+            var initializerEater = new VariableInitializerEater(eater, helper);
 
             // Act
-            var kind = initializerEater.Eat(snapshot, itemInitializer);
+            var result = initializerEater.Eat(snapshot, itemInitializer);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.Mock);
-        }
-
-        [Test]
-        public void EatTargetCallInitializerTest()
-        {
-            // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
-            var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.TargetCall);
-            var initializerEater = new VariableInitializerEater(eater);
-
-            // Act
-            var kind = initializerEater.Eat(snapshot, itemInitializer);
-
-            // Assert
-            Assert.AreEqual(kind, ExpressionKind.Result);
-        }
-
-        [Test]
-        public void EatStubCandidateTest()
-        {
-            // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == expression);
-            var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.StubCandidate);
-            var initializerEater = new VariableInitializerEater(eater);
-
-            // Act
-            var kind = initializerEater.Eat(snapshot, itemInitializer);
-
-            // Assert
-            Assert.AreEqual(kind, ExpressionKind.Stub);
+            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result.Scope, Scope.Local);
         }
 
         [Test]
         public void NullSnapshotTest()
         {
             // Arrange
-            var initializerEater = new VariableInitializerEater(Mock.Of<IEater>());
+            var initializerEater = new VariableInitializerEater(Mock.Of<IEater>(), Mock.Of<IMetricHelper>());
 
             // Assert
             Assert.Throws<ArgumentNullException>(() => initializerEater.Eat(null, Mock.Of<IExpressionInitializer>()));
@@ -151,7 +136,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
         public void NullInitializerTest()
         {
             // Arrange
-            var initializerEater = new VariableInitializerEater(Mock.Of<IEater>());
+            var initializerEater = new VariableInitializerEater(Mock.Of<IEater>(), Mock.Of<IMetricHelper>());
             
             // Assert
             Assert.Throws<ArgumentNullException>(() => initializerEater.Eat(Mock.Of<ISnapshot>(), null));
