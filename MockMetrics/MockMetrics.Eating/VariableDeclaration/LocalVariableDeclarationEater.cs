@@ -29,6 +29,7 @@ namespace MockMetrics.Eating.VariableDeclaration
             }
 
             var metrics = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
+            metrics.Scope = Scope.Local;
             snapshot.AddVariable(variableDeclaration, metrics);
             return metrics;
         }

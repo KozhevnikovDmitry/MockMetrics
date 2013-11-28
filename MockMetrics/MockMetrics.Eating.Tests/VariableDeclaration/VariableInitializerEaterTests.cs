@@ -34,7 +34,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
         }
 
         [Test]
-        public void AddItemToSnapshotTest()
+        public void EatArrayItemsRecoursivlyTests()
         {
             // Arrange
             var expression = Mock.Of<ICSharpExpression>();
@@ -43,14 +43,14 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             Mock.Get(arrayInit).Setup(t => t.ElementInitializers)
                 .Returns(new TreeNodeCollection<IVariableInitializer>(new[] { itemInitializer }));
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>();
-            var initializerEater = new Mock<VariableInitializerEater>(eater);
+            var eater = new Mock<IEater>();
+            var initializerEater = new VariableInitializerEater(eater.Object, Mock.Of<IMetricHelper>(t => t.AcceptorMetrics(It.IsAny<Metrics>()) == Metrics.Create()));
 
             // Act
-            initializerEater.Object.Eat(snapshot, arrayInit);
+            initializerEater.Eat(snapshot, arrayInit);
 
             // Assert
-            initializerEater.Verify(t => t.Eat(snapshot, itemInitializer), Times.Once());
+            eater.Verify(t => t.Eat(snapshot, expression), Times.Once());
         }
 
         [Test]

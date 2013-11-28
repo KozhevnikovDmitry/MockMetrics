@@ -133,7 +133,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
         public Metrics GetVarMetrics(IVariableDeclaration localVariable)
         {
-           return new Metrics();
+           return Metrics.Create();
         }
 
         public void Except(IVariableDeclaration variableDeclaration)

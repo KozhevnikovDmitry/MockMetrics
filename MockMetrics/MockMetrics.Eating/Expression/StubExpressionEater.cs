@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.Expression
 
         public Metrics Eat(ISnapshot snapshot, ICSharpExpression statement)
         {
-            return new Metrics();
+            return Metrics.Create();
         }
 
         public Type ExpressionType { get; private set; }

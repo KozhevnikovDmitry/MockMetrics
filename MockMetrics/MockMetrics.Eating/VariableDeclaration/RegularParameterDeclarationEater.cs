@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.VariableDeclaration
         // TODO : investigate, what is IRegularParameterDeclaration
         public override Metrics Eat(ISnapshot snapshot, IRegularParameterDeclaration variableDeclaration)
         {
-           return new Metrics();
+           return Metrics.Create();
         }
     }
 }

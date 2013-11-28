@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.VariableDeclaration
             _metricHelper = metricHelper;
         }
 
-        public Metrics Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
+        public virtual Metrics Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");

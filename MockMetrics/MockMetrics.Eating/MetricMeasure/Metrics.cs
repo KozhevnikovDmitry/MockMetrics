@@ -1,7 +1,12 @@
 ﻿namespace MockMetrics.Eating.MetricMeasure
 {
-    public struct Metrics
+    public class Metrics
     {
+        private Metrics()
+        {
+            
+        }
+
         public static Metrics Create()
         {
             return new Metrics();

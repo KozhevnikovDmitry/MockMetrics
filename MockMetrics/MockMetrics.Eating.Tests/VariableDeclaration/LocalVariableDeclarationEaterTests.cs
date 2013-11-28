@@ -12,7 +12,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
     public class LocalVariableDeclarationEaterTests
     {
         [Test]
-        public void AddLocalVariableWitnInitializerToSnapshotTest()
+        public void AddLocalVariableWithInitializerToSnapshotTest()
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
