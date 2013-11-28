@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.Statement;
 using Moq;
 using NUnit.Framework;
@@ -22,7 +23,7 @@ namespace MockMetrics.Eating.Tests.Statement
             expressionStatementEater.Eat(snapshot, statement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, expression), Times.Once);
         }
     }
 }

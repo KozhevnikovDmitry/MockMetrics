@@ -1,5 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.Statement;
 using NUnit.Framework;
 using Moq;
@@ -27,7 +27,7 @@ namespace MockMetrics.Eating.Tests.Statement
         }
 
         [Test]
-        public void EatConditionTest()
+        public void EatMonitorTest()
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -40,25 +40,7 @@ namespace MockMetrics.Eating.Tests.Statement
             lockStatementEater.Eat(snapshot, lockStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, monitor, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, monitor), Times.Once);
         }
-
-        [Test]
-        public void AddConditionToSnapshotTest()
-        {
-            // Arrange
-            var snapshot = new Mock<ISnapshot>();
-            var monitor = Mock.Of<ICSharpExpression>();
-            var lockStatement = Mock.Of<ILockStatement>(t => t.Monitor == monitor);
-
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, monitor, false) == ExpressionKind.None);
-            var lockStatementEater = new LockStatementEater(eater);
-
-            // Act
-            lockStatementEater.Eat(snapshot.Object, lockStatement);
-
-            // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.None, monitor), Times.Once);
-        } 
     }
 }

@@ -1,8 +1,8 @@
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Exceptions;
+using MockMetrics.Eating.Expression;
 
-namespace MockMetrics.Eating.Expression
+namespace MockMetrics.Eating.Exceptions
 {
     public class UnexpectedReferenceTypeException : EatingException
     {

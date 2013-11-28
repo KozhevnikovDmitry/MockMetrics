@@ -59,7 +59,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EaterTest.cs" />
+    <Compile Include="EaterConfigTest.cs" />
     <Compile Include="Expression\AnonymousMethodExpressionEaterTests.cs" />
     <Compile Include="Expression\AnonymousObjectCreationExpressionEaterTests.cs" />
     <Compile Include="Expression\ArgumentsEaterTests.cs" />

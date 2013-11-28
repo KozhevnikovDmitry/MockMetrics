@@ -1,5 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.Statement;
 using Moq;
 using NUnit.Framework;
@@ -23,25 +23,8 @@ namespace MockMetrics.Eating.Tests.Statement
             yieldStatementEater.Eat(snapshot, yieldStatement);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression, false), Times.Once);
+            eater.Verify(t => t.Eat(snapshot, expression), Times.Once);
         }
-
-        [Test]
-        public void AddExpressionToSnapshotTest()
-        {
-            // Arrange
-            var snapshot = new Mock<ISnapshot>();
-            var expression = Mock.Of<ICSharpExpression>();
-            var yieldStatement = Mock.Of<IYieldStatement>(t => t.Expression == expression);
-
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression, false) == ExpressionKind.None);
-            var yieldStatementEater = new YieldStatementEater(eater);
-
-            // Act
-            yieldStatementEater.Eat(snapshot.Object, yieldStatement);
-
-            // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.None, expression), Times.Once);
-        }
+       
     }
 }

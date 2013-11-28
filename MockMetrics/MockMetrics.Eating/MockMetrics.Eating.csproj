@@ -84,8 +84,8 @@
     <Compile Include="Expression\ReferenceExpressionEater.cs" />
     <Compile Include="Expression\IExpressionEater.cs" />
     <Compile Include="Expression\IsExpressionEater.cs" />
-    <Compile Include="Expression\UnexpectedAssignDestinationException.cs" />
-    <Compile Include="Expression\UnexpectedReferenceTypeException.cs" />
+    <Compile Include="Exceptions\UnexpectedAssignDestinationException.cs" />
+    <Compile Include="Exceptions\UnexpectedReferenceTypeException.cs" />
     <Compile Include="ICSharpNodeEater.cs" />
     <Compile Include="MetricMeasure\MetricSnapshot.cs" />
     <Compile Include="MetricMeasure\NodeKind.cs" />

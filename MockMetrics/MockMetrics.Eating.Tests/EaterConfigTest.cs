@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace MockMetrics.Eating.Tests
 {
     [TestFixture]
-    public class EaterTest
+    public class EaterConfigTest
     {
         [Test]
         public void GetInstancesFromContainerTest()

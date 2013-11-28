@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.Statement;
 using NUnit.Framework;
 using Moq;
@@ -10,7 +11,7 @@ namespace MockMetrics.Eating.Tests.Statement
     public class DeclarationStatementEaterTests
     {
         [Test]
-        public void AddConstantsToSnapshotAsStubsTest()
+        public void EatLocalConstantsTest()
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
