@@ -3,6 +3,7 @@ using System.Linq;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using Moq;
 using NUnit.Framework;
 
@@ -26,7 +27,7 @@ namespace MockMetrics.Eating.Tests.Expression
             argumentsEater.Eat(snapshot, args);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, expression, true), Times.Exactly(10));
+            eater.Verify(t => t.Eat(snapshot, expression), Times.Exactly(10));
         }
 
         [Test]

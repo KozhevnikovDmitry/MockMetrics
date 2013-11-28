@@ -1,6 +1,7 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using NUnit.Framework;
 using Moq;
 
@@ -22,7 +23,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var lambdaExpressionEater = new LambdaExpressionEater(eater.Object);
 
             // Act
-            lambdaExpressionEater.Eat(snapshot, lambdaExpression, false);
+            lambdaExpressionEater.Eat(snapshot, lambdaExpression);
 
             // Assert
             eater.Verify(t => t.Eat(snapshot, parameterDeclaration));
@@ -41,7 +42,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var lambdaExpressionEater = new LambdaExpressionEater(eater.Object);
 
             // Act
-            lambdaExpressionEater.Eat(snapshot, lambdaExpression, false);
+            lambdaExpressionEater.Eat(snapshot, lambdaExpression);
 
             // Assert
             eater.Verify(t => t.Eat(snapshot, bodyBlock));
@@ -60,10 +61,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var lambdaExpressionEater = new LambdaExpressionEater(eater.Object);
 
             // Act
-            lambdaExpressionEater.Eat(snapshot, lambdaExpression, false);
+            lambdaExpressionEater.Eat(snapshot, lambdaExpression);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, bodyExpression, false));
+            eater.Verify(t => t.Eat(snapshot, bodyExpression));
         }
 
         [Test]
@@ -78,10 +79,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var lambdaExpressionEater = new LambdaExpressionEater(eater);
 
             // Act
-            var kind = lambdaExpressionEater.Eat(snapshot, lambdaExpression, false);
+            var metrics = lambdaExpressionEater.Eat(snapshot, lambdaExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
+            Assert.AreEqual(metrics.VarType, VarType.Internal);
         }
     }
 }

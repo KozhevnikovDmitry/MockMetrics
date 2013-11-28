@@ -1,6 +1,7 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using NUnit.Framework;
 using Moq;
 
@@ -22,7 +23,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousMethodExpressionEater = new AnonymousMethodExpressionEater(eater.Object);
 
             // Act
-            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression, false);
+            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression);
 
             // Assert
             eater.Verify(t => t.Eat(snapshot, parameterDeclaration));
@@ -41,7 +42,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousMethodExpressionEater = new AnonymousMethodExpressionEater(eater.Object);
 
             // Act
-            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression, false);
+            anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression);
 
             // Assert
             eater.Verify(t => t.Eat(snapshot, body));
@@ -59,10 +60,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var anonymousMethodExpressionEater = new AnonymousMethodExpressionEater(eater);
 
             // Act
-            var kind = anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression, false);
+            var metrics = anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
+            Assert.AreEqual(metrics.VarType, VarType.Internal);
         }
     }
 }

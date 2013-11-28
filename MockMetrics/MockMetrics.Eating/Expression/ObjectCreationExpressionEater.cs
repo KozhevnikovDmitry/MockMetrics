@@ -26,7 +26,9 @@ namespace MockMetrics.Eating.Expression
             {
                 foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
                 {
-                   Eater.Eat(snapshot, memberInitializer.Expression);
+                    var memberMetrics = Eater.Eat(snapshot, memberInitializer.Expression);
+                    memberMetrics.Scope = Scope.Local;
+                    snapshot.AddOperand(memberInitializer, memberMetrics);
                 }
             }
 

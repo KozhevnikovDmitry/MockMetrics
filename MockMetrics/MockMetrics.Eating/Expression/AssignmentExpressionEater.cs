@@ -22,45 +22,24 @@ namespace MockMetrics.Eating.Expression
             var sourceMetrics = Eater.Eat(snapshot, expression.Source);
 
             if (expression.Dest is IReferenceExpression)
-            { 
+            {
+                var destMetrics = Eater.Eat(snapshot, expression.Dest);
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 { 
                     // TODO : check on properties, fields, events, parameters
                     if (declaredElement is IEventDeclaration)
                     {
-                        return Eater.Eat(snapshot, expression.Dest);
+                        return destMetrics;
                     }
 
-                    return EatVariableDeclaration(snapshot, declaredElement as IVariableDeclaration, sourceMetrics);
+                    var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);
+                    snapshot.AddVariable(declaredElement as IVariableDeclaration, assigneeMetrics);
+                    return assigneeMetrics;
                 }
             }
 
             throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);
-        }
-
-        private Metrics EatVariableDeclaration(ISnapshot snapshot, IVariableDeclaration variableDeclaration, Metrics sourceMetrics)
-        {
-            var assigneeMetrics = _metricHelper.MetricsForAssignee(sourceMetrics);
-
-            if (variableDeclaration is ILocalVariableDeclaration)
-            {
-                if ((variableDeclaration as ILocalVariableDeclaration).Initial == null)
-                {
-                    snapshot.Except(variableDeclaration);
-                }
-            }
-
-            if (variableDeclaration is IUnsafeCodeFixedPointerDeclaration)
-            {
-                if ((variableDeclaration as IUnsafeCodeFixedPointerDeclaration).Initial == null)
-                {
-                    snapshot.Except(variableDeclaration);
-                }
-            }
-
-            snapshot.AddVariable(variableDeclaration, assigneeMetrics);
-            return assigneeMetrics;
         }
     }
 }

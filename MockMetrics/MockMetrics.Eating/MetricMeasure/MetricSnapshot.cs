@@ -80,6 +80,7 @@ namespace MockMetrics.Eating.MetricMeasure
             
         }
 
+        // TODO : seek variable in snaphot an add metrics
         public void AddVariable(ICSharpDeclaration variable, Metrics metrics)
         {
             

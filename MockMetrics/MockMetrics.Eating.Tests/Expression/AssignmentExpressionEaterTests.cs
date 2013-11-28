@@ -1,5 +1,9 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Helpers;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.Tests.StubTypes;
 using Moq;
 using NUnit.Framework;
@@ -19,125 +23,79 @@ namespace MockMetrics.Eating.Tests.Expression
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
             var eater = new Mock<IEater>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IVariableDeclarationAndIDeclaredElement>());
-            var expressionKindHelper = Mock.Of<VarTypeHelper>();
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater.Object, eatExpressionHelper, expressionKindHelper);
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var assignmentExpressionEater = new AssignmentExpressionEater(eater.Object, eatExpressionHelper, metricHelper);
 
             // Act
-            assignmentExpressionEater.Eat(snapshot, assignmentExpression, false);
+            assignmentExpressionEater.Eat(snapshot, assignmentExpression);
 
             // Assert
-            eater.Verify(t => t.Eat(snapshot, source, false));
+            eater.Verify(t => t.Eat(snapshot, source));
         }
 
         [Test]
-        public void ReturnNoneForEventAssigmentDestTest()
+        public void EatEventAssigmentDestTest()
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
             var source = Mock.Of<ICSharpExpression>();
             var dest = Mock.Of<IReferenceExpression>();
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
-            var eater = Mock.Of<IEater>();
+            var resultMetrics = Metrics.Create();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, dest) == resultMetrics);
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IEventDeclarationAndIDeclaredElement>());
-            var expressionKindHelper = Mock.Of<VarTypeHelper>();
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
 
             // Act
-            var kind = assignmentExpressionEater.Eat(snapshot, assignmentExpression, false);
+            var result = assignmentExpressionEater.Eat(snapshot, assignmentExpression);
 
             // Assert
-            Assert.That(kind, Is.EqualTo(ExpressionKind.None));
+            Assert.That(result, Is.EqualTo(resultMetrics));
         }
 
         [Test]
         public void EatVariableAssignmentTest()
         {
             // Arrange
+            var sourceMetrics = Metrics.Create();
+            var destMetrics = Metrics.Create(); 
+            var mergeMetrics = Metrics.Create();
             var snapshot = Mock.Of<ISnapshot>();
             var source = Mock.Of<ICSharpExpression>();
             var dest = Mock.Of<IReferenceExpression>();
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, source, false) == ExpressionKind.StubCandidate);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, source) == sourceMetrics
+                                          && t.Eat(snapshot, dest) == destMetrics);
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IVariableDeclarationAndIDeclaredElement>());
-            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsMerge(destMetrics, sourceMetrics) == mergeMetrics);
+            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
 
             // Act
-            var kind = assignmentExpressionEater.Eat(snapshot, assignmentExpression, false);
+            var result = assignmentExpressionEater.Eat(snapshot, assignmentExpression);
 
             // Assert
-            Assert.That(kind, Is.EqualTo(ExpressionKind.Stub));
+            Assert.That(result, Is.EqualTo(mergeMetrics));
         }
 
         [Test]
-        public void AddAssigningVariableToSnapshotTest()
+        public void UnexpectedAssignDestinationNotVariableDeclarationTest()
         {
             // Arrange
-            var snapshot = new Mock<ISnapshot>();
-            var source = Mock.Of<ICSharpExpression>();
+            var snapshot = Mock.Of<ISnapshot>();
             var dest = Mock.Of<IReferenceExpression>();
-            var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, source, false) == ExpressionKind.StubCandidate);
-            var variableDeclaration = Mock.Of<IVariableDeclarationAndIDeclaredElement>();
-            var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == variableDeclaration);
-            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
-
-            // Act
-            assignmentExpressionEater.Eat(snapshot.Object, assignmentExpression, false);
+            var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest);
+            var eater = Mock.Of<IEater>();
+            var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IDeclaredElement>());
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, variableDeclaration), Times.Once);
-        }
-
-
-
-        [Test]
-        public void ExceptAssigningLocalVariableFromSnapshotBeforeEatTest()
-        {
-            // Arrange
-            var snapshot = new Mock<ISnapshot>();
-            var source = Mock.Of<ICSharpExpression>();
-            var dest = Mock.Of<IReferenceExpression>();
-            var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, source, false) == ExpressionKind.StubCandidate);
-            var variableDeclaration = Mock.Of<ILocalVariableAndIDeclaredElement>();
-            var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == variableDeclaration);
-            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
-
-            // Act
-            assignmentExpressionEater.Eat(snapshot.Object, assignmentExpression, false);
-
-            // Assert
-            snapshot.Verify(t => t.Except(variableDeclaration), Times.Once);
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, variableDeclaration), Times.Once);
+            Assert.Throws<UnexpectedAssignDestinationException>(() => assignmentExpressionEater.Eat(snapshot, assignmentExpression));
         }
 
         [Test]
-        public void ExceptAssigningEatUnsafeCodeFixedPointeFromSnapshotBeforeEatTest()
-        {
-            // Arrange
-            var snapshot = new Mock<ISnapshot>();
-            var source = Mock.Of<ICSharpExpression>();
-            var dest = Mock.Of<IReferenceExpression>();
-            var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, source, false) == ExpressionKind.StubCandidate);
-            var variableDeclaration = Mock.Of<IUnsafeCodeFixedPointerAndIDeclaredElement>();
-            var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == variableDeclaration);
-            var expressionKindHelper = Mock.Of<VarTypeHelper>(t => t.KindOfAssignment(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
-
-            // Act
-            assignmentExpressionEater.Eat(snapshot.Object, assignmentExpression, false);
-
-            // Assert
-            snapshot.Verify(t => t.Except(variableDeclaration), Times.Once);
-            snapshot.Verify(t => t.Add(ExpressionKind.Stub, variableDeclaration), Times.Once);
-        }
-
-        [Test]
-        public void UnexpectedAssignDestinationTest()
+        public void UnexpectedAssignDestinationNotReferenceTest()
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -145,11 +103,11 @@ namespace MockMetrics.Eating.Tests.Expression
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest);
             var eater = Mock.Of<IEater>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
-            var expressionKindHelper = Mock.Of<VarTypeHelper>();
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, expressionKindHelper);
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
 
             // Assert
-            Assert.Throws<UnexpectedAssignDestinationException>(() => assignmentExpressionEater.Eat(snapshot, assignmentExpression, false));
+            Assert.Throws<UnexpectedAssignDestinationException>(() => assignmentExpressionEater.Eat(snapshot, assignmentExpression));
         }
     }
 }

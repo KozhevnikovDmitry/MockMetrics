@@ -1,5 +1,7 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Helpers;
+using MockMetrics.Eating.MetricMeasure;
 using Moq;
 using NUnit.Framework;
 
@@ -19,46 +21,49 @@ namespace MockMetrics.Eating.Tests.Expression
             var isExpressionEater = new IsExpressionEater(eater);
 
             // Act
-            var kind = isExpressionEater.Eat(snapshot, isExpression, false);
+            var metrics = isExpressionEater.Eat(snapshot, isExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-        }
-        
-        [TestCase(true)]
-        [TestCase(false)]
-        public void EatLeftExpression_TranslateInnerEatTest(bool innerEat)
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var operand = Mock.Of<ICSharpExpression>();
-            var isExpression = Mock.Of<IIsExpression>(t => t.Operand == operand);
-            var eater = new Mock<IEater>();
-            var isExpressionEater = new IsExpressionEater(eater.Object);
-
-            // Act
-            isExpressionEater.Eat(snapshot, isExpression, innerEat);
-
-            // Assert
-            eater.Verify(t => t.Eat(snapshot, operand, innerEat), Times.Once);
+            Assert.AreEqual(metrics.VarType, VarType.Library);
         }
 
         [Test]
-        public void AddLeftExpressionToSnapshotTest()
+        public void AddToSnapshotTypeUsageTest()
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
             var operand = Mock.Of<ICSharpExpression>();
-            var isExpression = Mock.Of<IIsExpression>(t => t.Operand == operand);
-
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, operand, false) == ExpressionKind.None);
+            var typeOperand = Mock.Of<ITypeUsage>();
+            var isExpression = Mock.Of<IIsExpression>(t => t.Operand == operand && t.TypeOperand == typeOperand);
+            var eater = Mock.Of<IEater>();
             var isExpressionEater = new IsExpressionEater(eater);
 
             // Act
-            isExpressionEater.Eat(snapshot.Object, isExpression, false);
+            isExpressionEater.Eat(snapshot.Object, isExpression);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.None, operand), Times.Once);
+            snapshot.Verify(t =>
+                t.AddOperand(typeOperand,
+                             It.Is<Metrics>(m => m.Scope == Scope.Local && m.VarType == VarType.Library && m.Aim == Aim.Data)),
+                             Times.Once);
+        }
+
+        [Test]
+        public void EatExpressionTest()
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var operand = Mock.Of<ICSharpExpression>();
+            var typeOperand = Mock.Of<ITypeUsage>();
+            var isExpression = Mock.Of<IIsExpression>(t => t.Operand == operand && t.TypeOperand == typeOperand);
+            var eater = new Mock<IEater>();
+            var isExpressionEater = new IsExpressionEater(eater.Object);
+
+            // Act
+            isExpressionEater.Eat(snapshot, isExpression);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, operand), Times.Once());
         }
     }
 }

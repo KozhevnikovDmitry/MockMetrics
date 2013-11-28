@@ -1,6 +1,8 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Helpers;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.Tests.StubTypes;
 using Moq;
 using NUnit.Framework;

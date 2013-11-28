@@ -2,6 +2,7 @@
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.MoqStub;
 using Moq;
 using NUnit.Framework;

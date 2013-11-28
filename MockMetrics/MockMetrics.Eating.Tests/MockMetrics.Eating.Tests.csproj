@@ -60,6 +60,84 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EaterConfigTest.cs" />
+    <Compile Include="Expression\AnonymousMethodExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\AnonymousObjectCreationExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ArgumentsEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ArrayCreationExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\AsExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\AssignmentExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\AwaitExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\BinaryExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\CastExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ConditionalTernaryExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\DefaultExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ElementAccessExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\ExpressionKindHelperTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\InvocationExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\IsExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\LambdaExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\LiteralExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ObjectCreationExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ParenthesizedExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ParentReferenceEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\PostfixOperatorExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\PrefixOperatorExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\ReferenceExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Helpers\TypeEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\TypeofExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Expression\UnaryOperatorExpressionEaterTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="MoqStub\MockOfInvocationEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -119,7 +197,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MetricMeasure\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\JetBrains.ReSharper.SDK.8.0.1243\build\JetBrains.ReSharper.SDK.Targets" Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.0.1243\build\JetBrains.ReSharper.SDK.Targets')" />

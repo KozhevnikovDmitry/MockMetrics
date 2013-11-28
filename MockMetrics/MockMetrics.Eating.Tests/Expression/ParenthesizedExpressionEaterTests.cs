@@ -1,5 +1,6 @@
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using Moq;
 using NUnit.Framework;
 
@@ -15,32 +16,15 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var expression = Mock.Of<ICSharpExpression>();
             var parenthesizedExpression = Mock.Of<IParenthesizedExpression>(t => t.Expression == expression);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.None);
+            var metrics = Metrics.Create();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == metrics);
             var parenthesizedExpressionEater = new ParenthesizedExpressionEater(eater);
 
             // Act
-            var kind = parenthesizedExpressionEater.Eat(snapshot, parenthesizedExpression, false);
+            var result = parenthesizedExpressionEater.Eat(snapshot, parenthesizedExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.None);
-        }
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void EatContainingExpressionAndReturnItKindTest(bool innerEat)
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var expression = Mock.Of<ICSharpExpression>();
-            var parenthesizedExpression = Mock.Of<IParenthesizedExpression>(t => t.Expression == expression);
-            var eater = new Mock<IEater>();
-            var parenthesizedExpressionEater = new ParenthesizedExpressionEater(eater.Object);
-
-            // Act
-            parenthesizedExpressionEater.Eat(snapshot, parenthesizedExpression, innerEat);
-
-            // Assert
-            eater.Verify(t => t.Eat(snapshot, expression, innerEat), Times.Once);
+            Assert.AreEqual(result, metrics);
         }
     }
 }

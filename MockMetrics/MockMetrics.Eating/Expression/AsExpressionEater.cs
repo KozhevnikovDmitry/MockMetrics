@@ -20,7 +20,7 @@ namespace MockMetrics.Eating.Expression
 
             var operandMetrics = Eater.Eat(snapshot, expression.Operand);
 
-            return Metrics.Create(_metricHelper.MetricsForCasted(snapshot, operandMetrics, expression.TypeOperand));
+            return _metricHelper.MetricsForCasted(snapshot, operandMetrics, expression.TypeOperand);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using Moq;
 using NUnit.Framework;
 
@@ -14,33 +15,16 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
             var task = Mock.Of<IUnaryExpression>();
+            var taskMetrics = Metrics.Create();
             var awaitExpression = Mock.Of<IAwaitExpression>(t => t.Task == task);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, task, false) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, task) == taskMetrics);
             var awaitExpressionEater = new AwaitExpressionEater(eater);
 
             // Act
-            var kind = awaitExpressionEater.Eat(snapshot, awaitExpression, false);
+            var result = awaitExpressionEater.Eat(snapshot, awaitExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.None);
-        }
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void EatContainingExpression_TranslateInnerEatTest(bool innerEat)
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var task = Mock.Of<IUnaryExpression>();
-            var awaitExpression = Mock.Of<IAwaitExpression>(t => t.Task == task);
-            var eater = new Mock<IEater>();
-            var awaitExpressionEater = new AwaitExpressionEater(eater.Object);
-
-            // Act
-            awaitExpressionEater.Eat(snapshot, awaitExpression, false);
-
-            // Assert
-            eater.Verify(t => t.Eat(snapshot, task, false), Times.Once);
+            Assert.AreEqual(result, taskMetrics);
         }
     }
 }

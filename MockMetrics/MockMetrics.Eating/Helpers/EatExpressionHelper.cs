@@ -156,7 +156,9 @@ namespace MockMetrics.Eating.Helpers
                 throw new ArgumentNullException("expression");
 
             if (expression.Parent is IExpressionInitializer ||
-                expression.Parent is IAssignmentExpression)
+                expression.Parent is IAssignmentExpression ||
+                expression.Parent is IMemberInitializer ||
+                expression.Parent is IAnonymousMemberDeclaration)
             {
                 return false;
             }

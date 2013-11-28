@@ -21,9 +21,7 @@ namespace MockMetrics.Eating.Expression
                 Eater.Eat(snapshot, size);
             }
 
-            _variableInitializerEater.Eat(snapshot, expression.ArrayInitializer);
-
-            return Metrics.Create(Scope.Local, VarType.Library);
+            return _variableInitializerEater.Eat(snapshot, expression.ArrayInitializer);
         }
     }
 }

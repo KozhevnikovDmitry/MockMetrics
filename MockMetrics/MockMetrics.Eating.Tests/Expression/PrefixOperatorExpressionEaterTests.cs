@@ -1,5 +1,6 @@
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using Moq;
 using NUnit.Framework;
 
@@ -15,32 +16,15 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var operand = Mock.Of<IUnaryExpression>();
             var prefixOperatorExpression = Mock.Of<IPrefixOperatorExpression>(t => t.Operand == operand);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand, false) == ExpressionKind.None);
+            var metrics = Metrics.Create();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == metrics);
             var prefixOperatorExpressionEater = new PrefixOperatorExpressionEater(eater);
 
             // Act
-            var kind = prefixOperatorExpressionEater.Eat(snapshot, prefixOperatorExpression, false);
+            var result = prefixOperatorExpressionEater.Eat(snapshot, prefixOperatorExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.None);
-        }
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void EatOperandAndReturnItKind_TranslateInnerEatTest(bool innerEat)
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var operand = Mock.Of<IUnaryExpression>();
-            var prefixOperatorExpression = Mock.Of<IPrefixOperatorExpression>(t => t.Operand == operand);
-            var eater = new Mock<IEater>();
-            var prefixOperatorExpressionEater = new PrefixOperatorExpressionEater(eater.Object);
-
-            // Act
-            prefixOperatorExpressionEater.Eat(snapshot, prefixOperatorExpression, innerEat);
-
-            // Assert
-            eater.Verify(t => t.Eat(snapshot, operand, innerEat), Times.Once);
+            Assert.AreEqual(result, metrics);
         }
     }
 }

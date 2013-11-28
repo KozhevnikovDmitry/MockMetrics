@@ -4,6 +4,7 @@ using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Resolve.Managed;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.MetricMeasure;
 using NUnit.Framework;
 using Moq;
 
