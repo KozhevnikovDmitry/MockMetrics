@@ -96,9 +96,6 @@
     <Compile Include="Expression\ElementAccessExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\ExpressionKindHelperTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Expression\InvocationExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -129,7 +126,7 @@
     <Compile Include="Expression\ReferenceExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helpers\TypeEaterTests.cs">
+    <Compile Include="Helpers\MetricHelperTests.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Expression\TypeofExpressionEaterTests.cs">

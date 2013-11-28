@@ -35,12 +35,15 @@ namespace MockMetrics.Eating.Expression
                 {
                     Metrics result = _metricHelper.MetricsForType(snapshot, (declaredElement as IProperty).Type);
                     result.Scope = Scope.Internal;
+
+                    return result;
                 }
 
                 if (declaredElement is IField)
                 {
                     Metrics result = _metricHelper.MetricsForType(snapshot, (declaredElement as IField).Type);
                     result.Scope = Scope.Internal;
+                    return result;
                 }
 
                 if (declaredElement is IEvent)
@@ -56,6 +59,11 @@ namespace MockMetrics.Eating.Expression
                 if (declaredElement is IClass)
                 {
                     // static members of class containing unit test are internal
+                    return Metrics.Create(Scope.External);
+                } 
+                
+                if (declaredElement is IStruct)
+                {                    
                     return Metrics.Create(Scope.External);
                 }
 

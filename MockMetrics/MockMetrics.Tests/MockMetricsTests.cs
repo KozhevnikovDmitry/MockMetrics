@@ -174,5 +174,16 @@ namespace MockMetrics.Tests
             var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
+
+        /// <summary>
+        /// Test#9
+        /// </summary>
+        [TestCase(@"<Tested.Tests>\FooTests\ReferenceTypesTests.cs")]
+        public void ReferenceTypesTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+        }
     }
 }

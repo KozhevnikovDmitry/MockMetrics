@@ -58,7 +58,9 @@
     <Compile Include="AggregatorTests\NestedMoqStubsTests.cs" />
     <Compile Include="AggregatorTests\VariablesWithInitializersTests.cs" />
     <None Include="FooTests\MoqStubPositioningTests.cs.gold" />
+    <None Include="FooTests\ReferenceTypesTests.cs.gold" />
     <Compile Include="FooTests\MoqStubPositioningTests.cs" />
+    <Compile Include="FooTests\ReferenceTypesTests.cs" />
     <Compile Include="FooTests\StubTests.cs" />
     <None Include="FooTests\ExpressionVariableTests.cs.gold" />
     <Compile Include="FooTests\ExpressionVariableTests.cs" />
