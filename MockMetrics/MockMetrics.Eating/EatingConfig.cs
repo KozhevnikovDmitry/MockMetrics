@@ -15,7 +15,7 @@ namespace MockMetrics.Eating
             For<IContainer>().Use(() => container);
             For<IEater>().Use<Eater>().AsSingleton();
             For<EatExpressionHelper>().Use<EatExpressionHelper>().AsSingleton();
-            For<MetricHelper>().Use<IMetricHelper>().AsSingleton();
+            For<IMetricHelper>().Use<MetricHelper>().AsSingleton();
             For<UnitTestEater>().Use<UnitTestEater>().AsSingleton();
             assembly.GetTypes()
                     .Where(type => type.GetInterfaces().Contains(typeof(ICSharpNodeEater)) && !type.IsInterface && !type.IsAbstract)

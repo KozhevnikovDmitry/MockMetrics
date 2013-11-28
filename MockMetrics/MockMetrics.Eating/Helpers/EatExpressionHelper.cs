@@ -149,5 +149,19 @@ namespace MockMetrics.Eating.Helpers
 
             return extensionArgumentInfo.Expression;
         }
+
+        public virtual bool IsStandaloneMoqStubExpression([NotNull] IInvocationExpression expression)
+        {
+            if (expression == null) 
+                throw new ArgumentNullException("expression");
+
+            if (expression.Parent is IExpressionInitializer ||
+                expression.Parent is IAssignmentExpression)
+            {
+                return false;
+            }
+
+            return true;
+        }
     }
 }

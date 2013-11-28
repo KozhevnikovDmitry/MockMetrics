@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.MoqStub;
 using NUnit.Framework;
 using Moq;
@@ -32,14 +33,14 @@ namespace MockMetrics.Eating.Tests.MoqStub
             var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>();
             var option = Mock.Of<IInvocationExpression>();
-            var stubOptionTargetEater = Mock.Of<IMoqStubOptionTargetEater>(t => t.EatOption(snapshot.Object, option) == FakeOptionType.Method);
+            var stubOptionTargetEater = Mock.Of<IMoqStubOptionTargetEater>(t => t.EatOption(snapshot.Object, option) == FakeOption.Method);
             var stubOptionsEater = new MoqStubOptionsEater(eater, stubOptionTargetEater);
 
             // Act
             stubOptionsEater.EatStubOptions(snapshot.Object, option);
 
             // Assert
-            snapshot.Verify(t => t.Add(FakeOptionType.Method, option), Times.Once);
+            snapshot.Verify(t => t.AddFakeOption(option, FakeOption.Method), Times.Once);
         }
         
         [Test]
@@ -66,14 +67,14 @@ namespace MockMetrics.Eating.Tests.MoqStub
             var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>();
             var option = Mock.Of<IReferenceExpression>();
-            var stubOptionTargetEater = Mock.Of<IMoqStubOptionTargetEater>(t => t.EatOption(snapshot.Object, option) == FakeOptionType.Property);
+            var stubOptionTargetEater = Mock.Of<IMoqStubOptionTargetEater>(t => t.EatOption(snapshot.Object, option) == FakeOption.Property);
             var stubOptionsEater = new MoqStubOptionsEater(eater, stubOptionTargetEater);
 
             // Act
             stubOptionsEater.EatStubOptions(snapshot.Object, option);
 
             // Assert
-            snapshot.Verify(t => t.Add(FakeOptionType.Property, option), Times.Once);
+            snapshot.Verify(t => t.AddFakeOption(option, FakeOption.Property), Times.Once);
         }
 
         [Test]

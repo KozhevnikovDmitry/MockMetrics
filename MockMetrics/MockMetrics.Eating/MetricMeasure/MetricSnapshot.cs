@@ -63,7 +63,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
-        Metrics GetVarType(IVariableDeclaration variable);
+        Metrics GetVarMetrics(IVariableDeclaration variable);
         void Except(IVariableDeclaration variableDeclaration);
     }
 
@@ -77,42 +77,42 @@ namespace MockMetrics.Eating.MetricMeasure
         public IMethodDeclaration UnitTest { get; private set; }
         public void AddVariable(ICSharpDeclaration variable, Scope scope, Aim aim, VarType varType)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddVariable(ICSharpDeclaration variable, Metrics metrics)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddOperand(ICSharpTreeNode operand, Scope scope, Aim aim, VarType varType)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddOperand(ICSharpTreeNode operand, Metrics metrics)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddCall(IInvocationExpression invocation, Metrics metrics)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddCall(ITypeofExpression invocation, Metrics metrics)
         {
-            throw new NotImplementedException();
+           
         }
 
         public void AddFakeOption(ICSharpExpression opton, FakeOption fakeOption)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void AddLabel(ILabelStatement labelStatement)
         {
-            throw new NotImplementedException();
+            
         }
 
         public IEnumerable<ICSharpTreeNode> TargetCalls { get; private set; }
@@ -123,22 +123,22 @@ namespace MockMetrics.Eating.MetricMeasure
         public IEnumerable<ICSharpTreeNode> Asserts { get; private set; }
         public bool IsInTestScope(string projectName)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
         public bool IsInTestProject(string projectName)
         {
-            throw new NotImplementedException();
+            return true;
         }
 
-        public Metrics GetVarType(IVariableDeclaration localVariable)
+        public Metrics GetVarMetrics(IVariableDeclaration localVariable)
         {
-            throw new NotImplementedException();
+           return new Metrics();
         }
 
         public void Except(IVariableDeclaration variableDeclaration)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

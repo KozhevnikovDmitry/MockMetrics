@@ -1,6 +1,8 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Helpers;
+using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.MoqStub;
 using MockMetrics.Eating.Tests.StubTypes;
 using NUnit.Framework;
@@ -110,7 +112,7 @@ namespace MockMetrics.Eating.Tests.MoqStub
             var fakeOptionType = stubTargetEater.EatOption(snapshot, invocationOption);
 
             // Assert
-            Assert.AreEqual(fakeOptionType, FakeOptionType.Method);
+            Assert.AreEqual(fakeOptionType, FakeOption.Method);
         }
 
         [Test]
@@ -200,7 +202,7 @@ namespace MockMetrics.Eating.Tests.MoqStub
             var fakeOptionType = stubTargetEater.EatOption(snapshot, referenceExpression);
 
             // Assert
-            Assert.AreEqual(fakeOptionType, FakeOptionType.Property);
+            Assert.AreEqual(fakeOptionType, FakeOption.Property);
         }
 
         [Test]

@@ -1,22 +1,23 @@
+using Moq;
 using NUnit.Framework;
 
-namespace Tested.Tests
+namespace Tested.Tests.FooTests
 {
     /// <summary>
-    /// Test#3
+    /// Test#2
     /// </summary>
     [TestFixture]
-    public class ExpressionVariableTests
+    public class StubTests
     {
         [Test]
         public void ExpressionVariablesTest()
         {
             // Arrange
-            var item = string.IsNullOrEmpty("WAKAWAKA");
+            var stub = Mock.Of<Bar>();
             var foo = new Foo();
 
             // Act
-            var result = foo.GetBool(item);
+            var result = foo.GetBool(stub.SomeBool);
 
             // Assert
             Assert.False(result);

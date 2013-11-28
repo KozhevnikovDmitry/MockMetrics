@@ -50,7 +50,7 @@ namespace MockMetrics.Eating.Expression
                 
                 if (declaredElement is IVariableDeclaration)
                 {
-                    return snapshot.GetVarType(declaredElement as IVariableDeclaration);
+                    return snapshot.GetVarMetrics(declaredElement as IVariableDeclaration);
                 }
                 
                 if (declaredElement is IClass)

@@ -41,7 +41,7 @@ namespace MockMetrics.Tests
         /// <summary>
         /// Test#1
         /// </summary>
-        [TestCase(@"<Tested.Tests>\Foo\SimpleVariablesTests.cs")]
+        [TestCase(@"<Tested.Tests>\FooTests\SimpleVariablesTests.cs")]
         public void SimpleVariablesTests(string testName)
         {
             DoTestFiles(testName);
@@ -59,7 +59,7 @@ namespace MockMetrics.Tests
         /// <summary>
         /// Test#2
         /// </summary>
-        [TestCase(@"<Tested.Tests>\Foo\ExpressionVariableTests.cs")]
+        [TestCase(@"<Tested.Tests>\FooTests\ExpressionVariableTests.cs")]
         public void ExpressionVariableTests(string testName)
         {
             DoTestFiles(testName);
@@ -77,7 +77,7 @@ namespace MockMetrics.Tests
         /// <summary>
         /// Test#3
         /// </summary>
-        [TestCase(@"<Tested.Tests>\Foo\StubTests.cs")]
+        [TestCase(@"<Tested.Tests>\FooTests\StubTests.cs")]
         public void StubTests(string testName)
         {
             DoTestFiles(testName);
@@ -109,7 +109,7 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count(), 2, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
-        
+
         /// <summary>
         /// Test#5
         /// </summary>
@@ -146,7 +146,6 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
 
-
         /// <summary>
         /// Test#7
         /// </summary>
@@ -163,6 +162,17 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.TargetCalls.Count(), 1, "Assert targetCalls");
             Assert.AreEqual(snapshot.Asserts.Count(), 2, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
+        }
+
+        /// <summary>
+        /// Test#8
+        /// </summary>
+        [TestCase(@"<Tested.Tests>\FooTests\MoqStubPositioningTests.cs")]
+        public void MoqStubPositioningTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
         }
     }
 }

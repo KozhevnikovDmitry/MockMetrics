@@ -44,12 +44,14 @@ namespace MockMetrics.Eating.Helpers
         // TODO : implement!
         public Metrics MetricsForReference(Metrics parentMetrics)
         {
+            return Metrics.Create();
             throw new NotImplementedException();
         }
 
         // TODO : implement!
         public Metrics MetricsForAssignee(Metrics sourceMetrics)
         {
+            return Metrics.Create();
             throw new NotImplementedException();
         }
 
@@ -148,12 +150,14 @@ namespace MockMetrics.Eating.Helpers
         // TODO : implement!
         public Metrics AcceptorMetrics(Metrics sourceMetrics)
         {
+            return Metrics.Create();
             throw new NotImplementedException();
         }
 
         // TODO : implement!
         public Metrics ChildMetric(Metrics sourceMetrics)
         {
+            return Metrics.Create();
             throw new NotImplementedException();
         }
     }

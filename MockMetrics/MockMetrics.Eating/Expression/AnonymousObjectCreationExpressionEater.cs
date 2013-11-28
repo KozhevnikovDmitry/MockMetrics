@@ -20,7 +20,7 @@ namespace MockMetrics.Eating.Expression
             foreach (var memberDeclaration in expression.AnonymousInitializer.MemberInitializers)
             {
                 var metrics = Eater.Eat(snapshot, memberDeclaration.Expression);
-                var resultMetrics = metrics.AcceptorMetrics();
+                var resultMetrics = _metricHelper.AcceptorMetrics(metrics);
                 resultMetrics.Scope = Scope.Local;
                 snapshot.AddOperand(memberDeclaration, resultMetrics);
             }

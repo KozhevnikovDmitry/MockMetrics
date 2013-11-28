@@ -1,26 +1,32 @@
 ﻿using System.Linq;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.MoqStub
 {
     public interface IMockOfInvocationEater
     {
-        VarType Eat(ISnapshot snapshot, IInvocationExpression expression);
+        void Eat(ISnapshot snapshot, IInvocationExpression expression);
     }
 
     public class MockOfInvocationEater : IMockOfInvocationEater, ICSharpNodeEater
     {
         private readonly IMoqStubOptionsEater _moqStubOptionsEater;
+        private readonly EatExpressionHelper _eatExpressionHelper;
 
-        public MockOfInvocationEater(IMoqStubOptionsEater moqStubOptionsEater)
+        public MockOfInvocationEater(IMoqStubOptionsEater moqStubOptionsEater, EatExpressionHelper eatExpressionHelper)
         {
             _moqStubOptionsEater = moqStubOptionsEater;
+            _eatExpressionHelper = eatExpressionHelper;
         }
 
-        public VarType Eat(ISnapshot snapshot, IInvocationExpression expression)
+        public void Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
-               // snapshot.Add(ExpressionKind.Stub, expression);
+            if (_eatExpressionHelper.IsStandaloneMoqStubExpression(expression))
+            {
+                snapshot.AddOperand(expression, Metrics.Create(Scope.Local, VarType.Stub, Aim.Data));
+            }
 
             var predicate = expression.Arguments.Select(t => t.Value).OfType<ILambdaExpression>().SingleOrDefault();
             if (predicate != null)
@@ -40,8 +46,6 @@ namespace MockMetrics.Eating.MoqStub
                     _moqStubOptionsEater.EatStubOptions(snapshot, predicate.BodyExpression);
                 }
             }
-
-            return VarType.Stub;
         }
     }
 

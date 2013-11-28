@@ -73,7 +73,7 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            var finalyResult = parentMetrics.ChildMetric();
+            var finalyResult = _metricHelper.ChildMetric(parentMetrics);
             snapshot.AddCall(expression, finalyResult);
             return finalyResult;
         }

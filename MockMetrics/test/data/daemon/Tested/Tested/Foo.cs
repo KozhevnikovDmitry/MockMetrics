@@ -9,7 +9,14 @@ namespace Tested
             return !item;
         }
 
+        public Bar GetBar(Bar item)
+        {
+            return item;
+        }
+
         public string StringProperty { get; set; }
+
+        public Bar Bar { get; set; }
 
         public event Action Act;
     }
