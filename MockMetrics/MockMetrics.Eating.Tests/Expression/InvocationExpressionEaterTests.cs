@@ -2,6 +2,7 @@
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.MoqStub;
 using Moq;
@@ -12,9 +13,8 @@ namespace MockMetrics.Eating.Tests.Expression
     [TestFixture]
     public class InvocationExpressionEaterTests
     {
-        [TestCase(true)]
-        [TestCase(false)]
-        public void EatMockOfInvocation_TranslateInnerEatTest(bool innerEat)
+        [Test]
+        public void EatMockOfInvocationTest()
         {
             // Arrange
             var args = new TreeNodeCollection<ICSharpArgument>();
@@ -26,37 +26,15 @@ namespace MockMetrics.Eating.Tests.Expression
             var parentEater = Mock.Of<IParentReferenceEater>();
             var argsEater = Mock.Of<IArgumentsEater>();
             var mockEater = new Mock<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
+            var metricHelper = Mock.Of<IMetricHelper>();
             var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Of");
-            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, kindHelper, parentEater, argsEater, mockEater.Object);
+            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, metricHelper, parentEater, argsEater, mockEater.Object);
 
             // Act
-            invocationEater.Eat(snapshot, invocationExpression, innerEat);
+            invocationEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            mockEater.Verify(t => t.Eat(snapshot, invocationExpression, innerEat), Times.Once);
-        }
-
-        [Test]
-        public void EatParentReferenceTest()
-        {
-            // Arrange
-            var invocationExpression = Mock.Of<IInvocationExpression>();
-            var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>();
-            var parentEater = new Mock<IParentReferenceEater>();
-            var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = Mock.Of<IMockOfInvocationEater>();
-            parentEater.Setup(t => t.Eat(snapshot, invocationExpression, false)).Returns(ExpressionKind.None).Verifiable();
-            var kindHelper = Mock.Of<VarTypeHelper>();
-            var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:NUnit.Framework.Assert");
-            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, kindHelper, parentEater.Object, argsEater, mockEater);
-
-            // Act
-            invocationEater.Eat(snapshot, invocationExpression, false);
-
-            // Assert
-            parentEater.VerifyAll();
+            mockEater.Verify(t => t.Eat(snapshot, invocationExpression), Times.Once);
         }
 
         [Test]
@@ -72,59 +50,80 @@ namespace MockMetrics.Eating.Tests.Expression
             var parentEater = Mock.Of<IParentReferenceEater>();
             var argsEater = new Mock<IArgumentsEater>();
             var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
+            var metricHelper = Mock.Of<IMetricHelper>();
             var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:NUnit.Framework.Assert");
-            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, kindHelper, parentEater, argsEater.Object, mockEater);
+            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, metricHelper, parentEater, argsEater.Object, mockEater);
 
             // Act
-            invocationEater.Eat(snapshot, invocationExpression, false);
+            invocationEater.Eat(snapshot, invocationExpression);
 
             // Assert
             argsEater.Verify(t => t.Eat(snapshot, args), Times.Once);
         }
-        
-        [TestCase("Method:NUnit.Framework.Assert", Result = ExpressionKind.Assert)]
-        [TestCase("Method:Moq.Mock.Verify", Result = ExpressionKind.Assert)]
-        public ExpressionKind EatAssertationTest(string invokedElementName)
+
+        [Test]
+        public void EatParentReferenceTest()
         {
             // Arrange
             var invocationExpression = Mock.Of<IInvocationExpression>();
             var snapshot = Mock.Of<ISnapshot>();
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot, invocationExpression, false) == ExpressionKind.None);
+            var eater = Mock.Of<IEater>();
+            var parentEater = new Mock<IParentReferenceEater>();
             var argsEater = Mock.Of<IArgumentsEater>();
             var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
-            var eater = Mock.Of<IEater>();
-            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == invokedElementName);
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:NUnit.Framework.Assert");
+            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, metricHelper, parentEater.Object, argsEater, mockEater);
+
+            // Act
+            invocationEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            return invocationEater.Eat(snapshot, invocationExpression, false);
-
+            parentEater.Verify(t => t.Eat(snapshot, invocationExpression), Times.Once());
         }
 
-        [TestCase("Method:NUnit.Framework.Assert")]
-        [TestCase("Method:Moq.Mock.Verify")]
-        public void AddAssertationToSnapshotTest(string invokedElementName)
+        [Test]
+        public void EatAssertTest()
         {
             // Arrange
             var invocationExpression = Mock.Of<IInvocationExpression>();
             var snapshot = new Mock<ISnapshot>();
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression, false) == ExpressionKind.None);
+            var parentEater = Mock.Of<IParentReferenceEater>();
             var argsEater = Mock.Of<IArgumentsEater>();
             var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
+            var metricHelper = Mock.Of<IMetricHelper>();
             var eater = Mock.Of<IEater>();
-            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == invokedElementName);
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:NUnit.Framework.Assert");
+            var invocationEater = new InvocationExpressionEater(eater, helper, metricHelper, parentEater, argsEater, mockEater);
 
             // Act
-            invocationEater.Eat(snapshot.Object, invocationExpression, false);
+            var metrics = invocationEater.Eat(snapshot.Object, invocationExpression);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.Assert, invocationExpression));
+            snapshot.Verify(t => t.AddCall(invocationExpression, It.Is<Metrics>(m => m.Call == Call.Assert && m.Scope == Scope.Local && m.Equals(metrics))));
+        }
+
+        [Test]
+        public void EatMoqVerifyTest()
+        {
+            // Arrange
+            var invocationExpression = Mock.Of<IInvocationExpression>();
+            var snapshot = new Mock<ISnapshot>();
+            var parentMetrics = Metrics.Create();
+            parentMetrics.Scope = Scope.Internal;
+            var parentEater = Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression) == parentMetrics);
+            var argsEater = Mock.Of<IArgumentsEater>();
+            var mockEater = Mock.Of<IMockOfInvocationEater>();
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var eater = Mock.Of<IEater>();
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Verify");
+            var invocationEater = new InvocationExpressionEater(eater, helper, metricHelper, parentEater, argsEater, mockEater);
+
+            // Act
+            var metrics = invocationEater.Eat(snapshot.Object, invocationExpression);
+
+            // Assert
+            snapshot.Verify(t => t.AddCall(invocationExpression, It.Is<Metrics>(m => m.Call == Call.Assert && m.Scope == Scope.Internal && m.Equals(metrics))));
         }
 
         [Test]
@@ -133,22 +132,25 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var invocationExpression = Mock.Of<IInvocationExpression>();
             var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == true);
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot, invocationExpression, false) == ExpressionKind.None);
+            var parentMetrics = Metrics.Create();
+            parentMetrics.Scope = Scope.Internal;
+            var parentEater = Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot, invocationExpression) == parentMetrics);
             var argsEater = Mock.Of<IArgumentsEater>();
             var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
+            var metricHelper = Mock.Of<IMetricHelper>();
             var eater = Mock.Of<IEater>();
             var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
                                                         && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
+            var invocationEater = new InvocationExpressionEater(eater, helper, metricHelper, parentEater, argsEater, mockEater);
 
             // Act
-            var kind = invocationEater.Eat(snapshot, invocationExpression, false);
+            var metrics = invocationEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.TargetCall);
+            Assert.AreEqual(metrics.Scope, Scope.Internal);
+            Assert.AreEqual(metrics.Call, Call.TargetCall);
+            Assert.AreEqual(metrics.Aim, Aim.Result);
         }
 
         [Test]
@@ -158,119 +160,76 @@ namespace MockMetrics.Eating.Tests.Expression
             var invocationExpression = Mock.Of<IInvocationExpression>();
             var snapshot = new Mock<ISnapshot>();
             snapshot.Setup(t => t.IsInTestScope("ModuleName")).Returns(true);
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression, false) == ExpressionKind.None);
+            var parentMetrics = Metrics.Create();
+            parentMetrics.Scope = Scope.Internal;
+            var parentEater = Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression) == parentMetrics);
             var argsEater = Mock.Of<IArgumentsEater>();
             var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
+            var metricHelper = Mock.Of<IMetricHelper>();
             var eater = Mock.Of<IEater>();
             var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
                                                         && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
+            var invocationEater = new InvocationExpressionEater(eater, helper, metricHelper, parentEater, argsEater, mockEater);
 
             // Act
-            invocationEater.Eat(snapshot.Object, invocationExpression, false);
+            var metrics = invocationEater.Eat(snapshot.Object, invocationExpression);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.TargetCall, invocationExpression), Times.Once);
+            snapshot.Verify(t => t.AddCall(invocationExpression, metrics), Times.Once);
         }
 
         [Test]
-        public void EatStubBecauseInvokedElementIsNotTestMethodTest()
-        {
-            // Arrange
-            var invocationExpression = Mock.Of<IInvocationExpression>();
-            var snapshot = Mock.Of<ISnapshot>();
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot, invocationExpression, false) == ExpressionKind.None);
-            var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
-            var eater = Mock.Of<IEater>();
-            var invoked = Mock.Of<IDeclaredElement>();
-            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invoked
-                                                        && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
-
-            // Act
-            var kind = invocationEater.Eat(snapshot, invocationExpression, false);
-
-            // Assert
-            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-        }
-
-        [Test]
-        public void EatStubBecauseInvokedElementIsNotInTestScopeTest()
-        {
-            // Arrange
-            var invocationExpression = Mock.Of<IInvocationExpression>();
-            var snapshot = Mock.Of<ISnapshot>(t => t.IsInTestScope("ModuleName") == false);
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot, invocationExpression, false) == ExpressionKind.None);
-            var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>();
-            var eater = Mock.Of<IEater>();
-            var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
-            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
-                                                        && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
-
-            // Act
-            var kind = invocationEater.Eat(snapshot, invocationExpression, false);
-
-            // Assert
-            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-        }
-
-        [Test]
-        public void ReturnKindOfInvocationBasedOnPArentReferenceKindTest()
-        {
-            // Arrange
-            var invocationExpression = Mock.Of<IInvocationExpression>();
-            var snapshot = Mock.Of<ISnapshot>();
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot, invocationExpression, false) == ExpressionKind.StubCandidate);
-            var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>(t => t.InvocationKindByParentReferenceKind(ExpressionKind.StubCandidate) == ExpressionKind.Stub);
-            var eater = Mock.Of<IEater>();
-            var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
-            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
-                                                        && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
-
-            // Act
-            var kind = invocationEater.Eat(snapshot, invocationExpression, false);
-
-            // Assert
-            Assert.AreEqual(kind, ExpressionKind.Stub);
-        }
-
-        [Test]
-        public void AddExpressionToSnapshotIfBasedOnPArentReferenceKindisTargetCallTest()
+        public void AddCallBasedOnParentMetricsTest()
         {
             // Arrange
             var invocationExpression = Mock.Of<IInvocationExpression>();
             var snapshot = new Mock<ISnapshot>();
-            var parentEater =
-                Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression, false) == ExpressionKind.StubCandidate);
+            snapshot.Setup(t => t.IsInTestScope("ModuleName")).Returns(false);
+            var parentMetrics = Metrics.Create();
+            var childMetrics = Metrics.Create();
+            var parentEater = Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression) == parentMetrics);
             var argsEater = Mock.Of<IArgumentsEater>();
             var mockEater = Mock.Of<IMockOfInvocationEater>();
-            var kindHelper = Mock.Of<VarTypeHelper>(t => t.InvocationKindByParentReferenceKind(ExpressionKind.StubCandidate) == ExpressionKind.TargetCall);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.ChildMetric(parentMetrics) == childMetrics);
             var eater = Mock.Of<IEater>();
             var invokedMethod = Mock.Of<IMethod>(t => t.Module.Name == "ModuleName");
             var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
                                                         && t.GetInvokedElementName(invocationExpression) == "");
-            var invocationEater = new InvocationExpressionEater(eater, helper, kindHelper, parentEater, argsEater, mockEater);
+            var invocationEater = new InvocationExpressionEater(eater, helper, metricHelper, parentEater, argsEater, mockEater);
 
             // Act
-            var kind = invocationEater.Eat(snapshot.Object, invocationExpression, false);
+            var metrics = invocationEater.Eat(snapshot.Object, invocationExpression);
 
             // Assert
-            snapshot.Verify(t => t.Add(ExpressionKind.TargetCall, invocationExpression), Times.Once);
-            Assert.AreEqual(kind, ExpressionKind.TargetCall);
+            snapshot.Verify(t => t.AddCall(invocationExpression, childMetrics), Times.Once);
+            Assert.AreEqual(metrics, childMetrics);
+        }
+
+        [Test]
+        public void AddCallBasedOnParentMetrics_NotAMethodTest()
+        {
+            // Arrange
+            var invocationExpression = Mock.Of<IInvocationExpression>();
+            var snapshot = new Mock<ISnapshot>();
+            var parentMetrics = Metrics.Create();
+            var childMetrics = Metrics.Create();
+            var parentEater = Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression) == parentMetrics);
+            var argsEater = Mock.Of<IArgumentsEater>();
+            var mockEater = Mock.Of<IMockOfInvocationEater>();
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.ChildMetric(parentMetrics) == childMetrics);
+            var eater = Mock.Of<IEater>();
+            var invokedMethod = Mock.Of<IDeclaredElement>();
+            var helper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElement(invocationExpression) == invokedMethod
+                                                        && t.GetInvokedElementName(invocationExpression) == "");
+            var invocationEater = new InvocationExpressionEater(eater, helper, metricHelper, parentEater, argsEater, mockEater);
+
+            // Act
+            var metrics = invocationEater.Eat(snapshot.Object, invocationExpression);
+
+            // Assert
+            snapshot.Verify(t => t.AddCall(invocationExpression, childMetrics), Times.Once);
+            Assert.AreEqual(metrics, childMetrics);
         }
     }
 }

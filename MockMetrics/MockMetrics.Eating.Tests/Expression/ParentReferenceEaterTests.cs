@@ -14,7 +14,7 @@ namespace MockMetrics.Eating.Tests.Expression
     public class ParentReferenceEaterTests
     {
         [Test]
-        public void ReturnNoneIfInvocationQualifierNullTest()
+        public void ReturnScopeInternalIfInvocationQualifierNullTest()
         {
             // Arrange
             var eater = Mock.Of<IEater>();
@@ -23,10 +23,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var parentReferenceEater = new ParentReferenceEater(eater);
 
             // Act
-            var kind = parentReferenceEater.Eat(snapshot, invocationExpression, false);
+            var metrics = parentReferenceEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.None);
+            Assert.AreEqual(metrics.Scope, Scope.Internal);
         }
 
         [Test]
@@ -40,10 +40,10 @@ namespace MockMetrics.Eating.Tests.Expression
             var parentReferenceEater = new ParentReferenceEater(eater);
 
             // Act
-            var kind = parentReferenceEater.Eat(snapshot, invocationExpression, false);
+            var metrics = parentReferenceEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.None);
+            Assert.AreEqual(metrics.Scope, Scope.Internal);
         }
 
         [Test]
@@ -52,35 +52,17 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
             var expression = Mock.Of<ICSharpExpression>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression, false) == ExpressionKind.StubCandidate);
+            var metrics = Metrics.Create();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == metrics);
             var managedConverible = new Mock<ExtensionArgumentInfo>(Mock.Of<ICSharpInvocationInfo>(), Mock.Of<ICSharpExpression>());
             var invocationExpression = Mock.Of<IInvocationExpression>(t => t.ExtensionQualifier.ManagedConvertible == managedConverible.Object);
             var parentReferenceEater = new ParentReferenceEater(eater);
 
             // Act
-            var kind = parentReferenceEater.Eat(snapshot, invocationExpression, false);
+            var result = parentReferenceEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(kind, ExpressionKind.StubCandidate);
-        }
-
-        [TestCase(true)]
-        [TestCase(false)]
-        public void EatQualifierReference_TranslateInnerEatTest(bool innerEat)
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var expression = Mock.Of<ICSharpExpression>();
-            var eater = new Mock<IEater>();
-            var managedConverible = new Mock<ExtensionArgumentInfo>(Mock.Of<ICSharpInvocationInfo>(), expression);
-            var invocationExpression = Mock.Of<IInvocationExpression>(t => t.ExtensionQualifier.ManagedConvertible == managedConverible.Object);
-            var parentReferenceEater = new ParentReferenceEater(eater.Object);
-
-            // Act
-            parentReferenceEater.Eat(snapshot, invocationExpression, innerEat);
-
-            // Assert
-            eater.Verify(t => t.Eat(snapshot, expression, innerEat), Times.Once);
+            Assert.AreEqual(result, metrics);
         }
 
         [Test]
@@ -98,7 +80,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var parentReferenceEater = new ParentReferenceEater(Mock.Of<IEater>());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => parentReferenceEater.Eat(null, Mock.Of<IInvocationExpression>(), false));
+            Assert.Throws<ArgumentNullException>(() => parentReferenceEater.Eat(null, Mock.Of<IInvocationExpression>()));
         }
 
         [Test]
@@ -108,7 +90,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var parentReferenceEater = new ParentReferenceEater(Mock.Of<IEater>());
 
             // Assert
-            Assert.Throws<ArgumentNullException>(() => parentReferenceEater.Eat(Mock.Of<ISnapshot>(), null, false));
+            Assert.Throws<ArgumentNullException>(() => parentReferenceEater.Eat(Mock.Of<ISnapshot>(), null));
         }
     }
 }
