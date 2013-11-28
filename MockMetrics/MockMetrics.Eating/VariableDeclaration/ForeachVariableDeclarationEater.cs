@@ -1,13 +1,14 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
     public class ForeachVariableDeclarationEater : VariableDeclarationEater<IForeachVariableDeclaration>
     {
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
 
-        public ForeachVariableDeclarationEater(IEater eater, MetricHelper metricHelper)
+        public ForeachVariableDeclarationEater(IEater eater, IMetricHelper metricHelper)
             : base(eater)
         {
             _metricHelper = metricHelper;

@@ -1,21 +1,20 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class ReferenceExpressionEater : ExpressionEater<IReferenceExpression>
     {
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
         private readonly EatExpressionHelper _eatExpressionHelper;
-        private readonly ITypeHelper _typeHelper;
 
-        public ReferenceExpressionEater(IEater eater, MetricHelper metricHelper, EatExpressionHelper eatExpressionHelper, ITypeHelper typeHelper)
+        public ReferenceExpressionEater(IEater eater, IMetricHelper metricHelper, EatExpressionHelper eatExpressionHelper)
             : base(eater)
         {
             _metricHelper = metricHelper;
             _eatExpressionHelper = eatExpressionHelper;
-            _typeHelper = typeHelper;
         }
 
         public override Metrics Eat(ISnapshot snapshot, IReferenceExpression expression)
@@ -33,13 +32,13 @@ namespace MockMetrics.Eating.Expression
                 // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
                 {
-                    Metrics result = _typeHelper.MetricVariable(snapshot, (declaredElement as IProperty).Type);
+                    Metrics result = _metricHelper.MetricVariable(snapshot, (declaredElement as IProperty).Type);
                     result.Scope = Scope.Internal;
                 }
 
                 if (declaredElement is IField)
                 {
-                    Metrics result = _typeHelper.MetricVariable(snapshot, (declaredElement as IField).Type);
+                    Metrics result = _metricHelper.MetricVariable(snapshot, (declaredElement as IField).Type);
                     result.Scope = Scope.Internal;
                 }
 

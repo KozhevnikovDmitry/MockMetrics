@@ -57,9 +57,4 @@
         Event,
         CallBack
     }
-
-    public interface MockMetrics
-    {
-        
-    }
 }

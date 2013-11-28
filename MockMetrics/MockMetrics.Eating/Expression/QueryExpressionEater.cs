@@ -1,15 +1,17 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class QueryExpressionEater : ExpressionEater<IQueryExpression>
     {
-        private readonly ITypeHelper _typeHelper;
+        private readonly IMetricHelper _metricHelper;
 
-        public QueryExpressionEater(IEater eater, ITypeHelper typeHelper) : base(eater)
+        public QueryExpressionEater(IEater eater, IMetricHelper metricHelper)
+            : base(eater)
         {
-            _typeHelper = typeHelper;
+            _metricHelper = metricHelper;
         }
 
         public override Metrics Eat(ISnapshot snapshot, IQueryExpression expression)

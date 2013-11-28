@@ -5,6 +5,7 @@ using System.Reflection;
 using HaveBox;
 using HaveBox.Configuration;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating
@@ -16,7 +17,7 @@ namespace MockMetrics.Eating
             For<IContainer>().Use(() => container);
             For<IEater>().Use<Eater>().AsSingleton();
             For<EatExpressionHelper>().Use<EatExpressionHelper>().AsSingleton();
-            For<MetricHelper>().Use<MetricHelper>().AsSingleton();
+            For<MetricHelper>().Use<IMetricHelper>().AsSingleton();
             For<UnitTestEater>().Use<UnitTestEater>().AsSingleton();
             assembly.GetTypes()
                     .Where(type => type.GetInterfaces().Contains(typeof(ICSharpNodeEater)) && !type.IsInterface && !type.IsAbstract)

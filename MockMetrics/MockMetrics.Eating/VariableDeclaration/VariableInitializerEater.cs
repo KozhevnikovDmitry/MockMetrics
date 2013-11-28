@@ -2,6 +2,7 @@ using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.Util;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
@@ -14,9 +15,9 @@ namespace MockMetrics.Eating.VariableDeclaration
     public class VariableInitializerEater : IVariableInitializerEater, ICSharpNodeEater
     {
         private readonly IEater _eater;
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
 
-        public VariableInitializerEater(IEater eater, MetricHelper metricHelper)
+        public VariableInitializerEater(IEater eater, IMetricHelper metricHelper)
         {
             _eater = eater;
             _metricHelper = metricHelper;

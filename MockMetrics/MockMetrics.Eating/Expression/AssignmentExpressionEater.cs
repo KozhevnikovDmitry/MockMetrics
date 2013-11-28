@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
@@ -6,9 +7,9 @@ namespace MockMetrics.Eating.Expression
     public class AssignmentExpressionEater : ExpressionEater<IAssignmentExpression>
     {
         private readonly EatExpressionHelper _eatExpressionHelper;
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
 
-        public AssignmentExpressionEater(IEater eater, EatExpressionHelper eatExpressionHelper, MetricHelper metricHelper)
+        public AssignmentExpressionEater(IEater eater, EatExpressionHelper eatExpressionHelper, IMetricHelper metricHelper)
             : base(eater)
         {
             _eatExpressionHelper = eatExpressionHelper;
@@ -17,11 +18,11 @@ namespace MockMetrics.Eating.Expression
 
         public override Metrics Eat(ISnapshot snapshot, IAssignmentExpression expression)
         {
-            var sourceKind = Eater.Eat(snapshot, expression.Source);
+            var sourceMetrics = Eater.Eat(snapshot, expression.Source);
 
             if (expression.Dest is IReferenceExpression)
             { 
-                var assignmentKind = _metricHelper.MetricsOfAssignment(sourceKind);
+                var assignmentKind = _metricHelper.MetricsOfAssignment(sourceMetrics);
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 {

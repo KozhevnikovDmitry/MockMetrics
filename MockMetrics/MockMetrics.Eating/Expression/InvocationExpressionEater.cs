@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.MoqStub;
 
@@ -8,14 +9,14 @@ namespace MockMetrics.Eating.Expression
     public class InvocationExpressionEater : ExpressionEater<IInvocationExpression>
     {
         private readonly EatExpressionHelper _expressionHelper;
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
         private readonly IParentReferenceEater _parentReferenceEater;
         private readonly IArgumentsEater _argumentsEater;
         private readonly IMockOfInvocationEater _mockOfInvocationEater;
 
         public InvocationExpressionEater(IEater eater, 
                                          EatExpressionHelper expressionHelper,
-                                         MetricHelper metricHelper,
+                                         IMetricHelper metricHelper,
                                          IParentReferenceEater parentReferenceEater,
                                          IArgumentsEater argumentsEater,
                                          IMockOfInvocationEater mockOfInvocationEater)

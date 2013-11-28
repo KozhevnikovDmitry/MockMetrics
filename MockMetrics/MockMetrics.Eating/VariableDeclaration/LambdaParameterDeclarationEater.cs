@@ -1,13 +1,14 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
     public class LambdaParameterDeclarationEater : VariableDeclarationEater<ILambdaParameterDeclaration>
     {
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
 
-        public LambdaParameterDeclarationEater(IEater eater, MetricHelper metricHelper)
+        public LambdaParameterDeclarationEater(IEater eater, IMetricHelper metricHelper)
             : base(eater)
         {
             _metricHelper = metricHelper;

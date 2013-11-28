@@ -1,13 +1,14 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class AnonymousObjectCreationExpressionEater : ExpressionEater<IAnonymousObjectCreationExpression>
     {
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
 
-        public AnonymousObjectCreationExpressionEater(IEater eater, MetricHelper metricHelper)
+        public AnonymousObjectCreationExpressionEater(IEater eater, IMetricHelper metricHelper)
             : base(eater)
         {
             _metricHelper = metricHelper;

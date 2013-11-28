@@ -1,4 +1,5 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
@@ -6,15 +7,15 @@ namespace MockMetrics.Eating.Expression
     public class ObjectCreationExpressionEater : ExpressionEater<IObjectCreationExpression>
     {
         private readonly IArgumentsEater _argumentsEater;
-        private readonly ITypeHelper _typeHelper;
+        private readonly IMetricHelper _metricHelper;
 
         public ObjectCreationExpressionEater(IEater eater, 
                                              IArgumentsEater argumentsEater,
-                                             ITypeHelper typeHelper)
+                                             IMetricHelper metricHelper)
             : base(eater)
         {
             _argumentsEater = argumentsEater;
-            _typeHelper = typeHelper;
+            _metricHelper = metricHelper;
         }
 
         public override Metrics Eat(ISnapshot snapshot, IObjectCreationExpression expression)
@@ -29,7 +30,7 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            return _typeHelper.MetricVariable(snapshot, expression.Type());
+            return _metricHelper.MetricVariable(snapshot, expression.Type());
         }
     }
 }

@@ -1,26 +1,25 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Expression
 {
     public class CastExpressionEater : ExpressionEater<ICastExpression>
     {
-        private readonly ITypeHelper _typeHelper;
-        private readonly MetricHelper _metricHelper;
+        private readonly IMetricHelper _metricHelper;
 
-        public CastExpressionEater(IEater eater, ITypeHelper typeHelper, MetricHelper metricHelper)
+        public CastExpressionEater(IEater eater, IMetricHelper metricHelper)
             : base(eater)
         {
-            _typeHelper = typeHelper;
             _metricHelper = metricHelper;
         }
 
         public override Metrics Eat(ISnapshot snapshot, ICastExpression expression)
         {
-            snapshot.AddOperand(expression.TargetType, Metrics.Create(Scope.Local, VarType.Library));
+            snapshot.AddOperand(expression.TargetType, Metrics.Create(Scope.Local, VarType.Library, Aim.Data));
 
             var operandMetrics = Eater.Eat(snapshot, expression.Op);
-            var typeVarType = _typeHelper.MetricCastType(snapshot, expression.TargetType);
+            var typeVarType = _metricHelper.MetricCastType(snapshot, expression.TargetType);
 
             return Metrics.Create(_metricHelper.CastExpressionType(operandMetrics, typeVarType));
         }

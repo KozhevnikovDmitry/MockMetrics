@@ -5,7 +5,7 @@ using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 
-namespace MockMetrics.Eating.Expression
+namespace MockMetrics.Eating.Helpers
 {
     public class EatExpressionHelper
     {
