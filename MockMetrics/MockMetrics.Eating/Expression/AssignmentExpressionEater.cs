@@ -22,18 +22,18 @@ namespace MockMetrics.Eating.Expression
 
             if (expression.Dest is IReferenceExpression)
             { 
-                var assignmentKind = _metricHelper.MetricsOfAssignment(sourceMetrics);
+                var assigneeMetrics = _metricHelper.MetricsForAssignee(sourceMetrics);
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 {
-                    return EatVariableDeclaration(snapshot, declaredElement as IVariableDeclaration, assignmentKind);
+                    return EatVariableDeclaration(snapshot, declaredElement as IVariableDeclaration, assigneeMetrics);
                 }
             }
 
             throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);
         }
 
-        private VarType EatVariableDeclaration(ISnapshot snapshot, IVariableDeclaration variableDeclaration, VarType assignmentType)
+        private Metrics EatVariableDeclaration(ISnapshot snapshot, IVariableDeclaration variableDeclaration, Metrics assigneeMetrics)
         {
             // TODO : check on properties, fields, events, parameters
             if (variableDeclaration is IEventDeclaration)
@@ -57,8 +57,8 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            snapshot.AddVariable(variableDeclaration, , , assignmentType);
-            return assignmentType;
+            snapshot.AddVariable(variableDeclaration, , , assigneeMetrics);
+            return assigneeMetrics;
         }
     }
 }

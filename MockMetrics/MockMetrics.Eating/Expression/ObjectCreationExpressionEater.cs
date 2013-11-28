@@ -30,7 +30,7 @@ namespace MockMetrics.Eating.Expression
                 }
             }
 
-            return _metricHelper.MetricVariable(snapshot, expression.Type());
+            return _metricHelper.MetricsForType(snapshot, expression.Type());
         }
     }
 }

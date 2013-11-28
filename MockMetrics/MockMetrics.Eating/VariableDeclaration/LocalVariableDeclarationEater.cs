@@ -23,7 +23,7 @@ namespace MockMetrics.Eating.VariableDeclaration
         {
             if (variableDeclaration.Initial == null)
             {
-                var typeMetric = _metricHelper.MetricVariable(snapshot, variableDeclaration.Type);
+                var typeMetric = _metricHelper.MetricsForType(snapshot, variableDeclaration.Type);
                 var result = Metrics.Create(typeMetric, Scope.Local);
                 snapshot.AddVariable(variableDeclaration, result);
                 return result;

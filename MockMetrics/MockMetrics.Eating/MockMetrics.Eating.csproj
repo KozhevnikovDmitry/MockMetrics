@@ -70,6 +70,7 @@
     <Compile Include="Helpers\EatExpressionHelper.cs" />
     <Compile Include="Expression\ElementAccessExpressionEater.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />
+    <Compile Include="Helpers\IMetricHelper.cs" />
     <Compile Include="Helpers\MetricHelper.cs" />
     <Compile Include="MetricMeasure\Metrics.cs" />
     <Compile Include="Expression\InvocationExpressionEater.cs" />

@@ -19,7 +19,7 @@ namespace MockMetrics.Eating.Expression
             var leftMetrics = Eater.Eat(snapshot, expression.LeftOperand);
             var rightMetrics = Eater.Eat(snapshot, expression.RightOperand);
 
-            return _metricHelper.CastExpressionType(leftMetrics, rightMetrics);
+            return _metricHelper.MetricsMerge(leftMetrics, rightMetrics);
         }
     }
 }

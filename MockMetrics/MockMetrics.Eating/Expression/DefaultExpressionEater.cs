@@ -16,7 +16,7 @@ namespace MockMetrics.Eating.Expression
 
         public override Metrics Eat(ISnapshot snapshot, IDefaultExpression expression)
         {
-            return Metrics.Create(_metricHelper.MetricCastType(snapshot, expression.TypeName));
+            return Metrics.Create(_metricHelper.MetricsForType(snapshot, expression.TypeName));
         }
     }
 }

@@ -19,9 +19,8 @@ namespace MockMetrics.Eating.Expression
             snapshot.AddOperand(expression.TypeOperand, Metrics.Create(Scope.Local, VarType.Library, Aim.Data));
 
             var operandMetrics = Eater.Eat(snapshot, expression.Operand);
-            var typeVarType = _metricHelper.MetricCastType(snapshot, expression.TypeOperand);
 
-            return Metrics.Create(_metricHelper.CastExpressionType(operandMetrics, typeVarType));
+            return Metrics.Create(_metricHelper.MetricsForCasted(snapshot, operandMetrics, expression.TypeOperand));
         }
     }
 }

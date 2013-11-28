@@ -32,13 +32,13 @@ namespace MockMetrics.Eating.Expression
                 // TODO: Property(Field) can be Stub, Mock or Target
                 if (declaredElement is IProperty)
                 {
-                    Metrics result = _metricHelper.MetricVariable(snapshot, (declaredElement as IProperty).Type);
+                    Metrics result = _metricHelper.MetricsForType(snapshot, (declaredElement as IProperty).Type);
                     result.Scope = Scope.Internal;
                 }
 
                 if (declaredElement is IField)
                 {
-                    Metrics result = _metricHelper.MetricVariable(snapshot, (declaredElement as IField).Type);
+                    Metrics result = _metricHelper.MetricsForType(snapshot, (declaredElement as IField).Type);
                     result.Scope = Scope.Internal;
                 }
 
@@ -61,7 +61,7 @@ namespace MockMetrics.Eating.Expression
                 throw new UnexpectedReferenceTypeException(declaredElement, this, expression);
             }
             
-            return _metricHelper.RefMetricsByParentMetrics(parentMetrics);
+            return _metricHelper.MetricsForReference(parentMetrics);
         }
     }
 }

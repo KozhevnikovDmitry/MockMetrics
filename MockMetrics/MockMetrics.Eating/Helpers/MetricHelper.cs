@@ -6,51 +6,11 @@ using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Helpers
 {
-    /// <summary>
-    /// Helps to determine metrics values in different cases
-    /// </summary>
-    public interface IMetricHelper
-    {
-        /// <summary>
-        /// Metrics for operand with type.
-        /// </summary>
-        /// <param name="snapshot">Context snapshot</param>
-        /// <param name="type">Type of the operand</param>
-        Metrics MetricsForType(ISnapshot snapshot, IType type);
-
-        /// <summary>
-        /// Change operand metrics <paramref name="valueMetrics"/> by metrics of casting type <paramref name="castMetrics"/>
-        /// </summary>
-        /// <param name="valueMetrics">Metrics of casted operand</param>
-        /// <param name="castMetrics">Metrics for casting type</param>
-        Metrics CastExpressionType(Metrics valueMetrics, Metrics castMetrics);
-
-        /// <summary>
-        /// Metrics for reference operand by metrics of its parent reference <paramref name="parentMetrics"/>
-        /// </summary>
-        /// <param name="parentMetrics">Metrics of parent reference</param>
-        Metrics RefMetricsByParentMetrics(Metrics parentMetrics);
-
-        /// <summary>
-        /// Metrics for assigned operand by metrics of assignment source <paramref name="sourceMetrics"/>
-        /// </summary>
-        /// <param name="sourceMetrics">Metrics of assignment source</param>
-        /// <returns></returns>
-        Metrics MetricsOfAssignment(Metrics sourceMetrics);
-
-        Metrics MetricCastType(ISnapshot snapshot, ITypeUsage typeUsage);
-
-        Metrics MetricVariable(ISnapshot snapshot, IType type);
-    }
-
-    /// <summary>
-    /// Helps to determine metrics values in different cases
-    /// </summary>
     public class MetricHelper : IMetricHelper
     {
         private readonly EatExpressionHelper _eatExpressionHelper;
 
-        public MetricHelper([NotNull] EatExpressionHelper eatExpressionHelper)
+        public MetricHelper([NotNull]EatExpressionHelper eatExpressionHelper)
         {
             if (eatExpressionHelper == null)
                 throw new ArgumentNullException("eatExpressionHelper");
@@ -58,50 +18,43 @@ namespace MockMetrics.Eating.Helpers
             _eatExpressionHelper = eatExpressionHelper;
         }
 
-        /// <summary>
-        /// Metrics for operand with type.
-        /// </summary>
-        /// <param name="snapshot">Context snapshot</param>
-        /// <param name="type">Type of the operand</param>
-        public Metrics MetricsForType(ISnapshot snapshot, IType type)
+        public Metrics MetricsMerge(Metrics first, Metrics second)
         {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Change operand metrics <paramref name="valueMetrics"/> by metrics of casting type <paramref name="castMetrics"/>
-        /// </summary>
-        /// <param name="valueMetrics">Metrics of casted operand</param>
-        /// <param name="castMetrics">Metrics for casting type</param>
-        public Metrics CastExpressionType(Metrics valueMetrics, Metrics castMetrics)
-        {
-            if (valueMetrics.VarType >= castMetrics.VarType)
+            if (first.VarType >= second.VarType)
             {
-                valueMetrics.VarType = castMetrics.VarType;
+                first.VarType = second.VarType;
             }
-            return valueMetrics;
+            return first;
         }
 
-        /// <summary>
-        /// Metrics for reference operand by metrics of its parent reference <paramref name="parentMetrics"/>
-        /// </summary>
-        /// <param name="parentMetrics">Metrics of parent reference</param>
-        public Metrics RefMetricsByParentMetrics(Metrics parentMetrics)
+        public Metrics MetricsForCasted([NotNull] ISnapshot snapshot, 
+                                        Metrics valueMetrics,
+                                        [NotNull] ITypeUsage typeUsage)
+        {
+            if (snapshot == null) 
+                throw new ArgumentNullException("snapshot");
+
+            if (typeUsage == null) 
+                throw new ArgumentNullException("typeUsage");
+
+            var castMetrics = MetricsForType(snapshot, typeUsage);
+            return MetricsMerge(valueMetrics, castMetrics);
+        }
+
+        // TODO : implement!
+        public Metrics MetricsForReference(Metrics parentMetrics)
         {
             throw new NotImplementedException();
         }
 
-        /// <summary>
-        /// Metrics for assigned operand by metrics of assignment source <paramref name="sourceMetrics"/>
-        /// </summary>
-        /// <param name="sourceMetrics">Metrics of assignment source</param>
-        /// <returns></returns>
-        public Metrics MetricsOfAssignment(Metrics sourceMetrics)
+        // TODO : implement!
+        public Metrics MetricsForAssignee(Metrics sourceMetrics)
         {
             throw new NotImplementedException();
         }
 
-        public Metrics MetricCastType([NotNull] ISnapshot snapshot, [NotNull] ITypeUsage typeUsage)
+        public Metrics MetricsForType([NotNull] ISnapshot snapshot, 
+                                      [NotNull] ITypeUsage typeUsage)
         {
             if (snapshot == null)
                 throw new ArgumentNullException("snapshot");
@@ -122,51 +75,42 @@ namespace MockMetrics.Eating.Helpers
             if (typeUsage is IUserTypeUsage)
             {
                 var userTypeUsage = typeUsage as IUserTypeUsage;
-                var classType = _eatExpressionHelper.GetUserTypeUsageClass(userTypeUsage);
-
-                if (snapshot.IsInTestScope(classType.Module.Name))
-                {
-                    return Metrics.Create(VarType.Target);
-                }
-
-                if (snapshot.IsInTestProject(classType.Module.Name))
-                {
-                    return Metrics.Create(VarType.Mock);
-                }
+                var typeElement = _eatExpressionHelper.GetUserTypeUsageClass(userTypeUsage);
+                return  Metrics.Create(GetVarType(snapshot, typeElement));
             }
 
             return Metrics.Create(VarType.Library);
         }
 
-        public Metrics MetricVariable([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        public Metrics MetricsForType([NotNull] ISnapshot snapshot, 
+                                      [NotNull] IType type)
         {
             if (snapshot == null) throw new ArgumentNullException("snapshot");
             if (type == null) throw new ArgumentNullException("type");
 
-            return Metrics.Create(VarTypeVaribale(snapshot, type), AimVariableType(snapshot, type));
+            return Metrics.Create(GetVarType(snapshot, type), GetAim(snapshot, type));
         }
 
-        private VarType VarTypeVaribale([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        private VarType GetVarType(ISnapshot snapshot, IType type)
         {
-            if (snapshot == null)
-                throw new ArgumentNullException("snapshot");
+            var typeElement = _eatExpressionHelper.GetTypeClass(type);
+            return GetVarType(snapshot, typeElement);
+        }
 
-            if (type == null)
-                throw new ArgumentNullException("type");
-
-            var classType = _eatExpressionHelper.GetTypeClass(type);
-            if (snapshot.IsInTestScope(classType.Module.Name))
+        private VarType GetVarType(ISnapshot snapshot, ITypeElement typeElement)
+        {
+            if (snapshot.IsInTestScope(typeElement.Module.Name))
             {
                 //TODO if type is interface or abstract class return stub/mock? enum struct delegate?
                 return VarType.Target;
             }
 
-            if (snapshot.IsInTestProject(classType.Module.Name))
+            if (snapshot.IsInTestProject(typeElement.Module.Name))
             {
                 return VarType.Internal;
             }
 
-            if (classType.ToString().StartsWith("Moq.Mock"))
+            if (typeElement.ToString().StartsWith("Moq.Mock"))
             {
                 return VarType.Mock;
             }
@@ -174,14 +118,8 @@ namespace MockMetrics.Eating.Helpers
             return VarType.Library;
         }
 
-        private Aim AimVariableType([NotNull] ISnapshot snapshot, [NotNull] IType type)
+        private Aim GetAim(ISnapshot snapshot, IType type)
         {
-            if (snapshot == null)
-                throw new ArgumentNullException("snapshot");
-
-            if (type == null)
-                throw new ArgumentNullException("type");
-
             var classType = _eatExpressionHelper.GetTypeClass(type);
             if (snapshot.IsInTestScope(classType.Module.Name))
             {
