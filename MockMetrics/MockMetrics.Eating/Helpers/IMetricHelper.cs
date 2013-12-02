@@ -60,5 +60,15 @@ namespace MockMetrics.Eating.Helpers
         /// </summary>
         /// <param name="sourceMetrics">Metrics for source expression</param>
         Metrics ChildMetric(Metrics sourceMetrics);
+
+        /// <summary>
+        /// Scope for type(class, struct, enum, etc.) 
+        /// </summary>
+        /// <remarks>
+        /// If type is current tests-class, it will be Internal.
+        /// If type is from test scope or tests project, it will be External.
+        /// In other cases it will be Library.
+        /// </remarks>
+        Scope GetTypeScope(ISnapshot snapshot, ITypeElement typeElement);
     }
 }

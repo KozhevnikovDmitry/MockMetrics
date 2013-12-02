@@ -15,7 +15,7 @@ namespace MockMetrics.Eating.Tests.Expression
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
-            var operand = Mock.Of<ICSharpExpression>();
+            var operand = Mock.Of<IUnaryExpression>();
             var targetType = Mock.Of<ITypeUsage>();
             var castExpression = Mock.Of<ICastExpression>(t => t.Op == operand && t.TargetType == targetType);
             var eater = Mock.Of<IEater>();
@@ -37,7 +37,7 @@ namespace MockMetrics.Eating.Tests.Expression
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
-            var operand = Mock.Of<ICSharpExpression>();
+            var operand = Mock.Of<IUnaryExpression>();
             var targetType = Mock.Of<ITypeUsage>();
             var castExpression = Mock.Of<ICastExpression>(t => t.Op == operand && t.TargetType == targetType);
             var operandMetrics = Metrics.Create();

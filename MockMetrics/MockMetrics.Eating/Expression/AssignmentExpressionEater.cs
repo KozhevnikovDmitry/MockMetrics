@@ -27,16 +27,12 @@ namespace MockMetrics.Eating.Expression
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 { 
-                    // TODO : check on properties, fields, events, parameters
-                    if (declaredElement is IEventDeclaration)
-                    {
-                        return destMetrics;
-                    }
-
                     var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);
                     snapshot.AddVariable(declaredElement as IVariableDeclaration, assigneeMetrics);
                     return assigneeMetrics;
                 }
+
+                return destMetrics;
             }
 
             throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);

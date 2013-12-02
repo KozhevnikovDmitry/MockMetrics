@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.Expression
         {
             snapshot.AddOperand(expression.TargetType, Metrics.Create(Scope.Local, VarType.Library, Aim.Data));
             var operandMetrics = Eater.Eat(snapshot, expression.Op);
-            return Metrics.Create(_metricHelper.MetricsForCasted(snapshot, operandMetrics, expression.TargetType));
+            return _metricHelper.MetricsForCasted(snapshot, operandMetrics, expression.TargetType);
         }
     }
 }

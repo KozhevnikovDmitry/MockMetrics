@@ -54,7 +54,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var expression = Mock.Of<ICSharpExpression>();
             var metrics = Metrics.Create();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == metrics);
-            var managedConverible = new Mock<ExtensionArgumentInfo>(Mock.Of<ICSharpInvocationInfo>(), Mock.Of<ICSharpExpression>());
+            var managedConverible = new Mock<ExtensionArgumentInfo>(Mock.Of<ICSharpInvocationInfo>(), expression);
             var invocationExpression = Mock.Of<IInvocationExpression>(t => t.ExtensionQualifier.ManagedConvertible == managedConverible.Object);
             var parentReferenceEater = new ParentReferenceEater(eater);
 

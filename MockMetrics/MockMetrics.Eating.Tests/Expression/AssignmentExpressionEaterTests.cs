@@ -34,27 +34,6 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void EatEventAssigmentDestTest()
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var source = Mock.Of<ICSharpExpression>();
-            var dest = Mock.Of<IReferenceExpression>();
-            var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
-            var resultMetrics = Metrics.Create();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, dest) == resultMetrics);
-            var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IEventDeclarationAndIDeclaredElement>());
-            var metricHelper = Mock.Of<IMetricHelper>();
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
-
-            // Act
-            var result = assignmentExpressionEater.Eat(snapshot, assignmentExpression);
-
-            // Assert
-            Assert.That(result, Is.EqualTo(resultMetrics));
-        }
-
-        [Test]
         public void EatVariableAssignmentTest()
         {
             // Arrange
@@ -77,23 +56,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.That(result, Is.EqualTo(mergeMetrics));
         }
-
-        [Test]
-        public void UnexpectedAssignDestinationNotVariableDeclarationTest()
-        {
-            // Arrange
-            var snapshot = Mock.Of<ISnapshot>();
-            var dest = Mock.Of<IReferenceExpression>();
-            var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest);
-            var eater = Mock.Of<IEater>();
-            var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IDeclaredElement>());
-            var metricHelper = Mock.Of<IMetricHelper>();
-            var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
-
-            // Assert
-            Assert.Throws<UnexpectedAssignDestinationException>(() => assignmentExpressionEater.Eat(snapshot, assignmentExpression));
-        }
-
+        
         [Test]
         public void UnexpectedAssignDestinationNotReferenceTest()
         {

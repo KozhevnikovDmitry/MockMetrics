@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.MetricMeasure
@@ -64,6 +65,7 @@ namespace MockMetrics.Eating.MetricMeasure
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
         Metrics GetVarMetrics(IVariableDeclaration variable);
+        Metrics GetVarMetrics(IParameter paramter);
         void Except(IVariableDeclaration variableDeclaration);
     }
 
@@ -135,6 +137,11 @@ namespace MockMetrics.Eating.MetricMeasure
         public Metrics GetVarMetrics(IVariableDeclaration localVariable)
         {
            return Metrics.Create();
+        }
+
+        public Metrics GetVarMetrics(IParameter paramter)
+        {
+            return Metrics.Create();
         }
 
         public void Except(IVariableDeclaration variableDeclaration)

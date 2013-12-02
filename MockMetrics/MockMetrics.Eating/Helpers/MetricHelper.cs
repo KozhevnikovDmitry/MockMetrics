@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
@@ -106,7 +107,7 @@ namespace MockMetrics.Eating.Helpers
                 //TODO if type is interface or abstract class return stub/mock? enum struct delegate?
                 return VarType.Target;
             }
-
+            
             if (snapshot.IsInTestProject(typeElement.Module.Name))
             {
                 return VarType.Internal;
@@ -118,6 +119,22 @@ namespace MockMetrics.Eating.Helpers
             }
 
             return VarType.Library;
+        }
+
+        public Scope GetTypeScope(ISnapshot snapshot, ITypeElement typeElement)
+        {
+            if (typeElement.Methods.Contains(snapshot.UnitTest.DeclaredElement))
+            {
+                return Scope.Internal;
+            }
+
+            if (snapshot.IsInTestScope(typeElement.Module.Name) ||
+                snapshot.IsInTestProject(typeElement.Module.Name))
+            {
+                return Scope.External;
+            }
+
+            return Scope.Local;
         }
 
         private Aim GetAim(ISnapshot snapshot, IType type)

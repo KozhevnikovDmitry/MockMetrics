@@ -38,22 +38,22 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var expression = Mock.Of<ICSharpExpression>();
             var memberInitializer = Mock.Of<IMemberInitializer>(t => t.Expression == expression);
-            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(); 
-            Mock.Get(objectCreationExpression).Setup(t => t.Initializer.InitializerElements)
+            var initializer = Mock.Of<ICreationExpressionInitializer>();
+            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Initializer == initializer);
+            Mock.Get(initializer).Setup(t => t.InitializerElements)
                  .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
             var snapshot = new Mock<ISnapshot>();
             var initialMetrics = Metrics.Create();
-            var resultMetrics = Metrics.Create();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == initialMetrics);
             var argsEater = Mock.Of<IArgumentsEater>();
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.AcceptorMetrics(initialMetrics) == resultMetrics);
+            var metricHelper = Mock.Of<IMetricHelper>();
             var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricHelper);
 
             // Act
             objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddOperand(memberInitializer, resultMetrics), Times.Once());
+            snapshot.Verify(t => t.AddOperand(memberInitializer, It.Is<Metrics>(m => m.Equals(initialMetrics) && m.Scope == Scope.Local)), Times.Once());
         }
        
         [Test]
@@ -78,7 +78,7 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void ReturnMetricsForconstructedTypeTest()
+        public void ReturnMetricsForConstructedTypeTest()
         {
             // Arrange
             var args = new TreeNodeCollection<ICSharpArgument>();
