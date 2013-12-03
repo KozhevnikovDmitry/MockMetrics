@@ -72,6 +72,10 @@
     <Compile Include="Expression\ExpressionEater.cs" />
     <Compile Include="Helpers\IMetricHelper.cs" />
     <Compile Include="Helpers\MetricHelper.cs" />
+    <Compile Include="MetricMeasure\IMetricNode.cs" />
+    <Compile Include="MetricMeasure\ISnapshot.cs" />
+    <Compile Include="MetricMeasure\MetricCall.cs" />
+    <Compile Include="MetricMeasure\MetricOperand.cs" />
     <Compile Include="MetricMeasure\Metrics.cs" />
     <Compile Include="Expression\InvocationExpressionEater.cs" />
     <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
@@ -87,7 +91,8 @@
     <Compile Include="Exceptions\UnexpectedAssignDestinationException.cs" />
     <Compile Include="Exceptions\UnexpectedReferenceTypeException.cs" />
     <Compile Include="ICSharpNodeEater.cs" />
-    <Compile Include="MetricMeasure\MetricSnapshot.cs" />
+    <Compile Include="Exceptions\OperandNotFoundInSnapshotException.cs" />
+    <Compile Include="MetricMeasure\Snapshot.cs" />
     <Compile Include="MetricMeasure\NodeKind.cs" />
     <Compile Include="MoqStub\MoqStubOptionsEater.cs" />
     <Compile Include="MoqStub\MoqStubOptionTargetEater.cs" />
@@ -112,7 +117,6 @@
     <Compile Include="Statement\IStatementEater.cs" />
     <Compile Include="PostEater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Snapshot.cs" />
     <Compile Include="Statement\BlockStatementEater.cs" />
     <Compile Include="Statement\DeclarationStatementEater.cs" />
     <Compile Include="Statement\ExpressionStatementEater.cs" />
