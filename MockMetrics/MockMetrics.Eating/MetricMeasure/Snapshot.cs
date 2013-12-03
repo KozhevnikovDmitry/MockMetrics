@@ -126,11 +126,11 @@ namespace MockMetrics.Eating.MetricMeasure
 
         public void AddOperand(ICSharpTreeNode operand, Metrics metrics)
         {
-            if (Operands.Any(t => t.Node == operand))
+            if (GetOperands(operand).Any())
             {
-                Operands.Single(t => t.Node == operand)
-                         .AddAim(metrics.Aim)
-                         .AddVarType(metrics.VarType);
+                GetOperands(operand).Single(t => t.Node == operand)
+                                    .AddAim(metrics.Aim)
+                                    .AddVarType(metrics.VarType);
             }
             else
             {
@@ -165,7 +165,51 @@ namespace MockMetrics.Eating.MetricMeasure
 
         }
 
-        private IEnumerable<ICSharpDeclaration> GetDeclarations(IReferenceExpression referenceExpression)
+        private IEnumerable<ICSharpDeclaration> GetDeclarations(ICSharpTreeNode operand)
+        {
+            if (operand is ICSharpDeclaration)
+            {
+                return new[] {operand as ICSharpDeclaration};
+            }
+
+            if (operand is IDeclaredElement)
+            {
+                return (operand as IDeclaredElement).GetDeclarations().OfType<ICSharpDeclaration>();
+            }
+
+            if (operand is IReferenceExpression)
+            {
+                return GetDeclarationsForReference(operand as IReferenceExpression);
+            }
+            throw new NotImplementedException();
+        }
+
+        private IEnumerable<IMetricOperand> GetOperands(ICSharpTreeNode operand)
+        {
+            if (operand is ICSharpDeclaration)
+            {
+                return _nodes.Where(t => t.Node == operand).OfType<IMetricOperand>();
+            }
+
+            if (operand is IDeclaredElement)
+            {
+                return _nodes.Where(t => (operand as IDeclaredElement).GetDeclarations().OfType<ICSharpDeclaration>().Contains(t.Node)).OfType<IMetricOperand>();
+            }
+
+            if (operand is IReferenceExpression)
+            {
+                return GetOperandsForReference(operand as IReferenceExpression);
+            }
+            throw new NotImplementedException();
+        }
+
+        private IEnumerable<IMetricOperand> GetOperandsForReference(IReferenceExpression referenceExpression)
+        {
+            var declarations = GetDeclarationsForReference(referenceExpression);
+            return _nodes.Where(t => declarations.Contains(t.Node)).OfType<IMetricOperand>();
+        }
+
+        private IEnumerable<ICSharpDeclaration> GetDeclarationsForReference(IReferenceExpression referenceExpression)
         {
             var declaredElement = referenceExpression.Reference.CurrentResolveResult.DeclaredElement;
             return declaredElement.GetDeclarations().OfType<ICSharpDeclaration>();

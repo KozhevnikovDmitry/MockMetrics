@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi;
 
 namespace MockMetrics.Eating.MetricMeasure
 {
     public interface IMetricNode
     {
-        ICSharpTreeNode Node { get; }
+        IDeclaredElement Node { get; }
 
         int Depth { get; }
     }
