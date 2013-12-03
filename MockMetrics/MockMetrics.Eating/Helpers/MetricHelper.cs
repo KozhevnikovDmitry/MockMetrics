@@ -19,44 +19,53 @@ namespace MockMetrics.Eating.Helpers
             _eatExpressionHelper = eatExpressionHelper;
         }
 
-        public Metrics MetricsMerge(Metrics first, Metrics second)
+        public Metrics MetricsMerge([NotNull] Metrics first, [NotNull] Metrics second)
         {
-            if (first.VarType >= second.VarType)
-            {
-                first.VarType = second.VarType;
-            }
+            if (first == null) 
+                throw new ArgumentNullException("first");
+            if (second == null) 
+                throw new ArgumentNullException("second");
+
+            Metrics result = Metrics.Create();
+
+            result.VarType = first.VarType >= second.VarType ? first.VarType : second.VarType;
+            result.Scope = first.Scope >= second.Scope ? first.Scope : second.Scope;
+            result.Call = first.Call >= second.Call ? first.Call : second.Call;
+            result.Aim = first.Aim >= second.Aim ? first.Aim : second.Aim;
+
+            return result;
+        }
+
+        public Metrics VarTypeMerge([NotNull] Metrics first, [NotNull] Metrics second)
+        {
+            if (first == null) 
+                throw new ArgumentNullException("first");
+            if (second == null) 
+                throw new ArgumentNullException("second");
+
+            first.VarType = first.VarType >= second.VarType ? first.VarType : second.VarType;
+
             return first;
         }
 
         public Metrics MetricsForCasted([NotNull] ISnapshot snapshot, 
-                                        Metrics valueMetrics,
+                                        [NotNull] Metrics valueMetrics,
                                         [NotNull] ITypeUsage typeUsage)
         {
-            if (snapshot == null) 
+            if (snapshot == null)
                 throw new ArgumentNullException("snapshot");
 
-            if (typeUsage == null) 
+            if (valueMetrics == null) 
+                throw new ArgumentNullException("valueMetrics");
+
+            if (typeUsage == null)
                 throw new ArgumentNullException("typeUsage");
 
             var castMetrics = MetricsForType(snapshot, typeUsage);
             return MetricsMerge(valueMetrics, castMetrics);
         }
-
-        // TODO : implement!
-        public Metrics MetricsForReference(Metrics parentMetrics)
-        {
-            return Metrics.Create();
-            throw new NotImplementedException();
-        }
-
-        // TODO : implement!
-        public Metrics MetricsForAssignee(Metrics sourceMetrics)
-        {
-            return Metrics.Create();
-            throw new NotImplementedException();
-        }
-
-        public Metrics MetricsForType([NotNull] ISnapshot snapshot, 
+        
+        public Metrics MetricsForType([NotNull] ISnapshot snapshot,
                                       [NotNull] ITypeUsage typeUsage)
         {
             if (snapshot == null)
@@ -79,13 +88,13 @@ namespace MockMetrics.Eating.Helpers
             {
                 var userTypeUsage = typeUsage as IUserTypeUsage;
                 var typeElement = _eatExpressionHelper.GetUserTypeUsageClass(userTypeUsage);
-                return  Metrics.Create(GetVarType(snapshot, typeElement));
+                return Metrics.Create(GetVarType(snapshot, typeElement));
             }
 
             return Metrics.Create(VarType.Library);
         }
 
-        public Metrics MetricsForType([NotNull] ISnapshot snapshot, 
+        public Metrics MetricsForType([NotNull] ISnapshot snapshot,
                                       [NotNull] IType type)
         {
             if (snapshot == null) throw new ArgumentNullException("snapshot");
@@ -107,7 +116,7 @@ namespace MockMetrics.Eating.Helpers
                 //TODO if type is interface or abstract class return stub/mock? enum struct delegate?
                 return VarType.Target;
             }
-            
+
             if (snapshot.IsInTestProject(typeElement.Module.Name))
             {
                 return VarType.Internal;
@@ -164,18 +173,39 @@ namespace MockMetrics.Eating.Helpers
             return Aim.Data;
         }
 
-        // TODO : implement!
-        public Metrics AcceptorMetrics(Metrics sourceMetrics)
+        public Metrics CallMetrics(ISnapshot snapshot, IMethod invokedMethod, Metrics parentMetrics)
         {
-            return Metrics.Create();
-            throw new NotImplementedException();
-        }
+            var result = Metrics.Create(parentMetrics.Scope);
 
-        // TODO : implement!
-        public Metrics ChildMetric(Metrics sourceMetrics)
-        {
-            return Metrics.Create();
-            throw new NotImplementedException();
+            if (snapshot.IsInTestScope(invokedMethod.Module.Name) || 
+                parentMetrics.VarType == VarType.Target ||
+                parentMetrics.VarType == VarType.Mock)
+            {
+                result.Call = Call.TargetCall;
+                result.Aim = Aim.Result;
+                return result;
+            }
+
+            if (snapshot.IsInTestProject(invokedMethod.Module.Name))
+            {
+                result.Call = Call.Service;
+                result.Aim = MetricsForType(snapshot, invokedMethod.ReturnType).Aim;
+                return result;
+            }
+
+            result.Call = Call.Library;
+            if (parentMetrics.Call == Call.TargetCall)
+            {
+                result.Aim = Aim.Result;
+                return result;
+            }
+
+            if (parentMetrics.Call == Call.Assert)
+            {
+                result.Aim = Aim.Result;
+                return result;
+            }
+            return result;
         }
     }
 }

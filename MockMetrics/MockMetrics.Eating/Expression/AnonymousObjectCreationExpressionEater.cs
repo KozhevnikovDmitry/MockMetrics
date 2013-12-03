@@ -19,8 +19,7 @@ namespace MockMetrics.Eating.Expression
             // TODO: cover by functional tests
             foreach (var memberDeclaration in expression.AnonymousInitializer.MemberInitializers)
             {
-                var metrics = Eater.Eat(snapshot, memberDeclaration.Expression);
-                var memberMetrics = _metricHelper.AcceptorMetrics(metrics);
+                var memberMetrics = Eater.Eat(snapshot, memberDeclaration.Expression);
                 memberMetrics.Scope = Scope.Local;
                 snapshot.AddOperand(memberDeclaration, memberMetrics);
             }

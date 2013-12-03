@@ -22,17 +22,16 @@ namespace MockMetrics.Eating.Tests.Expression
                 .Returns(new TreeNodeCollection<IAnonymousMemberDeclaration>(new[] { memberDeclaration }));
             var snapshot = new Mock<ISnapshot>();
             var initialMetrics = Metrics.Create();
-            var resultMetrics = Metrics.Create();
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == initialMetrics);
 
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.AcceptorMetrics(initialMetrics) == resultMetrics);
+            var metricHelper = Mock.Of<IMetricHelper>();
             var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater, metricHelper);
 
             // Act
             anonymousObjectCreationExpressionEater.Eat(snapshot.Object, anonymousObjectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddOperand(memberDeclaration, resultMetrics), Times.Once());
+            snapshot.Verify(t => t.AddOperand(memberDeclaration, initialMetrics), Times.Once());
         }
 
         [Test]

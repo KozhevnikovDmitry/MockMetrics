@@ -24,9 +24,16 @@ namespace MockMetrics.Eating.Helpers
         Metrics MetricsForType(ISnapshot snapshot, ITypeUsage typeUsage);
 
         /// <summary>
-        /// Merge two metrics, choose the most heavy var type
+        /// Merge two metrics, choose the most heavy metrics
+        /// Returns new metrics object
         /// </summary>
         Metrics MetricsMerge(Metrics first, Metrics second);
+
+        /// <summary>
+        /// Merge two metrics, choose the most heavy vartype
+        /// Returns modified first argument
+        /// </summary>
+        Metrics VarTypeMerge(Metrics first, Metrics second);
 
         /// <summary>
         /// Change operand metrics <paramref name="valueMetrics"/> by casting type <paramref name="typeUsage"/>
@@ -35,32 +42,7 @@ namespace MockMetrics.Eating.Helpers
         /// <param name="valueMetrics">Metrics of casted operand</param>
         /// <param name="typeUsage">Casting type usage</param>
         Metrics MetricsForCasted(ISnapshot snapshot, Metrics valueMetrics, ITypeUsage typeUsage);
-
-        /// <summary>
-        /// Metrics for reference operand by metrics of its parent reference <paramref name="parentMetrics"/>
-        /// </summary>
-        /// <param name="parentMetrics">Metrics of parent reference</param>
-        Metrics MetricsForReference(Metrics parentMetrics);
-
-        /// <summary>
-        /// Metrics for assigned operand by metrics of assignment source <paramref name="sourceMetrics"/>
-        /// </summary>
-        /// <param name="sourceMetrics">Metrics of assignment source</param>
-        /// <returns></returns>
-        Metrics MetricsForAssignee(Metrics sourceMetrics);
-
-        /// <summary>
-        /// Metrics for acceptor of result of source expression by source expression metrics
-        /// </summary>
-        /// <param name="sourceMetrics">Metrics for source expression</param>
-        Metrics AcceptorMetrics(Metrics sourceMetrics);
-
-        /// <summary>
-        /// Metrics for cnild reference of source expression by source expression metrics
-        /// </summary>
-        /// <param name="sourceMetrics">Metrics for source expression</param>
-        Metrics ChildMetric(Metrics sourceMetrics);
-
+        
         /// <summary>
         /// Scope for type(class, struct, enum, etc.) 
         /// </summary>
@@ -70,5 +52,10 @@ namespace MockMetrics.Eating.Helpers
         /// In other cases it will be Library.
         /// </remarks>
         Scope GetTypeScope(ISnapshot snapshot, ITypeElement typeElement);
+
+        /// <summary>
+        /// Metrics for method invocation by its parent reference
+        /// </summary>
+        Metrics CallMetrics(ISnapshot snapshot, IMethod invokedMethod, Metrics parentMetrics);
     }
 }

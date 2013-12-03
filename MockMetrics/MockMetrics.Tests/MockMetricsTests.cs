@@ -163,27 +163,5 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Asserts.Count(), 2, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
-
-        /// <summary>
-        /// Test#8
-        /// </summary>
-        [TestCase(@"<Tested.Tests>\FooTests\MoqStubPositioningTests.cs")]
-        public void MoqStubPositioningTests(string testName)
-        {
-            DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
-            Console.WriteLine(snapshot);
-        }
-
-        /// <summary>
-        /// Test#9
-        /// </summary>
-        [TestCase(@"<Tested.Tests>\FooTests\ReferenceTypesTests.cs")]
-        public void ReferenceTypesTests(string testName)
-        {
-            DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
-            Console.WriteLine(snapshot);
-        }
     }
 }

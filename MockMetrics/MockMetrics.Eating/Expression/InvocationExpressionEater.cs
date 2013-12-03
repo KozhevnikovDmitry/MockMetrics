@@ -1,5 +1,6 @@
 ﻿using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.MoqStub;
@@ -46,7 +47,7 @@ namespace MockMetrics.Eating.Expression
             // TODO: special eater for nunit asserts, that will eat with inner eating
             if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {
-                var result = Metrics.Create(Scope.Local, Call.Assert);
+                var result = Metrics.Create(Scope.Local, Call.Assert, Aim.Result);
                 snapshot.AddCall(expression, result); 
                 return result;
             }
@@ -54,7 +55,7 @@ namespace MockMetrics.Eating.Expression
             // TODO: special eater for moq mock verify, that will eat with inner eating
             if (invokedName.StartsWith("Method:Moq.Mock.Verify"))
             {
-                var result = Metrics.Create(parentMetrics.Scope, Call.Assert);
+                var result = Metrics.Create(parentMetrics.Scope, Call.Assert, Aim.Result);
                 snapshot.AddCall(expression, result);
                 return result;
             }
@@ -62,20 +63,13 @@ namespace MockMetrics.Eating.Expression
             var invoked = _expressionHelper.GetInvokedElement(expression);
             if (invoked is IMethod)
             {
-                var result = Metrics.Create(parentMetrics.Scope);
                 var invokedMethod = invoked as IMethod;
-                if (snapshot.IsInTestScope(invokedMethod.Module.Name))
-                {
-                    result.Call = Call.TargetCall;
-                    result.Aim = Aim.Result;
-                    snapshot.AddCall(expression, result);
-                    return result;
-                }
+                var result = _metricHelper.CallMetrics(snapshot, invokedMethod, parentMetrics);
+                snapshot.AddCall(expression, result);
+                return result;
             }
-
-            var finalyResult = _metricHelper.ChildMetric(parentMetrics);
-            snapshot.AddCall(expression, finalyResult);
-            return finalyResult;
+            
+            throw new UnexpectedInvokedElementTypeException(invoked, this, expression);
         }
     }
 }

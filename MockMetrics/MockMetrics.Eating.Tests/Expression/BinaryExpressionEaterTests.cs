@@ -24,7 +24,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, right) == rightMetrics
                                           && t.Eat(snapshot, left) == leftMetrics);
            
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsMerge(leftMetrics, rightMetrics) == mergeMetrics);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.VarTypeMerge(leftMetrics, rightMetrics) == mergeMetrics);
             var binaryExpressionEater = new BinaryExpressionEater(eater, metricHelper);
 
             // Act

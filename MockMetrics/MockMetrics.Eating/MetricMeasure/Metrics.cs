@@ -93,8 +93,18 @@
             return result;
         }
 
+        public static Metrics Create(Scope scope, Call call, Aim aim)
+        {
+            return new Metrics
+            {
+                Scope = scope,
+                Aim = aim,
+                Call = call
+            };
+        }
+
         public Scope Scope { get; set; }
-        
+
         public Aim Aim { get; set; }
 
         public VarType VarType { get; set; }
@@ -108,6 +118,5 @@
                 return Call != Call.None;
             }
         }
-
     }
 }

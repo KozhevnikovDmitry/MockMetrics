@@ -59,6 +59,8 @@
     <Compile Include="AggregatorTests\VariablesWithInitializersTests.cs" />
     <None Include="FooTests\MoqStubPositioningTests.cs.gold" />
     <None Include="FooTests\ReferenceTypesTests.cs.gold" />
+    <None Include="FooTests\MethodInvocationTypesTests.cs.gold" />
+    <Compile Include="FooTests\MethodInvocationTypesTests.cs" />
     <Compile Include="FooTests\MoqStubPositioningTests.cs" />
     <Compile Include="FooTests\ReferenceTypesTests.cs" />
     <Compile Include="FooTests\StubTests.cs" />

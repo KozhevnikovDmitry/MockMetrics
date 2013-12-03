@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
@@ -24,15 +25,17 @@ namespace MockMetrics.Eating.Expression
             if (expression.Dest is IReferenceExpression)
             {
                 var destMetrics = Eater.Eat(snapshot, expression.Dest);
+                var assigneeMetrics = _metricHelper.VarTypeMerge(destMetrics, sourceMetrics);
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 { 
-                    var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);
                     snapshot.AddVariable(declaredElement as IVariableDeclaration, assigneeMetrics);
-                    return assigneeMetrics;
                 }
-
-                return destMetrics;
+                else
+                {
+                    snapshot.AddOperand(declaredElement as ICSharpTreeNode, assigneeMetrics);
+                }
+                return assigneeMetrics;
             }
 
             throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);

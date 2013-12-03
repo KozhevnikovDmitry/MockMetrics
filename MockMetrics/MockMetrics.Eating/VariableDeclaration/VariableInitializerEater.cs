@@ -62,8 +62,7 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         private Metrics EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
         {
-            var initialMetrics = _eater.Eat(snapshot, initialExpression);
-            var resultMetrics = _metricHelper.AcceptorMetrics(initialMetrics);
+            var resultMetrics = _eater.Eat(snapshot, initialExpression);
             resultMetrics.Scope = Scope.Local;
             return resultMetrics;
         }

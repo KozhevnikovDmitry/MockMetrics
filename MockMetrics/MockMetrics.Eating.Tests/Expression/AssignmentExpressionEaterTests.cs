@@ -47,7 +47,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>(t => t.Eat(snapshot, source) == sourceMetrics
                                           && t.Eat(snapshot, dest) == destMetrics);
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IVariableDeclarationAndIDeclaredElement>());
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsMerge(destMetrics, sourceMetrics) == mergeMetrics);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.VarTypeMerge(destMetrics, sourceMetrics) == mergeMetrics);
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
 
             // Act

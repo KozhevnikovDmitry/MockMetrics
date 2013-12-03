@@ -123,6 +123,7 @@
     <Compile Include="Expression\PrefixOperatorExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Expression\ReferenceEatHelperTests.cs" />
     <Compile Include="Expression\ReferenceExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -16,7 +16,6 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
         public void EatArrayInitializerTest()
         {
             // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
             var arrayInit = Mock.Of<IArrayInitializer>();
             Mock.Get(arrayInit).Setup(t => t.ElementInitializers)
                 .Returns(new TreeNodeCollection<IVariableInitializer>(new IVariableInitializer[0]));
@@ -44,7 +43,8 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
                 .Returns(new TreeNodeCollection<IVariableInitializer>(new[] { itemInitializer }));
             var snapshot = Mock.Of<ISnapshot>();
             var eater = new Mock<IEater>();
-            var initializerEater = new VariableInitializerEater(eater.Object, Mock.Of<IMetricHelper>(t => t.AcceptorMetrics(It.IsAny<Metrics>()) == Metrics.Create()));
+            eater.Setup(t => t.Eat(snapshot, expression)).Returns(Metrics.Create());
+            var initializerEater = new VariableInitializerEater(eater.Object, Mock.Of<IMetricHelper>());
 
             // Act
             initializerEater.Eat(snapshot, arrayInit);
@@ -61,18 +61,16 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var itemInitializer = Mock.Of<IExpressionInitializer>(t => t.Value == initial);
             var snapshot = Mock.Of<ISnapshot>();
             var initialMetrics = Metrics.Create();
-            var resultMetrics = Metrics.Create();
             var eater = Mock.Of<IEater>();
             Mock.Get(eater).Setup(t => t.Eat(snapshot, initial)).Returns(initialMetrics);
             var helper = Mock.Of<IMetricHelper>();
-            Mock.Get(helper).Setup(t => t.AcceptorMetrics(initialMetrics)).Returns(resultMetrics);
             var initializerEater = new VariableInitializerEater(eater, helper);
 
             // Act
             var result = initializerEater.Eat(snapshot, itemInitializer);
 
             // Assert
-            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result, initialMetrics);
             Assert.AreEqual(result.Scope, Scope.Local);
         }
 
@@ -84,18 +82,16 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var itemInitializer = Mock.Of<IUnsafeCodeFixedPointerInitializer>(t => t.Value == initial);
             var snapshot = Mock.Of<ISnapshot>();
             var initialMetrics = Metrics.Create();
-            var resultMetrics = Metrics.Create();
             var eater = Mock.Of<IEater>();
             Mock.Get(eater).Setup(t => t.Eat(snapshot, initial)).Returns(initialMetrics);
             var helper = Mock.Of<IMetricHelper>();
-            Mock.Get(helper).Setup(t => t.AcceptorMetrics(initialMetrics)).Returns(resultMetrics);
             var initializerEater = new VariableInitializerEater(eater, helper);
 
             // Act
             var result = initializerEater.Eat(snapshot, itemInitializer);
 
             // Assert
-            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result, initialMetrics);
             Assert.AreEqual(result.Scope, Scope.Local);
         }
 
@@ -107,18 +103,16 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var itemInitializer = Mock.Of<IUnsafeCodeStackAllocInitializer>(t => t.DimExpr == initial);
             var snapshot = Mock.Of<ISnapshot>();
             var initialMetrics = Metrics.Create();
-            var resultMetrics = Metrics.Create();
             var eater = Mock.Of<IEater>();
             Mock.Get(eater).Setup(t => t.Eat(snapshot, initial)).Returns(initialMetrics);
             var helper = Mock.Of<IMetricHelper>();
-            Mock.Get(helper).Setup(t => t.AcceptorMetrics(initialMetrics)).Returns(resultMetrics);
             var initializerEater = new VariableInitializerEater(eater, helper);
 
             // Act
             var result = initializerEater.Eat(snapshot, itemInitializer);
 
             // Assert
-            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result, initialMetrics);
             Assert.AreEqual(result.Scope, Scope.Local);
         }
 
