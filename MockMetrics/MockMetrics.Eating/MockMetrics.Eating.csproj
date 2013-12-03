@@ -51,6 +51,8 @@
   <ItemGroup>
     <Compile Include="Exceptions\EatingException.cs" />
     <Compile Include="Exceptions\ExpressionHelperException.cs" />
+    <Compile Include="Exceptions\UnexpectedInvokedElementTypeException.cs" />
+    <Compile Include="Exceptions\UnexpectedOperandTypeException.cs" />
     <Compile Include="Exceptions\UnexpectedTypeOfNodeToEatException.cs" />
     <Compile Include="Expression\AnonymousMethodExpressionEater.cs" />
     <Compile Include="Expression\AnonymousObjectCreationExpressionEater.cs" />

@@ -1,7 +1,7 @@
 ﻿namespace MockMetrics.Eating.MetricMeasure
 {
     /// <summary>
-    /// Reference opernad type
+    /// Reference operand type
     /// </summary>
     public enum Operand
     {
@@ -11,7 +11,8 @@
         Argument,
         Property,
         Event,
-        Method
+        Method,
+        Type
     }
 
     /// <summary>

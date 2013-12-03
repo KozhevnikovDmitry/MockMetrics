@@ -6,13 +6,14 @@ namespace MockMetrics.Eating.MetricMeasure
 {
     public class MetricOperand : IMetricOperand
     {
-        public MetricOperand(ICSharpTreeNode node, Scope scope, Aim aim, VarType varType)
+        public MetricOperand(ICSharpTreeNode node, Scope scope, Aim aim, VarType varType, Operand operand)
         {
             Node = node;
             Aims = new Dictionary<Guid, Aim>();
             VarTypes = new Dictionary<Guid, VarType>();
 
             Scope = scope;
+            Operand = operand;
             Aims[Guid.NewGuid()] = aim;
             VarTypes[Guid.NewGuid()] = varType;
         }

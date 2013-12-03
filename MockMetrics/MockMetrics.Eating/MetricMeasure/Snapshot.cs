@@ -120,7 +120,7 @@ namespace MockMetrics.Eating.MetricMeasure
             }
             else
             {
-                _nodes.Add(new MetricOperand(variable, metrics.Scope, metrics.Aim, metrics.VarType));
+                _nodes.Add(new MetricOperand(variable, metrics.Scope, metrics.Aim, metrics.VarType, GetOperandType(variable)));
             }
         }
 
@@ -134,7 +134,7 @@ namespace MockMetrics.Eating.MetricMeasure
             }
             else
             {
-                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Aim, metrics.VarType));
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Aim, metrics.VarType, GetOperandType(operand)));
             }
         }
 
@@ -163,6 +163,87 @@ namespace MockMetrics.Eating.MetricMeasure
         public void AddLabel(ILabelStatement labelStatement)
         {
 
+        }
+
+        private IEnumerable<ICSharpDeclaration> GetDeclarations(IReferenceExpression referenceExpression)
+        {
+            var declaredElement = referenceExpression.Reference.CurrentResolveResult.DeclaredElement;
+            return declaredElement.GetDeclarations().OfType<ICSharpDeclaration>();
+        }
+
+        private Operand GetOperandType(ICSharpTreeNode operand)
+        {
+
+            if (operand is ILocalVariableDeclaration ||
+                operand is ILambdaParameterDeclaration ||
+                operand is IAnonymousMemberDeclaration ||
+                operand is ICatchVariableDeclaration ||
+                operand is IForeachVariableDeclaration ||
+                operand is IUnsafeCodeFixedPointerDeclaration ||
+                operand is IQueryRangeVariableDeclaration)
+            {
+                return Operand.Variable;
+            }
+
+            if (operand is ILocalConstantDeclaration ||
+                operand is IConstantDeclaration ||
+                operand is ITypeUsage)
+            {
+                return Operand.Constant;
+            }
+
+            if (operand is IRegularParameterDeclaration)
+            {
+                return Operand.Argument;
+            }
+
+            var node = GetDeclaredNode(operand);
+
+            if (node is IProperty ||
+                node is IField)
+            {
+                return Operand.Property;
+            }
+
+            if (node is IEvent)
+            {
+                return Operand.Event;
+            }
+
+            if (node is IMethod)
+            {
+                return Operand.Method;
+            }
+
+            if (node is ITypeElement)
+            {
+                return Operand.Type;
+            }
+
+            throw new UnexpectedOperandTypeException(this, operand);
+        }
+
+        private ICSharpTreeNode GetDeclaredNode(ICSharpTreeNode operand)
+        {
+            if (operand is ICSharpDeclaration)
+            {
+                return operand;
+            }
+
+            if (operand is IParameter)
+            {
+                return (operand as IParameter).GetDeclarations().Single() as ICSharpTreeNode;
+            }
+
+            if (operand is IReferenceExpression)
+            {
+                return
+                    GetDeclaredNode(
+                        (operand as IReferenceExpression).Reference.CurrentResolveResult.DeclaredElement as ICSharpTreeNode);
+            }
+
+
+            return operand;
         }
 
         #endregion
@@ -211,9 +292,11 @@ namespace MockMetrics.Eating.MetricMeasure
             if (paramter == null)
                 throw new ArgumentNullException("paramter");
 
-            if (Operands.Where(t => Equals(t.Node, paramter)).IsSingle())
+            var paramDeclaration = paramter.GetDeclarations().Single();
+
+            if (Operands.Where(t => Equals(t.Node, paramDeclaration)).IsSingle())
             {
-                var node = Operands.Single(t => t.Node == paramter);
+                var node = Operands.Single(t => t.Node == paramDeclaration);
                 return Metrics.Create(node.Scope, node.VarTypes.Values.Max(), node.Aims.Values.Max());
             }
 
