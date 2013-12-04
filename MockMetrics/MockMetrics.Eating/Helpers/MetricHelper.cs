@@ -116,11 +116,6 @@ namespace MockMetrics.Eating.Helpers
 
         private Variable GetVariable(ISnapshot snapshot, ITypeElement typeElement)
         {
-            if (typeElement.Type().Classify == TypeClassification.VALUE_TYPE)
-            {
-                return Variable.Data;
-            }
-
             if (snapshot.IsInTestScope(typeElement.Module.Name))
             {
                 //TODO if type is interface or abstract class return stub/mock? enum struct delegate?
