@@ -23,12 +23,18 @@ namespace MockMetrics.Eating.MetricMeasure
 
         void AddLabel(ILabelStatement labelStatement);
 
-        IEnumerable<IMetricCall> TargetCalls { get; }
-        IEnumerable<IMetricNode> Targets { get; }
-        IEnumerable<IMetricNode> Stubs { get; }
-        IEnumerable<IMetricNode> Results { get; }
-        IEnumerable<IMetricNode> Mocks { get; }
-        IEnumerable<IMetricCall> Asserts { get; }
+        IList<IMetricCall> TargetCalls { get; }
+        IList<IMetricNode> Targets { get; }
+        IList<IMetricNode> Stubs { get; }
+        IList<IMetricNode> Results { get; }
+        IList<IMetricNode> Mocks { get; }
+        IList<IMetricCall> Asserts { get; }
+
+        IList<IMetricOperand > Variables { get; }
+        IList<IMetricOperand> Constans { get; }
+        IList<IMetricOperand> Operands { get; }
+        IList<IMetricCall> Calls { get; }
+        IList<IMetricMockOption> FakeOptions { get; }
 
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);

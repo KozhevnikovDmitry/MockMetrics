@@ -22,5 +22,10 @@ namespace MockMetrics.Eating.MetricMeasure
         public int Depth { get; private set; }
         public Scope Scope { get; private set; }
         public Call Call { get; private set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, Scope=[{1}]; Call=[{2}];", Node, Scope, Call);
+        }
     }
 }

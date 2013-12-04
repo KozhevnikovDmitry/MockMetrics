@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SimpleTests\PrimitiveVariableTests.cs.gold" />
+    <Compile Include="SimpleTests\PrimitiveVariableTests.cs" />
     <None Include="FooTests\StubTests.cs.gold" />
     <None Include="AggregatorTests\MoqAssignmentStubsTests.cs.gold" />
     <None Include="AggregatorTests\VariablesWithInitializersTests.cs.gold" />

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 
@@ -36,12 +37,17 @@ namespace MockMetrics.Eating.MetricMeasure
 
         public bool NodeEquals(ICSharpTreeNode node)
         {
-            throw new NotImplementedException();
+            return Node.Equals(node);
         }
 
         public bool NodeEquals(IDeclaredElement node)
         {
             throw new NotImplementedException();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, Scope=[{1}]; Operand=[{2}]; MaxVariableType=[{3}]; VariableTypes=[{4}]", Node, Scope, Operand, VarTypes.Values.Max(), VarTypes.Count);
         }
     }
 }

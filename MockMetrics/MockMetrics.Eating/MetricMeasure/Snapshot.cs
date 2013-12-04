@@ -31,51 +31,51 @@ namespace MockMetrics.Eating.MetricMeasure
 
         #region Old Metrics
 
-        public IEnumerable<IMetricCall> TargetCalls
+        public IList<IMetricCall> TargetCalls
         {
             get
             {
-                return Calls.Where(t => t.Call == Call.TargetCall);
+                return Calls.Where(t => t.Call == Call.TargetCall).ToList();
             }
         }
 
-        public IEnumerable<IMetricCall> Asserts
+        public IList<IMetricCall> Asserts
         {
             get
             {
-                return Calls.Where(t => t.Call == Call.Assert);
+                return Calls.Where(t => t.Call == Call.Assert).ToList();
             }
         }
 
-        public IEnumerable<IMetricNode> Targets
+        public IList<IMetricNode> Targets
         {
             get
             {
-                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Target));
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Target)).Cast<IMetricNode>().ToList();
             }
         }
 
-        public IEnumerable<IMetricNode> Stubs
+        public IList<IMetricNode> Stubs
         {
             get
             {
-                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Mock));
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Mock)).Cast<IMetricNode>().ToList();
             }
         }
 
-        public IEnumerable<IMetricNode> Results
+        public IList<IMetricNode> Results
         {
             get
             {
-                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Result));
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Result)).Cast<IMetricNode>().ToList();
             }
         }
 
-        public IEnumerable<IMetricNode> Mocks
+        public IList<IMetricNode> Mocks
         {
             get
             {
-                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Mock));
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Mock)).Cast<IMetricNode>().ToList();
             }
         }
         
@@ -84,29 +84,29 @@ namespace MockMetrics.Eating.MetricMeasure
 
         #region Nodes
 
-        public IEnumerable<IMetricOperand> Variables 
+        public IList<IMetricOperand> Variables 
         {
-            get { return _nodes.OfType<IMetricOperand>().Where(t => t.Operand == Operand.Variable); }
+            get { return _nodes.OfType<IMetricOperand>().Where(t => t.Operand == Operand.Variable).ToList(); }
         }
 
-        public IEnumerable<IMetricOperand> Constans
+        public IList<IMetricOperand> Constans
         {
-            get { return _nodes.OfType<IMetricOperand>().Where(t => t.Operand == Operand.Constant); }
+            get { return _nodes.OfType<IMetricOperand>().Where(t => t.Operand == Operand.Constant).ToList(); }
         }
 
-        public IEnumerable<IMetricOperand> Operands
+        public IList<IMetricOperand> Operands
         {
-            get { return _nodes.OfType<IMetricOperand>(); }
+            get { return _nodes.OfType<IMetricOperand>().ToList(); }
         }
 
-        public IEnumerable<IMetricCall> Calls
+        public IList<IMetricCall> Calls
         {
-            get { return _nodes.OfType<IMetricCall>(); }
+            get { return _nodes.OfType<IMetricCall>().ToList(); }
         }
 
-        public IEnumerable<IMetricMockOption> FakeOptions
+        public IList<IMetricMockOption> FakeOptions
         {
-            get { return _nodes.OfType<IMetricMockOption>(); }
+            get { return _nodes.OfType<IMetricMockOption>().ToList(); }
         }
 
         #endregion

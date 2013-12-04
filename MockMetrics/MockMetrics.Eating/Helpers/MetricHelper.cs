@@ -105,6 +105,11 @@ namespace MockMetrics.Eating.Helpers
 
         private Variable GetVariable(ISnapshot snapshot, IType type)
         {
+            if (type.Classify == TypeClassification.VALUE_TYPE)
+            {
+                return Variable.Data;
+            }
+
             var typeElement = _eatExpressionHelper.GetTypeClass(type);
             return GetVariable(snapshot, typeElement);
         }
@@ -178,6 +183,12 @@ namespace MockMetrics.Eating.Helpers
             }
 
             result.Call = Call.Library;
+            if (parentMetrics.Variable == Variable.Data)
+            {
+                result.Variable = Variable.Data;
+                return result;
+            }
+
             if (parentMetrics.Call == Call.TargetCall)
             {
                 result.Variable = Variable.Result;
