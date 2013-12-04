@@ -49,7 +49,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metrics = anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression);
 
             // Assert
-            Assert.AreEqual(metrics.VarType, VarType.Internal);
+            Assert.AreEqual(metrics.Variable, Variable.Data);
 
         } 
     }

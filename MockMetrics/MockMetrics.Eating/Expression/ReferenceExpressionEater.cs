@@ -79,7 +79,7 @@ namespace MockMetrics.Eating.Expression
 
             if (declaredElement is IEnum)
             {
-                return Metrics.Create(Scope.Local, VarType.Library);
+                return Metrics.Create(Scope.Local, Variable.Data);
             }
 
             if (declaredElement is ITypeElement)
@@ -87,6 +87,7 @@ namespace MockMetrics.Eating.Expression
                 return Metrics.Create(_metricHelper.GetTypeScope(snapshot, declaredElement as ITypeElement));
             }
 
+            // TODO : parent metrics consider
             if (declaredElement is IMethod)
             {
                 return Metrics.Create(Scope.Internal);
@@ -94,7 +95,7 @@ namespace MockMetrics.Eating.Expression
 
             if (declaredElement is IEvent)
             {
-                return Metrics.Create(Scope.Internal, VarType.Internal);
+                return Metrics.Create(Scope.Internal, Variable.Data);
             }
 
             throw new UnexpectedReferenceTypeException(declaredElement, this, expression);

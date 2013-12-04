@@ -23,8 +23,8 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
 
             // Assert
             snapshot.Verify(t => 
-                t.AddVariable(catchVariableDeclaration, 
-                It.Is<Metrics>(m => m.Scope == Scope.Local && m.VarType == VarType.Stub && m.Aim == Aim.Result && m.Equals(result))), 
+                t.AddVariable(catchVariableDeclaration,
+                It.Is<Metrics>(m => m.Scope == Scope.Local && m.Variable == Variable.Result && m.Equals(result))), 
                 Times.Once);
         }
     }

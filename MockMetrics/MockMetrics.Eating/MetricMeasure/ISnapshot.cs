@@ -10,7 +10,11 @@ namespace MockMetrics.Eating.MetricMeasure
 
         void AddVariable(ICSharpDeclaration variable, Metrics metrics);
 
-        void AddOperand(ICSharpTreeNode operand, Metrics metrics);
+        void AddOperand(IInvocationExpression operand, Metrics metrics);
+        void AddOperand(IReferenceExpression operand, Metrics metrics);
+        void AddOperand(ITypeUsage operand, Metrics metrics);
+        void AddOperand(IInitializerElement operand, Metrics metrics);
+        void AddOperand(ICSharpLiteralExpression operand, Metrics metrics);
 
         void AddCall(IInvocationExpression invocation, Metrics metrics);
         void AddCall(ITypeofExpression invocation, Metrics metrics);
@@ -19,12 +23,12 @@ namespace MockMetrics.Eating.MetricMeasure
 
         void AddLabel(ILabelStatement labelStatement);
 
-        IEnumerable<ICSharpTreeNode> TargetCalls { get; }
-        IEnumerable<ICSharpTreeNode> Targets { get; }
-        IEnumerable<ICSharpTreeNode> Stubs { get; }
-        IEnumerable<ICSharpTreeNode> Results { get; }
-        IEnumerable<ICSharpTreeNode> Mocks { get; }
-        IEnumerable<ICSharpTreeNode> Asserts { get; }
+        IEnumerable<IMetricCall> TargetCalls { get; }
+        IEnumerable<IMetricNode> Targets { get; }
+        IEnumerable<IMetricNode> Stubs { get; }
+        IEnumerable<IMetricNode> Results { get; }
+        IEnumerable<IMetricNode> Mocks { get; }
+        IEnumerable<IMetricCall> Asserts { get; }
 
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);

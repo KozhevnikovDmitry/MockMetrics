@@ -24,7 +24,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             // Assert
             snapshot.Verify(t =>
                 t.AddVariable(localConstantDeclaration,
-                It.Is<Metrics>(m => m.Scope == Scope.Local && m.VarType == VarType.Library && m.Aim == Aim.Data && m.Equals(result))),
+                It.Is<Metrics>(m => m.Scope == Scope.Local && m.Variable == Variable.Data && m.Equals(result))),
                 Times.Once);
         }
     }

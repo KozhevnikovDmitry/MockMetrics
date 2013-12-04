@@ -24,7 +24,7 @@ namespace MockMetrics.Eating.Expression
                 snapshot.AddOperand(memberDeclaration, memberMetrics);
             }
 
-            return Metrics.Create(VarType.Internal);
+            return Metrics.Create(Variable.Data);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             snapshot.Verify(t =>
                 t.AddOperand(targetType,
-                             It.Is<Metrics>(m => m.Scope == Scope.Local && m.VarType == VarType.Library && m.Aim == Aim.Data)),
+                             It.Is<Metrics>(m => m.Scope == Scope.Local && m.Variable == Variable.Data)),
                              Times.Once);
         }
 

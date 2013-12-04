@@ -15,7 +15,7 @@ namespace MockMetrics.Eating.Expression
             Eater.Eat(snapshot, expression.ConditionOperand);
             Eater.Eat(snapshot, expression.ThenResult);
             Eater.Eat(snapshot, expression.ElseResult);
-            return Metrics.Create(VarType.Library);
+            return Metrics.Create(Variable.Data);
         }
     }
 }

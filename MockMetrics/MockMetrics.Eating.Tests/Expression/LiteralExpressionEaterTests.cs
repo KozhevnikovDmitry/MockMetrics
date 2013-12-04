@@ -10,7 +10,7 @@ namespace MockMetrics.Eating.Tests.Expression
     public class LiteralExpressionEaterTests
     {
         [Test]
-        public void ReturnStubCandidateTest()
+        public void ReturnDataTest()
         {
             // Arrange
             var literalExpression = Mock.Of<ICSharpLiteralExpression>();
@@ -23,8 +23,7 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             Assert.AreEqual(metrics.Scope, Scope.Local);
-            Assert.AreEqual(metrics.VarType, VarType.Library);
-            Assert.AreEqual(metrics.Aim, Aim.Data);
+            Assert.AreEqual(metrics.Variable, Variable.Data);
             snapshot.Verify(t => t.AddOperand(literalExpression, metrics));
         }
     }

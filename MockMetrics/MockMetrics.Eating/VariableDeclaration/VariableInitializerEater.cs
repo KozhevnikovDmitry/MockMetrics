@@ -37,7 +37,7 @@ namespace MockMetrics.Eating.VariableDeclaration
                     Eat(snapshot, variableInitializer);
                 }
 
-                return Metrics.Create(Scope.Local, VarType.Library, Aim.Data);
+                return Metrics.Create(Scope.Local, Variable.Data);
             }
 
             ICSharpExpression initialExpression = null;

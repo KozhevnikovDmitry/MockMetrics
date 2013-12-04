@@ -8,14 +8,14 @@ namespace MockMetrics.Eating.QueryClause
 {
     public interface IQueryClauseEater : ICSharpNodeEater
     {
-        VarType Eat(ISnapshot snapshot, IQueryClause queryClause);
+        Variable Eat(ISnapshot snapshot, IQueryClause queryClause);
 
         Type QueryClauseType { get; }
     }
 
     public interface IQueryClauseEater<T> : IQueryClauseEater where T : IQueryClause
     {
-        VarType Eat(ISnapshot snapshot, T queryClause);
+        Variable Eat(ISnapshot snapshot, T queryClause);
     }
 
     public abstract class QueryClauseEater<T> : IQueryClauseEater<T> where T : IQueryClause
@@ -30,7 +30,7 @@ namespace MockMetrics.Eating.QueryClause
             Eater = eater;
         }
 
-        public VarType Eat([NotNull] ISnapshot snapshot, [NotNull] IQueryClause queryClause)
+        public Variable Eat([NotNull] ISnapshot snapshot, [NotNull] IQueryClause queryClause)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -57,7 +57,7 @@ namespace MockMetrics.Eating.QueryClause
             }
         }
 
-        public abstract VarType Eat(ISnapshot snapshot, T queryClause);
+        public abstract Variable Eat(ISnapshot snapshot, T queryClause);
 
         public Type QueryClauseType
         {

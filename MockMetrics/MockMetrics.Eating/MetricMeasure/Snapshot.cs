@@ -7,17 +7,20 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.Util;
 using MockMetrics.Eating.Exceptions;
+using MockMetrics.Eating.Helpers;
 
 namespace MockMetrics.Eating.MetricMeasure
 {
     public class Snapshot : ISnapshot
     {
+        private readonly EatExpressionHelper _expressionHepler;
         private readonly List<IMetricNode> _nodes = new List<IMetricNode>();
 
         public IMethodDeclaration UnitTest { get; private set; }
 
-        public Snapshot([NotNull] IMethodDeclaration unitTest)
+        public Snapshot([NotNull] IMethodDeclaration unitTest, EatExpressionHelper expressionHepler)
         {
+            _expressionHepler = expressionHepler;
             if (unitTest == null) 
                 throw new ArgumentNullException("unitTest");
 
@@ -27,51 +30,51 @@ namespace MockMetrics.Eating.MetricMeasure
 
         #region Old Metrics
 
-        public IEnumerable<ICSharpTreeNode> TargetCalls
+        public IEnumerable<IMetricCall> TargetCalls
         {
             get
             {
-                return Calls.Where(t => t.Call == Call.TargetCall).Select(t => t.Node);
+                return Calls.Where(t => t.Call == Call.TargetCall);
             }
         }
 
-        public IEnumerable<ICSharpTreeNode> Asserts
+        public IEnumerable<IMetricCall> Asserts
         {
             get
             {
-                return Calls.Where(t => t.Call == Call.Assert).Select(t => t.Node);
+                return Calls.Where(t => t.Call == Call.Assert);
             }
         }
 
-        public IEnumerable<ICSharpTreeNode> Targets
+        public IEnumerable<IMetricNode> Targets
         {
             get
             {
-                return Operands.Where(t => t.VarTypes.Values.Max().Equals(VarType.Target)).Select(t => t.Node);
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Target));
             }
         }
 
-        public IEnumerable<ICSharpTreeNode> Stubs
+        public IEnumerable<IMetricNode> Stubs
         {
             get
             {
-                return Operands.Where(t => t.VarTypes.Values.Max().Equals(VarType.Stub)).Select(t => t.Node);
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Mock));
             }
         }
 
-        public IEnumerable<ICSharpTreeNode> Results
+        public IEnumerable<IMetricNode> Results
         {
             get
             {
-                return Operands.Where(t => t.Aims.Values.Max().Equals(Aim.Result)).Select(t => t.Node);
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Result));
             }
         }
 
-        public IEnumerable<ICSharpTreeNode> Mocks
+        public IEnumerable<IMetricNode> Mocks
         {
             get
             {
-                return Operands.Where(t => t.VarTypes.Values.Max().Equals(VarType.Mock)).Select(t => t.Node);
+                return Operands.Where(t => t.VarTypes.Values.Max().Equals(Variable.Mock));
             }
         }
         
@@ -110,39 +113,111 @@ namespace MockMetrics.Eating.MetricMeasure
 
         #region Add To Snapshot
 
-        public void AddVariable(ICSharpDeclaration variable, Metrics metrics)
+        public void AddVariable([NotNull] ICSharpDeclaration variable, [NotNull] Metrics metrics)
         {
-            if (Variables.Any(t => t.Node == variable))
+            if (variable == null) 
+                throw new ArgumentNullException("variable");
+
+            if (metrics == null) 
+                throw new ArgumentNullException("metrics");
+
+            if (Variables.Any(t => t.NodeEquals(variable)))
             {
-                Variables.Single(t => t.Node == variable)
-                         .AddAim(metrics.Aim)
-                         .AddVarType(metrics.VarType);
+                Variables.Single(t => t.NodeEquals(variable))
+                         .AddVarType(metrics.Variable);
             }
             else
             {
-                _nodes.Add(new MetricOperand(variable, metrics.Scope, metrics.Aim, metrics.VarType, GetOperandType(variable)));
+                _nodes.Add(new MetricOperand(variable, metrics.Scope, metrics.Variable, GetOperandType(variable)));
             }
         }
 
-        public void AddOperand(ICSharpTreeNode operand, Metrics metrics)
+        public void AddOperand([NotNull] IInvocationExpression operand, [NotNull] Metrics metrics)
         {
-            if (GetOperands(operand).Any())
+            if (operand == null) throw new ArgumentNullException("operand");
+            if (metrics == null) throw new ArgumentNullException("metrics");
+
+            if (Operands.Any(t => t.NodeEquals(operand)))
             {
-                GetOperands(operand).Single(t => t.Node == operand)
-                                    .AddAim(metrics.Aim)
-                                    .AddVarType(metrics.VarType);
+                Operands.Single(t => t.NodeEquals(operand))
+                        .AddVarType(metrics.Variable);
             }
             else
             {
-                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Aim, metrics.VarType, GetOperandType(operand)));
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetOperandType(operand)));
             }
         }
+
+        public void AddOperand([NotNull] IReferenceExpression operand, [NotNull] Metrics metrics)
+        {
+            if (operand == null) throw new ArgumentNullException("operand");
+            if (metrics == null) throw new ArgumentNullException("metrics");
+            var node = _expressionHepler.GetReferenceElement(operand);
+
+            if (node is IVariableDeclaration)
+            {
+                
+            }
+
+            if (node is IMethod)
+            {
+                
+            }
+        }
+
+        public void AddOperand([NotNull] ITypeUsage operand, [NotNull] Metrics metrics)
+        {
+            if (operand == null) throw new ArgumentNullException("operand");
+            if (metrics == null) throw new ArgumentNullException("metrics");
+            if (Operands.Any(t => t.NodeEquals(operand)))
+            {
+                Operands.Single(t => t.NodeEquals(operand))
+                         .AddVarType(metrics.Variable);
+            }
+            else
+            {
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetOperandType(operand)));
+            }
+        }
+
+        public void AddOperand([NotNull] IInitializerElement operand, [NotNull] Metrics metrics)
+        {
+            if (operand == null) throw new ArgumentNullException("operand");
+            if (metrics == null) throw new ArgumentNullException("metrics");
+            if (Operands.Any(t => t.NodeEquals(operand)))
+            {
+                Operands.Single(t => t.NodeEquals(operand))
+                         .AddVarType(metrics.Variable);
+            }
+            else
+            {
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetOperandType(operand)));
+            }
+        }
+
+        public void AddOperand(ICSharpLiteralExpression operand, Metrics metrics)
+        {
+            if (operand == null) throw new ArgumentNullException("operand");
+            if (metrics == null) throw new ArgumentNullException("metrics");
+            if (Operands.Any(t => t.NodeEquals(operand)))
+            {
+                Operands.Single(t => t.NodeEquals(operand))
+                         .AddVarType(metrics.Variable);
+            }
+            else
+            {
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetOperandType(operand)));
+            }
+        }
+
+
+
 
         public void AddCall(IInvocationExpression invocation, Metrics metrics)
         {
             if (Calls.All(t => t.Node != invocation))
             {
-                _nodes.Add(new MetricCall(invocation, metrics.Scope, metrics.Call));
+               _nodes.Add(new MetricCall(invocation, metrics.Scope, metrics.Call));
             }
         }
 
@@ -151,7 +226,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
             if (Calls.All(t => t.Node != invocation))
             {
-                _nodes.Add(new MetricCall(invocation, metrics.Scope, metrics.Call));
+               _nodes.Add(new MetricCall(invocation, metrics.Scope, metrics.Call));
             }
         }
 
@@ -193,7 +268,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
             if (operand is IDeclaredElement)
             {
-                return _nodes.Where(t => (operand as IDeclaredElement).GetDeclarations().OfType<ICSharpDeclaration>().Contains(t.Node)).OfType<IMetricOperand>();
+               // return _nodes.Where(t => (operand as IDeclaredElement).GetDeclarations().OfType<ICSharpDeclaration>().Contains(t.Node)).OfType<IMetricOperand>();
             }
 
             if (operand is IReferenceExpression)
@@ -206,7 +281,9 @@ namespace MockMetrics.Eating.MetricMeasure
         private IEnumerable<IMetricOperand> GetOperandsForReference(IReferenceExpression referenceExpression)
         {
             var declarations = GetDeclarationsForReference(referenceExpression);
-            return _nodes.Where(t => declarations.Contains(t.Node)).OfType<IMetricOperand>();
+            //return _nodes.Where(t => declarations.Contains(t.Node)).OfType<IMetricOperand>();
+
+            throw new NotImplementedException();
         }
 
         private IEnumerable<ICSharpDeclaration> GetDeclarationsForReference(IReferenceExpression referenceExpression)
@@ -325,7 +402,7 @@ namespace MockMetrics.Eating.MetricMeasure
             if (Variables.Where(t => t.Node == localVariable).IsSingle())
             {
                 var node = Variables.Single(t => Equals(t.Node, localVariable));
-                return Metrics.Create(node.Scope, node.VarTypes.Values.Max(), node.Aims.Values.Max());
+                return Metrics.Create(node.Scope, node.VarTypes.Values.Max());
             }
 
             throw new OperandNotFoundInSnapshotException(this, localVariable);
@@ -341,7 +418,7 @@ namespace MockMetrics.Eating.MetricMeasure
             if (Operands.Where(t => Equals(t.Node, paramDeclaration)).IsSingle())
             {
                 var node = Operands.Single(t => t.Node == paramDeclaration);
-                return Metrics.Create(node.Scope, node.VarTypes.Values.Max(), node.Aims.Values.Max());
+                return Metrics.Create(node.Scope, node.VarTypes.Values.Max());
             }
 
             throw new OperandNotFoundInSnapshotException(this, paramter as ICSharpTreeNode);

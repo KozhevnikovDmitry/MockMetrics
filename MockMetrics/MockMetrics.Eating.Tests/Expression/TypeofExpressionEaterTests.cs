@@ -10,7 +10,7 @@ namespace MockMetrics.Eating.Tests.Expression
     public class TypeofExpressionEaterTests
     {
         [Test]
-        public void AddLibraryCallToSnapshotAndReturnVarTypeLibraryTest()
+        public void AddDataCallToSnapshotAndReturnVarTypeLibraryTest()
         {
             // Arrange
             var snapshot = new Mock<ISnapshot>();
@@ -23,7 +23,7 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             snapshot.Verify(t => t.AddCall(typeofExpression, It.Is<Metrics>(m => m.Call == Call.Library)));
-            Assert.AreEqual(metric.VarType, VarType.Library);
+            Assert.AreEqual(metric.Variable, Variable.Data);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace MockMetrics.Eating.Expression
         {
             snapshot.AddCall(expression, Metrics.Create(Call.Library));
 
-            return Metrics.Create(VarType.Library);
+            return Metrics.Create(Variable.Data);
         }
     }
 }

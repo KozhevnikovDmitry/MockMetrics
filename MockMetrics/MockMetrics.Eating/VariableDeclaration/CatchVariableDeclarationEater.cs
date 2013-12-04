@@ -11,7 +11,7 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         public override Metrics Eat(ISnapshot snapshot, ICatchVariableDeclaration variableDeclaration)
         {
-            var metrics = Metrics.Create(Scope.Local, VarType.Stub, Aim.Result);
+            var metrics = Metrics.Create(Scope.Local, Variable.Result);
             snapshot.AddVariable(variableDeclaration, metrics);
             return metrics;
         }

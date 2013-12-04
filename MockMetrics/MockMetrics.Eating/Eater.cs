@@ -20,7 +20,7 @@ namespace MockMetrics.Eating
 
         Metrics Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
 
-        VarType Eat(ISnapshot snapshot, IQueryClause queryClause);
+        Variable Eat(ISnapshot snapshot, IQueryClause queryClause);
     }
 
     public class Eater : IEater
@@ -48,7 +48,7 @@ namespace MockMetrics.Eating
             GetEater(statement).Eat(snapshot, statement);
         }
 
-        public VarType Eat(ISnapshot snapshot, IQueryClause queryClause)
+        public Variable Eat(ISnapshot snapshot, IQueryClause queryClause)
         {
             if (queryClause == null)
                 throw new ArgumentNullException("queryClause");

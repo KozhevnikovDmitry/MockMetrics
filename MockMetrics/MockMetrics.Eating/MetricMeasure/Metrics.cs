@@ -12,6 +12,14 @@
             return new Metrics();
         }
 
+        public static Metrics Create(Scope scope)
+        {
+            return new Metrics
+            {
+                Scope = scope
+            };
+        }
+
         public static Metrics Create(Call call)
         {
             return new Metrics
@@ -20,31 +28,11 @@
             };
         }
 
-        public static Metrics Create(VarType varType = VarType.None, Call call = Call.None)
+        public static Metrics Create(Variable variable)
         {
             return new Metrics
             {
-                VarType = varType,
-                Call = call
-            };
-        }
-
-        public static Metrics Create(Aim aim = Aim.None, VarType varType = VarType.None, Call call = Call.None)
-        {
-            return new Metrics
-            {
-                VarType = varType,
-                Aim = aim,
-                Call = call
-            };
-        }
-
-        public static Metrics Create(VarType varType, Aim aim)
-        {
-            return new Metrics
-            {
-                VarType = varType,
-                Aim = aim
+                Variable = variable
             };
         }
 
@@ -57,35 +45,39 @@
             };
         }
 
-        public static Metrics Create(Scope scope = Scope.None, VarType varType = VarType.None, Aim aim = Aim.None, Call call = Call.None)
+        public static Metrics Create(Scope scope, Variable variable)
         {
             return new Metrics
             {
-                VarType = varType,
-                Aim = aim,
                 Scope = scope,
+                Variable = variable
+            };
+        }
+
+        public static Metrics Create(Scope scope, Call call, Variable variable)
+        {
+            return new Metrics
+            {
+                Scope = scope,
+                Variable = variable,
                 Call = call
             };
         }
 
-        public static Metrics Create(Metrics metrics, Scope scope = Scope.None, VarType varType = VarType.None, Aim aim = Aim.None, Call call = Call.None)
+        public static Metrics Create(Metrics metrics, Scope scope, Call call, Variable variable)
         {
-            var result = new Metrics()
+            var result = new Metrics
             {
-                Scope = metrics.Scope,
-                Aim = metrics.Aim,
-                VarType = metrics.VarType,
-                Call = metrics.Call
+                Scope = scope,
+                Variable = variable,
+                Call = call
             };
 
             if (scope != Scope.None)
                 result.Scope = scope;
 
-            if (aim != Aim.None)
-                result.Aim = aim;
-
-            if (varType != VarType.None)
-                result.VarType = varType;
+            if (variable != Variable.None)
+                result.Variable = variable;
 
             if (call != Call.None)
                 result.Call = call;
@@ -93,21 +85,11 @@
             return result;
         }
 
-        public static Metrics Create(Scope scope, Call call, Aim aim)
-        {
-            return new Metrics
-            {
-                Scope = scope,
-                Aim = aim,
-                Call = call
-            };
-        }
+        
 
         public Scope Scope { get; set; }
 
-        public Aim Aim { get; set; }
-
-        public VarType VarType { get; set; }
+        public Variable Variable { get; set; }
 
         public Call Call { get; set; }
 

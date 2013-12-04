@@ -109,7 +109,7 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             Assert.AreEqual(result.Scope, Scope.Local);
-            Assert.AreEqual(result.VarType, VarType.Library);
+            Assert.AreEqual(result.Variable, Variable.Data);
         }
 
         [Test]
@@ -164,7 +164,7 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             Assert.AreEqual(result.Scope, Scope.Internal);
-            Assert.AreEqual(result.VarType, VarType.Internal);
+            Assert.AreEqual(result.Variable, Variable.Data);
         }
 
         [Test]

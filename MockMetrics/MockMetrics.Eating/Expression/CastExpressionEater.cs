@@ -16,7 +16,7 @@ namespace MockMetrics.Eating.Expression
 
         public override Metrics Eat(ISnapshot snapshot, ICastExpression expression)
         {
-            snapshot.AddOperand(expression.TargetType, Metrics.Create(Scope.Local, VarType.Library, Aim.Data));
+            snapshot.AddOperand(expression.TargetType, Metrics.Create(Scope.Local, Variable.Data));
             var operandMetrics = Eater.Eat(snapshot, expression.Op);
             return _metricHelper.MetricsForCasted(snapshot, operandMetrics, expression.TargetType);
         }

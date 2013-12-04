@@ -30,6 +30,9 @@ namespace Tested.Tests.FooTests
             // Anon Method
             Action anon = delegate {  };
             anon();
+
+            // typeof
+            var t = typeof (Object);
         }
     }
 }

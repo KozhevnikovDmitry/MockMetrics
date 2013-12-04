@@ -3,6 +3,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.Util;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Helpers
@@ -28,10 +29,9 @@ namespace MockMetrics.Eating.Helpers
 
             Metrics result = Metrics.Create();
 
-            result.VarType = first.VarType >= second.VarType ? first.VarType : second.VarType;
+            result.Variable = first.Variable >= second.Variable ? first.Variable : second.Variable;
             result.Scope = first.Scope >= second.Scope ? first.Scope : second.Scope;
             result.Call = first.Call >= second.Call ? first.Call : second.Call;
-            result.Aim = first.Aim >= second.Aim ? first.Aim : second.Aim;
 
             return result;
         }
@@ -43,7 +43,7 @@ namespace MockMetrics.Eating.Helpers
             if (second == null) 
                 throw new ArgumentNullException("second");
 
-            first.VarType = first.VarType >= second.VarType ? first.VarType : second.VarType;
+            first.Variable = first.Variable >= second.Variable ? first.Variable : second.Variable;
 
             return first;
         }
@@ -76,22 +76,22 @@ namespace MockMetrics.Eating.Helpers
 
             if (typeUsage is IDynamicTypeUsage)
             {
-                return Metrics.Create(VarType.Library);
+                return Metrics.Create(Variable.Data);
             }
 
             if (typeUsage is IPredefinedTypeUsage)
             {
-                return Metrics.Create(VarType.Library);
+                return Metrics.Create(Variable.Data);
             }
 
             if (typeUsage is IUserTypeUsage)
             {
                 var userTypeUsage = typeUsage as IUserTypeUsage;
                 var typeElement = _eatExpressionHelper.GetUserTypeUsageClass(userTypeUsage);
-                return Metrics.Create(GetVarType(snapshot, typeElement));
+                return Metrics.Create(GetVariable(snapshot, typeElement));
             }
 
-            return Metrics.Create(VarType.Library);
+            return Metrics.Create(Variable.Data);
         }
 
         public Metrics MetricsForType([NotNull] ISnapshot snapshot,
@@ -100,34 +100,45 @@ namespace MockMetrics.Eating.Helpers
             if (snapshot == null) throw new ArgumentNullException("snapshot");
             if (type == null) throw new ArgumentNullException("type");
 
-            return Metrics.Create(GetVarType(snapshot, type), GetAim(snapshot, type));
+            return Metrics.Create(GetVariable(snapshot, type));
         }
 
-        private VarType GetVarType(ISnapshot snapshot, IType type)
+        private Variable GetVariable(ISnapshot snapshot, IType type)
         {
             var typeElement = _eatExpressionHelper.GetTypeClass(type);
-            return GetVarType(snapshot, typeElement);
+            return GetVariable(snapshot, typeElement);
         }
 
-        private VarType GetVarType(ISnapshot snapshot, ITypeElement typeElement)
+        private Variable GetVariable(ISnapshot snapshot, ITypeElement typeElement)
         {
+            if (typeElement.Type().Classify == TypeClassification.VALUE_TYPE)
+            {
+                return Variable.Data;
+            }
+
             if (snapshot.IsInTestScope(typeElement.Module.Name))
             {
                 //TODO if type is interface or abstract class return stub/mock? enum struct delegate?
-                return VarType.Target;
+                return Variable.Target;
             }
 
             if (snapshot.IsInTestProject(typeElement.Module.Name))
             {
-                return VarType.Internal;
+                return Variable.Mock;
             }
 
             if (typeElement.ToString().StartsWith("Moq.Mock"))
             {
-                return VarType.Mock;
+                return Variable.Mock;
             }
 
-            return VarType.Library;
+            if (typeElement.Module.Name.ToLower().StartsWith("nunit.framework") ||
+                typeElement.Module.Name.ToLower().StartsWith("moq"))
+            {
+                return Variable.Service;
+            }
+
+            return Variable.Data;
         }
 
         public Scope GetTypeScope(ISnapshot snapshot, ITypeElement typeElement)
@@ -145,64 +156,37 @@ namespace MockMetrics.Eating.Helpers
 
             return Scope.Local;
         }
-
-        private Aim GetAim(ISnapshot snapshot, IType type)
-        {
-            var classType = _eatExpressionHelper.GetTypeClass(type);
-            if (snapshot.IsInTestScope(classType.Module.Name))
-            {
-                return Aim.Tested;
-            }
-
-            if (snapshot.IsInTestProject(classType.Module.Name))
-            {
-                return Aim.Data;
-            }
-
-            if (classType.ToString().StartsWith("Moq.Mock"))
-            {
-                return Aim.Data;
-            }
-
-            if (classType.Module.Name.ToLower().StartsWith("nunit.framework") ||
-                classType.Module.Name.ToLower().StartsWith("moq"))
-            {
-                return Aim.Service;
-            }
-
-            return Aim.Data;
-        }
-
+        
         public Metrics CallMetrics(ISnapshot snapshot, IMethod invokedMethod, Metrics parentMetrics)
         {
             var result = Metrics.Create(parentMetrics.Scope);
 
-            if (snapshot.IsInTestScope(invokedMethod.Module.Name) || 
-                parentMetrics.VarType == VarType.Target ||
-                parentMetrics.VarType == VarType.Mock)
+            if (snapshot.IsInTestScope(invokedMethod.Module.Name) ||
+                parentMetrics.Variable == Variable.Target ||
+                parentMetrics.Variable == Variable.Mock)
             {
                 result.Call = Call.TargetCall;
-                result.Aim = Aim.Result;
+                result.Variable = Variable.Result;
                 return result;
             }
 
             if (snapshot.IsInTestProject(invokedMethod.Module.Name))
             {
                 result.Call = Call.Service;
-                result.Aim = MetricsForType(snapshot, invokedMethod.ReturnType).Aim;
+                result.Variable = MetricsForType(snapshot, invokedMethod.ReturnType).Variable;
                 return result;
             }
 
             result.Call = Call.Library;
             if (parentMetrics.Call == Call.TargetCall)
             {
-                result.Aim = Aim.Result;
+                result.Variable = Variable.Result;
                 return result;
             }
 
             if (parentMetrics.Call == Call.Assert)
             {
-                result.Aim = Aim.Result;
+                result.Variable = Variable.Result;
                 return result;
             }
             return result;

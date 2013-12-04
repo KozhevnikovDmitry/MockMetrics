@@ -9,9 +9,9 @@ namespace MockMetrics.Eating.QueryClause
         {
         }
 
-        public override VarType Eat(ISnapshot snapshot, IQueryFromClause queryClause)
+        public override Variable Eat(ISnapshot snapshot, IQueryFromClause queryClause)
         {
-            return VarType.None;
+            return Variable.None;
         }
     }
 }

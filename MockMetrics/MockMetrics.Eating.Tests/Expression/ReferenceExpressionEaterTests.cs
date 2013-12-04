@@ -17,7 +17,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var expressionQualifier = Mock.Of<ICSharpExpression>();
             var referenceExpression = Mock.Of<IReferenceExpression>(t => t.QualifierExpression == expressionQualifier);
-            var parentMetrics = Metrics.Create(Scope.Local, VarType.Stub);
+            var parentMetrics = Metrics.Create(Scope.Local, Variable.Data);
             var currentMetrics = Metrics.Create();
             var resultMetrics = Metrics.Create();
             var eatHelper = Mock.Of<IRefereceEatHelper>(t => t.Eat(snapshot, referenceExpression) == currentMetrics);
@@ -41,7 +41,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var currentMetrics = Metrics.Create();
             var resultMetrics = Metrics.Create();
             var eatHelper = Mock.Of<IRefereceEatHelper>(t => t.Eat(snapshot, referenceExpression) == currentMetrics);
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsMerge(currentMetrics, It.Is<Metrics>(m => m.Aim == Aim.None && m.Call == Call.None && m.Scope == Scope.None && m.VarType == VarType.None)) == resultMetrics);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsMerge(currentMetrics, It.Is<Metrics>(m => m.Call == Call.None && m.Scope == Scope.None && m.Variable == Variable.None)) == resultMetrics);
             var eater = Mock.Of<IEater>();
             var referenceExpressionEater = new ReferenceExpressionEater(eater, metricHelper, eatHelper);
 

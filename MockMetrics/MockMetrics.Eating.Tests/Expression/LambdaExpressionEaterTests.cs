@@ -68,7 +68,7 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
-        public void ReturnStubCandidateTest()
+        public void ReturnDataTest()
         {
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
@@ -82,7 +82,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metrics = lambdaExpressionEater.Eat(snapshot, lambdaExpression);
 
             // Assert
-            Assert.AreEqual(metrics.VarType, VarType.Internal);
+            Assert.AreEqual(metrics.Variable, Variable.Data);
         }
     }
 }

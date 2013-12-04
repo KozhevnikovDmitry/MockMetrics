@@ -4,16 +4,16 @@ namespace MockMetrics.Eating.MetricMeasure
 {
     public class MetricCall : IMetricCall
     {
-        public MetricCall(IInvocationExpression invocation, Scope scope, Call call)
+        public MetricCall(IInvocationExpression invocationExpression, Scope scope, Call call)
         {
-            Node = invocation;
+            Node = invocationExpression;
             Scope = scope;
             Call = call;
         }
 
-        public MetricCall(ITypeofExpression invocation, Scope scope, Call call)
+        public MetricCall(ITypeofExpression typeofElement, Scope scope, Call call)
         {
-            Node = invocation;
+            Node = typeofElement;
             Scope = scope;
             Call = call;
         }

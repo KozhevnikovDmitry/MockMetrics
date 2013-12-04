@@ -33,7 +33,7 @@ namespace MockMetrics.Eating.Expression
                 }
                 else
                 {
-                    snapshot.AddOperand(declaredElement as ICSharpTreeNode, assigneeMetrics);
+                    snapshot.AddOperand(expression.Dest as IReferenceExpression, assigneeMetrics);
                 }
                 return assigneeMetrics;
             }

@@ -12,7 +12,7 @@ namespace MockMetrics.Eating.Expression
 
         public override Metrics Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
         {
-            var result = Metrics.Create(Scope.Local, VarType.Library, Aim.Data);
+            var result = Metrics.Create(Scope.Local, Variable.Data);
             snapshot.AddOperand(expression, result);
             return result;
         }

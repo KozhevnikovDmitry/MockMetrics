@@ -22,7 +22,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metrics = ternaryExpressionEater.Eat(snapshot, ternaryExpression);
 
             // Assert
-            Assert.AreEqual(metrics.VarType, VarType.Library);
+            Assert.AreEqual(metrics.Variable, Variable.Data);
         }
 
         [Test]

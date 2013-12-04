@@ -37,7 +37,7 @@ namespace MockMetrics.Eating.Expression
             if (invokedName.StartsWith("Method:Moq.Mock.Of"))
             {
                 _mockOfInvocationEater.Eat(snapshot, expression);
-                return Metrics.Create(Scope.Local, VarType.Stub, Aim.Data, Call.Library);
+                return Metrics.Create(Scope.Local, Call.Library, Variable.Mock);
             }
 
             _argumentsEater.Eat(snapshot, expression.Arguments);
@@ -47,7 +47,7 @@ namespace MockMetrics.Eating.Expression
             // TODO: special eater for nunit asserts, that will eat with inner eating
             if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
             {
-                var result = Metrics.Create(Scope.Local, Call.Assert, Aim.Result);
+                var result = Metrics.Create(Scope.Local, Call.Assert, Variable.Result);
                 snapshot.AddCall(expression, result); 
                 return result;
             }
@@ -55,7 +55,7 @@ namespace MockMetrics.Eating.Expression
             // TODO: special eater for moq mock verify, that will eat with inner eating
             if (invokedName.StartsWith("Method:Moq.Mock.Verify"))
             {
-                var result = Metrics.Create(parentMetrics.Scope, Call.Assert, Aim.Result);
+                var result = Metrics.Create(parentMetrics.Scope, Call.Assert, Variable.Result);
                 snapshot.AddCall(expression, result);
                 return result;
             }

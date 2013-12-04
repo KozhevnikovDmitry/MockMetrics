@@ -28,8 +28,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
 
             // Assert
             Assert.AreEqual(metrics.Scope, Scope.Local);
-            Assert.AreEqual(metrics.Aim, Aim.Data);
-            Assert.AreEqual(metrics.VarType, VarType.Library);
+            Assert.AreEqual(metrics.Variable, Variable.Data);
         }
 
         [Test]
