@@ -12,7 +12,8 @@
         Property,
         Event,
         Method,
-        Type
+        Type,
+        Namespace
     }
 
     /// <summary>
@@ -45,7 +46,8 @@
         Data,
         Result,
         Mock,
-        Target
+        Target,
+        External
     }
 
     /// <summary>

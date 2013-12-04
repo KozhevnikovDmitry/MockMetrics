@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
@@ -17,7 +18,7 @@ namespace MockMetrics.Eating
         public ISnapshot EatUnitTest(IMethodDeclaration unitTest)
         {
             var snapshot = new Snapshot(unitTest, new EatExpressionHelper());
-
+            
             foreach (var parameterDeclaration in unitTest.ParameterDeclarations)
             {
                 _eater.Eat(snapshot, parameterDeclaration);

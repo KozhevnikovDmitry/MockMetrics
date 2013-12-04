@@ -7,9 +7,9 @@ namespace MockMetrics.Eating.Exceptions
     public class UnexpectedOperandTypeException : ApplicationException
     {
         public Snapshot Snapshot { get; private set; }
-        public ICSharpTreeNode Node { get; private set; }
+        public object Node { get; private set; }
 
-        public UnexpectedOperandTypeException(Snapshot snapshot, ICSharpTreeNode node)
+        public UnexpectedOperandTypeException(Snapshot snapshot, object node)
             : base("Unexpected operand type in snapshot")
         {
             Snapshot = snapshot;

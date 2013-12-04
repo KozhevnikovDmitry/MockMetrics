@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.DeclaredElements;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.Util;
 using MockMetrics.Eating.Exceptions;
@@ -144,7 +145,7 @@ namespace MockMetrics.Eating.MetricMeasure
             }
             else
             {
-                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetOperandType(operand)));
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, Operand.Method));
             }
         }
 
@@ -156,12 +157,21 @@ namespace MockMetrics.Eating.MetricMeasure
 
             if (node is IVariableDeclaration)
             {
-                
+                AddVariable(node as IVariableDeclaration, metrics);
+                return;
+            }
+            
+            if (node is IParameter)
+            {
+                var declaration = node.GetDeclarations().Single();
+                AddVariable(declaration as IRegularParameterDeclaration, metrics);
+                return;
             }
 
-            if (node is IMethod)
+            if (metrics.Scope == Scope.Internal &&
+                metrics.Scope == Scope.External)
             {
-                
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetDeclaredType(node)));
             }
         }
 
@@ -176,7 +186,7 @@ namespace MockMetrics.Eating.MetricMeasure
             }
             else
             {
-                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetOperandType(operand)));
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, Operand.Constant));
             }
         }
 
@@ -206,12 +216,9 @@ namespace MockMetrics.Eating.MetricMeasure
             }
             else
             {
-                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, GetOperandType(operand)));
+                _nodes.Add(new MetricOperand(operand, metrics.Scope, metrics.Variable, Operand.Constant));
             }
         }
-
-
-
 
         public void AddCall(IInvocationExpression invocation, Metrics metrics)
         {
@@ -240,68 +247,17 @@ namespace MockMetrics.Eating.MetricMeasure
 
         }
 
-        private IEnumerable<ICSharpDeclaration> GetDeclarations(ICSharpTreeNode operand)
-        {
-            if (operand is ICSharpDeclaration)
-            {
-                return new[] {operand as ICSharpDeclaration};
-            }
-
-            if (operand is IDeclaredElement)
-            {
-                return (operand as IDeclaredElement).GetDeclarations().OfType<ICSharpDeclaration>();
-            }
-
-            if (operand is IReferenceExpression)
-            {
-                return GetDeclarationsForReference(operand as IReferenceExpression);
-            }
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<IMetricOperand> GetOperands(ICSharpTreeNode operand)
-        {
-            if (operand is ICSharpDeclaration)
-            {
-                return _nodes.Where(t => t.Node == operand).OfType<IMetricOperand>();
-            }
-
-            if (operand is IDeclaredElement)
-            {
-               // return _nodes.Where(t => (operand as IDeclaredElement).GetDeclarations().OfType<ICSharpDeclaration>().Contains(t.Node)).OfType<IMetricOperand>();
-            }
-
-            if (operand is IReferenceExpression)
-            {
-                return GetOperandsForReference(operand as IReferenceExpression);
-            }
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<IMetricOperand> GetOperandsForReference(IReferenceExpression referenceExpression)
-        {
-            var declarations = GetDeclarationsForReference(referenceExpression);
-            //return _nodes.Where(t => declarations.Contains(t.Node)).OfType<IMetricOperand>();
-
-            throw new NotImplementedException();
-        }
-
-        private IEnumerable<ICSharpDeclaration> GetDeclarationsForReference(IReferenceExpression referenceExpression)
-        {
-            var declaredElement = referenceExpression.Reference.CurrentResolveResult.DeclaredElement;
-            return declaredElement.GetDeclarations().OfType<ICSharpDeclaration>();
-        }
 
         private Operand GetOperandType(ICSharpTreeNode operand)
         {
-
             if (operand is ILocalVariableDeclaration ||
                 operand is ILambdaParameterDeclaration ||
                 operand is IAnonymousMemberDeclaration ||
                 operand is ICatchVariableDeclaration ||
                 operand is IForeachVariableDeclaration ||
                 operand is IUnsafeCodeFixedPointerDeclaration ||
-                operand is IQueryRangeVariableDeclaration)
+                operand is IQueryRangeVariableDeclaration ||
+                operand is IInitializerElement)
             {
                 return Operand.Variable;
             }
@@ -318,8 +274,11 @@ namespace MockMetrics.Eating.MetricMeasure
                 return Operand.Argument;
             }
 
-            var node = GetDeclaredNode(operand);
+            throw new UnexpectedOperandTypeException(this, operand);
+        }
 
+        private Operand GetDeclaredType(IDeclaredElement node)
+        {
             if (node is IProperty ||
                 node is IField)
             {
@@ -341,31 +300,14 @@ namespace MockMetrics.Eating.MetricMeasure
                 return Operand.Type;
             }
 
-            throw new UnexpectedOperandTypeException(this, operand);
+            if (node is INamespace || node is IAlias)
+            {
+                return Operand.Namespace;
+            }
+
+            throw new UnexpectedOperandTypeException(this, node);
         }
-
-        private ICSharpTreeNode GetDeclaredNode(ICSharpTreeNode operand)
-        {
-            if (operand is ICSharpDeclaration)
-            {
-                return operand;
-            }
-
-            if (operand is IParameter)
-            {
-                return (operand as IParameter).GetDeclarations().Single() as ICSharpTreeNode;
-            }
-
-            if (operand is IReferenceExpression)
-            {
-                return
-                    GetDeclaredNode(
-                        (operand as IReferenceExpression).Reference.CurrentResolveResult.DeclaredElement as ICSharpTreeNode);
-            }
-
-
-            return operand;
-        }
+       
 
         #endregion
 
