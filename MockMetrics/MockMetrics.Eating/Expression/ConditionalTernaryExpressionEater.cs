@@ -10,12 +10,12 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IConditionalTernaryExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IConditionalTernaryExpression expression)
         {
             Eater.Eat(snapshot, expression.ConditionOperand);
             Eater.Eat(snapshot, expression.ThenResult);
             Eater.Eat(snapshot, expression.ElseResult);
-            return Metrics.Create(Variable.Data);
+            return Variable.Library;
         }
     }
 }

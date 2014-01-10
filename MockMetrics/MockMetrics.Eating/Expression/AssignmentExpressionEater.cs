@@ -1,5 +1,4 @@
-﻿using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
@@ -18,14 +17,14 @@ namespace MockMetrics.Eating.Expression
             _metricHelper = metricHelper;
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IAssignmentExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IAssignmentExpression expression)
         {
             var sourceMetrics = Eater.Eat(snapshot, expression.Source);
 
             if (expression.Dest is IReferenceExpression)
             {
                 var destMetrics = Eater.Eat(snapshot, expression.Dest);
-                var assigneeMetrics = _metricHelper.VarTypeMerge(destMetrics, sourceMetrics);
+                var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
                 if (declaredElement is IVariableDeclaration)
                 { 
@@ -33,7 +32,7 @@ namespace MockMetrics.Eating.Expression
                 }
                 else
                 {
-                    snapshot.AddOperand(expression.Dest as IReferenceExpression, assigneeMetrics);
+                    snapshot.AddVariable(expression.Dest as IReferenceExpression, assigneeMetrics);
                 }
                 return assigneeMetrics;
             }

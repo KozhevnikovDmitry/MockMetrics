@@ -25,7 +25,7 @@ namespace MockMetrics.Eating.MoqStub
         {
             if (_eatExpressionHelper.IsStandaloneMoqStubExpression(expression))
             {
-                snapshot.AddOperand(expression, Metrics.Create(Scope.Local, Variable.Mock));
+                snapshot.AddVariable(expression, Variable.Mock);
             }
 
             var predicate = expression.Arguments.Select(t => t.Value).OfType<ILambdaExpression>().SingleOrDefault();

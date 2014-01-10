@@ -11,9 +11,9 @@ namespace MockMetrics.Eating.VariableDeclaration
             VariableDecalrationType = GetType();
         }
 
-        public Metrics Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
+        public Variable Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
         {
-            return Metrics.Create(Scope.Local);
+            return Variable.None;
         }
 
         public Type VariableDecalrationType { get; private set; }

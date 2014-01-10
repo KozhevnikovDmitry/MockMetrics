@@ -17,7 +17,7 @@ namespace MockMetrics.Eating
 
         public ISnapshot EatUnitTest(IMethodDeclaration unitTest)
         {
-            var snapshot = new Snapshot(unitTest, new EatExpressionHelper());
+            var snapshot = new Snapshot(unitTest);
             
             foreach (var parameterDeclaration in unitTest.ParameterDeclarations)
             {

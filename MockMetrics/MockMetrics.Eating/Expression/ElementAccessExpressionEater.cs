@@ -14,7 +14,7 @@ namespace MockMetrics.Eating.Expression
             _argumentsEater = argumentsEater;
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IElementAccessExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IElementAccessExpression expression)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
 

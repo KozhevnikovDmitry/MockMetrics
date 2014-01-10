@@ -1,88 +1,22 @@
 ﻿namespace MockMetrics.Eating.MetricMeasure
 {
-    /// <summary>
-    /// Reference operand type
-    /// </summary>
-    public enum Operand
+    public enum FakeOption
     {
         None,
-        Constant,
-        Variable,
-        Argument,
+        Method,
         Property,
         Event,
-        Method,
-        Type,
-        Namespace
+        CallBack,
+        Exception
     }
 
-    /// <summary>
-    /// Scope of operand 
-    /// </summary>
-    public enum Scope
-    {
-        None,
-
-        /// <summary>
-        /// Inside test
-        /// </summary>
-        Local,
-
-        /// <summary>
-        /// Inside test class
-        /// </summary>
-        Internal,
-
-        /// <summary>
-        /// Outside of test class
-        /// </summary>
-        External
-    }
-    
     public enum Variable
     {
         None,
-        Service,
-        Data,
-        Result,
+        Library,
+        Stub,
         Mock,
         Target,
-        External
-    }
-
-    /// <summary>
-    /// Type of invocation
-    /// </summary>
-    public enum Call
-    {
-        None,
-
-        /// <summary>
-        /// Tested call of target object
-        /// </summary>
-        TargetCall,
-
-        /// <summary>
-        /// Call of library methods
-        /// </summary>
-        Library,
-
-        /// <summary>
-        /// Assertations
-        /// </summary>
-        Assert,
-
-        /// <summary>
-        /// Calls of service methods of unit-test or mockery frameworks
-        /// </summary>
         Service
-    }
-
-    public enum FakeOption
-    {
-        Method,
-        Property,
-        Event,
-        CallBack
     }
 }

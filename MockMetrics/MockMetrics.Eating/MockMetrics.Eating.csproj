@@ -76,9 +76,7 @@
     <Compile Include="Helpers\MetricHelper.cs" />
     <Compile Include="MetricMeasure\IMetricNode.cs" />
     <Compile Include="MetricMeasure\ISnapshot.cs" />
-    <Compile Include="MetricMeasure\MetricCall.cs" />
     <Compile Include="MetricMeasure\MetricOperand.cs" />
-    <Compile Include="MetricMeasure\Metrics.cs" />
     <Compile Include="Expression\InvocationExpressionEater.cs" />
     <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
     <Compile Include="Expression\ParentReferenceEater.cs" />

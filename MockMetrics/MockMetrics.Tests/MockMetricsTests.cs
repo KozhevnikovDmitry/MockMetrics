@@ -49,10 +49,8 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 1, "Assert stubs");
-            Assert.AreEqual(snapshot.Results.Count(), 1, "Assert results");
+            Assert.AreEqual(snapshot.Librarians.Count(), 1, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
-            Assert.AreEqual(snapshot.TargetCalls.Count(), 1, "Assert targetCalls");
-            Assert.AreEqual(snapshot.Asserts.Count(), 1, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
 
@@ -67,10 +65,8 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 1, "Assert stubs");
-            Assert.AreEqual(snapshot.Results.Count(), 1, "Assert results");
+            Assert.AreEqual(snapshot.Librarians.Count(), 1, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
-            Assert.AreEqual(snapshot.TargetCalls.Count(), 1, "Assert targetCalls");
-            Assert.AreEqual(snapshot.Asserts.Count(), 1, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
 
@@ -85,10 +81,8 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 1, "Assert stubs");
-            Assert.AreEqual(snapshot.Results.Count(), 1, "Assert results");
+            Assert.AreEqual(snapshot.Librarians.Count(), 1, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
-            Assert.AreEqual(snapshot.TargetCalls.Count(), 1, "Assert targetCalls");
-            Assert.AreEqual(snapshot.Asserts.Count(), 1, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
 
@@ -103,10 +97,8 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 2, "Assert stubs");
-            Assert.AreEqual(snapshot.Results.Count(), 2, "Assert results");
-            Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
-            Assert.AreEqual(snapshot.TargetCalls.Count(), 2, "Assert targetCalls");
-            Assert.AreEqual(snapshot.Asserts.Count(), 2, "Assert asserts");
+            Assert.AreEqual(snapshot.Librarians.Count(), 2, "Assert results");
+            Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");;
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
 
@@ -121,10 +113,8 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 2, "Assert stubs");
-            Assert.AreEqual(snapshot.Results.Count(), 2, "Assert results");
+            Assert.AreEqual(snapshot.Librarians.Count(), 2, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
-            Assert.AreEqual(snapshot.TargetCalls.Count(), 2, "Assert targetCalls");
-            Assert.AreEqual(snapshot.Asserts.Count(), 2, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
 
@@ -139,10 +129,8 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 3, "Assert stubs");
-            Assert.AreEqual(snapshot.Results.Count(), 1, "Assert results");
+            Assert.AreEqual(snapshot.Librarians.Count(), 1, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
-            Assert.AreEqual(snapshot.TargetCalls.Count(), 1, "Assert targetCalls");
-            Assert.AreEqual(snapshot.Asserts.Count(), 1, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
 
@@ -157,10 +145,8 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 4, "Assert stubs");
-            Assert.AreEqual(snapshot.Results.Count(), 1, "Assert results");
+            Assert.AreEqual(snapshot.Librarians.Count(), 1, "Assert results");
             Assert.AreEqual(snapshot.Targets.Count(), 0, "Assert targets");
-            Assert.AreEqual(snapshot.TargetCalls.Count(), 1, "Assert targetCalls");
-            Assert.AreEqual(snapshot.Asserts.Count(), 2, "Assert asserts");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Mocks targets");
         }
     }

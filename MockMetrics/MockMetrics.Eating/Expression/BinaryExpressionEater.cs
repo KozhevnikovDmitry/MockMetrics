@@ -14,12 +14,12 @@ namespace MockMetrics.Eating.Expression
             _metricHelper = metricHelper;
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IBinaryExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IBinaryExpression expression)
         {
             var leftMetrics = Eater.Eat(snapshot, expression.LeftOperand);
             var rightMetrics = Eater.Eat(snapshot, expression.RightOperand);
 
-            return _metricHelper.VarTypeMerge(leftMetrics, rightMetrics);
+            return _metricHelper.MetricsMerge(leftMetrics, rightMetrics);
         }
     }
 }

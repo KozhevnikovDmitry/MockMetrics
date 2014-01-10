@@ -6,26 +6,21 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.MetricMeasure
 {
-    public class MetricOperand : IMetricOperand
+    public class MetricVariable : IMetricVariable
     {
         public ICSharpTreeNode Node { get; private set; }
 
-        public MetricOperand(ICSharpTreeNode node, Scope scope, Variable variable, Operand operand)
+        public MetricVariable(ICSharpTreeNode node, Variable variable)
         {
             VarTypes = new Dictionary<Guid, Variable>();
-            
             Node = node;
-            Scope = scope;
-            Operand = operand;
             VarTypes[Guid.NewGuid()] = variable;
         }
 
         public int Depth { get; private set; }
-        public Scope Scope { get; private set; }
-        public Operand Operand { get; set; }
         public Dictionary<Guid, Variable> VarTypes { get; private set; }
 
-        public IMetricOperand AddVarType(Variable variable)
+        public IMetricVariable AddVarType(Variable variable)
         {
             if (!VarTypes.ContainsValue(variable))
             {
@@ -47,7 +42,27 @@ namespace MockMetrics.Eating.MetricMeasure
 
         public override string ToString()
         {
-            return string.Format("{0}, Scope=[{1}]; Operand=[{2}]; MaxVariableType=[{3}]; VariableTypes=[{4}]", Node, Scope, Operand, VarTypes.Values.Max(), VarTypes.Count);
+            return string.Format("{0}, Variable=[{1}]; VarTypeCount=[{2}];", Node, VarTypes.Values.Max(), VarTypes.Count);
+        }
+    }
+
+
+
+    public class MetricMockOption : IMetricMockOption
+    {
+        public ICSharpTreeNode Node { get; private set; }
+        public int Depth { get; private set; }
+        public FakeOption FakeOption { get; private set; }
+
+        public MetricMockOption(ICSharpExpression expression, FakeOption fakeOption)
+        {
+            Node = expression;
+            FakeOption = fakeOption;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, FakeOption=[{1}];", Node, FakeOption);
         }
     }
 }

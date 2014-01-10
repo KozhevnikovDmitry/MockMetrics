@@ -11,7 +11,7 @@ namespace MockMetrics.Eating.Statement
 
         public override void Eat(ISnapshot snapshot, ILabelStatement statement)
         {
-            snapshot.AddLabel(statement);
+            
         }
     }
 }

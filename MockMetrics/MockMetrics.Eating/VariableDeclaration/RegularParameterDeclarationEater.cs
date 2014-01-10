@@ -10,11 +10,10 @@ namespace MockMetrics.Eating.VariableDeclaration
         {
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IRegularParameterDeclaration variableDeclaration)
+        public override Variable Eat(ISnapshot snapshot, IRegularParameterDeclaration variableDeclaration)
         {
-            var result = Metrics.Create(Scope.Local, Variable.Data);
-            snapshot.AddVariable(variableDeclaration, result);
-            return result;
+            snapshot.AddVariable(variableDeclaration, Variable.Library);
+            return Variable.Library;
         }
     }
 }

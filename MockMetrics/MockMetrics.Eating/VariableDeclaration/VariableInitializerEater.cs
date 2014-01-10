@@ -1,28 +1,25 @@
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.VariableDeclaration
 {
     public interface IVariableInitializerEater
     {
-        Metrics Eat(ISnapshot snapshot, IVariableInitializer initializer);
+        Variable Eat(ISnapshot snapshot, IVariableInitializer initializer);
     }
 
     public class VariableInitializerEater : IVariableInitializerEater, ICSharpNodeEater
     {
         private readonly IEater _eater;
-        private readonly IMetricHelper _metricHelper;
 
-        public VariableInitializerEater(IEater eater, IMetricHelper metricHelper)
+        public VariableInitializerEater(IEater eater)
         {
             _eater = eater;
-            _metricHelper = metricHelper;
         }
 
-        public virtual Metrics Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
+        public virtual Variable Eat([NotNull] ISnapshot snapshot, [NotNull] IVariableInitializer initializer)
         {
             if (snapshot == null) 
                 throw new ArgumentNullException("snapshot");
@@ -37,7 +34,7 @@ namespace MockMetrics.Eating.VariableDeclaration
                     Eat(snapshot, variableInitializer);
                 }
 
-                return Metrics.Create(Scope.Local, Variable.Data);
+                return Variable.Library;
             }
 
             ICSharpExpression initialExpression = null;
@@ -57,14 +54,7 @@ namespace MockMetrics.Eating.VariableDeclaration
                 initialExpression = (initializer as IUnsafeCodeStackAllocInitializer).DimExpr;
             }
 
-            return EatResults(snapshot, initialExpression);
-        }
-
-        private Metrics EatResults(ISnapshot snapshot, ICSharpExpression initialExpression)
-        {
-            var resultMetrics = _eater.Eat(snapshot, initialExpression);
-            resultMetrics.Scope = Scope.Local;
-            return resultMetrics;
+            return _eater.Eat(snapshot, initialExpression);
         }
     }
 }

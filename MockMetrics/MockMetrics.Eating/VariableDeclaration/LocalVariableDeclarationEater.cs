@@ -18,20 +18,18 @@ namespace MockMetrics.Eating.VariableDeclaration
             _metricHelper = metricHelper;
         }
 
-        public override Metrics Eat(ISnapshot snapshot, ILocalVariableDeclaration variableDeclaration)
+        public override Variable Eat(ISnapshot snapshot, ILocalVariableDeclaration variableDeclaration)
         {
             if (variableDeclaration.Initial == null)
             {
-                var typeMetric = _metricHelper.MetricsForType(snapshot, variableDeclaration.Type);
-                typeMetric.Scope = Scope.Local;
-                snapshot.AddVariable(variableDeclaration, typeMetric);
-                return typeMetric;
+                var varType = _metricHelper.MetricsForType(snapshot, variableDeclaration.Type);
+                snapshot.AddVariable(variableDeclaration, varType);
+                return varType;
             }
 
-            var metrics = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
-            metrics.Scope = Scope.Local;
-            snapshot.AddVariable(variableDeclaration, metrics);
-            return metrics;
+            var variable = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
+            snapshot.AddVariable(variableDeclaration, variable);
+            return variable;
         }
     }
 }

@@ -9,11 +9,10 @@ namespace MockMetrics.Eating.VariableDeclaration
         {
         }
 
-        public override Metrics Eat(ISnapshot snapshot, ICatchVariableDeclaration variableDeclaration)
+        public override Variable Eat(ISnapshot snapshot, ICatchVariableDeclaration variableDeclaration)
         {
-            var metrics = Metrics.Create(Scope.Local, Variable.Result);
-            snapshot.AddVariable(variableDeclaration, metrics);
-            return metrics;
+            snapshot.AddVariable(variableDeclaration, Variable.Service);
+            return Variable.Service;
         }
     }
 }

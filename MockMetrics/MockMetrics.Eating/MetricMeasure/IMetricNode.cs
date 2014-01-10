@@ -12,31 +12,19 @@ namespace MockMetrics.Eating.MetricMeasure
         int Depth { get; }
     }
 
-    public interface IMetricOperand : IMetricNode
+    public interface IMetricVariable : IMetricNode
     {
-        Scope Scope { get; }
-
-        Operand Operand { get; set; }
-        
         Dictionary<Guid, Variable> VarTypes { get; }
 
-        IMetricOperand AddVarType(Variable variable);
+        IMetricVariable AddVarType(Variable variable);
 
         bool NodeEquals(ICSharpTreeNode Node);
 
         bool NodeEquals(IDeclaredElement Node);
     }
 
-    public interface IMetricCall : IMetricNode
-    {
-        Scope Scope { get; }
-
-        Call Call { get; }
-    }
-
     public interface IMetricMockOption : IMetricNode
     {
         FakeOption FakeOption { get; }
     }
-
 }
