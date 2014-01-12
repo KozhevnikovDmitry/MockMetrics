@@ -10,10 +10,10 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override Metrics Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
+        public override Variable Eat(ISnapshot snapshot, ICSharpLiteralExpression expression)
         {
-            var result = Metrics.Create(Scope.Local, Variable.Data);
-            snapshot.AddOperand(expression, result);
+            var result = Variable.Library;
+            snapshot.AddVariable(expression, result);
             return result;
         }
     }

@@ -10,11 +10,9 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override Metrics Eat(ISnapshot snapshot, ITypeofExpression expression)
+        public override Variable Eat(ISnapshot snapshot, ITypeofExpression expression)
         {
-            snapshot.AddCall(expression, Metrics.Create(Call.Library));
-
-            return Metrics.Create(Variable.Data);
+            return Variable.Library;
         }
     }
 }

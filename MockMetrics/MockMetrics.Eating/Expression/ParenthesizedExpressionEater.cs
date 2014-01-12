@@ -9,7 +9,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IParenthesizedExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IParenthesizedExpression expression)
         {
             return Eater.Eat(snapshot, expression.Expression);
         }

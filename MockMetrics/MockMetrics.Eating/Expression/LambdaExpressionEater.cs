@@ -10,7 +10,7 @@ namespace MockMetrics.Eating.Expression
         {
         }
 
-        public override Metrics Eat(ISnapshot snapshot, ILambdaExpression expression)
+        public override Variable Eat(ISnapshot snapshot, ILambdaExpression expression)
         {
             foreach (var anonymousMethodParameterDeclaration in expression.ParameterDeclarations)
             {
@@ -26,7 +26,7 @@ namespace MockMetrics.Eating.Expression
                 Eater.Eat(snapshot, expression.BodyExpression);
             }
 
-            return Metrics.Create(Variable.Data);
+            return Variable.Library;
         }
     }
 }

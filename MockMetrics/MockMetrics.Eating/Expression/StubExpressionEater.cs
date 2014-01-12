@@ -11,9 +11,9 @@ namespace MockMetrics.Eating.Expression
             ExpressionType = GetType();
         }
 
-        public Metrics Eat(ISnapshot snapshot, ICSharpExpression statement)
+        public Variable Eat(ISnapshot snapshot, ICSharpExpression statement)
         {
-            return Metrics.Create();
+            return Variable.None;
         }
 
         public Type ExpressionType { get; private set; }

@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.Expression
             _metricHelper = metricHelper;
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IObjectCreationExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IObjectCreationExpression expression)
         {
             _argumentsEater.Eat(snapshot, expression.Arguments);
             
@@ -26,9 +26,8 @@ namespace MockMetrics.Eating.Expression
             {
                 foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
                 {
-                    var memberMetrics = Eater.Eat(snapshot, memberInitializer.Expression);
-                    memberMetrics.Scope = Scope.Local;
-                    snapshot.AddOperand(memberInitializer, memberMetrics);
+                    var varType = Eater.Eat(snapshot, memberInitializer.Expression);
+                    snapshot.AddVariable(memberInitializer, varType);
                 }
             }
 

@@ -30,7 +30,7 @@ namespace MockMetrics.Eating.Expression
             _mockOfInvocationEater = mockOfInvocationEater;
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IInvocationExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
             var invokedName = _expressionHelper.GetInvokedElementName(expression);
 
