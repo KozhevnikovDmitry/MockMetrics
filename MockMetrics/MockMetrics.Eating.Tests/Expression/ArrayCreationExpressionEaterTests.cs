@@ -40,15 +40,14 @@ namespace MockMetrics.Eating.Tests.Expression
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new ICSharpExpression[0]));
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>();
-            var resultMetrics = Metrics.Create();
-            var initilizerEater = Mock.Of<IVariableInitializerEater>(t => t.Eat(snapshot, initializer) == resultMetrics);
+            var initilizerEater = Mock.Of<IVariableInitializerEater>(t => t.Eat(snapshot, initializer) == Variable.None);
             var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater, initilizerEater);
 
             // Act
             var result = arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);
 
             // Assert
-            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }

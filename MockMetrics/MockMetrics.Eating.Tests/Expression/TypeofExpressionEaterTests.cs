@@ -22,8 +22,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metric = typeofExpressionEater.Eat(snapshot.Object, typeofExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddCall(typeofExpression, It.Is<Metrics>(m => m.Call == Call.Library)));
-            Assert.AreEqual(metric.Variable, Variable.Data);
+            Assert.AreEqual(metric, Variable.Library);
         }
     }
 }

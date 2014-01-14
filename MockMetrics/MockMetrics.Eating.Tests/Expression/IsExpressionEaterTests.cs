@@ -24,7 +24,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metrics = isExpressionEater.Eat(snapshot, isExpression);
 
             // Assert
-            Assert.AreEqual(metrics.Variable, Variable.Data);
+            Assert.AreEqual(metrics, Variable.Library);
         }
 
         [Test]
@@ -43,8 +43,7 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             snapshot.Verify(t =>
-                t.AddOperand(typeOperand,
-                             It.Is<Metrics>(m => m.Scope == Scope.Local && m.Variable == Variable.Data)),
+                t.AddVariable(typeOperand, Variable.Library),
                              Times.Once);
         }
 

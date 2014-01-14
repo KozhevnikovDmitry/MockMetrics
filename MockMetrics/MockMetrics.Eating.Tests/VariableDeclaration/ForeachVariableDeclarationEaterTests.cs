@@ -20,17 +20,15 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var foreachVariableDeclaration = Mock.Of<IForeachVariableDeclaration>(t => t.Type == type);
             var eater = Mock.Of<IEater>();
             var helper = Mock.Of<IMetricHelper>();
-            var metrics = Metrics.Create();
-            Mock.Get(helper).Setup(t => t.MetricsForType(snapshot.Object, type)).Returns(metrics);
+            Mock.Get(helper).Setup(t => t.MetricsForType(snapshot.Object, type)).Returns(Variable.None);
             var foreachVariableDeclarationEater = new ForeachVariableDeclarationEater(eater, helper);
 
             // Act
             var result = foreachVariableDeclarationEater.Eat(snapshot.Object, foreachVariableDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(foreachVariableDeclaration, metrics), Times.Once);
-            Assert.AreEqual(result, metrics);
-            Assert.AreEqual(result.Scope, Scope.Local);
+            snapshot.Verify(t => t.AddVariable(foreachVariableDeclaration, Variable.None), Times.Once);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }

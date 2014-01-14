@@ -15,16 +15,15 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
             var operand = Mock.Of<IUnaryExpression>();
-            var metrics = Metrics.Create();
             var unaryOperatorExpression = Mock.Of<IUnaryOperatorExpression>(t => t.Operand == operand);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == metrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == Variable.None);
             var unaryOperatorExpressionEater = new UnaryOperatorExpressionEater(eater);
 
             // Act
             var result = unaryOperatorExpressionEater.Eat(snapshot, unaryOperatorExpression);
 
             // Assert
-            Assert.AreEqual(result, metrics);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }

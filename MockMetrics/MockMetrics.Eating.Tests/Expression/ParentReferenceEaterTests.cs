@@ -26,7 +26,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metrics = parentReferenceEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(metrics.Scope, Scope.Internal);
+            Assert.AreEqual(metrics, Variable.None);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metrics = parentReferenceEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(metrics.Scope, Scope.Internal);
+            Assert.AreEqual(metrics, Variable.None);
         }
 
         [Test]
@@ -52,8 +52,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Arrange
             var snapshot = Mock.Of<ISnapshot>();
             var expression = Mock.Of<ICSharpExpression>();
-            var metrics = Metrics.Create();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == metrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == Variable.None);
             var managedConverible = new Mock<ExtensionArgumentInfo>(Mock.Of<ICSharpInvocationInfo>(), expression);
             var invocationExpression = Mock.Of<IInvocationExpression>(t => t.ExtensionQualifier.ManagedConvertible == managedConverible.Object);
             var parentReferenceEater = new ParentReferenceEater(eater);
@@ -62,7 +61,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var result = parentReferenceEater.Eat(snapshot, invocationExpression);
 
             // Assert
-            Assert.AreEqual(result, metrics);
+            Assert.AreEqual(result, Variable.None);
         }
 
         [Test]

@@ -21,17 +21,14 @@ namespace MockMetrics.Eating.Tests.Expression
             Mock.Get(anonymousObjectCreationExpression).Setup(t => t.AnonymousInitializer.MemberInitializers)
                 .Returns(new TreeNodeCollection<IAnonymousMemberDeclaration>(new[] { memberDeclaration }));
             var snapshot = new Mock<ISnapshot>();
-            var initialMetrics = Metrics.Create();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == initialMetrics);
-
-            var metricHelper = Mock.Of<IMetricHelper>();
-            var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater, metricHelper);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == Variable.None);
+            var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater);
 
             // Act
             anonymousObjectCreationExpressionEater.Eat(snapshot.Object, anonymousObjectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddOperand(memberDeclaration, initialMetrics), Times.Once());
+            snapshot.Verify(t => t.AddVariable(memberDeclaration, Variable.None), Times.Once());
         }
 
         [Test]
@@ -43,13 +40,13 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>();
             var metricHelper = Mock.Of<IMetricHelper>();
-            var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater, metricHelper);
+            var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater);
 
             // Act
             var metrics = anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression);
 
             // Assert
-            Assert.AreEqual(metrics.Variable, Variable.Data);
+            Assert.AreEqual(metrics, Variable.Library);
 
         } 
     }

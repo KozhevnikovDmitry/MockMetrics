@@ -38,9 +38,8 @@ namespace MockMetrics.Eating.Tests.Expression
             var elementAccessExpression = Mock.Of<IElementAccessExpression>(t => t.Operand == operand);
             Mock.Get(elementAccessExpression).Setup(t => t.Arguments)
                 .Returns(new TreeNodeCollection<ICSharpArgument>());
-            var metrics = Metrics.Create();
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == metrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == Variable.None);
             var argsEater = Mock.Of<IArgumentsEater>();
             var elementAccessExpressionEater = new ElementAccessExpressionEater(eater, argsEater);
 
@@ -48,7 +47,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var result = elementAccessExpressionEater.Eat(snapshot, elementAccessExpression);
 
             // Assert
-            Assert.AreEqual(result, metrics);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }

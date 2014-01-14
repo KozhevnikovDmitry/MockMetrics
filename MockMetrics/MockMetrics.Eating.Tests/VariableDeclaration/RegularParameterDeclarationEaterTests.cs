@@ -23,7 +23,8 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var metrics = regularParameterEater.Eat(snapshot.Object, paramDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(paramDeclaration, It.Is<Metrics>(m => m.Scope == Scope.Local && m.Variable == Variable.Data && m.Equals(metrics))));
+            Assert.AreEqual(metrics, Variable.Library);
+            snapshot.Verify(t => t.AddVariable(paramDeclaration, Variable.Library));
         }
     }
 }

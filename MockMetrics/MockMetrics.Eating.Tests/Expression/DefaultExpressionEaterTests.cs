@@ -17,8 +17,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var typeUsage = Mock.Of<IDynamicTypeUsage>();
             var defaultExpression = Mock.Of<IDefaultExpression>(t => t.TypeName == typeUsage);
-            var metrics = Metrics.Create();
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsForType(snapshot, typeUsage) == metrics);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsForType(snapshot, typeUsage) == Variable.None);
             var eater = Mock.Of<IEater>();
             var defaultExpressionEater = new DefaultExpressionEater(eater, metricHelper);
 
@@ -26,7 +25,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var result = defaultExpressionEater.Eat(snapshot, defaultExpression);
 
             // Assert
-            Assert.AreEqual(result, metrics);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }

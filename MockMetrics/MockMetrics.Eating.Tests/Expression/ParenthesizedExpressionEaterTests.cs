@@ -16,15 +16,14 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = Mock.Of<ISnapshot>();
             var expression = Mock.Of<ICSharpExpression>();
             var parenthesizedExpression = Mock.Of<IParenthesizedExpression>(t => t.Expression == expression);
-            var metrics = Metrics.Create();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == metrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, expression) == Variable.None);
             var parenthesizedExpressionEater = new ParenthesizedExpressionEater(eater);
 
             // Act
             var result = parenthesizedExpressionEater.Eat(snapshot, parenthesizedExpression);
 
             // Assert
-            Assert.AreEqual(result, metrics);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }

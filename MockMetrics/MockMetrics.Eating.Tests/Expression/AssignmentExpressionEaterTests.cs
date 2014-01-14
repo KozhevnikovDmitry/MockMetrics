@@ -37,24 +37,21 @@ namespace MockMetrics.Eating.Tests.Expression
         public void EatVariableAssignmentTest()
         {
             // Arrange
-            var sourceMetrics = Metrics.Create();
-            var destMetrics = Metrics.Create(); 
-            var mergeMetrics = Metrics.Create();
             var snapshot = Mock.Of<ISnapshot>();
             var source = Mock.Of<ICSharpExpression>();
             var dest = Mock.Of<IReferenceExpression>();
             var assignmentExpression = Mock.Of<IAssignmentExpression>(t => t.Dest == dest && t.Source == source);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, source) == sourceMetrics
-                                          && t.Eat(snapshot, dest) == destMetrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, source) == Variable.None
+                                          && t.Eat(snapshot, dest) == Variable.Library);
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(dest) == Mock.Of<IVariableDeclarationAndIDeclaredElement>());
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.VarTypeMerge(destMetrics, sourceMetrics) == mergeMetrics);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsMerge(Variable.Library, Variable.None) == Variable.Service);
             var assignmentExpressionEater = new AssignmentExpressionEater(eater, eatExpressionHelper, metricHelper);
 
             // Act
             var result = assignmentExpressionEater.Eat(snapshot, assignmentExpression);
 
             // Assert
-            Assert.That(result, Is.EqualTo(mergeMetrics));
+            Assert.That(result, Is.EqualTo(Variable.Service));
         }
         
         [Test]

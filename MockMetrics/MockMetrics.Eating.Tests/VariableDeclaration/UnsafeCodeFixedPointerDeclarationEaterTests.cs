@@ -18,17 +18,15 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var codeFixedPointerDeclaration = Mock.Of<IUnsafeCodeFixedPointerDeclaration>(t => t.Initial == initial);
             var eater = Mock.Of<IEater>();
             var variableInitializerEater = Mock.Of<IVariableInitializerEater>();
-            var metrics = Metrics.Create();
-            Mock.Get(variableInitializerEater).Setup(t => t.Eat(snapshot.Object, initial)).Returns(metrics);
+            Mock.Get(variableInitializerEater).Setup(t => t.Eat(snapshot.Object, initial)).Returns(Variable.None);
             var codeFixedPointerDeclarationEater = new UnsafeCodeFixedPointerDeclarationEater(eater, variableInitializerEater);
 
             // Act
             var result = codeFixedPointerDeclarationEater.Eat(snapshot.Object, codeFixedPointerDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(codeFixedPointerDeclaration, metrics), Times.Once);
-            Assert.AreEqual(result, metrics);
-            Assert.AreEqual(result.Scope, Scope.Local);
+            snapshot.Verify(t => t.AddVariable(codeFixedPointerDeclaration, Variable.None), Times.Once);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }

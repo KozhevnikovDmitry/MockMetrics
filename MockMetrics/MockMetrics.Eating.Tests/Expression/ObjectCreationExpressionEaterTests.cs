@@ -22,8 +22,10 @@ namespace MockMetrics.Eating.Tests.Expression
                 .Returns(args); 
             var snapshot = Mock.Of<ISnapshot>();
             var eater = Mock.Of<IEater>();
+            var metricHelper = Mock.Of<IMetricHelper>();
             var argsEater = new Mock<IArgumentsEater>();
-            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater.Object, Mock.Of<IMetricHelper>());
+            var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater.Object, metricHelper, eatExpressionHelper);
 
             // Act
             objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
@@ -43,17 +45,17 @@ namespace MockMetrics.Eating.Tests.Expression
             Mock.Get(initializer).Setup(t => t.InitializerElements)
                  .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
             var snapshot = new Mock<ISnapshot>();
-            var initialMetrics = Metrics.Create();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == initialMetrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == Variable.None);
             var argsEater = Mock.Of<IArgumentsEater>();
             var metricHelper = Mock.Of<IMetricHelper>();
-            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricHelper);
+            var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricHelper, eatExpressionHelper);
 
             // Act
             objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddOperand(memberInitializer, It.Is<Metrics>(m => m.Equals(initialMetrics) && m.Scope == Scope.Local)), Times.Once());
+            snapshot.Verify(t => t.AddVariable(memberInitializer, Variable.None), Times.Once());
         }
        
         [Test]
@@ -68,13 +70,14 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>();
             var argsEater = Mock.Of<IArgumentsEater>();
             var metricHelper = Mock.Of<IMetricHelper>();
-            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricHelper);
+            var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricHelper, eatExpressionHelper);
 
             // Act
             objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddOperand(It.IsAny<IMemberInitializer>(), It.IsAny<Metrics>()), Times.Never);
+            snapshot.Verify(t => t.AddVariable(It.IsAny<IMemberInitializer>(), It.IsAny<Variable>()), Times.Never);
         }
 
         [Test]
@@ -86,18 +89,42 @@ namespace MockMetrics.Eating.Tests.Expression
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type() == type);
             Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
                 .Returns(args);
-            var snapshot = Mock.Of<ISnapshot>();
+            var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>();
-            var argsEater = new Mock<IArgumentsEater>();
-            var typeMetrics = Metrics.Create();
-            var metricsHelper = Mock.Of<IMetricHelper>(t => t.MetricsForType(snapshot, type) == typeMetrics);
-            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater.Object, metricsHelper);
+            var argsEater = Mock.Of<IArgumentsEater>();
+            var metricsHelper = Mock.Of<IMetricHelper>(t => t.MetricsForType(snapshot.Object, type) == Variable.None);
+            var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricsHelper, eatExpressionHelper);
 
             // Act
-            var result = objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
+            var result = objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
 
             // Assert
-            Assert.AreEqual(result, typeMetrics);
+            snapshot.Verify(t => t.AddVariable(objectCreationExpression, It.IsAny<Variable>()), Times.Never);
+            Assert.AreEqual(result, Variable.None);
+        }
+
+        [Test]
+        public void AddStandaloneObjectCreationExpressionToSnapshotTest()
+        {
+            // Arrange
+            var args = new TreeNodeCollection<ICSharpArgument>();
+            var type = Mock.Of<IType>();
+            var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Type() == type);
+            Mock.Get(objectCreationExpression).Setup(t => t.Arguments)
+                .Returns(args);
+            var snapshot = new Mock<ISnapshot>();
+            var eater = Mock.Of<IEater>();
+            var argsEater = Mock.Of<IArgumentsEater>();
+            var metricsHelper = Mock.Of<IMetricHelper>(t => t.MetricsForType(snapshot.Object, type) == Variable.None);
+            var eatExpressionHelper = Mock.Of<EatExpressionHelper>(t => t.IsStandaloneObjectCreationExpression(objectCreationExpression));
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricsHelper, eatExpressionHelper);
+
+            // Act
+            objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
+
+            // Assert
+            snapshot.Verify(t => t.AddVariable(objectCreationExpression, Variable.None), Times.Once);
         }
     }
 }

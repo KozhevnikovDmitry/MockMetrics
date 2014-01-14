@@ -159,7 +159,6 @@
     <Compile Include="Statement\ReturnStatementEaterTests.cs" />
     <Compile Include="Statement\ThrowsStatementEaterTests.cs" />
     <Compile Include="Statement\LockStatementEaterTests.cs" />
-    <Compile Include="Statement\LabelStatementEaterTests.cs" />
     <Compile Include="Statement\SwitchLabelStatementEaterTests.cs" />
     <Compile Include="Statement\SwitchStatementEaterTests.cs" />
     <Compile Include="Statement\DoStatementEaterTests.cs" />

@@ -26,7 +26,7 @@ namespace MockMetrics.Eating.Tests.MoqStub
             moqOfEater.Eat(snapshot.Object, mockOfExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddOperand(mockOfExpression, It.Is<Metrics>(m => m.Scope == Scope.Local && m.Variable == Variable.Mock)), Times.Once);
+            snapshot.Verify(t => t.AddVariable(mockOfExpression,Variable.Stub), Times.Once);
         }
 
         [Test]

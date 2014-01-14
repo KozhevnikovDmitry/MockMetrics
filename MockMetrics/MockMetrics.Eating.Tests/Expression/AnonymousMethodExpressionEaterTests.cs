@@ -63,7 +63,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var metrics = anonymousMethodExpressionEater.Eat(snapshot, anonymousMethodExpression);
 
             // Assert
-            Assert.AreEqual(metrics.Variable, Variable.Data);
+            Assert.AreEqual(metrics, Variable.Library);
         }
     }
 }

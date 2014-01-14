@@ -27,8 +27,7 @@ namespace MockMetrics.Eating.Tests.Expression
 
             // Assert
             snapshot.Verify(t =>
-                t.AddOperand(targetType,
-                             It.Is<Metrics>(m => m.Scope == Scope.Local && m.Variable == Variable.Data)),
+                t.AddVariable(targetType, Variable.Library),
                              Times.Once);
         }
 
@@ -40,17 +39,15 @@ namespace MockMetrics.Eating.Tests.Expression
             var operand = Mock.Of<IUnaryExpression>();
             var targetType = Mock.Of<ITypeUsage>();
             var castExpression = Mock.Of<ICastExpression>(t => t.Op == operand && t.TargetType == targetType);
-            var operandMetrics = Metrics.Create();
-            var resultMetrics = Metrics.Create();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == operandMetrics);
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsForCasted(snapshot, operandMetrics, targetType) == resultMetrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, operand) == Variable.None);
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsForCasted(snapshot, Variable.None, targetType) == Variable.Library);
             var castExpressionEater = new CastExpressionEater(eater, metricHelper);
 
             // Act
             var result = castExpressionEater.Eat(snapshot, castExpression);
 
             // Assert
-            Assert.AreEqual(result, resultMetrics);
+            Assert.AreEqual(result, Variable.Library);
         }
     }
 }

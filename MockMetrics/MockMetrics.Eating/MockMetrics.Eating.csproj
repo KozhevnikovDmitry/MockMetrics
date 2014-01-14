@@ -70,6 +70,7 @@
     <Compile Include="Expression\LambdaExpressionEater.cs" />
     <Compile Include="Expression\DefaultExpressionEater.cs" />
     <Compile Include="Expression\PredefinedTypeExpressionEater.cs" />
+    <Compile Include="Helpers\RefereceEatHelper.cs" />
     <Compile Include="Helpers\EatExpressionHelper.cs" />
     <Compile Include="Expression\ElementAccessExpressionEater.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />

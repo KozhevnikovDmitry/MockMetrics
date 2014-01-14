@@ -14,24 +14,21 @@ namespace MockMetrics.Eating.Tests.Expression
         public void EatOperandsAndReturnMeregedMetricsTest()
         {
             // Arrange
-            var rightMetrics = Metrics.Create();
-            var leftMetrics = Metrics.Create();
-            var mergeMetrics = Metrics.Create();
             var snapshot = Mock.Of<ISnapshot>();
             var right = Mock.Of<ICSharpExpression>();
             var left = Mock.Of<IReferenceExpression>();
             var assignmentExpression = Mock.Of<IBinaryExpression>(t => t.LeftOperand == left && t.RightOperand == right);
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, right) == rightMetrics
-                                          && t.Eat(snapshot, left) == leftMetrics);
-           
-            var metricHelper = Mock.Of<IMetricHelper>(t => t.VarTypeMerge(leftMetrics, rightMetrics) == mergeMetrics);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, right) == Variable.None
+                                          && t.Eat(snapshot, left) == Variable.Stub);
+
+            var metricHelper = Mock.Of<IMetricHelper>(t => t.MetricsMerge(Variable.Stub, Variable.None) == Variable.Service);
             var binaryExpressionEater = new BinaryExpressionEater(eater, metricHelper);
 
             // Act
             var result = binaryExpressionEater.Eat(snapshot, assignmentExpression);
 
             // Assert
-            Assert.That(result, Is.EqualTo(mergeMetrics));
+            Assert.That(result, Is.EqualTo(Variable.Service));
         }
     }
 }

@@ -20,17 +20,15 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var anonymousMethodParameterDeclaration = Mock.Of<IAnonymousMethodParameterDeclaration>(t => t.Type == type);
             var eater = Mock.Of<IEater>();
             var helper = Mock.Of<IMetricHelper>();
-            var metrics = Metrics.Create();
-            Mock.Get(helper).Setup(t => t.MetricsForType(snapshot.Object, type)).Returns(metrics);
+            Mock.Get(helper).Setup(t => t.MetricsForType(snapshot.Object, type)).Returns(Variable.None);
             var anonymousMethodParameterDeclarationEater = new AnonymousMethodParameterDeclarationEater(eater, helper);
 
             // Act
             var result = anonymousMethodParameterDeclarationEater.Eat(snapshot.Object, anonymousMethodParameterDeclaration);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(anonymousMethodParameterDeclaration, metrics), Times.Once);
-            Assert.AreEqual(result, metrics);
-            Assert.AreEqual(result.Scope, Scope.Local);
+            snapshot.Verify(t => t.AddVariable(anonymousMethodParameterDeclaration, Variable.None), Times.Once);
+            Assert.AreEqual(result, Variable.None);
         }
     }
 }
