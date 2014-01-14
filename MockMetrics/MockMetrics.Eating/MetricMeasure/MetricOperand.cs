@@ -18,6 +18,7 @@ namespace MockMetrics.Eating.MetricMeasure
         }
 
         public int Depth { get; private set; }
+
         public Dictionary<Guid, Variable> VarTypes { get; private set; }
 
         public IMetricVariable AddVarType(Variable variable)
@@ -28,6 +29,11 @@ namespace MockMetrics.Eating.MetricMeasure
             }
 
             return this;
+        }
+
+        public Variable GetVarType()
+        {
+            return VarTypes.Values.Last();
         }
 
         public bool NodeEquals(ICSharpTreeNode node)
@@ -42,7 +48,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
         public override string ToString()
         {
-            return string.Format("{0}, Variable=[{1}]; VarTypeCount=[{2}];", Node, VarTypes.Values.Max(), VarTypes.Count);
+            return string.Format("{0}, Variable=[{1}]; VarTypeCount=[{2}];", Node, GetVarType(), VarTypes.Count);
         }
     }
 

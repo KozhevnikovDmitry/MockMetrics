@@ -8,14 +8,17 @@ namespace MockMetrics.Eating.Expression
     {
         private readonly IArgumentsEater _argumentsEater;
         private readonly IMetricHelper _metricHelper;
+        private readonly EatExpressionHelper _eatExpressionHelper;
 
         public ObjectCreationExpressionEater(IEater eater, 
                                              IArgumentsEater argumentsEater,
-                                             IMetricHelper metricHelper)
+                                             IMetricHelper metricHelper,
+                                             EatExpressionHelper eatExpressionHelper)
             : base(eater)
         {
             _argumentsEater = argumentsEater;
             _metricHelper = metricHelper;
+            _eatExpressionHelper = eatExpressionHelper;
         }
 
         public override Variable Eat(ISnapshot snapshot, IObjectCreationExpression expression)
@@ -27,11 +30,19 @@ namespace MockMetrics.Eating.Expression
                 foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
                 {
                     var varType = Eater.Eat(snapshot, memberInitializer.Expression);
+
                     snapshot.AddVariable(memberInitializer, varType);
                 }
             }
 
-            return _metricHelper.MetricsForType(snapshot, expression.Type());
+            var vartype = _metricHelper.MetricsForType(snapshot, expression.Type());
+
+            if (_eatExpressionHelper.IsStandaloneObjectCreationExpression(expression))
+            {
+                snapshot.AddVariable(expression, vartype);
+            }
+
+            return vartype;
         }
     }
 }

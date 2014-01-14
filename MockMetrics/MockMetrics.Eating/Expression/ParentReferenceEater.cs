@@ -33,7 +33,7 @@ namespace MockMetrics.Eating.Expression
 
             if (expression.ExtensionQualifier == null)
             {
-                return Metrics.Create(Scope.Internal);
+                return Variable.None;
             }
 
             var mc = expression.ExtensionQualifier.ManagedConvertible;
@@ -42,7 +42,7 @@ namespace MockMetrics.Eating.Expression
                 return _eater.Eat(snapshot, (mc as ExtensionArgumentInfo).Expression);
             }
 
-            return Metrics.Create(Scope.Internal);
+            return Variable.None;
         }
     }
 }

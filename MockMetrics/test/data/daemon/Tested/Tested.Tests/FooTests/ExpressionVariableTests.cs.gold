@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Tested.Tests
+namespace Tested.Tests.FooTests
 {
     /// <summary>
     /// Test#3

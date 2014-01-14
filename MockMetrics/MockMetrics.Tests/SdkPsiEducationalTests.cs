@@ -7,6 +7,7 @@ using NUnit.Framework;
 
 namespace MockMetrics.Tests
 {
+    [TestFixture]
     public class SdkPsiEducationalTests : CSharpHighlightingWithinSolutionTestBase
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting, IContextBoundSettingsStore settingsstore)

@@ -55,6 +55,11 @@ namespace MockMetrics.Eating.MetricMeasure
             Add(varDeclaration, varType);
         }
 
+        public void AddVariable(IObjectCreationExpression varDeclaration, Variable varType)
+        {
+            Add(varDeclaration, varType); ;
+        }
+
         public void AddVariable(IReferenceExpression varDeclaration, Variable assigneeMetrics)
         {
             throw new NotImplementedException();
@@ -91,7 +96,7 @@ namespace MockMetrics.Eating.MetricMeasure
         {
             get
             {
-                return Variables.Where(t => t.VarTypes.Values.Max().Equals(Variable.Target)).ToList();
+                return Variables.Where(t => t.GetVarType().Equals(Variable.Target)).ToList();
             }
         }
 
@@ -99,7 +104,7 @@ namespace MockMetrics.Eating.MetricMeasure
         {
             get
             {
-                return Variables.Where(t => t.VarTypes.Values.Max().Equals(Variable.Stub)).ToList();
+                return Variables.Where(t => t.GetVarType().Equals(Variable.Stub)).ToList();
             }
         }
 
@@ -107,7 +112,7 @@ namespace MockMetrics.Eating.MetricMeasure
         {
             get
             {
-                return Variables.Where(t => t.VarTypes.Values.Max().Equals(Variable.Mock)).ToList();
+                return Variables.Where(t => t.GetVarType().Equals(Variable.Mock)).ToList();
             }
         }
 
@@ -115,7 +120,7 @@ namespace MockMetrics.Eating.MetricMeasure
         {
             get
             {
-                return Variables.Where(t => t.VarTypes.Values.Max().Equals(Variable.Library)).ToList();
+                return Variables.Where(t => t.GetVarType().Equals(Variable.Library)).ToList();
             }
         }
 
@@ -123,7 +128,7 @@ namespace MockMetrics.Eating.MetricMeasure
         {
             get
             {
-                return Variables.Where(t => t.VarTypes.Values.Max().Equals(Variable.Service)).ToList();
+                return Variables.Where(t => t.GetVarType().Equals(Variable.Service)).ToList();
             }
         }
 
@@ -179,7 +184,7 @@ namespace MockMetrics.Eating.MetricMeasure
             if (Variables.Where(t => t.Node == variable).IsSingle())
             {
                 var node = Variables.Single(t => Equals(t.Node, variable));
-                return node.VarTypes.Values.Max();
+                return node.GetVarType();
             }
 
             throw new OperandNotFoundInSnapshotException(this, variable);
@@ -194,7 +199,7 @@ namespace MockMetrics.Eating.MetricMeasure
             if (Variables.Where(t => Equals(t.Node, paramDeclaration)).IsSingle())
             {
                 var node = Variables.Single(t => t.Node == paramDeclaration);
-                return node.VarTypes.Values.Max();
+                return node.GetVarType();
             }
 
             throw new OperandNotFoundInSnapshotException(this, paramter as ICSharpTreeNode);

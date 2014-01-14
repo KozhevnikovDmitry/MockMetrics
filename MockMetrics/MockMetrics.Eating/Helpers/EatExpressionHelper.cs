@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Helpers
 {
@@ -164,6 +166,52 @@ namespace MockMetrics.Eating.Helpers
             }
 
             return true;
+        }
+
+        public virtual bool IsStandaloneLiteralExpression([NotNull] ICSharpLiteralExpression expression)
+        {
+            if (expression == null)
+                throw new ArgumentNullException("expression");
+
+            if (expression.Parent is IExpressionInitializer ||
+                expression.Parent is IAssignmentExpression ||
+                expression.Parent is IMemberInitializer ||
+                expression.Parent is IAnonymousMemberDeclaration)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool IsStandaloneObjectCreationExpression([NotNull] IObjectCreationExpression expression)
+        {
+            if (expression == null)
+                throw new ArgumentNullException("expression");
+
+            if (expression.Parent is IExpressionInitializer ||
+                expression.Parent is IAssignmentExpression ||
+                expression.Parent is IMemberInitializer ||
+                expression.Parent is IAnonymousMemberDeclaration)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool IsReferenceToLocalVariable(ISnapshot snapshot, IReferenceExpression referenceExpression)
+        {
+            var declared = GetReferenceElement(referenceExpression);
+            if (declared is IVariableDeclaration)
+            {
+                if (snapshot.Variables.Any(t => t.Node.Equals(declared)))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

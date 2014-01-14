@@ -15,9 +15,9 @@ namespace MockMetrics.Eating.Expression
             _metricHelper = metricHelper;
         }
 
-        public override Metrics Eat(ISnapshot snapshot, IQueryExpression expression)
+        public override Variable Eat(ISnapshot snapshot, IQueryExpression expression)
         {
-            throw new NotImplementedException();
+            return Variable.None;
             //var fromMetrics = Eater.Eat(snapshot, expression.From.Expression);
             //snapshot.AddVariable(expression.From.Declaration, Metrics.Create(Scope.Local));
 

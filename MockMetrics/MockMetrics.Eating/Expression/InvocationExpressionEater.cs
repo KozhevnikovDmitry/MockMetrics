@@ -37,39 +37,41 @@ namespace MockMetrics.Eating.Expression
             if (invokedName.StartsWith("Method:Moq.Mock.Of"))
             {
                 _mockOfInvocationEater.Eat(snapshot, expression);
-                return Metrics.Create(Scope.Local, Call.Library, Variable.Mock);
+                return Variable.Stub;
+            }
+
+            if (invokedName.StartsWith("Method:Moq.Mock.Get"))
+            {
+                // TODO : special eating for Mock settings
+                return Variable.None;
+            }
+
+            if (invokedName.StartsWith("Method:Moq.It.Is"))
+            {
+                // TODO : special eating for It.Is stubs
+                return Variable.Stub;
             }
 
             _argumentsEater.Eat(snapshot, expression.Arguments);
 
-            var parentMetrics = _parentReferenceEater.Eat(snapshot, expression);
-
-            // TODO: special eater for nunit asserts, that will eat with inner eating
-            if (invokedName.StartsWith("Method:NUnit.Framework.Assert"))
+            if (expression.ExtensionQualifier != null)
             {
-                var result = Metrics.Create(Scope.Local, Call.Assert, Variable.Result);
-                snapshot.AddCall(expression, result); 
-                return result;
+                var parentVarType = _parentReferenceEater.Eat(snapshot, expression);
+                return ExecuteResult(parentVarType);
             }
 
-            // TODO: special eater for moq mock verify, that will eat with inner eating
-            if (invokedName.StartsWith("Method:Moq.Mock.Verify"))
+            return Variable.Service;
+
+        }
+
+        private Variable ExecuteResult(Variable parentVarType)
+        {
+            if (parentVarType == Variable.Library)
             {
-                var result = Metrics.Create(parentMetrics.Scope, Call.Assert, Variable.Result);
-                snapshot.AddCall(expression, result);
-                return result;
+                return Variable.Library;
             }
 
-            var invoked = _expressionHelper.GetInvokedElement(expression);
-            if (invoked is IMethod)
-            {
-                var invokedMethod = invoked as IMethod;
-                var result = _metricHelper.CallMetrics(snapshot, invokedMethod, parentMetrics);
-                snapshot.AddCall(expression, result);
-                return result;
-            }
-            
-            throw new UnexpectedInvokedElementTypeException(invoked, this, expression);
+            return Variable.Service;
         }
     }
 }

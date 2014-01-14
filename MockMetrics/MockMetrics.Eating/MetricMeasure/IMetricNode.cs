@@ -18,6 +18,8 @@ namespace MockMetrics.Eating.MetricMeasure
 
         IMetricVariable AddVarType(Variable variable);
 
+        Variable GetVarType();
+
         bool NodeEquals(ICSharpTreeNode Node);
 
         bool NodeEquals(IDeclaredElement Node);

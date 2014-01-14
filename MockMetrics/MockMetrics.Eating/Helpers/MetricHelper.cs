@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Util;
+using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Helpers
@@ -22,7 +23,7 @@ namespace MockMetrics.Eating.Helpers
 
         public Variable MetricsMerge(Variable first, Variable second)
         {
-            return first >= second ? first : second; 
+            return first >= second ? first : second;
         }
 
         public Variable MetricsForCasted([NotNull] ISnapshot snapshot,
@@ -38,7 +39,7 @@ namespace MockMetrics.Eating.Helpers
             var castMetrics = MetricsForType(snapshot, typeUsage);
             return MetricsMerge(valuetype, castMetrics);
         }
-        
+
         public Variable MetricsForType([NotNull] ISnapshot snapshot,
                                        [NotNull] ITypeUsage typeUsage)
         {
@@ -92,12 +93,39 @@ namespace MockMetrics.Eating.Helpers
         {
             if (snapshot.IsInTestScope(typeElement.Module.Name))
             {
-                //TODO if type is interface or abstract class return stub/mock? enum struct delegate?
+                if (typeElement is IInterface)
+                {
+                    return Variable.Stub;
+                }
+
+                if (typeElement is IEnum ||
+                    typeElement is IStruct ||
+                    typeElement is IDelegate)
+                {
+                    return Variable.Library;
+                }
+                
+                // also ITypeParameter
+
                 return Variable.Target;
             }
 
             if (snapshot.IsInTestProject(typeElement.Module.Name))
             {
+                if (typeElement is IInterface)
+                {
+                    return Variable.Stub;
+                }
+
+                if (typeElement is IEnum ||
+                    typeElement is IStruct ||
+                    typeElement is IDelegate)
+                {
+                    return Variable.Library;
+                }
+
+                // also ITypeParameter
+
                 return Variable.Mock;
             }
 
@@ -115,22 +143,47 @@ namespace MockMetrics.Eating.Helpers
             return Variable.Library;
         }
 
-        //public Scope GetTypeScope(ISnapshot snapshot, ITypeElement typeElement)
-        //{
-        //    if (typeElement.Methods.Contains(snapshot.UnitTest.DeclaredElement))
-        //    {
-        //        return Scope.Internal;
-        //    }
+        public Scope GetTypeScope([NotNull] ISnapshot snapshot, [NotNull] ITypeElement typeElement)
+        {
+            if (snapshot == null) throw new ArgumentNullException("snapshot");
+            if (typeElement == null) throw new ArgumentNullException("typeElement");
+            if (snapshot.IsInTestProject(typeElement.Module.Name))
+            {
+                return Scope.Tested;
+            }
 
-        //    if (snapshot.IsInTestScope(typeElement.Module.Name) ||
-        //        snapshot.IsInTestProject(typeElement.Module.Name))
-        //    {
-        //        return Scope.External;
-        //    }
+            if (snapshot.IsInTestScope(typeElement.Module.Name))
+            {
+                return Scope.Test;
+            }
 
-        //    return Scope.Local;
-        //}
-        
+            return Scope.Outside;
+        }
+
+        public Variable MetricForTypeReferece([NotNull] ISnapshot snapshot, [NotNull] ITypeElement typeElement)
+        {
+            if (snapshot == null) throw new ArgumentNullException("snapshot");
+            if (typeElement == null) throw new ArgumentNullException("typeElement");
+            switch (GetTypeScope(snapshot, typeElement))
+            {
+                case Scope.Tested:
+                    {
+                        return Variable.Target;
+                    }
+                case Scope.Test:
+                    {
+                        return Variable.Service;
+                    }
+                case Scope.Outside:
+                    {
+                        return Variable.Library;
+                    }
+            }
+
+            // TODO : more detailed exception
+            throw new ArgumentException("typeElement");
+        }
+
         //public Metrics CallMetrics(ISnapshot snapshot, IMethod invokedMethod, Metrics parentMetrics)
         //{
         //    var result = Metrics.Create(parentMetrics.Scope);
