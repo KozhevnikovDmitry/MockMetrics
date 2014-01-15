@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Helpers;
@@ -20,7 +21,7 @@ namespace MockMetrics.Eating.Tests.MoqFake
             var argEater = new Mock<IArgumentsEater>();
             var snapshot = Mock.Of<ISnapshot>();
             var parentReference = Mock.Of<IReferenceExpression>();
-            var lambdaParamDeclaration = Mock.Of<ILambdaParameterDeclarationAndIDeclaredElement>();
+            var lambdaParamDeclaration = new Mock<ILambdaParameterDeclaration>().As<IDeclaredElement>().Object;
             var args = new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]);
             var invocationOption = Mock.Of<IInvocationExpression>();
             Mock.Get(invocationOption)

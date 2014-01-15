@@ -99,6 +99,7 @@
     <Compile Include="Expression\InvocationExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Expression\InvocationStuffEaterTests.cs" />
     <Compile Include="Expression\IsExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -140,6 +141,7 @@
     <Compile Include="MoqFake\MockOfInvocationEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MoqFake\MoqFakeOptionEaterTests.cs" />
     <Compile Include="MoqFake\MoqStubOptionsEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>

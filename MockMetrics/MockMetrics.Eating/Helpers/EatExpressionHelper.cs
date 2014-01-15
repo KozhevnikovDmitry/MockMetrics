@@ -200,8 +200,11 @@ namespace MockMetrics.Eating.Helpers
             return true;
         }
 
-        public virtual bool IsReferenceToLocalVariable(ISnapshot snapshot, IReferenceExpression referenceExpression)
+        public virtual bool IsReferenceToLocalVariable([NotNull] ISnapshot snapshot,
+                                                       [NotNull] IReferenceExpression referenceExpression)
         {
+            if (snapshot == null) throw new ArgumentNullException("snapshot");
+            if (referenceExpression == null) throw new ArgumentNullException("referenceExpression");
             var declared = GetReferenceElement(referenceExpression);
             if (declared is IVariableDeclaration)
             {
@@ -214,13 +217,15 @@ namespace MockMetrics.Eating.Helpers
             return false;
         }
 
-        public virtual IReferenceExpression GetParentReference(IReferenceExpression referenceExpression)
+        public virtual IReferenceExpression GetParentReference([NotNull] IReferenceExpression referenceExpression)
         {
+            if (referenceExpression == null) throw new ArgumentNullException("referenceExpression");
             return referenceExpression.QualifierExpression as IReferenceExpression;
         }
 
-        public virtual IReferenceExpression GetParentReference(IInvocationExpression invocationExpression)
+        public virtual IReferenceExpression GetParentReference([NotNull] IInvocationExpression invocationExpression)
         {
+            if (invocationExpression == null) throw new ArgumentNullException("invocationExpression");
             if (invocationExpression.ExtensionQualifier == null)
             {
                 return null;
@@ -233,6 +238,33 @@ namespace MockMetrics.Eating.Helpers
             }
 
             return null;
+        }
+
+        public virtual bool IsMoqFakeOptionParameter([NotNull] ILambdaParameterDeclaration variableDeclaration)
+        {
+            if (variableDeclaration == null) throw new ArgumentNullException("variableDeclaration");
+
+            var lambdaExpression = variableDeclaration.Parent.Parent;
+
+            if (lambdaExpression.Parent is ICSharpArgument)
+            {
+                var arg = lambdaExpression.Parent as ICSharpArgument;
+                if (arg.Parent is IArgumentList)
+                {
+                    var argList = arg.Parent as IArgumentList;
+
+                    if (argList.Parent is IInvocationExpression)
+                    {
+                        var invocation = argList.Parent as IInvocationExpression;
+
+                        var invokedName = GetInvokedElementName(invocation);
+
+                        return invokedName.StartsWith("Method:Moq");
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -99,8 +99,8 @@ namespace MockMetrics.Tests
             var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
-            Assert.AreEqual(snapshot.Stubs.Count(), 2, "Assert stubs");
-            Assert.AreEqual(snapshot.Librarians.Count(), 5, "Assert library");
+            Assert.AreEqual(snapshot.Stubs.Count(), 3, "Assert stubs");
+            Assert.AreEqual(snapshot.Librarians.Count(), 3, "Assert library");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets"); 
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Assert mocks");
             Assert.AreEqual(snapshot.Services.Count(), 2, "Assert services");
@@ -120,7 +120,7 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Librarians.Count(), 5, "Assert library");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Assert mocks");
-            Assert.AreEqual(snapshot.Services.Count(), 2, "Assert services");
+            Assert.AreEqual(snapshot.Services.Count(), 3, "Assert services");
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Librarians.Count(), 2, "Assert library");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Assert mocks");
-            Assert.AreEqual(snapshot.Services.Count(), 1, "Assert services");
+            Assert.AreEqual(snapshot.Services.Count(), 2, "Assert services");
         }
 
         /// <summary>
@@ -154,7 +154,7 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Librarians.Count(), 2, "Assert library");
             Assert.AreEqual(snapshot.Targets.Count(), 0, "Assert targets");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Assert mocks");
-            Assert.AreEqual(snapshot.Services.Count(), 1, "Assert services");
+            Assert.AreEqual(snapshot.Services.Count(), 2, "Assert services");
         }
     }
 }

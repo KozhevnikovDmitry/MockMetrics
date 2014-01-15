@@ -6,5 +6,7 @@ namespace MockMetrics.Eating.MoqFake
     public interface IMoqInvocationEater
     {
         Variable Eat(ISnapshot snapshot, IInvocationExpression expression);
+
+        bool ContainsFakeOptions(IInvocationExpression expression);
     }
 }
