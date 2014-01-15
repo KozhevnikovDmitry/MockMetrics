@@ -2,8 +2,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Resolve;
-using JetBrains.ReSharper.Psi.Tree;
+using JetBrains.Util;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
@@ -22,8 +21,8 @@ namespace MockMetrics.Eating.MoqFake
         private readonly IArgumentsEater _argumentsEater;
 
         public ItIsInvocationEater([NotNull] IEater eater, 
-            [NotNull] EatExpressionHelper eatExpressionHelper,
-            [NotNull] IArgumentsEater argumentsEater)
+                                   [NotNull] EatExpressionHelper eatExpressionHelper,
+                                   [NotNull] IArgumentsEater argumentsEater)
         {
             if (eater == null) throw new ArgumentNullException("eater");
             if (eatExpressionHelper == null) throw new ArgumentNullException("eatExpressionHelper");
@@ -55,7 +54,12 @@ namespace MockMetrics.Eating.MoqFake
 
             if (invokedName.StartsWith("Method:Moq.It.Is"))
             {
-                EatFakeOption(snapshot, invocationExpression.ArgumentList.Arguments.Single());
+                if (!invocationExpression.Arguments.IsSingle())
+                {
+                    throw new NotSingleItIsInvacotaionArgumentException(this, invocationExpression);
+                }
+
+                EatFakeOption(snapshot, invocationExpression.Arguments.Single());
                 return Variable.Stub;
             }
 
@@ -66,6 +70,11 @@ namespace MockMetrics.Eating.MoqFake
         {
             if (fakeArgument.Expression is ILambdaExpression)
             {
+                if (!(fakeArgument.Expression as ILambdaExpression).ParameterDeclarations.IsSingle())
+                {
+                    throw new NotSingleInIsOptionLambdaParameterException(this, fakeArgument);
+                }
+
                 var parameter = (fakeArgument.Expression as ILambdaExpression).ParameterDeclarations.Single();
                 var methodFakes = _eater.EatedNodes.OfType<IInvocationExpression>()
                                         .Where(t => _eatExpressionHelper.GetParentReference(t) != null && 

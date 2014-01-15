@@ -105,6 +105,8 @@
     <Compile Include="MoqFake\MoqStubOptionWrongTypeException.cs" />
     <Compile Include="MoqFake\MoqStubWrongSyntaxException.cs" />
     <Compile Include="MoqFake\MockOfInvocationEater.cs" />
+    <Compile Include="MoqFake\NotSingleInIsOptionLambdaParameterException.cs" />
+    <Compile Include="MoqFake\NotSingleItIsInvacotaionArgumentException.cs" />
     <Compile Include="MoqFake\UnexpectedMoqItIsMethodNameException.cs" />
     <Compile Include="QueryClause\QueryClauseEater.cs" />
     <Compile Include="QueryClause\QueryFromClause.cs" />

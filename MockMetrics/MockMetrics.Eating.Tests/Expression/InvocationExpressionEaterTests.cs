@@ -48,7 +48,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>();
             var parentEater = Mock.Of<IParentReferenceEater>();
             var argsEater = new Mock<IArgumentsEater>();
-            var mockEater = Mock.Of<IMockOfInvocationEater>();
+            var mockEater = Mock.Of<IMoqInvocationEater>();
             var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == string.Empty);
             var invocationEater = new InvocationExpressionEater(eater, expressionHelper, parentEater, argsEater.Object, mockEater);
 
@@ -68,7 +68,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>();
             var parentEater = Mock.Of<IParentReferenceEater>();
             var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = Mock.Of<IMockOfInvocationEater>();
+            var mockEater = Mock.Of<IMoqInvocationEater>();
             var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == string.Empty);
             var invocationEater = new InvocationExpressionEater(eater, expressionHelper, parentEater, argsEater, mockEater);
 
@@ -93,7 +93,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = new Mock<ISnapshot>();
             var parentEater = Mock.Of<IParentReferenceEater>(t => t.Eat(snapshot.Object, invocationExpression) == parentVarType);
             var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = Mock.Of<IMockOfInvocationEater>();
+            var mockEater = Mock.Of<IMoqInvocationEater>();
             var eater = Mock.Of<IEater>();
             var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == string.Empty);
             var invocationEater = new InvocationExpressionEater(eater, expressionHelper, parentEater, argsEater, mockEater);
