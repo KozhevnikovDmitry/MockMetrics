@@ -3,7 +3,7 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
-using MockMetrics.Eating.MoqStub;
+using MockMetrics.Eating.MoqFake;
 
 namespace MockMetrics.Eating.Expression
 {
@@ -12,41 +12,28 @@ namespace MockMetrics.Eating.Expression
         private readonly EatExpressionHelper _expressionHelper;
         private readonly IParentReferenceEater _parentReferenceEater;
         private readonly IArgumentsEater _argumentsEater;
-        private readonly IMockOfInvocationEater _mockOfInvocationEater;
+        private readonly IMoqInvocationEater _moqInvocationEater;
 
         public InvocationExpressionEater(IEater eater, 
                                          EatExpressionHelper expressionHelper,
                                          IParentReferenceEater parentReferenceEater,
                                          IArgumentsEater argumentsEater,
-                                         IMockOfInvocationEater mockOfInvocationEater)
+                                         IMoqInvocationEater moqInvocationEater)
             : base(eater)
         {
             _expressionHelper = expressionHelper;
             _parentReferenceEater = parentReferenceEater;
             _argumentsEater = argumentsEater;
-            _mockOfInvocationEater = mockOfInvocationEater;
+            _moqInvocationEater = moqInvocationEater;
         }
 
         public override Variable Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
             var invokedName = _expressionHelper.GetInvokedElementName(expression);
 
-            if (invokedName.StartsWith("Method:Moq.Mock.Of"))
+            if (invokedName.StartsWith("Method:Moq"))
             {
-                _mockOfInvocationEater.Eat(snapshot, expression);
-                return Variable.Stub;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Get"))
-            {
-                // TODO : special eating for Mock settings
-                return Variable.None;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.It.Is"))
-            {
-                // TODO : special eating for It.Is stubs
-                return Variable.Stub;
+                return _moqInvocationEater.Eat(snapshot, expression);
             }
 
             _argumentsEater.Eat(snapshot, expression.Arguments);

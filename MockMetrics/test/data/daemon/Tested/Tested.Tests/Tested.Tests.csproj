@@ -49,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SimpleTests\PrimitiveVariableTests.cs.gold" />
+    <None Include="FooTests\ItIsFakeOptionTests.cs.gold" />
+    <Compile Include="FooTests\ItIsFakeOptionTests.cs" />
     <Compile Include="SimpleTests\PrimitiveVariableTests.cs" />
     <None Include="FooTests\StubTests.cs.gold" />
     <None Include="AggregatorTests\MoqAssignmentStubsTests.cs.gold" />

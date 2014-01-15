@@ -24,6 +24,7 @@ namespace MockMetrics.Eating
                 _eater.Eat(snapshot, parameterDeclaration);
             }
 
+            _eater.EatedNodes.Clear();
             _eater.Eat(snapshot, unitTest.Body);
 
             return snapshot;

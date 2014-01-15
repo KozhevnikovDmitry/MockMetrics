@@ -21,14 +21,19 @@ namespace MockMetrics.Eating
         Variable Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
 
         Variable Eat(ISnapshot snapshot, IQueryClause queryClause);
+
+        List<ICSharpTreeNode> EatedNodes { get; }
     }
 
     public class Eater : IEater
     {
         private readonly IContainer _container;
 
+        public List<ICSharpTreeNode> EatedNodes { get; private set; } 
+
         public Eater(IContainer container)
         {
+            EatedNodes = new List<ICSharpTreeNode>();
             _container = container;
         }
 
@@ -36,6 +41,8 @@ namespace MockMetrics.Eating
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");
+
+            EatedNodes.Add(expression);
 
             return GetEater(expression).Eat(snapshot, expression);
         }
@@ -45,6 +52,8 @@ namespace MockMetrics.Eating
             if (statement == null)
                 throw new ArgumentNullException("statement");
 
+            EatedNodes.Add(statement);
+
             GetEater(statement).Eat(snapshot, statement);
         }
 
@@ -53,6 +62,8 @@ namespace MockMetrics.Eating
             if (queryClause == null)
                 throw new ArgumentNullException("queryClause");
 
+            EatedNodes.Add(queryClause);
+
             return GetEater(queryClause).Eat(snapshot, queryClause);
         }
 
@@ -60,6 +71,8 @@ namespace MockMetrics.Eating
         {
             if (variableDeclaration == null)
                 throw new ArgumentNullException("variableDeclaration");
+
+            EatedNodes.Add(variableDeclaration);
 
             return GetEater(variableDeclaration).Eat(snapshot, variableDeclaration);
         }

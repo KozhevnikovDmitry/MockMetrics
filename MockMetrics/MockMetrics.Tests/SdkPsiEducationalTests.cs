@@ -61,5 +61,13 @@ namespace MockMetrics.Tests
             var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
+
+        [TestCase(@"<Tested.Tests>\FooTests\ItIsFakeOptionTests.cs")]
+        public void ItIsFakeOptionTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+        }
     }
 }

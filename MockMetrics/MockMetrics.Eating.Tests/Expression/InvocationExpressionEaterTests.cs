@@ -1,12 +1,10 @@
-﻿using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp;
+﻿using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
-using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
-using MockMetrics.Eating.MoqStub;
+using MockMetrics.Eating.MoqFake;
 using Moq;
 using NUnit.Framework;
 
@@ -16,7 +14,7 @@ namespace MockMetrics.Eating.Tests.Expression
     public class InvocationExpressionEaterTests
     {
         [Test]
-        public void EatMockOfInvocationTest()
+        public void EatMoqInvocationTest()
         {
             // Arrange
             var args = new TreeNodeCollection<ICSharpArgument>();
@@ -27,62 +25,15 @@ namespace MockMetrics.Eating.Tests.Expression
             var eater = Mock.Of<IEater>();
             var parentEater = Mock.Of<IParentReferenceEater>();
             var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = new Mock<IMockOfInvocationEater>();
-            var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Of");
-            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, parentEater, argsEater, mockEater.Object);
-
-            // Act
-            var result = invocationEater.Eat(snapshot, invocationExpression);
-
-            // Assert
-            Assert.AreEqual(result, Variable.Stub);
-            mockEater.Verify(t => t.Eat(snapshot, invocationExpression), Times.Once);
-        }
-
-        [Test]
-        public void EatMockGetInvocationTest()
-        {
-            // Arrange
-            var args = new TreeNodeCollection<ICSharpArgument>();
-            var invocationExpression = Mock.Of<IInvocationExpression>();
-            Mock.Get(invocationExpression).Setup(t => t.Arguments)
-                .Returns(args);
-            var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>();
-            var parentEater = Mock.Of<IParentReferenceEater>();
-            var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = new Mock<IMockOfInvocationEater>();
-            var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.Mock.Get");
-            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, parentEater, argsEater, mockEater.Object);
+            var mockEater = Mock.Of<IMoqInvocationEater>(t => t.Eat(snapshot, invocationExpression) == Variable.None);
+            var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq");
+            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, parentEater, argsEater, mockEater);
 
             // Act
             var result = invocationEater.Eat(snapshot, invocationExpression);
 
             // Assert
             Assert.AreEqual(result, Variable.None);
-        }
-
-        [Test]
-        public void EatItIsStubInvocationTest()
-        {
-            // Arrange
-            var args = new TreeNodeCollection<ICSharpArgument>();
-            var invocationExpression = Mock.Of<IInvocationExpression>();
-            Mock.Get(invocationExpression).Setup(t => t.Arguments)
-                .Returns(args);
-            var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>();
-            var parentEater = Mock.Of<IParentReferenceEater>();
-            var argsEater = Mock.Of<IArgumentsEater>();
-            var mockEater = new Mock<IMockOfInvocationEater>();
-            var expressionHelper = Mock.Of<EatExpressionHelper>(t => t.GetInvokedElementName(invocationExpression) == "Method:Moq.It.Is");
-            var invocationEater = new InvocationExpressionEater(eater, expressionHelper, parentEater, argsEater, mockEater.Object);
-
-            // Act
-            var result = invocationEater.Eat(snapshot, invocationExpression);
-
-            // Assert
-            Assert.AreEqual(result, Variable.Stub);
         }
 
         [Test]

@@ -76,6 +76,8 @@ namespace Tested
 
     public interface IAnother
     {
+        string Mamba { get; set; }
+
         int Calabanga(string s);
     }
 

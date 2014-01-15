@@ -2,11 +2,11 @@
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
-using MockMetrics.Eating.MoqStub;
-using NUnit.Framework;
+using MockMetrics.Eating.MoqFake;
 using Moq;
+using NUnit.Framework;
 
-namespace MockMetrics.Eating.Tests.MoqStub
+namespace MockMetrics.Eating.Tests.MoqFake
 {
     [TestFixture]
     public class MockOfInvocationEaterTests

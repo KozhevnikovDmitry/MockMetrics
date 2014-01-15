@@ -1,7 +1,7 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 
-namespace MockMetrics.Eating.MoqStub
+namespace MockMetrics.Eating.MoqFake
 {
     public class MoqStubOptionWrongTypeException : EatingException
     {

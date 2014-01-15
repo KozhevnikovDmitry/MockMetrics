@@ -213,5 +213,26 @@ namespace MockMetrics.Eating.Helpers
 
             return false;
         }
+
+        public virtual IReferenceExpression GetParentReference(IReferenceExpression referenceExpression)
+        {
+            return referenceExpression.QualifierExpression as IReferenceExpression;
+        }
+
+        public virtual IReferenceExpression GetParentReference(IInvocationExpression invocationExpression)
+        {
+            if (invocationExpression.ExtensionQualifier == null)
+            {
+                return null;
+            }
+
+            var mc = invocationExpression.ExtensionQualifier.ManagedConvertible;
+            if (mc is ExtensionArgumentInfo)
+            {
+                return (mc as ExtensionArgumentInfo).Expression as IReferenceExpression;
+            }
+
+            return null;
+        }
     }
 }

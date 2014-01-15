@@ -3,7 +3,7 @@ using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
-namespace MockMetrics.Eating.MoqStub
+namespace MockMetrics.Eating.MoqFake
 {
     public interface IMoqStubOptionTargetEater
     {
