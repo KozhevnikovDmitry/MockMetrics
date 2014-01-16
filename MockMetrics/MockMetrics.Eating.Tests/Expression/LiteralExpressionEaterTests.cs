@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>();
             var expressionHelper =
-                Mock.Of<EatExpressionHelper>(t => t.IsStandaloneLiteralExpression(literalExpression) == false);
+                Mock.Of<EatExpressionHelper>(t => t.IsStandaloneExpression(literalExpression) == false);
             var literalExpressionEater = new LiteralExpressionEater(eater, expressionHelper);
 
             // Act
@@ -37,7 +37,7 @@ namespace MockMetrics.Eating.Tests.Expression
             var snapshot = new Mock<ISnapshot>();
             var eater = Mock.Of<IEater>();
             var expressionHelper =
-                Mock.Of<EatExpressionHelper>(t => t.IsStandaloneLiteralExpression(literalExpression) == true);
+                Mock.Of<EatExpressionHelper>(t => t.IsStandaloneExpression(literalExpression) == true);
             var literalExpressionEater = new LiteralExpressionEater(eater, expressionHelper);
 
             // Act

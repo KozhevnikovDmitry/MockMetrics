@@ -60,9 +60,23 @@ namespace MockMetrics.Eating.MetricMeasure
             Add(varDeclaration, varType); ;
         }
 
-        public void AddVariable(IReferenceExpression varDeclaration, Variable assigneeMetrics)
+        public void AddVariable(IReferenceExpression referenceExpression, Variable varType)
         {
-            throw new NotImplementedException();
+            // TODO : doubling with EatExpressionHelper
+            if (referenceExpression.Reference.CurrentResolveResult != null)
+            {
+                var declaration =
+                    referenceExpression.Reference.CurrentResolveResult.DeclaredElement as ICSharpDeclaration;
+
+                if (declaration != null && VariableNodes.Contains(declaration))
+                {
+                    AddVariable(declaration, varType);
+                    return;
+                }
+            }
+
+
+            Add(referenceExpression, varType);
         }
 
         private void Add([NotNull] ICSharpTreeNode varDeclaration, Variable varType)
@@ -91,6 +105,11 @@ namespace MockMetrics.Eating.MetricMeasure
 
 
         #region Statistics
+
+        public IList<ICSharpTreeNode> VariableNodes
+        {
+            get { return Variables.Select(t => t.Node).ToList(); }
+        }
 
         public IList<IMetricVariable> Targets
         {

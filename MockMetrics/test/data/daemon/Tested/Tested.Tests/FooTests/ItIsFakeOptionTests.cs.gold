@@ -1,4 +1,4 @@
-﻿using Moq;
+using Moq;
 using NUnit.Framework;
 
 namespace Tested.Tests.FooTests
@@ -9,7 +9,7 @@ namespace Tested.Tests.FooTests
         [Test]
         public void ItIsFakeOptionTest()
         {
-            var fake2 = It.Is<IAnother>(t => t.Calabanga("sad") == 1);
+            var fake2 = It.Is<IAnother>(t => t.Calabanga("sad") == 1 && t.Mamba == "sdfdsf");
         }
     }
 }

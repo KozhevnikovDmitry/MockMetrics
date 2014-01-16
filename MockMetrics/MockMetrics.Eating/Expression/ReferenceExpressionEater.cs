@@ -24,7 +24,15 @@ namespace MockMetrics.Eating.Expression
                 curVarType = Variable.Library;
             }
 
-            return _refereceEatHelper.ExecuteResult(curVarType, snapshot, expression);
+            var result = _refereceEatHelper.ExecuteResult(curVarType, snapshot, expression);
+
+            // TODO : Cover by unit tests
+            if (_refereceEatHelper.IsStandaloneMethodReference(expression))
+            {
+                snapshot.AddVariable(expression, result);
+            }
+
+            return result;
         }
 
         

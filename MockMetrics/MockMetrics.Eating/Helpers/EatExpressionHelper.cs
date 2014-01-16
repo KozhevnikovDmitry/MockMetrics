@@ -6,6 +6,7 @@ using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
+using Moq;
 
 namespace MockMetrics.Eating.Helpers
 {
@@ -152,23 +153,22 @@ namespace MockMetrics.Eating.Helpers
             return extensionArgumentInfo.Expression;
         }
 
-        public virtual bool IsStandaloneMoqStubExpression([NotNull] IInvocationExpression expression)
+        public virtual bool IsStandaloneExpression([NotNull] IInvocationExpression expression)
         {
-            if (expression == null) 
-                throw new ArgumentNullException("expression");
-
-            if (expression.Parent is IExpressionInitializer ||
-                expression.Parent is IAssignmentExpression ||
-                expression.Parent is IMemberInitializer ||
-                expression.Parent is IAnonymousMemberDeclaration)
-            {
-                return false;
-            }
-
-            return true;
+            return IsStandaloneExpr(expression);
         }
 
-        public virtual bool IsStandaloneLiteralExpression([NotNull] ICSharpLiteralExpression expression)
+        public virtual bool IsStandaloneExpression([NotNull] ICSharpLiteralExpression expression)
+        {
+            return IsStandaloneExpr(expression);
+        }
+
+        public virtual bool IsStandaloneExpression([NotNull] IReferenceExpression expression)
+        {
+            return IsStandaloneExpr(expression);
+        }
+
+        private bool IsStandaloneExpr(ICSharpExpression expression)
         {
             if (expression == null)
                 throw new ArgumentNullException("expression");

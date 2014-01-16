@@ -12,6 +12,7 @@ namespace MockMetrics.Eating.Helpers
         Variable Eat(ISnapshot snapshot, IReferenceExpression expression);
         Variable GetParentedVarType(ISnapshot snapshot, IReferenceExpression expression);
         Variable ExecuteResult(Variable vartype, ISnapshot snapshot, IReferenceExpression expression);
+        bool IsStandaloneMethodReference(IReferenceExpression expression);
     }
 
     public class RefereceEatHelper : IRefereceEatHelper
@@ -138,6 +139,21 @@ namespace MockMetrics.Eating.Helpers
             }
 
             return vartype;
+        }
+
+        public bool IsStandaloneMethodReference(IReferenceExpression expression)
+        {
+            if (_eatExpressionHelper.IsStandaloneExpression(expression))
+            {
+                var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
+
+                if (declaredElement is IMethod)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool IsAssignAcceptor(IReferenceExpression referenceExpression)

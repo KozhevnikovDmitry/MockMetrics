@@ -39,7 +39,7 @@ namespace MockMetrics.Eating.MoqFake
             {
                 if (!(fakeArgument.Expression as ILambdaExpression).ParameterDeclarations.IsSingle())
                 {
-                    throw new NotSingleInIsOptionLambdaParameterException(this, fakeArgument);
+                    throw new NotSingleMoqFakeOptionLambdaParameterException(this, fakeArgument);
                 }
 
                 var parameter = (fakeArgument.Expression as ILambdaExpression).ParameterDeclarations.Single();

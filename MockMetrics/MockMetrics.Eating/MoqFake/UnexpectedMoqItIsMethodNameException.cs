@@ -9,6 +9,5 @@ namespace MockMetrics.Eating.MoqFake
             : base(string.Format("Unexpected It.Is Moq-stub invocation method name [{0}]", methodName), eater, node)
         {
         }
-
     }
 }

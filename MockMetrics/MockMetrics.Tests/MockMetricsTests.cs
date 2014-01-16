@@ -150,11 +150,31 @@ namespace MockMetrics.Tests
             var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
-            Assert.AreEqual(snapshot.Stubs.Count(), 4, "Assert stubs");
-            Assert.AreEqual(snapshot.Librarians.Count(), 2, "Assert library");
-            Assert.AreEqual(snapshot.Targets.Count(), 0, "Assert targets");
-            Assert.AreEqual(snapshot.Mocks.Count(), 0, "Assert mocks");
-            Assert.AreEqual(snapshot.Services.Count(), 2, "Assert services");
         }
+
+        /// <summary>
+        /// Test#8
+        /// </summary>
+        [TestCase(@"<Tested.Tests>\AggregatorTests\MoqSyntaxTests.cs")]
+        public void MoqSyntaxTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+
+            Assert.AreEqual(snapshot.Stubs.Count(), 12, "Assert stubs");
+            Assert.AreEqual(snapshot.Librarians.Count(), 23, "Assert library");
+            Assert.AreEqual(snapshot.Targets.Count(), 0, "Assert targets");
+            Assert.AreEqual(snapshot.Mocks.Count(), 2, "Assert mocks");
+            Assert.AreEqual(snapshot.Services.Count(), 21, "Assert services");
+
+            Assert.AreEqual(snapshot.FakeProperties.Count(), 12, "Assert fake properties");
+            Assert.AreEqual(snapshot.FakeMethods.Count(), 9, "Assert fake methods");
+            Assert.AreEqual(snapshot.FakeCallbacks.Count(), 2, "Assert fake calbacks");
+            Assert.AreEqual(snapshot.FakeExceptions.Count(), 2, "Assert fake exception");
+
+        }
+
+        
     }
 }

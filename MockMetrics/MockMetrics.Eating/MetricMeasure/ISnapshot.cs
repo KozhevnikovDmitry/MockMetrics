@@ -13,7 +13,7 @@ namespace MockMetrics.Eating.MetricMeasure
         void AddVariable(ITypeUsage varDeclaration, Variable varType);
         void AddVariable(IInitializerElement varDeclaration, Variable varType);
         void AddVariable(ICSharpLiteralExpression varDeclaration, Variable varType);
-        void AddVariable(IReferenceExpression varDeclaration, Variable varType);
+        void AddVariable(IReferenceExpression referenceExpression, Variable varType);
         void AddVariable(IObjectCreationExpression varDeclaration, Variable varType);
         void AddFakeOption(ICSharpExpression option, FakeOption fakeOption);
 

@@ -8,7 +8,8 @@ namespace MockMetrics.Eating.Expression
     {
         private readonly IVariableInitializerEater _variableInitializerEater;
 
-        public ArrayCreationExpressionEater(IEater eater, IVariableInitializerEater variableInitializerEater) : base(eater)
+        public ArrayCreationExpressionEater(IEater eater, IVariableInitializerEater variableInitializerEater)
+            : base(eater)
         {
             _variableInitializerEater = variableInitializerEater;
         }
@@ -18,7 +19,8 @@ namespace MockMetrics.Eating.Expression
             // TODO : check in functional tests
             foreach (ICSharpExpression size in expression.Sizes)
             {
-                Eater.Eat(snapshot, size);
+                if (size != null)
+                    Eater.Eat(snapshot, size);
             }
 
             return _variableInitializerEater.Eat(snapshot, expression.ArrayInitializer);

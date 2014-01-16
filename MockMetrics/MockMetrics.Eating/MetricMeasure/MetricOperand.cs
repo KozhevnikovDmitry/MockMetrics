@@ -48,7 +48,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
         public override string ToString()
         {
-            return string.Format("{0}, Variable=[{1}]; VarTypeCount=[{2}];", Node, GetVarType(), VarTypes.Count);
+            return string.Format("{0}, Text=[{1}], Variable=[{2}]; VarTypeCount=[{3}];", Node, Node.GetText(), GetVarType(), VarTypes.Count);
         }
     }
 
@@ -68,7 +68,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
         public override string ToString()
         {
-            return string.Format("{0}, FakeOption=[{1}];", Node, FakeOption);
+            return string.Format("{0}, Text=[{1}], FakeOption=[{2}];", Node, Node.GetText(), FakeOption);
         }
     }
 }

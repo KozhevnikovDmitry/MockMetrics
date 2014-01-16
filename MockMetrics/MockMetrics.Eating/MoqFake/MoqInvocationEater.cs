@@ -1,105 +1,51 @@
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.Util;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.MoqFake
 {
+    public interface IMoqInvocationEater
+    {
+        Variable Eat(ISnapshot snapshot, IInvocationExpression expression);
+
+        bool ContainsFakeOptions(IInvocationExpression expression);
+    }
+
+
+    // TODO : cover by unit tests
     public class MoqInvocationEater : IMoqInvocationEater, ICSharpNodeEater
     {
-        private readonly IMockOfInvocationEater _mockOfInvocationEater;
         private readonly IMoqFakeOptionEater _moqFakeOptionEater;
         private readonly EatExpressionHelper _eatExpressionHelper;
+        private readonly MoqSyntaxHelper _moqSyntaxHelper;
         private readonly IInvocationStuffEater _invocationStuffEater;
 
-        public MoqInvocationEater([NotNull] IMockOfInvocationEater mockOfInvocationEater,
-                                  [NotNull] IMoqFakeOptionEater moqFakeOptionEater,
+        public MoqInvocationEater([NotNull] IMoqFakeOptionEater moqFakeOptionEater,
                                   [NotNull] EatExpressionHelper eatExpressionHelper,
+                                  [NotNull] MoqSyntaxHelper moqSyntaxHelper,
                                   [NotNull] IInvocationStuffEater invocationStuffEater)
         {
-            if (mockOfInvocationEater == null) throw new ArgumentNullException("mockOfInvocationEater");
             if (moqFakeOptionEater == null) throw new ArgumentNullException("moqFakeOptionEater");
+            if (moqSyntaxHelper == null) throw new ArgumentNullException("moqSyntaxHelper");
             if (invocationStuffEater == null) throw new ArgumentNullException("invocationStuffEater");
 
-            _mockOfInvocationEater = mockOfInvocationEater;
             _moqFakeOptionEater = moqFakeOptionEater;
             _eatExpressionHelper = eatExpressionHelper;
+            _moqSyntaxHelper = moqSyntaxHelper;
             _invocationStuffEater = invocationStuffEater;
         }
 
         public Variable Eat(ISnapshot snapshot, IInvocationExpression expression)
         {
-            var invokedName = _eatExpressionHelper.GetInvokedElementName(expression);
-            var result = Variable.Library;
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Get"))
-            {
-                result = Variable.None;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Returns"))
-            {
-                result = Variable.None;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Callback"))
-            {
-                snapshot.AddFakeOption(expression, FakeOption.CallBack);
-                result = Variable.None;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Throws"))
-            {
-                snapshot.AddFakeOption(expression, FakeOption.Exception);
-                result = Variable.None;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.Mock.SetupGet") ||
-                invokedName.StartsWith("Method:Moq.Mock.SetupSet") ||
-                invokedName.StartsWith("Method:Moq.Mock.VerifyGet") ||
-                invokedName.StartsWith("Method:Moq.Mock.VerifySet") ||
-                invokedName.StartsWith("Method:Moq.Mock.SetupProperty") ||
-                invokedName.StartsWith("Method:Moq.Mock.SetupProperty") ||
-                invokedName.StartsWith("Method:Moq.Mock.SetupAllProperties"))
-            {
-                snapshot.AddFakeOption(expression, FakeOption.Property);
-                result = Variable.None;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Setup"))
-            {
-                _moqFakeOptionEater.Eat(snapshot, expression);
-                result = Variable.None;
-
-            }
-
-            if (invokedName.StartsWith("Method:Moq.Mock.Of"))
-            {
-                _moqFakeOptionEater.Eat(snapshot, expression);
-                result = Variable.Stub;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.It.IsAny") ||
-                invokedName.StartsWith("Method:Moq.It.IsIn") ||
-                invokedName.StartsWith("Method:Moq.It.IsInRange") ||
-                invokedName.StartsWith("Method:Moq.It.IsNotIn") ||
-                invokedName.StartsWith("Method:Moq.It.IsRegex") ||
-                invokedName.StartsWith("Method:Moq.It.IsNotNull"))
-            {
-                result = Variable.Stub;
-            }
-
-            if (invokedName.StartsWith("Method:Moq.It.Is"))
-            {
-                _moqFakeOptionEater.Eat(snapshot, expression);
-                result = Variable.Stub;
-            }
-
             _invocationStuffEater.Eat(snapshot, expression);
 
-            if (_eatExpressionHelper.IsStandaloneMoqStubExpression(expression))
+            Variable result = ChooseMethod(snapshot, expression) ?? Variable.Library;
+
+            if (_eatExpressionHelper.IsStandaloneExpression(expression))
             {
                 snapshot.AddVariable(expression, result);
             }
@@ -107,10 +53,71 @@ namespace MockMetrics.Eating.MoqFake
             return result;
         }
 
+        private Variable? ChooseMethod(ISnapshot snapshot, IInvocationExpression expression)
+        {
+            var moqInvoke = _moqSyntaxHelper.GetMoqInvokeType(expression);
+
+            switch (moqInvoke)
+            {
+                case MoqInvoke.None:
+                    {
+                        return Variable.None;
+                    }
+                case MoqInvoke.Mock:
+                    {
+                        AddMock(snapshot, expression);
+                        return Variable.Mock;
+                    }
+                case MoqInvoke.FakeProperty:
+                    {
+                        snapshot.AddFakeOption(expression, FakeOption.Property);
+                        return Variable.None;
+                    }
+                case MoqInvoke.FakeCallback:
+                    {
+                        snapshot.AddFakeOption(expression, FakeOption.CallBack);
+                        return Variable.None;
+                    }
+                case MoqInvoke.FakeException:
+                    {
+                        snapshot.AddFakeOption(expression, FakeOption.Exception);
+                        return Variable.None;
+                    }
+                case MoqInvoke.FakeWithOptions:
+                    {
+                        _moqFakeOptionEater.Eat(snapshot, expression);
+                        return Variable.None;
+                    }
+                case MoqInvoke.StubWithOptions:
+                    {
+                        _moqFakeOptionEater.Eat(snapshot, expression);
+                        return Variable.Stub;
+                    }
+                case MoqInvoke.FakeWithoutOptions:
+                    {
+                        return Variable.Stub;
+                    }
+            }
+
+            return null;
+        }
+
         public bool ContainsFakeOptions(IInvocationExpression expression)
         {
             var invokedName = _eatExpressionHelper.GetInvokedElementName(expression);
             return invokedName.StartsWith("Method:Moq");
+        }
+
+        private void AddMock(ISnapshot snapshot, IInvocationExpression expression)
+        {
+            if (!expression.Arguments.IsSingle())
+            {
+                throw new NotSingleMockGetInvacotaionArgumentException(this, expression);
+            }
+
+            var mockRef = expression.Arguments.Single().Value as IReferenceExpression;
+            if (mockRef != null)
+                snapshot.AddVariable(mockRef, Variable.Mock);
         }
     }
 }

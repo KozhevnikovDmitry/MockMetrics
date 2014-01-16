@@ -18,7 +18,7 @@ namespace MockMetrics.Eating.Expression
         {
             var result = Variable.Library;
 
-            if (_eatExpressionHelper.IsStandaloneLiteralExpression(expression))
+            if (_eatExpressionHelper.IsStandaloneExpression(expression))
             {
                 snapshot.AddVariable(expression, result);
             }

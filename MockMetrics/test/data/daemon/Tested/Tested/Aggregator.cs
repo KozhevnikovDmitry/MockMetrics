@@ -79,6 +79,8 @@ namespace Tested
         string Mamba { get; set; }
 
         int Calabanga(string s);
+
+        void Calabanga();
     }
 
     public interface IDepend

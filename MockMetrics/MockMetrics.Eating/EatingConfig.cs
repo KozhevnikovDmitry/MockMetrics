@@ -5,6 +5,7 @@ using System.Reflection;
 using HaveBox;
 using HaveBox.Configuration;
 using MockMetrics.Eating.Helpers;
+using MockMetrics.Eating.MoqFake;
 
 namespace MockMetrics.Eating
 {
@@ -15,6 +16,7 @@ namespace MockMetrics.Eating
             For<IContainer>().Use(() => container);
             For<IEater>().Use<Eater>().AsSingleton();
             For<EatExpressionHelper>().Use<EatExpressionHelper>().AsSingleton();
+            For<MoqSyntaxHelper>().Use<MoqSyntaxHelper>().AsSingleton();
             For<IMetricHelper>().Use<MetricHelper>().AsSingleton();
             For<UnitTestEater>().Use<UnitTestEater>().AsSingleton();
             assembly.GetTypes()

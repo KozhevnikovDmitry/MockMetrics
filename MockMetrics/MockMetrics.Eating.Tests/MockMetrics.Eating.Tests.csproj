@@ -137,17 +137,7 @@
     <Compile Include="Expression\UnaryOperatorExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MoqFake\ItIsInvocationEaterTests.cs" />
-    <Compile Include="MoqFake\MockOfInvocationEaterTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="MoqFake\MoqFakeOptionEaterTests.cs" />
-    <Compile Include="MoqFake\MoqStubOptionsEaterTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="MoqFake\MoqStubOptionTargetEaterTests.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Statement\TryStatementEaterTests.cs" />
     <Compile Include="Statement\UsingStatementEaterTests.cs" />
     <Compile Include="StubTypes\IEventDeclarationAndIDeclaredElement.cs" />

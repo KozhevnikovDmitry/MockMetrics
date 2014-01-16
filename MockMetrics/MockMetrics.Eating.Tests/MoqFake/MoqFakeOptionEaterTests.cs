@@ -15,7 +15,7 @@ namespace MockMetrics.Eating.Tests.MoqFake
     class MoqFakeOptionEaterTests
     {
         [Test]
-        public void EatItIsMethodOptionTest()
+        public void EatMethodOptionTest()
         {
             // Arrange
             var methodOptionParent = Mock.Of<IReferenceExpression>();
@@ -45,7 +45,7 @@ namespace MockMetrics.Eating.Tests.MoqFake
         }
 
         [Test]
-        public void EatItIsPropertyOptionTest()
+        public void EatPropertyOptionTest()
         {
             // Arrange
             var propertyOptionParent = Mock.Of<IReferenceExpression>();
@@ -77,7 +77,7 @@ namespace MockMetrics.Eating.Tests.MoqFake
         public void EatWithoutArgumentsTest()
         {
             // Arrange
-            var args = new TreeNodeCollection<ICSharpArgument>();
+            var args = new TreeNodeCollection<ICSharpArgument>(new ICSharpArgument[0]);
             var invocationExpression = Mock.Of<IInvocationExpression>();
             Mock.Get(invocationExpression).Setup(t => t.Arguments)
                 .Returns(args); 
@@ -90,7 +90,7 @@ namespace MockMetrics.Eating.Tests.MoqFake
             itIsInvocationEater.Eat(snapshot.Object, invocationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddFakeOption(It.IsAny<ICSharpExpression>(), It.IsAny<FakeOption>()));
+            snapshot.Verify(t => t.AddFakeOption(It.IsAny<ICSharpExpression>(), It.IsAny<FakeOption>()), Times.Never());
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace MockMetrics.Eating.Tests.MoqFake
             var itIsInvocationEater = new MoqFakeOptionEater(eater, eatExpressionHelper);
 
             // Assert
-            Assert.Throws<NotSingleInIsOptionLambdaParameterException>(() => itIsInvocationEater.Eat(snapshot, invocationExpression));
+            Assert.Throws<NotSingleMoqFakeOptionLambdaParameterException>(() => itIsInvocationEater.Eat(snapshot, invocationExpression));
         }
     }
 }
