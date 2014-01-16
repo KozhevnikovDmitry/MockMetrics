@@ -31,5 +31,26 @@ namespace MockMetrics.Eating.Tests.Expression
             // Act
             return referenceExpressionEater.Eat(snapshot, referenceExpression);
         }
+
+        [Test]
+        public void EatStandaloneMethodReferenceTest()
+        {
+            // Arrange
+            var snapshot = new Mock<ISnapshot>();
+            var expressionQualifier = Mock.Of<ICSharpExpression>();
+            var referenceExpression = Mock.Of<IReferenceExpression>(t => t.QualifierExpression == expressionQualifier);
+            var eatHelper = Mock.Of<IRefereceEatHelper>(t => t.Eat(snapshot.Object, referenceExpression) == Variable.None
+                                                          && t.ExecuteResult(It.IsAny<Variable>(), snapshot.Object, referenceExpression) == Variable.None
+                                                          && t.ExecuteResult(Variable.Library, snapshot.Object, referenceExpression) == Variable.None
+                                                          && t.IsStandaloneMethodReference(referenceExpression));
+            var eater = Mock.Of<IEater>();
+            var referenceExpressionEater = new ReferenceExpressionEater(eater, eatHelper);
+
+            // Act
+            referenceExpressionEater.Eat(snapshot.Object, referenceExpression);
+
+            // Assert
+            snapshot.Verify(t => t.AddVariable(referenceExpression, Variable.None));
+        }
     }
 }

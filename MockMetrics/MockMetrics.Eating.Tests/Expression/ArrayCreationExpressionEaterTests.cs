@@ -31,6 +31,25 @@ namespace MockMetrics.Eating.Tests.Expression
         }
 
         [Test]
+        public void EatNullSizesTest()
+        {
+            // Arrange
+            ICSharpExpression size = null;
+            var arrayCreationExpression = Mock.Of<IArrayCreationExpression>();
+            Mock.Get(arrayCreationExpression).Setup(t => t.Sizes)
+                .Returns(new TreeNodeCollection<ICSharpExpression>(new[] { size }));
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
+            var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater.Object, Mock.Of<IVariableInitializerEater>());
+
+            // Act
+            arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, size), Times.Never());
+        }
+
+        [Test]
         public void EatArrayInitializerTest()
         {
             // Arrange

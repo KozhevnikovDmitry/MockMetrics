@@ -128,6 +128,7 @@ namespace MockMetrics.Eating.Helpers
             throw new UnexpectedReferenceTypeException(declaredElement, this, expression);
         }
 
+        // TODO : Cover by unit tests
         public Variable ExecuteResult(Variable vartype, ISnapshot snapshot, IReferenceExpression expression)
         {
             if (IsUltimateReference(expression))
@@ -139,21 +140,6 @@ namespace MockMetrics.Eating.Helpers
             }
 
             return vartype;
-        }
-
-        public bool IsStandaloneMethodReference(IReferenceExpression expression)
-        {
-            if (_eatExpressionHelper.IsStandaloneExpression(expression))
-            {
-                var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
-
-                if (declaredElement is IMethod)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private bool IsAssignAcceptor(IReferenceExpression referenceExpression)
@@ -169,6 +155,22 @@ namespace MockMetrics.Eating.Helpers
         private bool IsUltimateReference(IReferenceExpression expression)
         {
             return expression.FirstChild == null;
+        }
+
+        // TODO : Cover by unit tests
+        public bool IsStandaloneMethodReference(IReferenceExpression expression)
+        {
+            if (_eatExpressionHelper.IsStandaloneExpression(expression))
+            {
+                var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
+
+                if (declaredElement is IMethod)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

@@ -16,7 +16,6 @@ namespace MockMetrics.Eating.Expression
 
         public override Variable Eat(ISnapshot snapshot, IArrayCreationExpression expression)
         {
-            // TODO : check in functional tests
             foreach (ICSharpExpression size in expression.Sizes)
             {
                 if (size != null)

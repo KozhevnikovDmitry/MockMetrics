@@ -2,7 +2,6 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.DeclaredElements;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
-using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.Tests.StubTypes;
@@ -167,8 +166,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.AreEqual(result, Variable.Service);
         }
-
-
+        
         [Test]
         public void EatAliasReferenceTest()
         {
@@ -187,8 +185,7 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.AreEqual(result, Variable.None);
         }
-
-
+        
         [Test]
         public void EatNamespaceReferenceTest()
         {
@@ -223,5 +220,45 @@ namespace MockMetrics.Eating.Tests.Expression
             // Assert
             Assert.Throws<UnexpectedReferenceTypeException>(() => refereceEatHelper.Eat(snapshot, referenceExpression));
         }
-    }
+
+        [Test]
+        public void GetParentedVarTypeNullParentReferenceTest()
+        {
+            // Arrange
+            var referenceExpression = Mock.Of<IReferenceExpression>();
+            var declaredElement = Mock.Of<IDeclaredElement>();
+            var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == declaredElement);
+            var snapshot = Mock.Of<ISnapshot>();
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var eater = Mock.Of<IEater>();
+            var refereceEatHelper = new RefereceEatHelper(eater, metricHelper, eatHelper);
+            
+            // Act
+            var result = refereceEatHelper.GetParentedVarType(snapshot, referenceExpression);
+
+            // Assert
+            Assert.AreEqual(result, Variable.None);
+        }
+
+        [TestCase(Variable.Library, Result = Variable.Library)]
+        [TestCase(Variable.None, Result = Variable.None)]
+        [TestCase(Variable.Target, Result = Variable.Service)]
+        [TestCase(Variable.Stub, Result = Variable.Service)]
+        [TestCase(Variable.Service, Result = Variable.Service)]
+        [TestCase(Variable.Mock, Result = Variable.Service)]
+        public Variable GetParentedVarTypeTest(Variable parentReference)
+        {
+            // Arrange
+            var qualifierReference = Mock.Of<ICSharpExpression>();
+            var referenceExpression = Mock.Of<IReferenceExpression>(t => t.QualifierExpression == qualifierReference);
+            var declaredElement = Mock.Of<IDeclaredElement>();
+            var eatHelper = Mock.Of<EatExpressionHelper>(t => t.GetReferenceElement(referenceExpression) == declaredElement);
+            var snapshot = Mock.Of<ISnapshot>();
+            var metricHelper = Mock.Of<IMetricHelper>();
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, qualifierReference) == parentReference);
+            var refereceEatHelper = new RefereceEatHelper(eater, metricHelper, eatHelper);
+
+            // Act
+            return refereceEatHelper.GetParentedVarType(snapshot, referenceExpression);
+        }
 }

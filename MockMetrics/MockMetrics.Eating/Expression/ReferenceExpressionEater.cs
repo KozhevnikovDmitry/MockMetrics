@@ -26,7 +26,6 @@ namespace MockMetrics.Eating.Expression
 
             var result = _refereceEatHelper.ExecuteResult(curVarType, snapshot, expression);
 
-            // TODO : Cover by unit tests
             if (_refereceEatHelper.IsStandaloneMethodReference(expression))
             {
                 snapshot.AddVariable(expression, result);
