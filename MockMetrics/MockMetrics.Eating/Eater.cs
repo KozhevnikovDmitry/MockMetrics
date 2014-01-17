@@ -5,6 +5,7 @@ using System.Linq;
 using HaveBox;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Expression;
+using MockMetrics.Eating.InitializerElement;
 using MockMetrics.Eating.MetricMeasure;
 using MockMetrics.Eating.QueryClause;
 using MockMetrics.Eating.Statement;
@@ -22,6 +23,8 @@ namespace MockMetrics.Eating
 
         Variable Eat(ISnapshot snapshot, IQueryClause queryClause);
 
+        Variable Eat(ISnapshot snapshot, IInitializerElement initializerElement);
+
         List<ICSharpTreeNode> EatedNodes { get; }
     }
 
@@ -29,7 +32,7 @@ namespace MockMetrics.Eating
     {
         private readonly IContainer _container;
 
-        public List<ICSharpTreeNode> EatedNodes { get; private set; } 
+        public List<ICSharpTreeNode> EatedNodes { get; private set; }
 
         public Eater(IContainer container)
         {
@@ -57,6 +60,16 @@ namespace MockMetrics.Eating
             GetEater(statement).Eat(snapshot, statement);
         }
 
+        public Variable Eat(ISnapshot snapshot, IInitializerElement initializerElement)
+        {
+            if (initializerElement == null)
+                throw new ArgumentNullException("statement");
+
+            EatedNodes.Add(initializerElement);
+
+            return GetEater(initializerElement).Eat(snapshot, initializerElement);
+        }
+
         public Variable Eat(ISnapshot snapshot, IQueryClause queryClause)
         {
             if (queryClause == null)
@@ -76,7 +89,22 @@ namespace MockMetrics.Eating
 
             return GetEater(variableDeclaration).Eat(snapshot, variableDeclaration);
         }
-        
+
+        [DebuggerStepThrough]
+        private IInitializerElementEater GetEater(IInitializerElement initializerElement)
+        {
+            var eater =
+             _container.GetInstance<IEnumerable<IInitializerElementEater>>()
+                 .SingleOrDefault(t => t.InitializerElementType.IsInstanceOfType(initializerElement));
+
+            if (eater == null)
+            {
+                return new StubInitializerElementEater();
+            }
+
+            return eater;
+        }
+
         [DebuggerStepThrough]
         private IVariableDeclarationEater GetEater(IVariableDeclaration variableDeclaration)
         {
@@ -91,7 +119,7 @@ namespace MockMetrics.Eating
 
             return eater;
         }
-        
+
         [DebuggerStepThrough]
         public IExpressionEater GetEater(ICSharpExpression expression)
         {

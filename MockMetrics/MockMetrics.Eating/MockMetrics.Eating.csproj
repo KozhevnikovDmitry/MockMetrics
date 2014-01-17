@@ -77,6 +77,16 @@
     <Compile Include="Expression\ExpressionEater.cs" />
     <Compile Include="Helpers\IMetricHelper.cs" />
     <Compile Include="Helpers\MetricHelper.cs" />
+    <Compile Include="InitializerElement\AnonymousMemberDeclarationEater.cs" />
+    <Compile Include="InitializerElement\ArrayInitializerEater.cs" />
+    <Compile Include="InitializerElement\CollectionElementInitializerEater.cs" />
+    <Compile Include="InitializerElement\ExpressionInitializerEater.cs" />
+    <Compile Include="InitializerElement\IInitializerElementEater.cs" />
+    <Compile Include="InitializerElement\InitializerElementEater.cs" />
+    <Compile Include="InitializerElement\MemberInitializerEater.cs" />
+    <Compile Include="InitializerElement\StubInitializerElementEater.cs" />
+    <Compile Include="InitializerElement\UnsafeCodeFixedPointerInitializerEater.cs" />
+    <Compile Include="InitializerElement\UnsafeCodeStackAllocInitializerEater.cs" />
     <Compile Include="MetricMeasure\IMetricNode.cs" />
     <Compile Include="MetricMeasure\ISnapshot.cs" />
     <Compile Include="MetricMeasure\MetricOperand.cs" />
@@ -154,7 +164,6 @@
     <Compile Include="VariableDeclaration\RegularParameterDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\UnsafeCodeFixedPointerDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\VariableDeclarationEater.cs" />
-    <Compile Include="VariableDeclaration\VariableInitializerEater.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

@@ -137,6 +137,13 @@
     <Compile Include="Expression\UnaryOperatorExpressionEaterTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="InitializerElement\AnonymousMemberDeclarationEaterTests.cs" />
+    <Compile Include="InitializerElement\ArrayInitializerEaterTests.cs" />
+    <Compile Include="InitializerElement\CollectionElementInitializerEater.cs" />
+    <Compile Include="InitializerElement\ExpressionInitializerEater.cs" />
+    <Compile Include="InitializerElement\MemberInitializerEater.cs" />
+    <Compile Include="InitializerElement\UnsafeCodeFixedPointerInitializerEater.cs" />
+    <Compile Include="InitializerElement\UnsafeCodeStackAllocInitializerEater.cs" />
     <Compile Include="MoqFake\MoqFakeOptionEaterTests.cs" />
     <Compile Include="Statement\TryStatementEaterTests.cs" />
     <Compile Include="Statement\UsingStatementEaterTests.cs" />
@@ -173,7 +180,6 @@
     <Compile Include="VariableDeclaration\LocalVariableDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\RegularParameterDeclarationEaterTests.cs" />
     <Compile Include="VariableDeclaration\UnsafeCodeFixedPointerDeclarationEaterTests.cs" />
-    <Compile Include="VariableDeclaration\VariableInitializerEaterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />

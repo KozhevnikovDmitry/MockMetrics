@@ -15,20 +15,19 @@ namespace MockMetrics.Eating.Tests.Expression
         public void EatMemberDeclarationsTest()
         {
             // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var memberDeclaration = Mock.Of<IAnonymousMemberDeclaration>(t => t.Expression == expression);
+            var memberDeclaration = Mock.Of<IAnonymousMemberDeclaration>();
             var anonymousObjectCreationExpression = Mock.Of<IAnonymousObjectCreationExpression>();
             Mock.Get(anonymousObjectCreationExpression).Setup(t => t.AnonymousInitializer.MemberInitializers)
                 .Returns(new TreeNodeCollection<IAnonymousMemberDeclaration>(new[] { memberDeclaration }));
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == Variable.None);
-            var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater);
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
+            var anonymousObjectCreationExpressionEater = new AnonymousObjectCreationExpressionEater(eater.Object);
 
             // Act
-            anonymousObjectCreationExpressionEater.Eat(snapshot.Object, anonymousObjectCreationExpression);
+            anonymousObjectCreationExpressionEater.Eat(snapshot, anonymousObjectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(memberDeclaration, Variable.None), Times.Once());
+            eater.Verify(t => t.Eat(snapshot, memberDeclaration), Times.Once());
         }
 
         [Test]

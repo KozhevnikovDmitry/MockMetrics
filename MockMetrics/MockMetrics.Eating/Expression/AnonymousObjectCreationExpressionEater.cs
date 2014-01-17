@@ -13,11 +13,9 @@ namespace MockMetrics.Eating.Expression
 
         public override Variable Eat(ISnapshot snapshot, IAnonymousObjectCreationExpression expression)
         {
-            // TODO: cover by functional tests
             foreach (var memberDeclaration in expression.AnonymousInitializer.MemberInitializers)
             {
-                var memberMetrics = Eater.Eat(snapshot, memberDeclaration.Expression);
-                snapshot.AddVariable(memberDeclaration, memberMetrics);
+                Eater.Eat(snapshot, memberDeclaration);
             }
 
             return Variable.Library;

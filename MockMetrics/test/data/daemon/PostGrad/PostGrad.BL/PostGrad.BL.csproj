@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{88B3A12D-ADFA-4CFF-A48C-45DE652C415D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PostGrad.BL</RootNamespace>
+    <AssemblyName>PostGrad.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AddInList\After\CheckHolderDataAddIn.cs" />
+    <Compile Include="AddInList\After\ILinkagerAddIn.cs" />
+    <Compile Include="AddInList\After\LinkageDossierAddIn.cs" />
+    <Compile Include="AddInList\After\LinkageHolderAddIn.cs" />
+    <Compile Include="AddInList\After\LinkageLicenseAddIn.cs" />
+    <Compile Include="AddInList\After\Linkager.cs" />
+    <Compile Include="AddInList\After\LinkageRequisitesAddIn.cs" />
+    <Compile Include="AddInList\After\SetupFileAddIn.cs" />
+    <Compile Include="AddInList\Before\Linkager.cs" />
+    <Compile Include="DiActionContext\After\DiActionContext.cs" />
+    <Compile Include="DiActionContext\After\SupervisionFacade.cs" />
+    <Compile Include="DiActionContext\After\ServiceResultGranter.cs" />
+    <Compile Include="DiActionContext\Before\SupervisionFacade.cs" />
+    <Compile Include="DiActionContext\Before\ServiceResultGranter.cs" />
+    <Compile Include="InitializedObject\After\CacheRepository.cs" />
+    <Compile Include="InitializedObject\After\ICacheRepository.cs" />
+    <Compile Include="InitializedObject\Before\ICacheRepository.cs" />
+    <Compile Include="InitializedObject\Before\CacheRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StepByStep\After\BuildingFileSteps.cs" />
+    <Compile Include="StepByStep\After\DossierFileBuildingFacade.cs" />
+    <Compile Include="StepByStep\Before\DossierFileBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PostGrad.Core\PostGrad.Core.csproj">
+      <Project>{38D57C52-810A-4092-AE27-40FA714884DA}</Project>
+      <Name>PostGrad.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

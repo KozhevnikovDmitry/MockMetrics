@@ -6,7 +6,6 @@ using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
-using Moq;
 
 namespace MockMetrics.Eating.Helpers
 {

@@ -27,11 +27,10 @@ namespace MockMetrics.Eating.Expression
             
             if (expression.Initializer != null)
             {
-                foreach (IMemberInitializer memberInitializer in expression.Initializer.InitializerElements)
+                // TODO : Cover by unit tests
+                foreach (IInitializerElement initializer in expression.Initializer.InitializerElements)
                 {
-                    var varType = Eater.Eat(snapshot, memberInitializer.Expression);
-
-                    snapshot.AddVariable(memberInitializer, varType);
+                    Eater.Eat(snapshot, initializer);
                 }
             }
 

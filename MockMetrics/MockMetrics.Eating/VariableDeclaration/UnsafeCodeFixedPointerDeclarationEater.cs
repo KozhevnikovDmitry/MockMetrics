@@ -5,17 +5,14 @@ namespace MockMetrics.Eating.VariableDeclaration
 {
     public class UnsafeCodeFixedPointerDeclarationEater : VariableDeclarationEater<IUnsafeCodeFixedPointerDeclaration>
     {
-        private readonly IVariableInitializerEater _variableInitializerEater;
-
-        public UnsafeCodeFixedPointerDeclarationEater(IEater eater, IVariableInitializerEater variableInitializerEater)
+        public UnsafeCodeFixedPointerDeclarationEater(IEater eater)
             : base(eater)
         {
-            _variableInitializerEater = variableInitializerEater;
         }
 
         public override Variable Eat(ISnapshot snapshot, IUnsafeCodeFixedPointerDeclaration variableDeclaration)
         {
-            var varType = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
+            var varType = Eater.Eat(snapshot, variableDeclaration.Initial);
             snapshot.AddVariable(variableDeclaration, varType);
             return varType;
         }

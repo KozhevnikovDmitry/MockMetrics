@@ -2,7 +2,6 @@
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.MetricMeasure;
-using MockMetrics.Eating.VariableDeclaration;
 using NUnit.Framework;
 using Moq;
 
@@ -21,7 +20,7 @@ namespace MockMetrics.Eating.Tests.Expression
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new[] { size }));
             var snapshot = Mock.Of<ISnapshot>();
             var eater = new Mock<IEater>();
-            var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater.Object, Mock.Of<IVariableInitializerEater>());
+            var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater.Object);
 
             // Act
             arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);
@@ -40,7 +39,7 @@ namespace MockMetrics.Eating.Tests.Expression
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new[] { size }));
             var snapshot = Mock.Of<ISnapshot>();
             var eater = new Mock<IEater>();
-            var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater.Object, Mock.Of<IVariableInitializerEater>());
+            var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater.Object);
 
             // Act
             arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);
@@ -58,9 +57,8 @@ namespace MockMetrics.Eating.Tests.Expression
             Mock.Get(arrayCreationExpression).Setup(t => t.Sizes)
                 .Returns(new TreeNodeCollection<ICSharpExpression>(new ICSharpExpression[0]));
             var snapshot = Mock.Of<ISnapshot>();
-            var eater = Mock.Of<IEater>();
-            var initilizerEater = Mock.Of<IVariableInitializerEater>(t => t.Eat(snapshot, initializer) == Variable.None);
-            var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater, initilizerEater);
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot, initializer) == Variable.None);
+            var arrayCreationExpressionEater = new ArrayCreationExpressionEater(eater);
 
             // Act
             var result = arrayCreationExpressionEater.Eat(snapshot, arrayCreationExpression);

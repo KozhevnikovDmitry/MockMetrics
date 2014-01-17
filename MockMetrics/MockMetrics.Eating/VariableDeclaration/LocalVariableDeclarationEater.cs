@@ -6,15 +6,12 @@ namespace MockMetrics.Eating.VariableDeclaration
 {
     public class LocalVariableDeclarationEater : VariableDeclarationEater<ILocalVariableDeclaration>
     {
-        private readonly IVariableInitializerEater _variableInitializerEater;
         private readonly IMetricHelper _metricHelper;
 
         public LocalVariableDeclarationEater(IEater eater, 
-                                             IVariableInitializerEater variableInitializerEater,
                                              IMetricHelper metricHelper)
             : base(eater)
         {
-            _variableInitializerEater = variableInitializerEater;
             _metricHelper = metricHelper;
         }
 
@@ -27,7 +24,8 @@ namespace MockMetrics.Eating.VariableDeclaration
                 return varType;
             }
 
-            var variable = _variableInitializerEater.Eat(snapshot, variableDeclaration.Initial);
+            // TODO : Cover by unit tests
+            var variable = Eater.Eat(snapshot, variableDeclaration.Initial);
             snapshot.AddVariable(variableDeclaration, variable);
             return variable;
         }

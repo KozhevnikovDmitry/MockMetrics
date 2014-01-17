@@ -38,24 +38,23 @@ namespace MockMetrics.Eating.Tests.Expression
         public void EatMemberInitializersTest()
         {
             // Arrange
-            var expression = Mock.Of<ICSharpExpression>();
-            var memberInitializer = Mock.Of<IMemberInitializer>(t => t.Expression == expression);
+            var memberInitializer = Mock.Of<IMemberInitializer>();
             var initializer = Mock.Of<ICreationExpressionInitializer>();
             var objectCreationExpression = Mock.Of<IObjectCreationExpression>(t => t.Initializer == initializer);
             Mock.Get(initializer).Setup(t => t.InitializerElements)
                  .Returns(new TreeNodeCollection<IInitializerElement>(new[] { memberInitializer }));
-            var snapshot = new Mock<ISnapshot>();
-            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, expression) == Variable.None);
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
             var argsEater = Mock.Of<IArgumentsEater>();
             var metricHelper = Mock.Of<IMetricHelper>();
             var eatExpressionHelper = Mock.Of<EatExpressionHelper>();
-            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater, argsEater, metricHelper, eatExpressionHelper);
+            var objectCreationExpressionEater = new ObjectCreationExpressionEater(eater.Object, argsEater, metricHelper, eatExpressionHelper);
 
             // Act
-            objectCreationExpressionEater.Eat(snapshot.Object, objectCreationExpression);
+            objectCreationExpressionEater.Eat(snapshot, objectCreationExpression);
 
             // Assert
-            snapshot.Verify(t => t.AddVariable(memberInitializer, Variable.None), Times.Once());
+            eater.Verify(t => t.Eat(snapshot, memberInitializer), Times.Once());
         }
        
         [Test]

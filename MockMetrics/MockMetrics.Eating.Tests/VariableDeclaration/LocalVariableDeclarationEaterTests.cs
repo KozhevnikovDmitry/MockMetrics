@@ -18,10 +18,8 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var snapshot = new Mock<ISnapshot>();
             var initial = Mock.Of<IVariableInitializer>();
             var localVariableDeclaration = Mock.Of<ILocalVariableDeclaration>(t => t.Initial == initial);
-            var eater = Mock.Of<IEater>();
-            var variableInitializerEater = Mock.Of<IVariableInitializerEater>();
-            Mock.Get(variableInitializerEater).Setup(t => t.Eat(snapshot.Object, initial)).Returns(Variable.None);
-            var localVariableDeclarationEater = new LocalVariableDeclarationEater(eater, variableInitializerEater, Mock.Of<IMetricHelper>());
+            var eater = Mock.Of<IEater>(t => t.Eat(snapshot.Object, initial) == Variable.None);
+            var localVariableDeclarationEater = new LocalVariableDeclarationEater(eater,  Mock.Of<IMetricHelper>());
 
             // Act
             var result = localVariableDeclarationEater.Eat(snapshot.Object, localVariableDeclaration);
@@ -41,8 +39,7 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var metricHelper = Mock.Of<IMetricHelper>();
             Mock.Get(metricHelper).Setup(t => t.MetricsForType(snapshot.Object, type)).Returns(Variable.None);
             var eater = Mock.Of<IEater>();
-            var initializerEater = Mock.Of<IVariableInitializerEater>();
-            var localConstantDeclarationEater = new LocalVariableDeclarationEater(eater, initializerEater, metricHelper);
+            var localConstantDeclarationEater = new LocalVariableDeclarationEater(eater, metricHelper);
 
             // Act
             localConstantDeclarationEater.Eat(snapshot.Object, localVariableDeclaration);

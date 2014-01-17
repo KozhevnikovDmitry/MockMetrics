@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{38D57C52-810A-4092-AE27-40FA714884DA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PostGrad.Core</RootNamespace>
+    <AssemblyName>PostGrad.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BL\BuildingDataNotCompleteException.cs" />
+    <Compile Include="BL\CantAddProvidedDocumentWithEmptyNameException.cs" />
+    <Compile Include="BL\CantAddProvidedDocumentWithNegativeQuantityException.cs" />
+    <Compile Include="BL\CantSetStatusException.cs" />
+    <Compile Include="BL\DictionaryItemNotFoundException.cs" />
+    <Compile Include="BL\DictionaryNotFoundException.cs" />
+    <Compile Include="BL\DossierFileLinkWrapper.cs" />
+    <Compile Include="BL\GranterWorksWithTaskWithWrongStatusException.cs" />
+    <Compile Include="BL\HolderInfo.cs" />
+    <Compile Include="BL\ICacheRepository.cs" />
+    <Compile Include="BL\IDomainDataMapper.cs" />
+    <Compile Include="BL\IDossierFileBuilder.cs" />
+    <Compile Include="BL\IDossierFileLinkWrapper.cs" />
+    <Compile Include="BL\ILicenseDossierRepository.cs" />
+    <Compile Include="BL\ILicenseHolderRepository.cs" />
+    <Compile Include="BL\ILicenseObjectProvider.cs" />
+    <Compile Include="BL\ILicenseProvider.cs" />
+    <Compile Include="BL\ILifeTimeScope.cs" />
+    <Compile Include="BL\ILinkager.cs" />
+    <Compile Include="BL\ITaskParser.cs" />
+    <Compile Include="BL\ITaskStatusPolicy.cs" />
+    <Compile Include="BL\LicenseInfo.cs" />
+    <Compile Include="BL\NoDossierLinkagedException.cs" />
+    <Compile Include="BL\NoExistingDossierForLightSceanrioException.cs" />
+    <Compile Include="BL\NoExistingHolderForLightSceanrioException.cs" />
+    <Compile Include="BL\NotSingleResulstOnLightScenarioException.cs" />
+    <Compile Include="BL\RequisitesOrigin.cs" />
+    <Compile Include="BL\TooMoreLinkagingLicesensesException.cs" />
+    <Compile Include="BL\UnavailableRequisitesException.cs" />
+    <Compile Include="BL\WrongScenarioSteplistException.cs" />
+    <Compile Include="Common\BLLException.cs" />
+    <Compile Include="Common\BaseException.cs" />
+    <Compile Include="Common\Util.cs" />
+    <Compile Include="DomainModel\Address.cs" />
+    <Compile Include="DomainModel\CloneIgnoreAttribute.cs" />
+    <Compile Include="DomainModel\CommonData.cs" />
+    <Compile Include="DomainModel\DbUser.cs" />
+    <Compile Include="DomainModel\DomainObject.cs" />
+    <Compile Include="DomainModel\Dossier\AnnexRevision.cs" />
+    <Compile Include="DomainModel\Dossier\DocumentInventory.cs" />
+    <Compile Include="DomainModel\Dossier\DossierFile.cs" />
+    <Compile Include="DomainModel\Dossier\DossierFileLogic.cs" />
+    <Compile Include="DomainModel\Dossier\DossierFileScenarioStep.cs" />
+    <Compile Include="DomainModel\Dossier\DossierFileServiceResult.cs" />
+    <Compile Include="DomainModel\Dossier\DossierFileStatus.cs" />
+    <Compile Include="DomainModel\Dossier\LicenseDossier.cs" />
+    <Compile Include="DomainModel\Dossier\ProvidedDocument.cs" />
+    <Compile Include="BL\WrongStatusForGrantingException.cs" />
+    <Compile Include="DomainModel\FileScenario\Scenario.cs" />
+    <Compile Include="DomainModel\FileScenario\ScenarioStep.cs" />
+    <Compile Include="DomainModel\FileScenario\ScenarioType.cs" />
+    <Compile Include="DomainModel\FileScenario\ServiceResult.cs" />
+    <Compile Include="DomainModel\Holder\HolderRequisites.cs" />
+    <Compile Include="DomainModel\Holder\LegalForm.cs" />
+    <Compile Include="DomainModel\Holder\LicenseHolder.cs" />
+    <Compile Include="DomainModel\ICommonData.cs" />
+    <Compile Include="DomainModel\IdentityDomainObject.cs" />
+    <Compile Include="DA\IDomainDbManager.cs" />
+    <Compile Include="DomainModel\IDomainObject.cs" />
+    <Compile Include="DomainModel\Inspect\DocumentExpertise.cs" />
+    <Compile Include="DomainModel\Inspect\DocumentExpertiseResult.cs" />
+    <Compile Include="DomainModel\Inspect\ExpertedDocument.cs" />
+    <Compile Include="DomainModel\Inspect\Inspection.cs" />
+    <Compile Include="DomainModel\Inspect\InspectionEmployee.cs" />
+    <Compile Include="DomainModel\Inspect\InspectionExpert.cs" />
+    <Compile Include="DomainModel\IPersistentObject.cs" />
+    <Compile Include="DomainModel\Licensing\License.cs" />
+    <Compile Include="DomainModel\Licensing\LicensedActivity.cs" />
+    <Compile Include="DomainModel\Licensing\LicensedSubactivity.cs" />
+    <Compile Include="DomainModel\Licensing\LicenseObjcetType.cs" />
+    <Compile Include="DomainModel\Licensing\LicenseObject.cs" />
+    <Compile Include="DomainModel\Licensing\LicenseObjectStatus.cs" />
+    <Compile Include="DomainModel\Licensing\LicenseRequisites.cs" />
+    <Compile Include="DomainModel\Licensing\LicenseStatus.cs" />
+    <Compile Include="DomainModel\Licensing\LicenseStatusType.cs" />
+    <Compile Include="DomainModel\Licensing\LicenseType.cs" />
+    <Compile Include="DomainModel\Licensing\ObjectSubactivity.cs" />
+    <Compile Include="DomainModel\Licensing\SubactivityGroup.cs" />
+    <Compile Include="DomainModel\MzOrder\ExpertiseHolderAddress.cs" />
+    <Compile Include="DomainModel\MzOrder\ExpertiseOrder.cs" />
+    <Compile Include="DomainModel\MzOrder\ExpertiseOrderAgree.cs" />
+    <Compile Include="DomainModel\MzOrder\InspectionHolderAddress.cs" />
+    <Compile Include="DomainModel\MzOrder\InspectionOrder.cs" />
+    <Compile Include="DomainModel\MzOrder\InspectionOrderAgree.cs" />
+    <Compile Include="DomainModel\MzOrder\InspectionOrderExpert.cs" />
+    <Compile Include="DomainModel\MzOrder\IOrder.cs" />
+    <Compile Include="DomainModel\MzOrder\StandartOrder.cs" />
+    <Compile Include="DomainModel\MzOrder\StandartOrderAgree.cs" />
+    <Compile Include="DomainModel\MzOrder\StandartOrderDetail.cs" />
+    <Compile Include="DomainModel\MzOrder\StandartOrderOption.cs" />
+    <Compile Include="DomainModel\MzOrder\StandartOrderType.cs" />
+    <Compile Include="DomainModel\Notifying\Notice.cs" />
+    <Compile Include="DomainModel\Notifying\NoticeType.cs" />
+    <Compile Include="DomainModel\Notifying\ViolationNotice.cs" />
+    <Compile Include="DomainModel\PersistentState.cs" />
+    <Compile Include="DomainModel\Person\AccreditateActivity.cs" />
+    <Compile Include="DomainModel\Person\Employee.cs" />
+    <Compile Include="DomainModel\Person\Expert.cs" />
+    <Compile Include="DomainModel\Person\ExpertStateType.cs" />
+    <Compile Include="DomainModel\Person\IExpertState.cs" />
+    <Compile Include="DomainModel\Person\IndividualExpertState.cs" />
+    <Compile Include="DomainModel\Person\JuridicalExpertState.cs" />
+    <Compile Include="DomainModel\Requisites\IndRequisites.cs" />
+    <Compile Include="DomainModel\Requisites\JurRequisites.cs" />
+    <Compile Include="DomainModel\Service.cs" />
+    <Compile Include="DomainModel\ServiceGroup.cs" />
+    <Compile Include="DomainModel\Task.cs" />
+    <Compile Include="DomainModel\TaskStatusType.cs" />
+    <Compile Include="DomainModel\Violation\ViolationResolveInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
