@@ -41,21 +41,11 @@ namespace MockMetrics.Tests
             get { return @"PostGrad.sln"; }
         }
 
-        /// <summary>
-        /// Test#0
-        /// </summary>
         [TestCase(@"<PostGrad.BL.Tests>\AddInList\Before\LinkagerTests.cs")]
-        public void PrimitiveVariableTests(string testName)
+        public void PostGradTests(string testName)
         {
-            try
-            {
-                DoTestFiles(testName);
-                Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
-            }
-            catch (EatingException ex)
-            {
-                Console.WriteLine(ex);
-            }
+            DoTestFiles(testName);
+            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
         }
     }
 }

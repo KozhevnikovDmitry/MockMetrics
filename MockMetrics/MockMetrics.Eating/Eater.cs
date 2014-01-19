@@ -90,7 +90,6 @@ namespace MockMetrics.Eating
             return GetEater(variableDeclaration).Eat(snapshot, variableDeclaration);
         }
 
-        [DebuggerStepThrough]
         private IInitializerElementEater GetEater(IInitializerElement initializerElement)
         {
             var eater =
@@ -105,7 +104,6 @@ namespace MockMetrics.Eating
             return eater;
         }
 
-        [DebuggerStepThrough]
         private IVariableDeclarationEater GetEater(IVariableDeclaration variableDeclaration)
         {
             var eater =

@@ -48,36 +48,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="SimpleTests\PrimitiveVariableTests.cs.gold" />
-    <None Include="FooTests\ItIsFakeOptionTests.cs.gold" />
-    <None Include="AggregatorTests\MoqSyntaxTests.cs.gold" />
     <Compile Include="AggregatorTests\MoqSyntaxTests.cs" />
     <Compile Include="FooTests\ItIsFakeOptionTests.cs" />
     <Compile Include="SimpleTests\PrimitiveVariableTests.cs" />
-    <None Include="FooTests\StubTests.cs.gold" />
-    <None Include="AggregatorTests\MoqAssignmentStubsTests.cs.gold" />
-    <None Include="AggregatorTests\VariablesWithInitializersTests.cs.gold" />
-    <None Include="AggregatorTests\NestedMoqStubsTests.cs.gold" />
     <Compile Include="AggregatorTests\MoqAssignmentStubsTests.cs" />
     <Compile Include="AggregatorTests\MoqStubTests.cs" />
-    <None Include="AggregatorTests\MoqStubTests.cs.gold" />
     <Compile Include="AggregatorTests\NestedMoqStubsTests.cs" />
     <Compile Include="AggregatorTests\VariablesWithInitializersTests.cs" />
-    <None Include="FooTests\MoqStubPositioningTests.cs.gold" />
-    <None Include="FooTests\ReferenceTypesTests.cs.gold" />
-    <None Include="FooTests\MethodInvocationTypesTests.cs.gold" />
     <Compile Include="FooTests\MethodInvocationTypesTests.cs" />
     <Compile Include="FooTests\MoqStubPositioningTests.cs" />
     <Compile Include="FooTests\ReferenceTypesTests.cs" />
     <Compile Include="FooTests\StubTests.cs" />
-    <None Include="FooTests\ExpressionVariableTests.cs.gold" />
     <Compile Include="FooTests\ExpressionVariableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FooTests\SimpleVariablesTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="FooTests\SimpleVariablesTests.cs.gold" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tested\Tested.csproj">
