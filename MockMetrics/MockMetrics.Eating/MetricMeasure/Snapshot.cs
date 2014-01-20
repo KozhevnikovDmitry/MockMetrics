@@ -171,7 +171,6 @@ namespace MockMetrics.Eating.MetricMeasure
             get { return FakeOptions.Where(t => t.FakeOption == FakeOption.Exception).ToList(); }
         }
 
-
         #endregion
 
 

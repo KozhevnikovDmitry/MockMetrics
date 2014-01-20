@@ -5,7 +5,6 @@
         None,
         Method,
         Property,
-        Event,
         CallBack,
         Exception
     }

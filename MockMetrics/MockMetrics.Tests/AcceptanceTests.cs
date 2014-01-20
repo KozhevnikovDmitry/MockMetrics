@@ -41,28 +41,36 @@ namespace MockMetrics.Tests
         public void PostGrad_AddInList_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
+            var snapshots = FakesElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count());
+            new SnapshotDump().Dump(snapshots, "step_by_step");
         }
 
         [TestCase(@"<PostGrad.BL.Tests>\StepByStep")]
         public void PostGrad_StepByStep_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
+            var snapshots = FakesElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count());
+            new SnapshotDump().Dump(snapshots, "step_by_step");
         }
 
         [TestCase(@"<PostGrad.BL.Tests>\InitializedObject")]
         public void PostGrad_InitializedObject_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
+            var snapshots = FakesElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count());
+            new SnapshotDump().Dump(snapshots, "initialized_object");
         }
 
         [TestCase(@"<PostGrad.BL.Tests>\DiActionContext")]
         public void PostGrad_DiActionContext_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
+            var snapshots = FakesElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count());
+            new SnapshotDump().Dump(snapshots, "di_action_context");
         }
     }
 }
