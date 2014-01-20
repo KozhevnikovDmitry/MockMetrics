@@ -5,7 +5,6 @@ using System.Reflection;
 using HaveBox;
 using HaveBox.Configuration;
 using MockMetrics.Eating.Helpers;
-using MockMetrics.Eating.MoqFake;
 
 namespace MockMetrics.Eating
 {

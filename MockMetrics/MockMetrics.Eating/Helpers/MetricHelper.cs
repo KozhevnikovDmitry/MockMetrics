@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Util;
-using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Helpers

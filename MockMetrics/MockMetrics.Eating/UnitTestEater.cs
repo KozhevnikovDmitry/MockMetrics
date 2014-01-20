@@ -1,6 +1,4 @@
-﻿using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Helpers;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.MetricMeasure;
 
 

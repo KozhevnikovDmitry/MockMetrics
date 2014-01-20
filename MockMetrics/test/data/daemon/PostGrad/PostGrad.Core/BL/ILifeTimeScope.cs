@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace PostGrad.Core.BL
+﻿namespace PostGrad.Core.BL
 {
     public interface ILifetimeScope
     {

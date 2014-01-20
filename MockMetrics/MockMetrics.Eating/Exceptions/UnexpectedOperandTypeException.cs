@@ -1,5 +1,4 @@
 using System;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Exceptions

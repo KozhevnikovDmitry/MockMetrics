@@ -1,10 +1,4 @@
-﻿using System;
-using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Helpers;
-using MockMetrics.Eating.MetricMeasure;
-using Moq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace MockMetrics.Eating.Tests.Helpers
 {

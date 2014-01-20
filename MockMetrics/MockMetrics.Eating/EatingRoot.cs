@@ -1,5 +1,4 @@
-﻿using System;
-using HaveBox;
+﻿using HaveBox;
 
 namespace MockMetrics.Eating
 {
