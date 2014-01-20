@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using JetBrains.ReSharper.Features.Browsing.Resources;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Tests
@@ -30,7 +29,7 @@ namespace MockMetrics.Tests
             }
             csv = csv.Remove(csv.Count() - 2, 1);
 
-            Directory.CreateDirectory(DumpPath);
+         Directory.CreateDirectory(DumpPath);
             File.Create(Path.Combine(DumpPath, testSet + ".csv")).Dispose();
             File.WriteAllText(Path.Combine(DumpPath, testSet + ".csv"), csv);
         }

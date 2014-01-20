@@ -8,16 +8,16 @@ namespace PostGrad.Core.BL
         /// <summary>
         /// Полное наименование заявителя
         /// </summary>
-        public string FullName { get; set; }
+        public virtual string FullName { get; set; }
 
         /// <summary>
         /// ИНН заявителя
         /// </summary>
-        public string Inn { get; set; }
+        public virtual string Inn { get; set; }
 
         /// <summary>
         /// ОГРН заявителя
         /// </summary>
-        public string Ogrn { get; set; }
+        public virtual string Ogrn { get; set; }
     }
 }

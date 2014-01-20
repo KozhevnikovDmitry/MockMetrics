@@ -33,7 +33,7 @@ namespace PostGrad.BL.Tests.AddInList.After
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task);
             var fileLink = Mock.Of<IDossierFileLinkWrapper>(t => t.DossierFile == file);
-            var holderInfo = new HolderInfo { Inn = "1", Ogrn = "2" };
+            var holderInfo =  Mock.Of<HolderInfo>(t => t.Inn == "1" && t.Ogrn == "2");
             var taskDataParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo);
             var holderRegistr = Mock.Of<ILicenseHolderRepository>(t => t.HolderExists("1", "2", db)
                                                                     && t.GetLicenseHolder("1", "2", db) == holder);
@@ -56,7 +56,7 @@ namespace PostGrad.BL.Tests.AddInList.After
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task);
             var fileLink = Mock.Of<IDossierFileLinkWrapper>(t => t.DossierFile == file);
-            var holderInfo = new HolderInfo();
+            var holderInfo = Mock.Of<HolderInfo>();
             var taskDataParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo
                                                                && t.ParseHolder(task) == holder);
             var holderRegistr = Mock.Of<ILicenseHolderRepository>(t => t.HolderExists(It.IsAny<string>(), It.IsAny<string>(), db) == false);
@@ -79,7 +79,7 @@ namespace PostGrad.BL.Tests.AddInList.After
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task && t.ScenarioType == ScenarioType.Light);
             var fileLink = Mock.Of<IDossierFileLinkWrapper>(t => t.DossierFile == file);
-            var holderInfo = new HolderInfo();
+            var holderInfo = Mock.Of<HolderInfo>();
             var taskDataParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo
                                                                && t.ParseHolder(task) == holder);
             var holderRegistr = Mock.Of<ILicenseHolderRepository>(t => t.HolderExists(It.IsAny<string>(), It.IsAny<string>(), db) == false);

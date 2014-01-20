@@ -37,6 +37,16 @@ namespace MockMetrics.Tests
             get { return @"PostGrad.sln"; }
         }
 
+        [TestCase(@"<PostGrad.BL.Tests>\AddInList\After\LinkagerTests.cs")]
+        public void PostGrad_AddInList_After_LinakgerTests_Tests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshots = FakesElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count());
+            new SnapshotDump().Dump(snapshots, "add_in_list");
+        }
+
+
         [TestCase(@"<PostGrad.BL.Tests>\AddInList")]
         public void PostGrad_AddInList_Tests(string testName)
         {

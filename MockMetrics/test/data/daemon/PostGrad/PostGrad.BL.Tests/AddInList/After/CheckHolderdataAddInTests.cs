@@ -30,7 +30,7 @@ namespace PostGrad.BL.Tests.AddInList.After
             // Arrange
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task);
-            var holderInfo = new HolderInfo { Inn = taskInn, Ogrn = taskOgrn };
+            var holderInfo = Mock.Of<HolderInfo>(t => t.Inn == taskInn && t.Ogrn == taskOgrn);
             var taskDataParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo);
             var holder = Mock.Of<LicenseHolder>(t => t.Ogrn == regOgrn && t.Inn == regInn);
             var fileLink = Mock.Of<IDossierFileLinkWrapper>(t => t.DossierFile == file && t.LicenseHolder == holder);

@@ -129,15 +129,9 @@ namespace MockMetrics.Eating.Helpers
                 return Variable.Mock;
             }
 
-            if (typeElement.ToString().StartsWith("Moq.Mock"))
+            if (typeElement.ToString().Equals("Class:Moq.Mock`1"))
             {
                 return Variable.Mock;
-            }
-
-            if (typeElement.Module.Name.ToLower().StartsWith("nunit.framework") ||
-                typeElement.Module.Name.ToLower().StartsWith("moq"))
-            {
-                return Variable.Service;
             }
 
             return Variable.Library;

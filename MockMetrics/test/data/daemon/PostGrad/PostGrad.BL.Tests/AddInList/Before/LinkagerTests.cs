@@ -27,7 +27,7 @@ namespace PostGrad.BL.Tests.AddInList.Before
             var holder = Mock.Of<LicenseHolder>(t => t.RequisitesList == new EditableList<HolderRequisites> { Mock.Of<HolderRequisites>() });
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task && t.LicensedActivity.Id == 3);
-            var holderInfo = new HolderInfo { Inn = "1", Ogrn = "2" };
+            var holderInfo = Mock.Of<HolderInfo>(t => t.Inn == "1" && t.Ogrn == "2");
             var taskParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo);
             var holderRepository = Mock.Of<ILicenseHolderRepository>(t => t.HolderExists("1", "2", db)
                                                                     && t.GetLicenseHolder("1", "2", db) == holder);
@@ -50,7 +50,7 @@ namespace PostGrad.BL.Tests.AddInList.Before
             var holder = Mock.Of<LicenseHolder>(t => t.RequisitesList == new EditableList<HolderRequisites> { Mock.Of<HolderRequisites>() });
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task && t.LicensedActivity.Id == 3);
-            var holderInfo = new HolderInfo();
+            var holderInfo = Mock.Of<HolderInfo>();
             var taskParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo
                                                                && t.ParseHolder(task) == holder);
             var holderRepository = Mock.Of<ILicenseHolderRepository>(t => t.HolderExists(It.IsAny<string>(), It.IsAny<string>(), db) == false);
@@ -73,7 +73,7 @@ namespace PostGrad.BL.Tests.AddInList.Before
             var holder = Mock.Of<LicenseHolder>(t => t.RequisitesList == new EditableList<HolderRequisites> { Mock.Of<HolderRequisites>() });
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task && t.ScenarioType == ScenarioType.Light && t.LicensedActivity.Id == 3);
-            var holderInfo = new HolderInfo();
+            var holderInfo = Mock.Of<HolderInfo>();
             var taskParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo
                                                                && t.ParseHolder(task) == holder);
             var holderRepository = Mock.Of<ILicenseHolderRepository>(t => t.HolderExists(It.IsAny<string>(), It.IsAny<string>(), db) == false);
@@ -407,7 +407,7 @@ namespace PostGrad.BL.Tests.AddInList.Before
             var dossierRepository = Mock.Of<ILicenseDossierRepository>();
             var task = Mock.Of<Task>();
             var file = Mock.Of<DossierFile>(t => t.Task == task && t.IsNewLicense && t.LicensedActivity.Id == 3);
-            var holderInfo = new HolderInfo { Inn = taskInn, Ogrn = taskOgrn };
+            var holderInfo = Mock.Of<HolderInfo>(t => t.Inn == taskInn && t.Ogrn == taskOgrn);
             var taskParser = Mock.Of<ITaskParser>(t => t.ParseHolderInfo(task) == holderInfo);
             var linkager = new BL.AddInList.Before.Linkager(() => db, holderRepository, dossierRepository, taskParser);
 
