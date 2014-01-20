@@ -5,29 +5,26 @@ namespace MockMetrics.Eating
 {
     public class EatingRoot
     {
-        #region Singleton
+        public static EatingRoot Instance { get { return Nested.instance; } }
 
-        private static readonly Lazy<EatingRoot> _instance = new Lazy<EatingRoot>(() => new EatingRoot());
-
-        public static EatingRoot Instance
+        private class Nested
         {
-            get
+            static Nested()
             {
-                return _instance.Value;
             }
+
+            internal static readonly EatingRoot instance = new EatingRoot();
         }
 
         private readonly IContainer _container;
-        
-        #endregion
 
         private EatingRoot()
         {
             _container = new Container();
             _container.Configure(config => config.MergeConfig(new EatingConfig(GetType().Assembly, _container)));
-            
+
             #region Expressions to eat
-            
+
             // - already implemented
             //*ICSharpLiteralExpression
             //*IObjectCreationExpression
@@ -70,7 +67,7 @@ namespace MockMetrics.Eating
             //*IAwaitExpression
             //*IUnaryOperatorExpression
             //*IParenthesizedExpression
-            
+
             // - simply eat containing expressions and return none
             //*IAssignmentExpression (case: int i; i = 0;)
 
@@ -82,7 +79,7 @@ namespace MockMetrics.Eating
             //*IAsExpression
             //*ICastExpression
 
-            
+
             // - commom expression interfaces, never eat
             //*IUnaryExpression
             //*IPrimaryExpression
@@ -101,7 +98,7 @@ namespace MockMetrics.Eating
             //IUnsafeCodePointerIndirectionExpression
             //IUnsafeCodeSizeOfExpression
             //IUnsafeCodeAddressOfExpression
-            
+
             #endregion
 
             #region Statements to eat
@@ -133,7 +130,7 @@ namespace MockMetrics.Eating
             #endregion
 
             #region VariableDeclarations to eat
-            
+
             //*IAnonymousMethodParameterDeclaration
             //*ICatchVariableDeclaration
             //*IForeachVariableDeclaration
@@ -155,7 +152,7 @@ namespace MockMetrics.Eating
 
             #endregion
         }
-        
+
         public UnitTestEater GetUnitTestEater()
         {
             return _container.GetInstance<UnitTestEater>();
