@@ -6,6 +6,11 @@ namespace MockMetrics.Eating.InitializerElement
 {
     public class StubInitializerElementEater : IInitializerElementEater 
     {
+        public StubInitializerElementEater()
+        {
+            InitializerElementType = GetType();
+        }
+
         public Variable Eat(ISnapshot snapshot, IInitializerElement initializer)
         {
             return Variable.None;

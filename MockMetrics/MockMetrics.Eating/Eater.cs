@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using HaveBox;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Expression;
 using MockMetrics.Eating.InitializerElement;
 using MockMetrics.Eating.MetricMeasure;
@@ -13,10 +14,10 @@ using MockMetrics.Eating.VariableDeclaration;
 
 namespace MockMetrics.Eating
 {
-    public interface IEater
+    public interface IEater : ICSharpNodeEater
     {
         Variable Eat(ISnapshot snapshot, ICSharpExpression expression);
-        
+
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
 
         Variable Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration);
@@ -92,75 +93,111 @@ namespace MockMetrics.Eating
 
         private IInitializerElementEater GetEater(IInitializerElement initializerElement)
         {
-            var eater =
-             _container.GetInstance<IEnumerable<IInitializerElementEater>>()
-                 .SingleOrDefault(t => t.InitializerElementType.IsInstanceOfType(initializerElement));
-
-            if (eater == null)
+            try
             {
-                return new StubInitializerElementEater();
-            }
+                var eater =
+                 _container.GetInstance<IEnumerable<IInitializerElementEater>>()
+                     .SingleOrDefault(t => t.InitializerElementType.IsInstanceOfType(initializerElement));
 
-            return eater;
+                if (eater == null)
+                {
+                    return new StubInitializerElementEater();
+                }
+
+                return eater;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException(string.Format("Fail to get eater fo initializer element of type [{0}]", initializerElement.GetType()), ex, this, initializerElement);
+            }
         }
 
         private IVariableDeclarationEater GetEater(IVariableDeclaration variableDeclaration)
         {
-            var eater =
-              _container.GetInstance<IEnumerable<IVariableDeclarationEater>>()
-                  .SingleOrDefault(t => t.VariableDecalrationType.IsInstanceOfType(variableDeclaration));
-
-            if (eater == null)
+            try
             {
-                return new StubVariableDeclarationEater();
-            }
+                var eater =
+                  _container.GetInstance<IEnumerable<IVariableDeclarationEater>>()
+                      .SingleOrDefault(t => t.VariableDecalrationType.IsInstanceOfType(variableDeclaration));
 
-            return eater;
+                if (eater == null)
+                {
+                    return new StubVariableDeclarationEater();
+                }
+
+                return eater;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException(string.Format("Fail to get eater for variable declaration of type [{0}]", variableDeclaration.GetType()), ex, this, variableDeclaration);
+            }
         }
 
         [DebuggerStepThrough]
         public IExpressionEater GetEater(ICSharpExpression expression)
         {
-            var eater =
-              _container.GetInstance<IEnumerable<IExpressionEater>>()
-                  .SingleOrDefault(t => t.ExpressionType.IsInstanceOfType(expression));
-
-            if (eater == null)
+            try
             {
-                return new StubExpressionEater();
-            }
 
-            return eater;
+                var eater =
+                  _container.GetInstance<IEnumerable<IExpressionEater>>()
+                      .SingleOrDefault(t => t.ExpressionType.IsInstanceOfType(expression));
+
+                if (eater == null)
+                {
+                    return new StubExpressionEater();
+                }
+
+                return eater;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException(string.Format("Fail to get eater for expression of type [{0}]", expression.GetType()), ex, this, expression);
+            }
         }
 
         [DebuggerStepThrough]
         public IStatementEater GetEater(ICSharpStatement statement)
         {
-            var eater =
-                _container.GetInstance<IEnumerable<IStatementEater>>()
-                    .SingleOrDefault(t => t.StatementType.IsInstanceOfType(statement));
-
-            if (eater == null)
+            try
             {
-                return new StubStatementEater();
-            }
+                var eater =
+                    _container.GetInstance<IEnumerable<IStatementEater>>()
+                        .SingleOrDefault(t => t.StatementType.IsInstanceOfType(statement));
 
-            return eater;
+                if (eater == null)
+                {
+                    return new StubStatementEater();
+                }
+
+                return eater;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException(string.Format("Fail to get eater for statement of type [{0}]", statement.GetType()), ex, this, statement);
+            }
         }
 
         [DebuggerStepThrough]
         public IQueryClauseEater GetEater(IQueryClause queryClause)
         {
-            var eater =
-                _container.GetInstance<IEnumerable<IQueryClauseEater>>()
-                    .SingleOrDefault(t => t.QueryClauseType.IsInstanceOfType(queryClause));
-
-            if (eater == null)
+            try
             {
-                return new StubClauseEater();
-            }
+                var eater =
+                    _container.GetInstance<IEnumerable<IQueryClauseEater>>()
+                        .SingleOrDefault(t => t.QueryClauseType.IsInstanceOfType(queryClause));
 
-            return eater;
+                if (eater == null)
+                {
+                    return new StubClauseEater();
+                }
+
+                return eater;
+            }
+            catch (Exception ex)
+            {
+                throw new EatingException(string.Format("Fail to get eater for query clause of type [{0}]", queryClause.GetType()), ex, this, queryClause);
+            }
         }
     }
 }
