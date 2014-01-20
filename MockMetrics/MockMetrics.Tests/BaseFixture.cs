@@ -90,6 +90,57 @@ namespace MockMetrics.Tests
         }
 
 
+        public void DoMultipleTestFiles(string fullProjectPathToTestFile)
+        {
+            Assert.IsNotNull(_loadedTestSolution, "Expected solution to be loaded");
+            bool processedFile = false;
+
+            var listOfProjectPaths = new List<string>();
+
+            RunGuarded(() =>
+            {
+                foreach (var project in _loadedTestSolution.GetAllProjects())
+                {
+                    List<IProjectFile> projectFiles = project.GetAllProjectFiles().ToList();
+
+                    foreach (IProjectFile projectFile in
+                            projectFiles.Where(p => p.LanguageType.Is<CSharpProjectFileType>()))
+                    {
+                        listOfProjectPaths.Add(projectFile.GetPresentableProjectPath());
+                        if (!projectFile.GetPresentableProjectPath().StartsWith(fullProjectPathToTestFile))
+                            continue;
+
+                        IPsiSourceFile sourceFile = projectFile.ToSourceFile();
+                        Assert.IsNotNull(sourceFile);
+
+                        if (!sourceFile.Properties.IsNonUserFile)
+                        {
+                            processedFile = true;
+                            Assert.IsTrue(projectFile.Kind == ProjectItemKind.PHYSICAL_FILE);
+
+                            IProjectFile file = projectFile;
+                            ExecuteWithGold(projectFile.Location.FullPath
+                                            , (writer =>
+                                            {
+                                                var highlightDumper =
+                                                    CreateHighlightDumper(sourceFile, writer);
+                                                highlightDumper.DoHighlighting(
+                                                    DaemonProcessKind.VISIBLE_DOCUMENT);
+                                                highlightDumper.Dump();
+
+                                                DumperShortCutAction(file, writer);
+                                            }));
+                        }
+                    }
+                }
+            });
+            if (!processedFile)
+            {
+                listOfProjectPaths.ForEach(f => System.Diagnostics.Trace.WriteLine("Located Item:" + f));
+                Assert.Fail("Failed to project file by project path " + fullProjectPathToTestFile);
+            }
+        }
+
         public void DoTestFiles(string fullProjectPathToTestFile)
         {
             Assert.IsNotNull(_loadedTestSolution, "Expected solution to be loaded");

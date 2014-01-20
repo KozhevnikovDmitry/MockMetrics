@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
-using MockMetrics.Eating.Exceptions;
 using MockMetrics.Fake;
 using NUnit.Framework;
 
@@ -41,10 +37,31 @@ namespace MockMetrics.Tests
             get { return @"PostGrad.sln"; }
         }
 
-        [TestCase(@"<PostGrad.BL.Tests>\AddInList\Before\LinkagerTests.cs")]
-        public void PostGradTests(string testName)
+        [TestCase(@"<PostGrad.BL.Tests>\AddInList")]
+        public void PostGrad_AddInList_Tests(string testName)
         {
-            DoTestFiles(testName);
+            DoMultipleTestFiles(testName);
+            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
+        }
+
+        [TestCase(@"<PostGrad.BL.Tests>\StepByStep")]
+        public void PostGrad_StepByStep_Tests(string testName)
+        {
+            DoMultipleTestFiles(testName);
+            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
+        }
+
+        [TestCase(@"<PostGrad.BL.Tests>\InitializedObject")]
+        public void PostGrad_InitializedObject_Tests(string testName)
+        {
+            DoMultipleTestFiles(testName);
+            Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
+        }
+
+        [TestCase(@"<PostGrad.BL.Tests>\DiActionContext")]
+        public void PostGrad_DiActionContext_Tests(string testName)
+        {
+            DoMultipleTestFiles(testName);
             Console.WriteLine(Enumerable.ToArray(FakesElementProcessor.Results.Values).Count());
         }
     }

@@ -1,5 +1,4 @@
 ﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.Helpers;
 using MockMetrics.Eating.MetricMeasure;
 
@@ -7,37 +6,30 @@ namespace MockMetrics.Eating.Expression
 {
     public class AssignmentExpressionEater : ExpressionEater<IAssignmentExpression>
     {
-        private readonly EatExpressionHelper _eatExpressionHelper;
         private readonly IMetricHelper _metricHelper;
 
-        public AssignmentExpressionEater(IEater eater, EatExpressionHelper eatExpressionHelper, IMetricHelper metricHelper)
+        public AssignmentExpressionEater(IEater eater, IMetricHelper metricHelper)
             : base(eater)
         {
-            _eatExpressionHelper = eatExpressionHelper;
             _metricHelper = metricHelper;
         }
 
         public override Variable Eat(ISnapshot snapshot, IAssignmentExpression expression)
         {
             var sourceMetrics = Eater.Eat(snapshot, expression.Source);
+            var destMetrics = Eater.Eat(snapshot, expression.Dest);
 
             if (expression.Dest is IReferenceExpression)
             {
-                var destMetrics = Eater.Eat(snapshot, expression.Dest);
-                var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);
-                var declaredElement = _eatExpressionHelper.GetReferenceElement(expression.Dest as IReferenceExpression);
-                if (declaredElement is IVariableDeclaration)
-                { 
-                    snapshot.AddVariable(declaredElement as IVariableDeclaration, assigneeMetrics);
-                }
-                else
-                {
-                    snapshot.AddVariable(expression.Dest as IReferenceExpression, assigneeMetrics);
-                }
-                return assigneeMetrics;
+                var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);;
+                snapshot.AddVariable(expression.Dest as IReferenceExpression, assigneeMetrics);
+            }
+            else
+            {
+                Eater.Eat(snapshot, expression.Dest);
             }
 
-            throw new UnexpectedAssignDestinationException(expression.Dest, this, expression);
+            return Variable.None;
         }
     }
 }

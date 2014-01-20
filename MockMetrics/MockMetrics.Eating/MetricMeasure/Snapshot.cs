@@ -68,7 +68,7 @@ namespace MockMetrics.Eating.MetricMeasure
                 var declaration =
                     referenceExpression.Reference.CurrentResolveResult.DeclaredElement as ICSharpDeclaration;
 
-                if (declaration != null && VariableNodes.Contains(declaration))
+                if (declaration != null)
                 {
                     AddVariable(declaration, varType);
                     return;
