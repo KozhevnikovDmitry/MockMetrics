@@ -43,7 +43,7 @@ namespace MockMetrics.Tests
             DoMultipleTestFiles(testName);
             var snapshots = FakesElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count());
-            new SnapshotDump().Dump(snapshots, "step_by_step");
+            new SnapshotDump().Dump(snapshots, "add_in_list");
         }
 
         [TestCase(@"<PostGrad.BL.Tests>\StepByStep")]
