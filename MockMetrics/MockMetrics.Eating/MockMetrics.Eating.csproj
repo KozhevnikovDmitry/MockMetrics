@@ -5,14 +5,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A3988EE1-0AA7-414E-AC61-ED918058DED5}</ProjectGuid>
+    <ProjectGuid>{D4187CDA-CBB4-4B29-860C-214FAB5C4C82}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MockMetrics.Eating</RootNamespace>
     <AssemblyName>MockMetrics.Eating</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -24,7 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,12 +31,10 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="HaveBox, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HaveBox.1.6.0\lib\net45\HaveBox.dll</HintPath>
+    <Reference Include="HaveBox">
+      <HintPath>..\packages\HaveBox.1.6.1\lib\net45\HaveBox.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -49,34 +45,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Eater.cs" />
+    <Compile Include="EatingConfig.cs" />
+    <Compile Include="EatingRoot.cs" />
     <Compile Include="Exceptions\EatingException.cs" />
     <Compile Include="Exceptions\ExpressionHelperException.cs" />
+    <Compile Include="Exceptions\OperandNotFoundInSnapshotException.cs" />
+    <Compile Include="Exceptions\UnexpectedAssignDestinationException.cs" />
     <Compile Include="Exceptions\UnexpectedInvokedElementTypeException.cs" />
     <Compile Include="Exceptions\UnexpectedOperandTypeException.cs" />
+    <Compile Include="Exceptions\UnexpectedReferenceTypeException.cs" />
     <Compile Include="Exceptions\UnexpectedTypeOfNodeToEatException.cs" />
     <Compile Include="Expression\AnonymousMethodExpressionEater.cs" />
     <Compile Include="Expression\AnonymousObjectCreationExpressionEater.cs" />
     <Compile Include="Expression\ArgumentsEater.cs" />
+    <Compile Include="Expression\ArrayCreationExpressionEater.cs" />
     <Compile Include="Expression\AsExpressionEater.cs" />
     <Compile Include="Expression\AssignmentExpressionEater.cs" />
-    <Compile Include="Expression\CastExpressionEater.cs" />
-    <Compile Include="Expression\ConditionalTernaryExpressionEater.cs" />
-    <Compile Include="Eater.cs" />
-    <Compile Include="EatingConfig.cs" />
-    <Compile Include="EatingRoot.cs" />
-    <Compile Include="Expression\ArrayCreationExpressionEater.cs" />
     <Compile Include="Expression\AwaitExpressionEater.cs" />
     <Compile Include="Expression\BinaryExpressionEater.cs" />
-    <Compile Include="Expression\InvocationStuffEater.cs" />
-    <Compile Include="Expression\LambdaExpressionEater.cs" />
+    <Compile Include="Expression\CastExpressionEater.cs" />
+    <Compile Include="Expression\ConditionalTernaryExpressionEater.cs" />
     <Compile Include="Expression\DefaultExpressionEater.cs" />
-    <Compile Include="Expression\PredefinedTypeExpressionEater.cs" />
-    <Compile Include="Helpers\RefereceEatHelper.cs" />
-    <Compile Include="Helpers\EatExpressionHelper.cs" />
     <Compile Include="Expression\ElementAccessExpressionEater.cs" />
     <Compile Include="Expression\ExpressionEater.cs" />
+    <Compile Include="Expression\IExpressionEater.cs" />
+    <Compile Include="Expression\InvocationExpressionEater.cs" />
+    <Compile Include="Expression\InvocationStuffEater.cs" />
+    <Compile Include="Expression\IsExpressionEater.cs" />
+    <Compile Include="Expression\LambdaExpressionEater.cs" />
+    <Compile Include="Expression\LiteralExpressionEater.cs" />
+    <Compile Include="Expression\ObjectCreationExpressionEater.cs" />
+    <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
+    <Compile Include="Expression\ParentReferenceEater.cs" />
+    <Compile Include="Expression\PostfixOperatorExpressionEater.cs" />
+    <Compile Include="Expression\PredefinedTypeExpressionEater.cs" />
+    <Compile Include="Expression\PrefixOperatorExpressionEater.cs" />
+    <Compile Include="Expression\QueryExpressionEater.cs" />
+    <Compile Include="Expression\ReferenceExpressionEater.cs" />
+    <Compile Include="Expression\StubExpressionEater.cs" />
+    <Compile Include="Expression\TypeofExpressionEater.cs" />
+    <Compile Include="Expression\UnaryOperatorExpressionEater.cs" />
+    <Compile Include="Helpers\EatExpressionHelper.cs" />
     <Compile Include="Helpers\IMetricHelper.cs" />
     <Compile Include="Helpers\MetricHelper.cs" />
+    <Compile Include="Helpers\MoqSyntaxHelper.cs" />
+    <Compile Include="Helpers\RefereceEatHelper.cs" />
+    <Compile Include="ICSharpNodeEater.cs" />
     <Compile Include="InitializerElement\AnonymousMemberDeclarationEater.cs" />
     <Compile Include="InitializerElement\ArrayInitializerEater.cs" />
     <Compile Include="InitializerElement\CollectionElementInitializerEater.cs" />
@@ -90,31 +110,17 @@
     <Compile Include="MetricMeasure\IMetricNode.cs" />
     <Compile Include="MetricMeasure\ISnapshot.cs" />
     <Compile Include="MetricMeasure\MetricOperand.cs" />
-    <Compile Include="Expression\InvocationExpressionEater.cs" />
-    <Compile Include="Expression\ParenthesizedExpressionEater.cs" />
-    <Compile Include="Expression\ParentReferenceEater.cs" />
-    <Compile Include="Expression\UnaryOperatorExpressionEater.cs" />
-    <Compile Include="Expression\LiteralExpressionEater.cs" />
-    <Compile Include="Expression\ObjectCreationExpressionEater.cs" />
-    <Compile Include="Expression\PostfixOperatorExpressionEater.cs" />
-    <Compile Include="Expression\PrefixOperatorExpressionEater.cs" />
-    <Compile Include="Expression\ReferenceExpressionEater.cs" />
-    <Compile Include="Expression\IExpressionEater.cs" />
-    <Compile Include="Expression\IsExpressionEater.cs" />
-    <Compile Include="Exceptions\UnexpectedAssignDestinationException.cs" />
-    <Compile Include="Exceptions\UnexpectedReferenceTypeException.cs" />
-    <Compile Include="ICSharpNodeEater.cs" />
-    <Compile Include="Exceptions\OperandNotFoundInSnapshotException.cs" />
+    <Compile Include="MetricMeasure\NodeKind.cs" />
     <Compile Include="MetricMeasure\Scope.cs" />
     <Compile Include="MetricMeasure\Snapshot.cs" />
-    <Compile Include="MetricMeasure\NodeKind.cs" />
     <Compile Include="MoqFake\MoqFakeOptionEater.cs" />
     <Compile Include="MoqFake\MoqInvocationEater.cs" />
     <Compile Include="MoqFake\MoqInvoke.cs" />
-    <Compile Include="Helpers\MoqSyntaxHelper.cs" />
-    <Compile Include="MoqFake\NotSingleMoqFakeOptionLambdaParameterException.cs" />
     <Compile Include="MoqFake\NotSingleItIsInvacotaionArgumentException.cs" />
+    <Compile Include="MoqFake\NotSingleMoqFakeOptionLambdaParameterException.cs" />
     <Compile Include="MoqFake\UnexpectedMoqItIsMethodNameException.cs" />
+    <Compile Include="PostEater.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryClause\QueryClauseEater.cs" />
     <Compile Include="QueryClause\QueryFromClause.cs" />
     <Compile Include="QueryClause\QueryGroupClause.cs" />
@@ -123,24 +129,22 @@
     <Compile Include="QueryClause\QueryOrderByClause.cs" />
     <Compile Include="QueryClause\QueryWhereClause.cs" />
     <Compile Include="QueryClause\StubClauseEater.cs" />
+    <Compile Include="Statement\BlockStatementEater.cs" />
+    <Compile Include="Statement\DeclarationStatementEater.cs" />
     <Compile Include="Statement\DoStatementEater.cs" />
     <Compile Include="Statement\EmptyStatementEater.cs" />
+    <Compile Include="Statement\ExpressionStatementEater.cs" />
     <Compile Include="Statement\ForeachStatementEater.cs" />
     <Compile Include="Statement\ForStatementEater.cs" />
     <Compile Include="Statement\GotoCaseStatementEater.cs" />
     <Compile Include="Statement\GotoStatementEater.cs" />
     <Compile Include="Statement\IfStatementEater.cs" />
     <Compile Include="Statement\IStatementEater.cs" />
-    <Compile Include="PostEater.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Statement\BlockStatementEater.cs" />
-    <Compile Include="Statement\DeclarationStatementEater.cs" />
-    <Compile Include="Statement\ExpressionStatementEater.cs" />
     <Compile Include="Statement\LabelStatementEater.cs" />
     <Compile Include="Statement\LockStatementEater.cs" />
-    <Compile Include="Expression\QueryExpressionEater.cs" />
     <Compile Include="Statement\ReturnStatementEater.cs" />
     <Compile Include="Statement\StatementEater.cs" />
+    <Compile Include="Statement\StubStatementEater.cs" />
     <Compile Include="Statement\SwitchLabelStatementEater.cs" />
     <Compile Include="Statement\SwitchStatementEater.cs" />
     <Compile Include="Statement\ThrowStatementEater.cs" />
@@ -149,10 +153,6 @@
     <Compile Include="Statement\UsingStatementEater.cs" />
     <Compile Include="Statement\WhileStatementEater.cs" />
     <Compile Include="Statement\YieldStatementEater.cs" />
-    <Compile Include="Expression\StubExpressionEater.cs" />
-    <Compile Include="Statement\StubStatementEater.cs" />
-    <Compile Include="Expression\TypeofExpressionEater.cs" />
-    <Compile Include="VariableDeclaration\StubVariableDeclarationEater.cs" />
     <Compile Include="UnitTestEater.cs" />
     <Compile Include="VariableDeclaration\AnonymousMethodParameterDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\CatchVariableDeclarationEater.cs" />
@@ -162,15 +162,18 @@
     <Compile Include="VariableDeclaration\LocalConstantDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\LocalVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\RegularParameterDeclarationEater.cs" />
+    <Compile Include="VariableDeclaration\StubVariableDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\UnsafeCodeFixedPointerDeclarationEater.cs" />
     <Compile Include="VariableDeclaration\VariableDeclarationEater.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Import Project="..\packages\JetBrains.ReSharper.SDK.8.1.555\build\JetBrains.ReSharper.SDK.Targets" Condition="Exists('..\packages\JetBrains.ReSharper.SDK.8.1.555\build\JetBrains.ReSharper.SDK.Targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>
