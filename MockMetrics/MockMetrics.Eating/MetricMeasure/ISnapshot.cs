@@ -29,6 +29,7 @@ namespace MockMetrics.Eating.MetricMeasure
         IList<IMetricMockOption> FakeProperties { get; }
         IList<IMetricMockOption> FakeCallbacks { get; }
         IList<IMetricMockOption> FakeExceptions { get; }
+        List<IMetricMockOption> FakeOptions { get; }
 
         bool IsInTestScope(string projectName);
         bool IsInTestProject(string projectName);
