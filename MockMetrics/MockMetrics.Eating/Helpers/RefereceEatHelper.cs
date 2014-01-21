@@ -1,3 +1,4 @@
+using System.Linq;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.DeclaredElements;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
@@ -146,7 +147,20 @@ namespace MockMetrics.Eating.Helpers
                 snapshot.AddVariable(expression, vartype);
             }
 
+            if (IsEnumMember(expression))
+            {
+                snapshot.AddVariable(expression, vartype);
+            }
+
             return vartype;
+        }
+
+        private bool IsEnumMember(IReferenceExpression expression)
+        {
+            var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
+            var declaration = declaredElement.GetDeclarations().FirstOrDefault();
+
+            return declaration is IEnumMemberDeclaration;
         }
 
         private bool IsInternalVariable(IReferenceExpression expression, ISnapshot snapshot)

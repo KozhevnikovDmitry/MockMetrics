@@ -74,7 +74,7 @@ namespace MockMetrics.Eating.MetricMeasure
                     return;
                 }
 
-                declaration = declaredElement.GetDeclarations().First() as ICSharpDeclaration;
+                declaration = declaredElement.GetDeclarations().FirstOrDefault() as ICSharpDeclaration;
 
                 if (declaration != null)
                 {

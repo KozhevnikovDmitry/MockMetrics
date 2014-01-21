@@ -52,6 +52,28 @@ namespace MockMetrics.Tests
         }
 
         /// <summary>
+        /// Test#0.1
+        /// </summary>
+        [TestCase(@"<Tested.Tests>\SimpleTests\EnumOccurencesTests.cs")]
+        public void EnumOccurencesTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+
+            Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
+            Assert.AreEqual(snapshot.Librarians.Count(), 2, "Assert library");
+            Assert.AreEqual(snapshot.Targets.Count(), 0, "Assert targets");
+            Assert.AreEqual(snapshot.Mocks.Count(), 0, "Assert mocks");
+            Assert.AreEqual(snapshot.Services.Count(), 0, "Assert services");
+
+            Assert.AreEqual(snapshot.FakeProperties.Count(), 0, "Assert fake properties");
+            Assert.AreEqual(snapshot.FakeMethods.Count(), 0, "Assert fake methods");
+            Assert.AreEqual(snapshot.FakeCallbacks.Count(), 0, "Assert fake calbacks");
+            Assert.AreEqual(snapshot.FakeExceptions.Count(), 0, "Assert fake exception");
+        }
+
+        /// <summary>
         /// Test#1
         /// </summary>
         [TestCase(@"<Tested.Tests>\FooTests\SimpleVariablesTests.cs")]
