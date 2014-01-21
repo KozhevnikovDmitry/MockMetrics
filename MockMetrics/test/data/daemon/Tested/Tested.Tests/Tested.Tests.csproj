@@ -49,8 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AggregatorTests\InternalFieldVariableTests.cs" />
+    <Compile Include="AggregatorTests\InternalMultiDeclaredVariableTests.cs" />
+    <Compile Include="AggregatorTests\InternalVariableTests.cs" />
     <Compile Include="AggregatorTests\MoqSyntaxTests.cs" />
     <Compile Include="FooTests\ItIsFakeOptionTests.cs" />
+    <Compile Include="SimpleTests\EnumOccurencesTests.cs" />
     <Compile Include="SimpleTests\PrimitiveVariableTests.cs" />
     <Compile Include="AggregatorTests\MoqAssignmentStubsTests.cs" />
     <Compile Include="AggregatorTests\MoqStubTests.cs" />

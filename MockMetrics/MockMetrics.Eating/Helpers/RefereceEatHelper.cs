@@ -1,6 +1,9 @@
+using System.Linq;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.DeclaredElements;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.Parsing;
+using JetBrains.UI.Application.ExceptionReport;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
 
@@ -139,7 +142,41 @@ namespace MockMetrics.Eating.Helpers
                 }
             }
 
+            if (IsInternalVariable(expression, snapshot))
+            {
+                snapshot.AddVariable(expression, vartype);
+            }
+
+            if (IsEnumMember(expression))
+            {
+                snapshot.AddVariable(expression, vartype);
+            }
+
             return vartype;
+        }
+
+        private bool IsEnumMember(IReferenceExpression expression)
+        {
+            var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
+            var declaration = declaredElement.GetDeclarations().FirstOrDefault();
+
+            return declaration is IEnumMemberDeclaration;
+        }
+
+        private bool IsInternalVariable(IReferenceExpression expression, ISnapshot snapshot)
+        {
+            var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
+            if (declaredElement is IProperty ||
+                declaredElement is IField)
+            {
+                if ((declaredElement as ITypeMember).GetContainingType() ==
+                    snapshot.UnitTest.DeclaredElement.GetContainingType())
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool IsAssignAcceptor(IReferenceExpression referenceExpression)
