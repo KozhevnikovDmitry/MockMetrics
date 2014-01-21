@@ -4,7 +4,7 @@
   <Target Name="CI" DependsOnTargets="Build" />
  
   <Target Name="Build">
-    <MSBuild Projects="MockMetrics/MockMetrics.sln" Properties="Configuration=Debug;Platform=Any CPU" />
+    <MSBuild Projects="MockMetrics/test/data/daemon/PostGrad/PostGrad.sln" Properties="Configuration=Debug;Platform=Any CPU" />
   </Target>
  
 </Project>
