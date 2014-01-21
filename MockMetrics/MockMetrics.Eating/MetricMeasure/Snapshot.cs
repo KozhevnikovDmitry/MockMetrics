@@ -65,8 +65,16 @@ namespace MockMetrics.Eating.MetricMeasure
             // TODO : doubling with EatExpressionHelper
             if (referenceExpression.Reference.CurrentResolveResult != null)
             {
-                var declaration =
-                    referenceExpression.Reference.CurrentResolveResult.DeclaredElement as ICSharpDeclaration;
+                var declaredElement = referenceExpression.Reference.CurrentResolveResult.DeclaredElement;
+                var declaration = declaredElement as ICSharpDeclaration;
+
+                if (declaration != null)
+                {
+                    AddVariable(declaration, varType);
+                    return;
+                }
+
+                declaration = declaredElement.GetDeclarations().First() as ICSharpDeclaration;
 
                 if (declaration != null)
                 {
