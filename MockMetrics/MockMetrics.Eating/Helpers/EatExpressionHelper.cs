@@ -94,6 +94,21 @@ namespace MockMetrics.Eating.Helpers
             }
         }
 
+        public virtual bool IsInternalMethod(IInvocationExpression expression, ISnapshot snapshot)
+        {
+            var method = GetInvokedElement(expression) as IMethod;
+            if (method != null)
+            {
+                if (method.GetContainingType() ==
+                   snapshot.UnitTest.DeclaredElement.GetContainingType())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public virtual IDeclaredElement GetReferenceElement([NotNull] IReferenceExpression referenceExpression)
         {
             if (referenceExpression == null)

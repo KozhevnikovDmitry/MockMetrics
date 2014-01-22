@@ -40,7 +40,6 @@ namespace MockMetrics.Eating.Helpers
         /// <summary>
         /// Scope for type(class, struct, enum, etc.) 
         /// </summary>
-        /// <remarks>
         Scope GetTypeScope(ISnapshot snapshot, ITypeElement typeElement);
 
         /// <summary>
@@ -48,9 +47,9 @@ namespace MockMetrics.Eating.Helpers
         /// </summary>
         Variable MetricForTypeReferece(ISnapshot snapshot, ITypeElement typeElement);
 
-        ///// <summary>
-        ///// Metrics for method invocation by its parent reference
-        ///// </summary>
-        //Metrics CallMetrics(ISnapshot snapshot, IMethod invokedMethod, Metrics parentMetrics);
+        /// <summary>
+        /// Metrics for method invocation
+        /// </summary>
+        Variable GetReturnVarType(IInvocationExpression expression, ISnapshot snapshot);
     }
 }
