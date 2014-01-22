@@ -290,7 +290,7 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.Librarians.Count(), 1, "Assert library");
             Assert.AreEqual(snapshot.Targets.Count(), 1, "Assert targets");
             Assert.AreEqual(snapshot.Mocks.Count(), 0, "Assert mocks");
-            Assert.AreEqual(snapshot.Services.Count(), 1, "Assert services");
+            Assert.AreEqual(snapshot.Services.Count(), 0, "Assert services");
 
             Assert.AreEqual(snapshot.FakeProperties.Count(), 0, "Assert fake properties");
             Assert.AreEqual(snapshot.FakeMethods.Count(), 0, "Assert fake methods");

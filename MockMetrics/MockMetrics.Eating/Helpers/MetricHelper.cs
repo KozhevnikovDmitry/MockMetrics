@@ -24,8 +24,8 @@ namespace MockMetrics.Eating.Helpers
         }
 
         public Variable MetricsForCasted([NotNull] ISnapshot snapshot,
-                                        [NotNull] Variable valuetype,
-                                        [NotNull] ITypeUsage typeUsage)
+                                         Variable valuetype,
+                                         [NotNull] ITypeUsage typeUsage)
         {
             if (snapshot == null)
                 throw new ArgumentNullException("snapshot");
@@ -175,45 +175,15 @@ namespace MockMetrics.Eating.Helpers
             throw new ArgumentException("typeElement");
         }
 
-        //public Metrics CallMetrics(ISnapshot snapshot, IMethod invokedMethod, Metrics parentMetrics)
-        //{
-        //    var result = Metrics.Create(parentMetrics.Scope);
+        public Variable GetReturnVarType(IInvocationExpression expression, ISnapshot snapshot)
+        {
+            if (_eatExpressionHelper.IsInternalMethod(expression, snapshot))
+            {
+                var method = _eatExpressionHelper.GetInvokedElement(expression) as IMethod;
+                return MetricsForType(snapshot, method.ReturnType);
+            }
 
-        //    if (snapshot.IsInTestScope(invokedMethod.Module.Name) ||
-        //        parentMetrics.Variable == Variable.Target ||
-        //        parentMetrics.Variable == Variable.Mock)
-        //    {
-        //        result.Call = Call.TargetCall;
-        //        result.Variable = Variable.Result;
-        //        return result;
-        //    }
-
-        //    if (snapshot.IsInTestProject(invokedMethod.Module.Name))
-        //    {
-        //        result.Call = Call.Service;
-        //        result.Variable = MetricsForType(snapshot, invokedMethod.ReturnType).Variable;
-        //        return result;
-        //    }
-
-        //    result.Call = Call.Library;
-        //    if (parentMetrics.Variable == Variable.Data)
-        //    {
-        //        result.Variable = Variable.Data;
-        //        return result;
-        //    }
-
-        //    if (parentMetrics.Call == Call.TargetCall)
-        //    {
-        //        result.Variable = Variable.Result;
-        //        return result;
-        //    }
-
-        //    if (parentMetrics.Call == Call.Assert)
-        //    {
-        //        result.Variable = Variable.Result;
-        //        return result;
-        //    }
-        //    return result;
-        //}
+            return Variable.Service;
+        }
     }
 }
