@@ -38,7 +38,7 @@ namespace MockMetrics.Tests
             get { return @"GU.MZ.sln"; }
         }
 
-        [TestCase(@"<GU.MZ.BL.Tests>\DomainLogic\Linkage\LicenseHolderRepositoryTests.cs")]
+        [TestCase(@"<GU.MZ.BL.Tests>\DataMapping\LicenseHolderDataMapperTests")]
         public void GU_MZ_BL_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
