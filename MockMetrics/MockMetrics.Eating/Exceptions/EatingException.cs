@@ -3,7 +3,7 @@ using JetBrains.ReSharper.Psi.CSharp.Tree;
 
 namespace MockMetrics.Eating.Exceptions
 {
-    public class EatingException : ApplicationException
+    public abstract class EatingException : ApplicationException
     {
         public Exception Exception { get; private set; }
 
@@ -45,6 +45,22 @@ namespace MockMetrics.Eating.Exceptions
             }
 
             return string.Format("{0} \n {1}", ex, InnerToString(ex.InnerException));
+        }
+    }
+
+    public class FailToGetEaterException : EatingException
+    {
+        public FailToGetEaterException(Exception exception, ICSharpNodeEater eater, ICSharpTreeNode node)
+            : base(string.Format("Fail to get eater foк node of type [{0}]", node.GetType()), exception, eater, node)
+        {
+        }
+    }
+
+    public class UnexpextedEatingException : EatingException
+    {
+        public UnexpextedEatingException(Exception exception, ICSharpNodeEater eater, ICSharpTreeNode node)
+            : base("Unexpected exception", exception, eater, node)
+        {
         }
     }
 }

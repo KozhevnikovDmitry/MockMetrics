@@ -108,7 +108,7 @@ namespace MockMetrics.Eating
             }
             catch (Exception ex)
             {
-                throw new EatingException(string.Format("Fail to get eater fo initializer element of type [{0}]", initializerElement.GetType()), ex, this, initializerElement);
+                throw new FailToGetEaterException(ex, this, initializerElement);
             }
         }
 
@@ -129,7 +129,7 @@ namespace MockMetrics.Eating
             }
             catch (Exception ex)
             {
-                throw new EatingException(string.Format("Fail to get eater for variable declaration of type [{0}]", variableDeclaration.GetType()), ex, this, variableDeclaration);
+                throw new FailToGetEaterException(ex, this, variableDeclaration);
             }
         }
 
@@ -152,7 +152,7 @@ namespace MockMetrics.Eating
             }
             catch (Exception ex)
             {
-                throw new EatingException(string.Format("Fail to get eater for expression of type [{0}]", expression.GetType()), ex, this, expression);
+                throw new FailToGetEaterException(ex, this, expression);
             }
         }
 
@@ -174,7 +174,7 @@ namespace MockMetrics.Eating
             }
             catch (Exception ex)
             {
-                throw new EatingException(string.Format("Fail to get eater for statement of type [{0}]", statement.GetType()), ex, this, statement);
+                throw new FailToGetEaterException(ex, this, statement);
             }
         }
 
@@ -196,7 +196,7 @@ namespace MockMetrics.Eating
             }
             catch (Exception ex)
             {
-                throw new EatingException(string.Format("Fail to get eater for query clause of type [{0}]", queryClause.GetType()), ex, this, queryClause);
+                throw new FailToGetEaterException(ex, this, queryClause);
             }
         }
     }
