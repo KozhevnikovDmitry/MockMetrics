@@ -8,7 +8,7 @@ namespace MockMetrics.Eating.Expression
     {
         public StubExpressionEater()
         {
-            ExpressionType = GetType();
+            NodeType = GetType();
         }
 
         public Variable Eat(ISnapshot snapshot, ICSharpExpression statement)
@@ -16,6 +16,6 @@ namespace MockMetrics.Eating.Expression
             return Variable.None;
         }
 
-        public Type ExpressionType { get; private set; }
+        public Type NodeType { get; private set; }
     }
 }

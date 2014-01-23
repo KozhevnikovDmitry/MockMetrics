@@ -8,7 +8,7 @@ namespace MockMetrics.Eating.InitializerElement
     {
         public StubInitializerElementEater()
         {
-            InitializerElementType = GetType();
+            NodeType = GetType();
         }
 
         public Variable Eat(ISnapshot snapshot, IInitializerElement initializer)
@@ -16,6 +16,6 @@ namespace MockMetrics.Eating.InitializerElement
             return Variable.None;
         }
 
-        public Type InitializerElementType { get; private set; }
+        public Type NodeType { get; private set; }
     }
 }

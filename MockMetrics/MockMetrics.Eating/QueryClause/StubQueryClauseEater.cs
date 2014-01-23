@@ -4,13 +4,18 @@ using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.QueryClause
 {
-    public class StubClauseEater : IQueryClauseEater
+    public class StubQueryClauseEater : IQueryClauseEater
     {
+        public StubQueryClauseEater()
+        {
+            NodeType = GetType();
+        }
+
         public Variable Eat(ISnapshot snapshot, IQueryClause queryClause)
         {
             return Variable.None;
         }
 
-        public Type QueryClauseType { get; private set; }
+        public Type NodeType { get; private set; }
     }
 }

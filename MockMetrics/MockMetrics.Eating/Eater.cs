@@ -97,7 +97,7 @@ namespace MockMetrics.Eating
             {
                 var eater =
                  _container.GetInstance<IEnumerable<IInitializerElementEater>>()
-                     .SingleOrDefault(t => t.InitializerElementType.IsInstanceOfType(initializerElement));
+                     .SingleOrDefault(t => t.NodeType.IsInstanceOfType(initializerElement));
 
                 if (eater == null)
                 {
@@ -118,7 +118,7 @@ namespace MockMetrics.Eating
             {
                 var eater =
                   _container.GetInstance<IEnumerable<IVariableDeclarationEater>>()
-                      .SingleOrDefault(t => t.VariableDecalrationType.IsInstanceOfType(variableDeclaration));
+                      .SingleOrDefault(t => t.NodeType.IsInstanceOfType(variableDeclaration));
 
                 if (eater == null)
                 {
@@ -141,7 +141,7 @@ namespace MockMetrics.Eating
 
                 var eater =
                   _container.GetInstance<IEnumerable<IExpressionEater>>()
-                      .SingleOrDefault(t => t.ExpressionType.IsInstanceOfType(expression));
+                      .SingleOrDefault(t => t.NodeType.IsInstanceOfType(expression));
 
                 if (eater == null)
                 {
@@ -163,7 +163,7 @@ namespace MockMetrics.Eating
             {
                 var eater =
                     _container.GetInstance<IEnumerable<IStatementEater>>()
-                        .SingleOrDefault(t => t.StatementType.IsInstanceOfType(statement));
+                        .SingleOrDefault(t => t.NodeType.IsInstanceOfType(statement));
 
                 if (eater == null)
                 {
@@ -185,11 +185,11 @@ namespace MockMetrics.Eating
             {
                 var eater =
                     _container.GetInstance<IEnumerable<IQueryClauseEater>>()
-                        .SingleOrDefault(t => t.QueryClauseType.IsInstanceOfType(queryClause));
+                        .SingleOrDefault(t => t.NodeType.IsInstanceOfType(queryClause));
 
                 if (eater == null)
                 {
-                    return new StubClauseEater();
+                    return new StubQueryClauseEater();
                 }
 
                 return eater;

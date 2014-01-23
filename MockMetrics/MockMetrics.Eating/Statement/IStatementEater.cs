@@ -1,14 +1,11 @@
-﻿using System;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.Statement
 {
-    public interface IStatementEater : ICSharpNodeEater
+    public interface IStatementEater : INodeEater, ICSharpNodeEater
     {
         void Eat(ISnapshot snapshot, ICSharpStatement statement);
-
-        Type StatementType { get; }
     }
 
     public interface IStatementEater<T> : IStatementEater where T : ICSharpStatement
