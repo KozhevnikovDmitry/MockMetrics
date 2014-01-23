@@ -341,5 +341,16 @@ namespace MockMetrics.Tests
             Assert.AreEqual(snapshot.FakeCallbacks.Count(), 0, "Assert fake calbacks");
             Assert.AreEqual(snapshot.FakeExceptions.Count(), 0, "Assert fake exception");
         }
+
+        /// <summary>
+        /// Test#15
+        /// </summary>
+        [TestCase(@"<Tested.Tests>\SimpleTests\DynamicArgumentForOverloadMethodTests.cs")]
+        public void DynamicArgumentForOverloadMethodTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+        }
     }
 }
