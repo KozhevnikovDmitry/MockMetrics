@@ -16,11 +16,11 @@ namespace MockMetrics.Eating.Statement
 
             foreach (var catchClause in statement.Catches)
             {
-                Eater.Eat(snapshot, catchClause.Body);
                 if (catchClause is ISpecificCatchClause)
                 {
                     Eater.Eat(snapshot, (catchClause as ISpecificCatchClause).ExceptionDeclaration);
                 }
+                Eater.Eat(snapshot, catchClause.Body);
             }
 
             if (statement.FinallyBlock != null)

@@ -11,8 +11,8 @@ namespace MockMetrics.Eating.VariableDeclaration
 
         public override Variable Eat(ISnapshot snapshot, ICatchVariableDeclaration variableDeclaration)
         {
-            snapshot.AddVariable(variableDeclaration, Variable.Service);
-            return Variable.Service;
+            snapshot.AddVariable(variableDeclaration, Variable.Library);
+            return Variable.Library;
         }
     }
 }
