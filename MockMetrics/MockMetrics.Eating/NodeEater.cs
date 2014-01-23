@@ -13,6 +13,16 @@ namespace MockMetrics.Eating
 
     public abstract class NodeEater<T> :INodeEater, ICSharpNodeEater where T : ICSharpTreeNode
     {
+        protected readonly IEater Eater;
+
+        protected NodeEater([NotNull] IEater eater)
+        {
+            if (eater == null)
+                throw new ArgumentNullException("eater");
+
+            Eater = eater;
+        }
+
         protected Variable EatNode([NotNull] ISnapshot snapshot, [NotNull] ICSharpTreeNode node, Func<ISnapshot, T, Variable> eat)
         {
             var result = Variable.None;

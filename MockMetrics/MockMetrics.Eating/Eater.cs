@@ -185,11 +185,11 @@ namespace MockMetrics.Eating
             {
                 var eater =
                     _container.GetInstance<IEnumerable<IQueryClauseEater>>()
-                        .SingleOrDefault(t => t.QueryClauseType.IsInstanceOfType(queryClause));
+                        .SingleOrDefault(t => t.NodeType.IsInstanceOfType(queryClause));
 
                 if (eater == null)
                 {
-                    return new StubClauseEater();
+                    return new StubQueryClauseEater();
                 }
 
                 return eater;

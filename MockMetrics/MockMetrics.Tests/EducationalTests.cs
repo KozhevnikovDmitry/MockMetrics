@@ -69,5 +69,13 @@ namespace MockMetrics.Tests
             var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
+
+        [TestCase(@"<Tested.Tests>\FooTests\LinqQuerySyntaxTests.cs")]
+        public void LinqQuerySyntaxTests(string testName)
+        {
+            DoTestFiles(testName);
+            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            Console.WriteLine(snapshot);
+        }
     }
 }

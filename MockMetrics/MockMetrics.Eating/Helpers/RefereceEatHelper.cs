@@ -2,6 +2,7 @@ using System.Linq;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.DeclaredElements;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.CSharp.Tree.Query;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
 
@@ -81,6 +82,11 @@ namespace MockMetrics.Eating.Helpers
                 return snapshot.GetVarMetrics(declaredElement as IVariableDeclaration);
             }
 
+            if (declaredElement is IQueryVariable)
+            {
+                return Variable.Service;
+            }
+
             if (declaredElement is IParameter)
             {
                 return snapshot.GetVarMetrics(declaredElement as IParameter);
@@ -89,6 +95,11 @@ namespace MockMetrics.Eating.Helpers
             if (declaredElement is IProperty)
             {
                 return _metricHelper.MetricsForType(snapshot, (declaredElement as IProperty).Type);
+            }
+
+            if (declaredElement is IAnonymousTypeProperty)
+            {
+                return _metricHelper.MetricsForType(snapshot, (declaredElement as IAnonymousTypeProperty).Type);
             }
 
             if (declaredElement is IField)
