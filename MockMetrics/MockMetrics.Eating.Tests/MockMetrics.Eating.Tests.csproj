@@ -95,6 +95,17 @@
     <Compile Include="InitializerElement\UnsafeCodeStackAllocInitializerEater.cs" />
     <Compile Include="MoqFake\MoqFakeOptionEaterTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryClause\QueryContinuationEaterTests.cs" />
+    <Compile Include="QueryClause\QueryFirstFromEaterTests.cs" />
+    <Compile Include="QueryClause\QueryFromClauseEaterTests.cs" />
+    <Compile Include="QueryClause\QueryGroupClauseEaterTests.cs" />
+    <Compile Include="QueryClause\QueryJoinClauseEaterTests.cs" />
+    <Compile Include="QueryClause\QueryLetClauseEaterTests.cs" />
+    <Compile Include="QueryClause\QueryOrderByClauseEaterTests.cs" />
+    <Compile Include="QueryClause\QueryParameterPlatformEaterTests.cs" />
+    <Compile Include="QueryClause\QueryRangeVariableDeclarationEaterTests.cs" />
+    <Compile Include="QueryClause\QuerySelectClauseEaterTests.cs" />
+    <Compile Include="QueryClause\QueryWhereClauseEaterTests.cs" />
     <Compile Include="Statement\BlockStatementEaterTests.cs" />
     <Compile Include="Statement\DeclarationStatementEaterTests.cs" />
     <Compile Include="Statement\DoStatementEaterTests.cs" />

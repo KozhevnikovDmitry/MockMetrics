@@ -77,8 +77,8 @@
     <Compile Include="Expression\IExpressionEater.cs" />
     <Compile Include="Expression\InvocationExpressionEater.cs" />
     <Compile Include="Expression\InvocationStuffEater.cs" />
-    <Compile Include="QueryClause\IQueryContinuationEater.cs" />
-    <Compile Include="QueryClause\IQueryFirstFromEater.cs" />
+    <Compile Include="QueryClause\QueryContinuationEater.cs" />
+    <Compile Include="QueryClause\QueryFirstFromEater.cs" />
     <Compile Include="Expression\IsExpressionEater.cs" />
     <Compile Include="Expression\LambdaExpressionEater.cs" />
     <Compile Include="Expression\LiteralExpressionEater.cs" />
