@@ -1,14 +1,11 @@
-﻿using System;
-using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.InitializerElement
 {
-    public interface IInitializerElementEater : ICSharpNodeEater
+    public interface IInitializerElementEater : INodeEater, ICSharpNodeEater
     {
         Variable Eat(ISnapshot snapshot, IInitializerElement initializer);
-
-        Type InitializerElementType { get; }
     }
 
     public interface IInitializerElementEater<T> : IInitializerElementEater where T : IInitializerElement

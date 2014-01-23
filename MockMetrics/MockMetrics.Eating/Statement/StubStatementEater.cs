@@ -8,7 +8,7 @@ namespace MockMetrics.Eating.Statement
     {
         public StubStatementEater()
         {
-            StatementType = GetType();
+            NodeType = GetType();
         }
 
         public void Eat(ISnapshot snapshot, ICSharpStatement statement)
@@ -16,6 +16,6 @@ namespace MockMetrics.Eating.Statement
             
         }
 
-        public Type StatementType { get; private set; }
+        public Type NodeType { get; private set; }
     }
 }

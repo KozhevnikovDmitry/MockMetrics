@@ -3,7 +3,6 @@ using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Modules;
 using MockMetrics.Eating.MoqFake;
 
 namespace MockMetrics.Eating.Helpers

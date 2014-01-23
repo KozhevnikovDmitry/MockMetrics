@@ -8,7 +8,7 @@ namespace MockMetrics.Eating.VariableDeclaration
     {
         public StubVariableDeclarationEater()
         {
-            VariableDecalrationType = GetType();
+            NodeType = GetType();
         }
 
         public Variable Eat(ISnapshot snapshot, IVariableDeclaration variableDeclaration)
@@ -16,6 +16,6 @@ namespace MockMetrics.Eating.VariableDeclaration
             return Variable.None;
         }
 
-        public Type VariableDecalrationType { get; private set; }
+        public Type NodeType { get; private set; }
     }
 }

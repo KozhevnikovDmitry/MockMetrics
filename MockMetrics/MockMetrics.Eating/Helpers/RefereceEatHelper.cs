@@ -2,8 +2,6 @@ using System.Linq;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.DeclaredElements;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using JetBrains.ReSharper.Psi.Parsing;
-using JetBrains.UI.Application.ExceptionReport;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
 

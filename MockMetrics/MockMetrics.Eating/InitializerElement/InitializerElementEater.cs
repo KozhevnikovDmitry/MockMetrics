@@ -1,12 +1,11 @@
 using System;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
-using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics.Eating.InitializerElement
 {
-    public abstract class InitializerElementEater<T> : IInitializerElementEater<T> where T : IInitializerElement
+    public abstract class InitializerElementEater<T> : NodeEater<T>, IInitializerElementEater<T> where T : IInitializerElement
     {
         protected readonly IEater Eater;
 
@@ -25,29 +24,7 @@ namespace MockMetrics.Eating.InitializerElement
 
         public Variable Eat([NotNull] ISnapshot snapshot, [NotNull] IInitializerElement initializer)
         {
-            if (snapshot == null) 
-                throw new ArgumentNullException("snapshot");
-
-            if (initializer == null) 
-                throw new ArgumentNullException("initializer");
-
-            try
-            {
-                if (initializer is T)
-                {
-                    return Eat(snapshot, (T)initializer);
-                }
-
-                throw new UnexpectedTypeOfNodeToEatException(typeof(T), this, initializer);
-            }
-            catch (ApplicationException)
-            {
-                throw;
-            }
-            catch (Exception ex)
-            {
-                throw new EatingException("Unexpected exception", ex, this, initializer);
-            }
+            return EatNode(snapshot, initializer, (s, n) => Eat(s, n));
         }
 
         public abstract Variable Eat(ISnapshot snapshot, T initializer);

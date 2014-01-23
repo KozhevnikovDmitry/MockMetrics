@@ -16,14 +16,17 @@ namespace MockMetrics.Eating
         public ISnapshot EatUnitTest(IMethodDeclaration unitTest)
         {
             var snapshot = new Snapshot(unitTest);
-            
-            foreach (var parameterDeclaration in unitTest.ParameterDeclarations)
-            {
-                _eater.Eat(snapshot, parameterDeclaration);
-            }
 
-            _eater.EatedNodes.Clear();
-            _eater.Eat(snapshot, unitTest.Body);
+            if (unitTest.IsValid())
+            {
+                foreach (var parameterDeclaration in unitTest.ParameterDeclarations)
+                {
+                    _eater.Eat(snapshot, parameterDeclaration);
+                }
+
+                _eater.EatedNodes.Clear();
+                _eater.Eat(snapshot, unitTest.Body);
+            }
 
             return snapshot;
         }
