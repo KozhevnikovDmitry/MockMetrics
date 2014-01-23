@@ -22,9 +22,9 @@ namespace MockMetrics.Eating.Tests.VariableDeclaration
             var result = catchVariableDeclarationEater.Eat(snapshot.Object, catchVariableDeclaration);
 
             // Assert
-            Assert.AreEqual(result, Variable.Service);
-            snapshot.Verify(t => 
-                t.AddVariable(catchVariableDeclaration, Variable.Service), 
+            Assert.AreEqual(result, Variable.Library);
+            snapshot.Verify(t =>
+                t.AddVariable(catchVariableDeclaration, Variable.Library), 
                 Times.Once);
         }
     }

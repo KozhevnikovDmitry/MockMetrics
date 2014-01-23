@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SimpleTests\EatingCatchVaribaleBeforeBodyTests.cs" />
     <Compile Include="SimpleTests\EatingForeachVaribaleBeforeBodyTests.cs" />
     <Compile Include="AggregatorTests\InternalFieldVariableTests.cs" />
     <Compile Include="AggregatorTests\InternalMultiDeclaredVariableTests.cs" />
