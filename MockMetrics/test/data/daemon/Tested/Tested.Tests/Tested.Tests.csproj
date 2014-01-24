@@ -71,6 +71,7 @@
     <Compile Include="FooTests\ExpressionVariableTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FooTests\SimpleVariablesTests.cs" />
+    <Compile Include="SimpleTests\DynamicArgumentForOverloadMethodTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

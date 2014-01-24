@@ -2,7 +2,6 @@
 using System.Linq;
 using JetBrains.Annotations;
 using JetBrains.ReSharper.Psi;
-using JetBrains.ReSharper.Psi.CSharp;
 using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.Exceptions;
@@ -12,28 +11,6 @@ namespace MockMetrics.Eating.Helpers
 {
     public class EatExpressionHelper
     {
-        public virtual IClass GetCreationClass([NotNull] IObjectCreationExpression creationExpression)
-        {
-            if (creationExpression == null)
-                throw new ArgumentNullException("creationExpression");
-
-            if (creationExpression.TypeReference != null)
-            {
-                if (creationExpression.TypeReference.CurrentResolveResult != null)
-                {
-                    return creationExpression.TypeReference.CurrentResolveResult.DeclaredElement as IClass;
-                }
-                else
-                {
-                    throw new ExpressionHelperException("Null type reference of creation expression", creationExpression);
-                }
-            }
-            else
-            {
-                throw new ExpressionHelperException("Null resolved result of creation expression", creationExpression);
-            }
-        }
-
         public virtual ITypeElement GetUserTypeUsageClass([NotNull] IUserTypeUsage userTypeUsage)
         {
             if (userTypeUsage == null)
@@ -72,22 +49,27 @@ namespace MockMetrics.Eating.Helpers
             }
         }
 
-        public virtual string GetCreationTypeName([NotNull] IObjectCreationExpression creationExpression)
-        {
-            if (creationExpression == null)
-                throw new ArgumentNullException("creationExpression");
-
-            return creationExpression.Type().ToString();
-        }
-
         public virtual IDeclaredElement GetInvokedElement([NotNull] IInvocationExpression invocationExpression)
         {
-            if (invocationExpression == null)
-                throw new ArgumentNullException("invocationExpression");
+            var result = invocationExpression.InvocationExpressionReference.CurrentResolveResult;
 
-            if (invocationExpression.InvocationExpressionReference.CurrentResolveResult != null)
+            if (result != null)
             {
-                return invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement;
+                if (result.DeclaredElement != null)
+                {
+                    return result.DeclaredElement;
+                }
+                else
+                {
+                    if (result.ResolveErrorType.ToString() == "DYNAMIC")
+                    {
+                        return new DynamicDeclaredElement();
+                    }
+                    else
+                    {
+                        throw new ExpressionHelperException("Null resolved result of invocation expression", invocationExpression);
+                    }
+                }
             }
             else
             {
@@ -114,10 +96,26 @@ namespace MockMetrics.Eating.Helpers
         {
             if (referenceExpression == null)
                 throw new ArgumentNullException("referenceExpression");
+            
+            var result = referenceExpression.Reference.CurrentResolveResult;
 
-            if (referenceExpression.Reference.CurrentResolveResult != null)
+            if (result != null)
             {
-                return referenceExpression.Reference.CurrentResolveResult.DeclaredElement;
+                if (result.DeclaredElement != null)
+                {
+                    return result.DeclaredElement;
+                }
+                else
+                {
+                    if (result.ResolveErrorType.ToString() == "DYNAMIC")
+                    {
+                        return new DynamicDeclaredElement();
+                    }
+                    else
+                    {
+                        throw new ExpressionHelperException("Null resolved result of reference expression", referenceExpression);
+                    }
+                }
             }
             else
             {
@@ -130,14 +128,24 @@ namespace MockMetrics.Eating.Helpers
             if (invocationExpression == null)
                 throw new ArgumentNullException("invocationExpression");
 
-            if (invocationExpression.InvocationExpressionReference.CurrentResolveResult != null)
+            var result = invocationExpression.InvocationExpressionReference.CurrentResolveResult;
+
+            if (result != null)
             {
-                if (invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement != null)
+                if (result.DeclaredElement != null)
                 {
-                    return invocationExpression.InvocationExpressionReference.CurrentResolveResult.DeclaredElement.ToString();
+                    return result.DeclaredElement.ToString();
                 }
                 else
                 {
+                    if (result.ResolveErrorType.ToString() == "DYNAMIC")
+                    {
+                        if (result.Result.Candidates.Any())
+                        {
+                            return result.Result.Candidates.First().ToString();
+                        }
+                    }
+
                     throw new ExpressionHelperException("Null parent reference of invocation expression", invocationExpression);
                 }
             }
@@ -145,27 +153,6 @@ namespace MockMetrics.Eating.Helpers
             {
                 throw new ExpressionHelperException("Null resolved result of invocation parent reference expression", invocationExpression);
             }
-        }
-
-        public virtual ICSharpExpression GetInvocationReference([NotNull] IInvocationExpression invocationExpression)
-        {
-            if (invocationExpression == null) 
-                throw new ArgumentNullException("invocationExpression");
-
-            if (invocationExpression.ExtensionQualifier == null)
-            {
-                return null;
-            }
-
-            var extensionArgumentInfo =
-               invocationExpression.ExtensionQualifier.ManagedConvertible as ExtensionArgumentInfo;
-
-            if (extensionArgumentInfo == null || extensionArgumentInfo.Expression == null)
-            {
-                return null;
-            }
-
-            return extensionArgumentInfo.Expression;
         }
 
         public virtual bool IsStandaloneExpression([NotNull] IInvocationExpression expression)
@@ -218,23 +205,6 @@ namespace MockMetrics.Eating.Helpers
             }
 
             return true;
-        }
-
-        public virtual bool IsReferenceToLocalVariable([NotNull] ISnapshot snapshot,
-                                                       [NotNull] IReferenceExpression referenceExpression)
-        {
-            if (snapshot == null) throw new ArgumentNullException("snapshot");
-            if (referenceExpression == null) throw new ArgumentNullException("referenceExpression");
-            var declared = GetReferenceElement(referenceExpression);
-            if (declared is IVariableDeclaration)
-            {
-                if (snapshot.Variables.Any(t => t.Node.Equals(declared)))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         public virtual IReferenceExpression GetParentReference([NotNull] IReferenceExpression referenceExpression)
