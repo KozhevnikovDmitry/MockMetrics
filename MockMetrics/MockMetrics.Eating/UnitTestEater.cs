@@ -1,4 +1,5 @@
-﻿using JetBrains.ReSharper.Psi.CSharp.Tree;
+﻿using System;
+using JetBrains.ReSharper.Psi.CSharp.Tree;
 using MockMetrics.Eating.MetricMeasure;
 
 
@@ -15,6 +16,8 @@ namespace MockMetrics.Eating
 
         public ISnapshot EatUnitTest(IMethodDeclaration unitTest)
         {
+            Console.WriteLine(unitTest.NameIdentifier.Name);
+
             var snapshot = new Snapshot(unitTest);
 
             if (unitTest.IsValid())
