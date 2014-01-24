@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using Moq;
 using NUnit.Framework;
 
 namespace Tested.Tests.SimpleTests
@@ -14,7 +11,7 @@ namespace Tested.Tests.SimpleTests
             dynamic obj = new object();
 
             // Assert
-            Assert.AreEqual(obj, 1);
+            Assert.AreEqual(obj.sfdf.sdfdsf.sdfdsf, 1);
         }
     }
 }
