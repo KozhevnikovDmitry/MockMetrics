@@ -11,19 +11,27 @@ namespace MockMetrics.Eating.Statement
 
         public override void Eat(ISnapshot snapshot, IForStatement statement)
         {
-            Eater.Eat(snapshot, statement.Body);
-
-            Eater.Eat(snapshot, statement.Condition);
+            if (statement.Initializer.Declaration != null)
+            {
+                foreach (var declarator in statement.Initializer.Declaration.Declarators)
+                {
+                    Eater.Eat(snapshot, declarator);
+                }
+            }
 
             foreach (var initializer in statement.Initializer.Expressions)
             {
                 Eater.Eat(snapshot, initializer);
             }
 
+            Eater.Eat(snapshot, statement.Condition);
+
             foreach (var iterator in statement.Iterators.Expressions)
             {
                 Eater.Eat(snapshot, iterator);
             }
+
+            Eater.Eat(snapshot, statement.Body);
         }
     }
 }
