@@ -61,9 +61,22 @@ namespace MockMetrics.Eating.Helpers
                 }
                 else
                 {
-                    if (result.ResolveErrorType.ToString() == "DYNAMIC")
+                    var errorType = result.ResolveErrorType.ToString();
+                    if (errorType == "MULTIPLE_CANDIDATES")
                     {
-                        return new DynamicDeclaredElement();
+                        if (result.Result.Candidates.Any())
+                        {
+                            return result.Result.Candidates.First();
+                        }
+                        else
+                        {
+                            return new NullDeclaredElement();
+                        }
+                    }
+
+                    if (errorType == "DYNAMIC" || errorType == "NOT_INVOCABLE")
+                    {
+                        return new NullDeclaredElement();
                     }
                     else
                     {
@@ -96,7 +109,7 @@ namespace MockMetrics.Eating.Helpers
         {
             if (referenceExpression == null)
                 throw new ArgumentNullException("referenceExpression");
-            
+
             var result = referenceExpression.Reference.CurrentResolveResult;
 
             if (result != null)
@@ -110,7 +123,7 @@ namespace MockMetrics.Eating.Helpers
                     var errorType = result.ResolveErrorType.ToString();
                     if (errorType == "DYNAMIC")
                     {
-                        return new DynamicDeclaredElement();
+                        return new NullDeclaredElement();
                     }
                     else
                     {
@@ -140,6 +153,12 @@ namespace MockMetrics.Eating.Helpers
                 else
                 {
                     var errorType = result.ResolveErrorType.ToString();
+
+                    if (errorType == "NOT_INVOCABLE")
+                    {
+                        return "NOT_INVOCABLE";
+                    }
+
                     if (errorType == "DYNAMIC" || errorType == "MULTIPLE_CANDIDATES")
                     {
                         if (result.Result.Candidates.Any())

@@ -138,7 +138,7 @@ namespace MockMetrics.Eating.Helpers
                 return Variable.None;
             }
 
-            if (declaredElement is DynamicDeclaredElement)
+            if (declaredElement is NullDeclaredElement)
             {
                 return Variable.None;
             }
@@ -173,7 +173,7 @@ namespace MockMetrics.Eating.Helpers
         private bool IsEnumMember(IReferenceExpression expression)
         {
             var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
-            if (declaredElement is DynamicDeclaredElement)
+            if (declaredElement is NullDeclaredElement)
             {
                 return false;
             }
