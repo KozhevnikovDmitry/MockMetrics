@@ -7,56 +7,56 @@ using JetBrains.Util.DataStructures;
 
 namespace MockMetrics.Eating.Helpers
 {
-    public class DynamicDeclaredElement : IDeclaredElement
+    public class NullDeclaredElement : IDeclaredElement
     {
         public IPsiServices GetPsiServices()
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public IList<IDeclaration> GetDeclarations()
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public IList<IDeclaration> GetDeclarationsIn(IPsiSourceFile sourceFile)
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public DeclaredElementType GetElementType()
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public XmlNode GetXMLDoc(bool inherit)
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public XmlNode GetXMLDescriptionSummary(bool inherit)
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public bool IsValid()
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public bool IsSynthetic()
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public HybridCollection<IPsiSourceFile> GetSourceFiles()
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public bool HasDeclarationsIn(IPsiSourceFile sourceFile)
         {
-            throw new ItIsDynamicDeclaredElementException();
+            throw new ItIsNullDeclaredElementException();
         }
 
         public string ShortName { get { return "Dynamic declared element"; } }
@@ -65,7 +65,7 @@ namespace MockMetrics.Eating.Helpers
         {
             get
             {
-                throw new ItIsDynamicDeclaredElementException();
+                throw new ItIsNullDeclaredElementException();
             }
         }
 
@@ -73,12 +73,12 @@ namespace MockMetrics.Eating.Helpers
         {
             get
             {
-                throw new ItIsDynamicDeclaredElementException();
+                throw new ItIsNullDeclaredElementException();
             }
         }
     }
 
-    public class ItIsDynamicDeclaredElementException : ApplicationException
+    public class ItIsNullDeclaredElementException : ApplicationException
     {
         
     }
