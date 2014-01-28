@@ -18,7 +18,9 @@ namespace MockMetrics.Eating.Statement
             {
                 if (catchClause is ISpecificCatchClause)
                 {
-                    Eater.Eat(snapshot, (catchClause as ISpecificCatchClause).ExceptionDeclaration);
+                    var specCatchClause = catchClause as ISpecificCatchClause;
+                    if (specCatchClause.ExceptionDeclaration != null)
+                        Eater.Eat(snapshot, specCatchClause.ExceptionDeclaration);
                 }
                 Eater.Eat(snapshot, catchClause.Body);
             }

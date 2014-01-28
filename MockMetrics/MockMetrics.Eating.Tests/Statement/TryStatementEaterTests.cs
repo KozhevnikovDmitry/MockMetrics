@@ -75,6 +75,27 @@ namespace MockMetrics.Eating.Tests.Statement
             eater.Verify(t => t.Eat(snapshot, varDeclaration), Times.Once);
 		}
 
+        [Test]
+        public void NotEatSpecificCatchNullVariableDeclarationTest()
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var eater = new Mock<IEater>();
+            var catchClause = Mock.Of<ISpecificCatchClause>();
+            var tryStatement = Mock.Of<ITryStatement>();
+            Mock.Get(tryStatement)
+                .Setup(t => t.Catches)
+                .Returns(new TreeNodeCollection<ICatchClause>(new[] { catchClause }));
+
+            var tryStatementEater = new TryStatementEater(eater.Object);
+
+            // Act
+            tryStatementEater.Eat(snapshot, tryStatement);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, It.IsAny<ICatchVariableDeclaration>()), Times.Never);
+        }
+
 		[Test]
 		public void EatFinallyTest()
 		{
