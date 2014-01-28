@@ -12,7 +12,8 @@ namespace MockMetrics.Eating.Statement
 
         public override void Eat(ISnapshot snapshot, IReturnStatement statement)
         {
-           Eater.Eat(snapshot, statement.Value);
+            if (statement.Value != null)
+                Eater.Eat(snapshot, statement.Value);
         }
     }
 }
