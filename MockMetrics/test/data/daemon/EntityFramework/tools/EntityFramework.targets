@@ -1,0 +1,101 @@
+<!--
+****************************************************************************************************
+Project global post-settings and targets.
+****************************************************************************************************-->
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Set computed properties after all dependent properties have been resolved -->
+  <PropertyGroup>
+    <DefineConstants Condition="'$(InternalsInvisible)' == 'true'">$(DefineConstants);INTERNALS_INVISIBLE</DefineConstants>
+    <DefineConstants Condition="'$(VisualStudioVersion)' == '11.0'">$(DefineConstants);VS11</DefineConstants>
+    <DefineConstants Condition="'$(VisualStudioVersion)' == '12.0'">$(DefineConstants);VS12</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(BuildingToolingProject)' == 'true'" >
+    <VsSDKDir Condition="'$(VisualStudioVersion)' == '12.0'">$(VSSDK120Install)</VsSDKDir>
+    <VsSDKDir Condition="'$(VisualStudioVersion)' == '11.0'">$(VSSDK110Install)</VsSDKDir>
+    <AssemblySearchPaths>
+      $(VsSDKDir)VisualStudioIntegration\Common\Assemblies\v4.0\;
+      $(VsSDKDir)VisualStudioIntegration\Common\Assemblies\v2.0\;
+      $(DevEnvDir)ReferenceAssemblies\v4.5\;
+      $(DevEnvDir)ReferenceAssemblies\v4.0\;
+      $(DevEnvDir)ReferenceAssemblies\v2.0\;
+      $(DevEnvDir)PublicAssemblies\;
+      $(DevEnvDir);
+      $(AssemblySearchPaths)
+    </AssemblySearchPaths>
+  </PropertyGroup>
+
+
+  <PropertyGroup Condition="'$(BuildingToolingProject)' == 'true'">
+    <BuildDependsOn>ValidateVisualStudioVersion;$(BuildDependsOn)</BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="ValidateVisualStudioVersion">
+    <PropertyGroup>
+      <VisualStudioVersionError Condition="'$(VisualStudioVersion)' == '' OR ('$(VisualStudioVersion)' != '11.0' AND '$(VisualStudioVersion)' != '12.0')">true</VisualStudioVersionError>
+    </PropertyGroup>
+    <Error Condition="'$(VisualStudioVersionError)' == 'true'" Text="VisualStudioVersion property value is invalid or not supported: '$(VisualStudioVersion)'" />
+  </Target>
+
+  <PropertyGroup>
+    <BuildDependsOn>SetComputedProperties;$(BuildDependsOn)</BuildDependsOn>
+  </PropertyGroup>
+  <Target Name="SetComputedProperties">
+    <PropertyGroup>
+      <!-- If building the runtime then override the default AssemblyVersion. This only affects nightly builds. -->
+      <AssemblyVersion Condition="'$(BuildingRuntimeProject)' == 'true'">$(VersionMajor).$(RuntimeAssemblyVersionMinor).0.$(VersionRevision)</AssemblyVersion>
+      <AssemblyVersion Condition="'$(AssemblyVersion)' == ''">$(VersionMajor).$(VersionMinor).0.$(VersionRevision)</AssemblyVersion>
+      <AssemblyFileVersion Condition="'$(AssemblyFileVersion)' == ''">$(VersionMajor).$(VersionMinor).$(VersionBuild).$(VersionRevision)</AssemblyFileVersion>
+      <!-- TODO: NuGetPackageVersion is set by versions.targets, so when it is being used for runtime dated builds it's important
+           not to override it, but for tooling builds it gives the wrong answer (based on the tooling VersionMajor and VersionMinor)
+           so there we must override it. Should come up with a fix in version.targets. -->
+      <NuGetPackageVersion Condition="'$(BuildingToolingProject)' == 'true' Or '$(NuGetPackageVersion)' == ''">$(RuntimeVersionMajor).$(RuntimeVersionMinor).$(VersionRelease)</NuGetPackageVersion>
+      <EF6NuGetPackageVersion>$(NuGetPackageVersion)</EF6NuGetPackageVersion>
+      <EF6NuGetPackageWixId>$(NuGetPackageVersion)</EF6NuGetPackageWixId>
+      <EF5NuGetPackageVersion>5.0.0</EF5NuGetPackageVersion>
+      <ProjectUrlFwLinkID Condition="'$(ProjectUrlFwLinkID)' == ''">386835</ProjectUrlFwLinkID>
+      <LicenseUrlFwLinkID Condition="'$(LicenseUrlFwLinkID)' == ''">386836</LicenseUrlFwLinkID>
+      <NuSpecProperties>NuGetPackageVersion=$(NuGetPackageVersion);EF6NuGetPackageVersion=$(EF6NuGetPackageVersion)</NuSpecProperties>
+      <NuSpecProperties>$(NuSpecProperties);ProjectUrlFwLinkID=$(ProjectUrlFwLinkID);LicenseUrlFwLinkID=$(LicenseUrlFwLinkID)</NuSpecProperties>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.wixproj'" Label="Properties used in setup">
+      <!-- WixID must not contain hyphens -->
+      <EF6NuGetPackageWixId>$(EF6NuGetPackageVersion.Replace('-', '_'))</EF6NuGetPackageWixId>
+    </PropertyGroup>
+  </Target>
+
+  <!-- GetNuGetContentFromProject: Gets the Compile item collection (source files) from projects into the NuGetContent item. -->
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.nuproj'">
+    <BuildDependsOn>GetNuGetContentFromProject;$(BuildDependsOn)</BuildDependsOn>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <NuGetContentProject>
+      <SourceRootFullPath />
+      <Destination>src</Destination>
+    </NuGetContentProject>
+  </ItemDefinitionGroup>
+
+  <Target Name="GetNuGetContentFromProject" Condition="'@(NuGetContentProject)' != ''">
+    <MSBuild Projects="$(MSBuildThisFileFullPath)" Targets="GetNuGetContentFromProjectCore"
+             Properties="NuGetContentProject=%(NuGetContentProject.FullPath);SourceRootFullPath=%(RootDir)%(Directory)\..\;Destination=%(Destination)" >
+      <Output TaskParameter="TargetOutputs" ItemName="NuGetContent" />
+    </MSBuild>
+  </Target>
+
+  <Target Name="GetNuGetContentFromProjectCore" Outputs="@(NuGetContent)">
+    <MSBuild Projects="$(NuGetContentProject)" Targets="GetCompile" RebaseOutputs="true">
+      <Output TaskParameter="TargetOutputs" ItemName="Compile" />
+    </MSBuild>
+    <ItemGroup>
+      <NugetContent Include="%(Compile.FullPath)">
+        <Destination>$([System.IO.Path]::Combine($(Destination), $([MSBuild]::MakeRelative($([System.IO.Path]::GetFullPath($(SourceRootFullPath))), %(Compile.RootDir)%(Directory)))))</Destination>
+      </NugetContent>
+    </ItemGroup>
+  </Target>
+
+  <Import Project="EF.stylecop.targets" Condition="Exists('..\packages\StyleCop.4.7.10.0\lib\StyleCop.dll')" />
+  <Import Project="EFTools.common.tasks" Condition="'$(BuildingToolingProject)' == 'true'" />
+  <Import Project="$(CustomAfterEntityFrameworkTargets)" Condition="Exists('$(CustomAfterEntityFrameworkTargets)')" Label="Post-targets Build Extensibility Point." />
+</Project>
+
