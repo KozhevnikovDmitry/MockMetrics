@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:RegistrationHousingNeeded xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/RegistrationHousingNeeded/1.4" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:PhysicalPerson>
+    <ns2:FamilyName>Тест</ns2:FamilyName>
+    <ns2:FirstName>Тест</ns2:FirstName>
+    <ns2:Patronymic>Тест</ns2:Patronymic>
+    <ns1:IdentityDocument>
+      <ns2:PassportRF>
+        <ns2:Series>0505</ns2:Series>
+        <ns2:Number>411215</ns2:Number>
+        <ns2:IssueDate>2013-03-27</ns2:IssueDate>
+        <ns2:Issuer>Кем выдан</ns2:Issuer>
+      </ns2:PassportRF>
+    </ns1:IdentityDocument>
+  </ns1:PhysicalPerson>
+  <ns1:BasisForAccounting>
+    <ns1:NoAbode>true</ns1:NoAbode>
+    <ns1:SmallAbode>true</ns1:SmallAbode>
+    <ns1:BadAbode>true</ns1:BadAbode>
+    <ns1:InFamilyThereIsDangerousSick>false</ns1:InFamilyThereIsDangerousSick>
+  </ns1:BasisForAccounting>
+  <ns1:RegisteredHousing>
+    <ns1:CadastralNumber>61:6:10104:12</ns1:CadastralNumber>
+    <ns1:ObjectName>Объект недвижимости</ns1:ObjectName>
+    <ns1:ObjectType>
+      <ns2:code>2002002000</ns2:code>
+      <ns2:displayText>Помещение</ns2:displayText>
+    </ns1:ObjectType>
+    <ns1:AreaCode>
+      <ns2:code>5</ns2:code>
+      <ns2:displayText>Жилая площадь</ns2:displayText>
+    </ns1:AreaCode>
+    <ns1:Area>56</ns1:Area>
+    <ns1:Unit>
+      <ns2:code>12002001000</ns2:code>
+      <ns2:displayText>Квадратный метр</ns2:displayText>
+    </ns1:Unit>
+    <ns1:Address>
+      <ns2:Region>
+        <ns2:code>37</ns2:code>
+        <ns2:displayText>Ивановская область</ns2:displayText>
+      </ns2:Region>
+    </ns1:Address>
+    <ns1:OwnerBase>Основание владения</ns1:OwnerBase>
+    <ns1:PropertyType>
+      <ns2:code>1001000000</ns2:code>
+      <ns2:displayText>Собственность</ns2:displayText>
+    </ns1:PropertyType>
+    <ns1:RegisteredPersonNumber>7</ns1:RegisteredPersonNumber>
+  </ns1:RegisteredHousing>
+  <ns1:OwnedHousing>
+    <ns1:CadastralNumber>61:6:10104:13</ns1:CadastralNumber>
+    <ns1:ObjectName>Объект недвижимости 2</ns1:ObjectName>
+    <ns1:ObjectType>
+      <ns2:code>2002001000</ns2:code>
+      <ns2:displayText>Здание</ns2:displayText>
+    </ns1:ObjectType>
+    <ns1:AreaCode>
+      <ns2:code>7</ns2:code>
+      <ns2:displayText>Основная площадь</ns2:displayText>
+    </ns1:AreaCode>
+    <ns1:Area>158</ns1:Area>
+    <ns1:Unit>
+      <ns2:code>12002001000</ns2:code>
+      <ns2:displayText>Квадратный метр</ns2:displayText>
+    </ns1:Unit>
+    <ns1:Address>
+      <ns2:Region>
+        <ns2:code>37</ns2:code>
+        <ns2:displayText>Ивановская область</ns2:displayText>
+      </ns2:Region>
+    </ns1:Address>
+    <ns1:OwnerBase>Основание владения 2</ns1:OwnerBase>
+    <ns1:PropertyType>
+      <ns2:code>1001000000</ns2:code>
+      <ns2:displayText>Собственность</ns2:displayText>
+    </ns1:PropertyType>
+    <ns1:RegisteredPersonNumber>150</ns1:RegisteredPersonNumber>
+  </ns1:OwnedHousing>
+  <ns1:RegisteredTogetherFamilyMember>
+    <ns2:FamilyName>Фамилия члена семьи</ns2:FamilyName>
+    <ns2:FirstName>Имя</ns2:FirstName>
+    <ns1:BirthDate>2013-04-03</ns1:BirthDate>
+    <ns1:INN>122354543523</ns1:INN>
+    <ns1:Relationship>
+      <ns2:code>20</ns2:code>
+      <ns2:displayText>Прабабушка</ns2:displayText>
+    </ns1:Relationship>
+    <ns1:Unemployment>Да</ns1:Unemployment>
+    <ns1:MemberDUL>
+      <ns2:PassportRF>
+        <ns2:Series>0707</ns2:Series>
+        <ns2:Number>121324</ns2:Number>
+        <ns2:IssueDate>2013-04-04</ns2:IssueDate>
+        <ns2:Issuer>Кем выдан</ns2:Issuer>
+      </ns2:PassportRF>
+    </ns1:MemberDUL>
+    <ns1:RegistrationType>Постоянная</ns1:RegistrationType>
+  </ns1:RegisteredTogetherFamilyMember>
+  <ns1:DistrictAdministration>
+    <ns2:code>6</ns2:code>
+    <ns2:displayText>Администрация Советского района</ns2:displayText>
+  </ns1:DistrictAdministration>
+</ns1:RegistrationHousingNeeded>

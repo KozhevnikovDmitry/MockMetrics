@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="GU.MZ.UI.View.OrderView.Standart.StandartOrderDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:behaviors="clr-namespace:Common.UI.ViewModel.Attachables.Behaviors;assembly=Common.UI"
+             xmlns:standart="clr-namespace:GU.MZ.UI.ViewModel.OrderViewModel.Standart"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Width="600"
+             d:DataContext="{d:DesignInstance standart:StandartOrderDataVm}">
+    <i:Interaction.Behaviors>
+        <behaviors:FirstFocusBehavior/>
+    </i:Interaction.Behaviors>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Регистрационный номер:"            Grid.Row="0" />
+        <TextBox  Grid.Row="0" Text="{Binding RegNumber, ValidatesOnDataErrors=True}" />
+
+        <TextBlock Text="Дата составления:"            Grid.Row="1" />
+        <DatePicker Grid.Row="1" SelectedDate="{Binding Stamp, ValidatesOnDataErrors=True}" />
+        
+        <TextBlock Text="Сотрудник:"            Grid.Row="2" />
+        <TextBox  Grid.Row="2" Text="{Binding EmployeeName, ValidatesOnDataErrors=True}" />
+        
+        <TextBlock Text="Должность:"            Grid.Row="3" />
+        <TextBox  Grid.Row="3" Text="{Binding EmployeePosition, ValidatesOnDataErrors=True}" />
+        
+        <TextBlock Text="Контакты:"            Grid.Row="4" />
+        <TextBox  Grid.Row="4" Text="{Binding EmployeeContacts, ValidatesOnDataErrors=True}" />
+        
+        <TextBlock Text="Глава органа:"            Grid.Row="5" />
+        <TextBox  Grid.Row="5" Text="{Binding LicensialHeadName, ValidatesOnDataErrors=True}" />
+        
+        <TextBlock Text="Должность главы:"            Grid.Row="6" />
+        <TextBox  Grid.Row="6" Text="{Binding LicensiarHeadPosition, ValidatesOnDataErrors=True}" />
+
+        
+    </Grid>
+</UserControl>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:SearchWorkEmployees xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:SearchEmployees>
+    <ns1:EmpToRe>
+      <ns1:Hirer>
+        <ns1:UL>
+          <ns1:ULName>Наименование работодателя</ns1:ULName>
+          <ns1:LawForm>Форма собственности</ns1:LawForm>
+          <ns1:Representative>
+            <ns2:FamilyName>Фамилия представителя</ns2:FamilyName>
+            <ns2:FirstName>Имя представителя</ns2:FirstName>
+            <ns2:Patronymic>Отчество представителя</ns2:Patronymic>
+            <ns1:Post>Должность представителя</ns1:Post>
+          </ns1:Representative>
+          <ns1:OGRN>1234567890123</ns1:OGRN>
+          <ns1:Address>
+            <ns2:Region>
+              <ns2:code>99</ns2:code>
+              <ns2:displayText>Значение отсутствует</ns2:displayText>
+            </ns2:Region>
+            <ns2:CityLocality>Город</ns2:CityLocality>
+          </ns1:Address>
+        </ns1:UL>
+        <ns1:Phone>3912456798</ns1:Phone>
+        <ns1:PropertyForm>Государственная</ns1:PropertyForm>
+        <ns1:ActivityType>Вид деятельности</ns1:ActivityType>
+        <ns1:EmployeesQuantity>23</ns1:EmployeesQuantity>
+        <ns1:FiredEmployeesQuantity>5</ns1:FiredEmployeesQuantity>
+        <ns1:WorkPlacesQuantity>28</ns1:WorkPlacesQuantity>
+        <ns1:InformationPlacement>
+          <ns1:TerritorialJobBank>true</ns1:TerritorialJobBank>
+          <ns1:InterterritorialJobBank>true</ns1:InterterritorialJobBank>
+          <ns1:FederalJobBank>true</ns1:FederalJobBank>
+          <ns1:Media>true</ns1:Media>
+          <ns1:PublicAuthorityInternetResources>true</ns1:PublicAuthorityInternetResources>
+        </ns1:InformationPlacement>
+      </ns1:Hirer>
+      <ns1:WorkConditions>
+        <ns1:WorkAddress>
+          <ns2:Region>
+            <ns2:code>39</ns2:code>
+            <ns2:displayText>Калининградская область</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город работы</ns2:CityLocality>
+        </ns1:WorkAddress>
+        <ns1:Transport>Проезд транспортом</ns1:Transport>
+        <ns1:SocialGuarantee>
+          <ns1:MedService>true</ns1:MedService>
+          <ns1:Sanatorium>true</ns1:Sanatorium>
+          <ns1:DOU>true</ns1:DOU>
+          <ns1:EatingConditions>true</ns1:EatingConditions>
+        </ns1:SocialGuarantee>
+        <ns1:OtherConditions>Иные условия</ns1:OtherConditions>
+        <ns1:NeedsInfo>
+          <ns1:WorkName>Требуемая профессия</ns1:WorkName>
+          <ns1:WorkQualification>Требуемая квалификация</ns1:WorkQualification>
+          <ns1:NeedEmployees>4</ns1:NeedEmployees>
+          <ns1:WorkSort>По совместительству</ns1:WorkSort>
+          <ns1:Salary>Доход предлагаемый</ns1:Salary>
+          <ns1:Mode>Нормальная продолжительность рабочего времени</ns1:Mode>
+          <ns1:Start>2013</ns1:Start>
+          <ns1:Finish>2015</ns1:Finish>
+          <ns1:Requerements>Доп. навыки</ns1:Requerements>
+          <ns1:MoreWishes>Доп. пожелания к кандидату</ns1:MoreWishes>
+          <ns1:MoreGuarantee>Доп. гарантии</ns1:MoreGuarantee>
+        </ns1:NeedsInfo>
+      </ns1:WorkConditions>
+    </ns1:EmpToRe>
+  </ns1:SearchEmployees>
+</ns1:SearchWorkEmployees>

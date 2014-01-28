@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C03946AB-F720-41F1-93C0-DDBDBA03D983}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Common.BL</RootNamespace>
+    <AssemblyName>Common.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Integration\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Externals\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authentification\Authentificator.cs" />
+    <Compile Include="Authentification\IAuthentificator.cs" />
+    <Compile Include="BlFactory.cs" />
+    <Compile Include="BlModule.cs" />
+    <Compile Include="ConnectChecker.cs" />
+    <Compile Include="DataMapping\AbstractDataMapper.cs" />
+    <Compile Include="DomainContext\TransactionWrapper.cs" />
+    <Compile Include="DomainLogicContainer.cs" />
+    <Compile Include="DictionaryManagement\AbstractDictionaryManager.cs" />
+    <Compile Include="DataMapping\IDomainDataMapper.cs" />
+    <Compile Include="DictionaryManagement\DictionaryException\DictionaryItemNotFoundException.cs" />
+    <Compile Include="DictionaryManagement\DictionaryException\DictionaryNotFoundException.cs" />
+    <Compile Include="DomainContext\DomainContext.cs" />
+    <Compile Include="DomainContext\DomainContextException\MultipleDbManagerDetectedException.cs" />
+    <Compile Include="DomainContext\DomainContextException\NoDbManagerFoundException.cs" />
+    <Compile Include="DomainContext\DomainDependent.cs" />
+    <Compile Include="DomainContext\IDomainContext.cs" />
+    <Compile Include="DomainContext\IDomainDependent.cs" />
+    <Compile Include="DomainContext\StubDomainContext.cs" />
+    <Compile Include="Exceptions\DomainBLLException.cs" />
+    <Compile Include="ICore.cs" />
+    <Compile Include="DictionaryManagement\IDictionaryManager.cs" />
+    <Compile Include="IDomainLogicContainer.cs" />
+    <Compile Include="ReportMapping\DbReport.cs" />
+    <Compile Include="ReportMapping\IReport.cs" />
+    <Compile Include="ReportMapping\ReportDataRetrieveException.cs" />
+    <Compile Include="Search\IDomainObjectSearcher.cs" />
+    <Compile Include="IUserPreferences.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Search\AbstractDomainObjectSearcher.cs" />
+    <Compile Include="Search\AbstractSearchStrategy.cs" />
+    <Compile Include="Search\ISearchData.cs" />
+    <Compile Include="Search\ISearchStrategy.cs" />
+    <Compile Include="Search\SearchData.cs" />
+    <Compile Include="Search\SearchSpecification\ExpressionQuantity.cs" />
+    <Compile Include="Search\SearchSpecification\ISearchSpecificationContainer.cs" />
+    <Compile Include="Search\SearchSpecification\SearchOrdering.cs" />
+    <Compile Include="Search\SearchSpecification\SearchPresetSpec.cs" />
+    <Compile Include="Search\SearchSpecification\SearchConditionType.cs" />
+    <Compile Include="Search\SearchSpecification\SearchExpressionSpec.cs" />
+    <Compile Include="Search\SearchModification\SearchMode.cs" />
+    <Compile Include="Search\SearchModification\CustomSearchModification.cs" />
+    <Compile Include="Search\SearchModification\ISearchModification.cs" />
+    <Compile Include="Search\SearchSpecification\SearchExpression.cs" />
+    <Compile Include="Search\SearchSpecification\SearchPreset.cs" />
+    <Compile Include="Search\SearchModification\TemplatedSearchModification.cs" />
+    <Compile Include="Search\SearchSpecification\SearchSpecificationContainer.cs" />
+    <Compile Include="Search\SearchResultReady.cs" />
+    <Compile Include="Search\SearchSpecification\SearchPresetSpecContainer.cs" />
+    <Compile Include="Search\SearchSpecification\SearchPropertySpec.cs" />
+    <Compile Include="Search\SearchSpecification\OrderDirection.cs" />
+    <Compile Include="Validation\AbstractDomainValidator.cs" />
+    <Compile Include="Validation\IDomainValidator.cs" />
+    <Compile Include="Validation\StubDomainValidatior.cs" />
+    <Compile Include="Validation\ValidationErrorInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.DA\Common.DA.csproj">
+      <Project>{166C26B9-576E-44C2-993A-8392B79A619F}</Project>
+      <Name>Common.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common.Types\Common.Types.csproj">
+      <Project>{63B80D1D-4E6D-4C64-93A5-3A117E73A332}</Project>
+      <Name>Common.Types</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

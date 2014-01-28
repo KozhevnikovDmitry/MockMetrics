@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:LicensingMedActivity xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingMedActivity/1.8" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:NewLicense>
+    <ns1:NewLicenseIP>
+      <ns1:IPInfo>
+        <ns2:FamilyName>Получение</ns2:FamilyName>
+        <ns2:FirstName>Медицина</ns2:FirstName>
+        <ns2:Patronymic>ИП</ns2:Patronymic>
+        <ns1:IPAddress>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город</ns2:CityLocality>
+        </ns1:IPAddress>
+        <ns1:Document>
+          <ns2:PassportRF>
+            <ns2:Series>0404</ns2:Series>
+            <ns2:Number>451233</ns2:Number>
+            <ns2:IssueDate>2013-05-07</ns2:IssueDate>
+            <ns2:Issuer>Кем выдан</ns2:Issuer>
+          </ns2:PassportRF>
+        </ns1:Document>
+        <ns1:OGRN>
+          <ns1:OGRNnumber>354654313212135</ns1:OGRNnumber>
+          <ns1:EGRULData>
+            <ns1:Series>0505</ns1:Series>
+            <ns1:Number>Номер</ns1:Number>
+            <ns1:DocIssuedBy>Кем выдан</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2012-05-03</ns1:DocIssuedDate>
+            <ns1:RegAddress>
+              <ns2:Region>
+                <ns2:code>24</ns2:code>
+                <ns2:displayText>Красноярский край</ns2:displayText>
+              </ns2:Region>
+              <ns2:CityLocality>Город</ns2:CityLocality>
+            </ns1:RegAddress>
+          </ns1:EGRULData>
+        </ns1:OGRN>
+        <ns1:INN>
+          <ns1:INN>249565121212</ns1:INN>
+          <ns1:TaxAuthorityData>
+            <ns1:Series>0606</ns1:Series>
+            <ns1:Number>65441222</ns1:Number>
+            <ns1:Date>2013-04-04</ns1:Date>
+            <ns1:Code>5451</ns1:Code>
+            <ns1:IssuerName>Выдавший орган</ns1:IssuerName>
+          </ns1:TaxAuthorityData>
+        </ns1:INN>
+        <ns1:Phone>6561231321</ns1:Phone>
+      </ns1:IPInfo>
+      <ns1:WorksInfo>
+        <ns1:ActivityAddress>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город</ns2:CityLocality>
+        </ns1:ActivityAddress>
+        <ns1:Works>Работы</ns1:Works>
+        <ns1:DocRequisites>
+          <ns1:OrgName>Орган</ns1:OrgName>
+          <ns1:Date>2013-05-10</ns1:Date>
+          <ns1:Number>Номер</ns1:Number>
+        </ns1:DocRequisites>
+      </ns1:WorksInfo>
+    </ns1:NewLicenseIP>
+  </ns1:NewLicense>
+</ns1:LicensingMedActivity>

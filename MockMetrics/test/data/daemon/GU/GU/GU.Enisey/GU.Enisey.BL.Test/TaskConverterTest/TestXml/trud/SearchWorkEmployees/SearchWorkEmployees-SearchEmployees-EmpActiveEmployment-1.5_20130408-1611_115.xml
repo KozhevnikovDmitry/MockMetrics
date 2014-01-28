@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:SearchWorkEmployees xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:SearchEmployees>
+    <ns1:EmpActiveEmployment>
+      <ns1:Hirer>
+        <ns1:FL>
+          <ns2:FamilyName>Федченко</ns2:FamilyName>
+          <ns2:FirstName>Наталья</ns2:FirstName>
+          <ns2:Patronymic>Иосифовна</ns2:Patronymic>
+          <ns1:FLAddress>
+            <ns2:Region>
+              <ns2:code>39</ns2:code>
+              <ns2:displayText>Калининградская область</ns2:displayText>
+            </ns2:Region>
+            <ns2:CityLocality>Город работодателя</ns2:CityLocality>
+          </ns1:FLAddress>
+        </ns1:FL>
+        <ns1:Phone>3914567892</ns1:Phone>
+        <ns1:PropertyForm>Частная</ns1:PropertyForm>
+        <ns1:ActivityType>Вид деятельности</ns1:ActivityType>
+        <ns1:EmployeesQuantity>11</ns1:EmployeesQuantity>
+        <ns1:FiredEmployeesQuantity>0</ns1:FiredEmployeesQuantity>
+        <ns1:WorkPlacesQuantity>14</ns1:WorkPlacesQuantity>
+        <ns1:InformationPlacement>
+          <ns1:TerritorialJobBank>false</ns1:TerritorialJobBank>
+          <ns1:InterterritorialJobBank>false</ns1:InterterritorialJobBank>
+          <ns1:FederalJobBank>false</ns1:FederalJobBank>
+          <ns1:Media>false</ns1:Media>
+          <ns1:PublicAuthorityInternetResources>false</ns1:PublicAuthorityInternetResources>
+        </ns1:InformationPlacement>
+        <ns1:Agreement>
+          <ns1:Fair>false</ns1:Fair>
+          <ns1:PayedWorks>false</ns1:PayedWorks>
+          <ns1:NonAdults>false</ns1:NonAdults>
+          <ns1:Graduates>false</ns1:Graduates>
+          <ns1:DifficultEmployees>false</ns1:DifficultEmployees>
+        </ns1:Agreement>
+      </ns1:Hirer>
+      <ns1:WorkConditions>
+        <ns1:WorkAddress>
+          <ns2:Region>
+            <ns2:code>37</ns2:code>
+            <ns2:displayText>Ивановская область</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город работы</ns2:CityLocality>
+        </ns1:WorkAddress>
+        <ns1:Transport>Проезд на такси</ns1:Transport>
+        <ns1:SocialGuarantee>
+          <ns1:MedService>true</ns1:MedService>
+          <ns1:Sanatorium>true</ns1:Sanatorium>
+          <ns1:DOU>true</ns1:DOU>
+          <ns1:EatingConditions>true</ns1:EatingConditions>
+        </ns1:SocialGuarantee>
+        <ns1:OtherConditions>Иные условия</ns1:OtherConditions>
+        <ns1:NeedsInfo>
+          <ns1:WorkName>Требуемая профессия</ns1:WorkName>
+          <ns1:WorkQualification>Требуемая квалификация</ns1:WorkQualification>
+          <ns1:NeedEmployees>2</ns1:NeedEmployees>
+          <ns1:WorkSort>Сезонная</ns1:WorkSort>
+          <ns1:Salary>Доход предлагаемый</ns1:Salary>
+          <ns1:Mode>Ненормированный рабочий день</ns1:Mode>
+          <ns1:Start>2013</ns1:Start>
+          <ns1:Finish>2016</ns1:Finish>
+          <ns1:Requerements>Доп навыки</ns1:Requerements>
+          <ns1:MoreWishes>Доп пожелания</ns1:MoreWishes>
+          <ns1:MoreGuarantee>Доп гарантии</ns1:MoreGuarantee>
+        </ns1:NeedsInfo>
+      </ns1:WorkConditions>
+    </ns1:EmpActiveEmployment>
+  </ns1:SearchEmployees>
+</ns1:SearchWorkEmployees>

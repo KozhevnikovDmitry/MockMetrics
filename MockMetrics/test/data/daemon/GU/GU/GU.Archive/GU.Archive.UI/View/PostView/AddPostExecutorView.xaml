@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="GU.Archive.UI.View.PostView.AddPostExecutorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Width="300"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Сотрудник:" Grid.Row="0" />
+        <ComboBox ItemsSource="{Binding EmployeeList}" 
+                  Grid.Row="0"
+                  SelectedValue="{Binding Employee, ValidatesOnDataErrors=True}" />
+        <TextBlock Text="Примечание:" Grid.Row="1" />
+        <TextBox Text="{Binding Note}" Grid.Row="1" Grid.RowSpan="2" Height="50"
+                 TextWrapping="Wrap" VerticalContentAlignment="Top"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" />
+
+    </Grid>
+</UserControl>

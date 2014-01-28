@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:LicensingMedActivity xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingMedActivity/1.8" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:ReregistrationLicense>
+    <ns1:ReregistrationLicenseIP>
+      <ns1:IPInfo>
+        <ns2:FamilyName>Медицина</ns2:FamilyName>
+        <ns2:FirstName>Переоформление</ns2:FirstName>
+        <ns2:Patronymic>ИП</ns2:Patronymic>
+        <ns1:IPAddress>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город</ns2:CityLocality>
+        </ns1:IPAddress>
+        <ns1:Document>
+          <ns2:PassportRF>
+            <ns2:Series>0100</ns2:Series>
+            <ns2:Number>545645</ns2:Number>
+            <ns2:IssueDate>2013-05-15</ns2:IssueDate>
+            <ns2:Issuer>Кем</ns2:Issuer>
+          </ns2:PassportRF>
+        </ns1:Document>
+        <ns1:OGRN>
+          <ns1:OGRNnumber>345654121212121</ns1:OGRNnumber>
+          <ns1:EGRULData>
+            <ns1:Series>0202</ns1:Series>
+            <ns1:Number>5465312312</ns1:Number>
+            <ns1:DocIssuedBy>Кем</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-05-02</ns1:DocIssuedDate>
+            <ns1:RegAddress>
+              <ns2:Region>
+                <ns2:code>24</ns2:code>
+                <ns2:displayText>Красноярский край</ns2:displayText>
+              </ns2:Region>
+              <ns2:CityLocality>Город</ns2:CityLocality>
+            </ns1:RegAddress>
+          </ns1:EGRULData>
+        </ns1:OGRN>
+        <ns1:INN>
+          <ns1:INN>249653212321</ns1:INN>
+          <ns1:TaxAuthorityData>
+            <ns1:Series>0303</ns1:Series>
+            <ns1:Number>8454515121</ns1:Number>
+            <ns1:Date>2013-05-06</ns1:Date>
+            <ns1:Code>9565</ns1:Code>
+            <ns1:IssuerName>Орган</ns1:IssuerName>
+          </ns1:TaxAuthorityData>
+        </ns1:INN>
+        <ns1:Phone>9562231121</ns1:Phone>
+      </ns1:IPInfo>
+      <ns1:LicenseInfo>
+        <ns1:LicenseNumber>00-11-2-001159</ns1:LicenseNumber>
+        <ns1:LicenseDate>2013-05-10</ns1:LicenseDate>
+        <ns1:LicenseOrg>Лицензирующий орган</ns1:LicenseOrg>
+      </ns1:LicenseInfo>
+      <ns1:Base>
+        <ns1:Rename>
+          <ns2:FamilyName>Фамилия новая</ns2:FamilyName>
+          <ns2:FirstName>Имя</ns2:FirstName>
+          <ns1:DocData>
+            <ns1:DocIssuedBy>Орган</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-05-03</ns1:DocIssuedDate>
+            <ns1:Series>0602</ns1:Series>
+            <ns1:Number>44545453</ns1:Number>
+          </ns1:DocData>
+        </ns1:Rename>
+      </ns1:Base>
+    </ns1:ReregistrationLicenseIP>
+  </ns1:ReregistrationLicense>
+</ns1:LicensingMedActivity>

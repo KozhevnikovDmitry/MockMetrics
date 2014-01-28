@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/UnemployedPayment/1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.1" xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:attach="http://smev.gosuslugi.ru/request/rev111111" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/UnemployedPayment/1.4" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="UnemployedPayment" hints:rus="Осуществление социальных выплат гражданам, признанным в установленном порядке безработными">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ApplicantInfo" hints:rus="Сведения о заявителе" hints:injectionType="injectAndGetBack">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="ns1:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+							<xs:element name="INN" type="ns1:PhysicalPersonINN-Type" hints:rus="ИНН"/>
+							<xs:element name="Address" type="ns1:OptionalIndexAddress-Type" hints:rus="Адрес регистрации"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:choice hints:rus="Желательный способ получения социальных выплат">
+					<xs:element name="MoneyWire" type="krsk:BankType" hints:rus="Перечисление через отделение кредитной организации (на банковский счет)"/>
+					<xs:element name="PostalPayment" hints:rus="Перечисление в в почтовое отделение связи (почтовый перевод)">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Post_Office_Number" type="ns1:SixDigitString-Type" hints:rus="Номер отделения федеральной почтовой связи"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:element name="DocAttach" type="attach:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="BankType" hints:rus="Тип: Банк">
+		<xs:sequence>
+			<xs:element name="Bank_Info" type="ns1:string-500" hints:rus="Наименование банка получателя платежа" hints:userHint="Пример: Красноярский филиал ОАО «Банк Москвы»"/>
+			<xs:element name="TransactionalAccount" hints:rus="Номер счета получателя платежа" hints:userHint="20 цифр. Пример: 12301230000000000123" hints:inputMask="[N][N][N][N][N][N][N][N][N][N][N][N][N][N][N][N][N][N][N][N]">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:pattern value="[0-9]{20,25}"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="GU.HQ.UI.View.ClaimView.ClaimQueuePrivDeRegView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" mc:Ignorable="d" d:DesignHeight="400">
+
+    <UserControl.Resources>
+        <ResourceDictionary Source="/GU.HQ.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+    </UserControl.Resources>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <AdornerDecorator>
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="170"/>
+                <ColumnDefinition Width="230"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Дата документа – основания утраты права на внеочередное предоставление жилого помещения:" />
+            <TextBlock Grid.Row="1" Text="Номер документа – основания утраты права на внеочередное предоставление жилого помещения:" />
+            <TextBlock Grid.Row="2" Text="Дата решения об исключении из списка на внеочередное предоставление жилого помещения:" />
+            <TextBlock Grid.Row="3" Text="Номер решения об исключении из списка на внеочередное предоставление жилого помещения:" />
+            <TextBlock Grid.Row="4" Text="Примечание:"/>
+
+            <DatePicker Grid.Row="0" SelectedDate="{Binding Path=DocumentDate,  ValidatesOnDataErrors=True}" VerticalAlignment="Bottom"/>
+            <TextBox    Grid.Row="1" Text="{Binding Path=DocumentNum,  ValidatesOnDataErrors=True}"          VerticalAlignment="Bottom"/>
+            <DatePicker Grid.Row="2" SelectedDate="{Binding Path=DecisionDate,  ValidatesOnDataErrors=True}" VerticalAlignment="Bottom"/>
+            <TextBox    Grid.Row="3" Text="{Binding Path=DecisionNum,  ValidatesOnDataErrors=True}"          VerticalAlignment="Bottom"/>
+            <TextBox    Grid.Row="4" Text="{Binding Path=Note,  ValidatesOnDataErrors=True}"                 VerticalAlignment="Bottom"/>
+
+        </Grid>
+    </AdornerDecorator>
+</UserControl>

@@ -1,0 +1,520 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9B66602-5060-4073-9FC1-730202D03C99}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GU.UI</RootNamespace>
+    <AssemblyName>GU.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Integration\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AvalonDock">
+      <HintPath>..\..\..\Externals\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\..\..\Externals\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VIBlend.WPF.Editors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5f568d4f9cd901f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\VIBlend.WPF.Editors.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WPFToolkit.Extended, Version=1.5.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\WPFToolkit.Extended.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ViewModel\ContentViewModel\ComplexChoiseContentNodeVM.cs" />
+    <Compile Include="ViewModel\ContentViewModel\ComplexContentNodeVM.cs" />
+    <Compile Include="ViewModel\ContentViewModel\ContentNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\ContentNodeVmBuilder.cs" />
+    <Compile Include="Extension\TaskStatusTypeExtension.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\AddNoteVM.cs" />
+    <Compile Include="ViewModel\ContentViewModel\DeppLevelWitdthConverter.cs" />
+    <Compile Include="ViewModel\ContentViewModel\PotentionalContentNodeVM.cs" />
+    <Compile Include="ViewModel\ContentViewModel\RefSpecContentNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\SimpleBooleanNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\SimpleDateNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\SimpleDictNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\SimpleFileNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\SimpleNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\SimpleNumberNodeVm.cs" />
+    <Compile Include="ViewModel\ContentViewModel\SimpleStringNodeVm.cs" />
+    <Compile Include="ViewModel\EventSubscriber\ContentEventSubscriber.cs" />
+    <Compile Include="ViewModel\EventSubscriber\ContentNodeEventSubscriber.cs" />
+    <Compile Include="ViewModel\EventSubscriber\TaskEventSubscriber.cs" />
+    <Compile Include="ViewModel\EventSubscriber\UserEventSubscriber.cs" />
+    <Compile Include="ViewModel\ReportDialogViewModel\GetReportDateIntervalVM.cs" />
+    <Compile Include="ViewModel\SearchViewModel\DbUserSearchVM.cs" />
+    <Compile Include="ViewModel\SearchViewModel\SearchResultViewModel\DbUserSearchResultVM.cs" />
+    <Compile Include="ViewModel\SearchViewModel\SearchTemplateViewModel\TaskSearchTemplateVM.cs" />
+    <Compile Include="ViewModel\TaskViewModel\BaseTaskManagementVM.cs" />
+    <Compile Include="ViewModel\TaskViewModel\TaskDockableVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\AddRoleVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\SetPasswordVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\UserDataVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\UserManageVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\UserModuleVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\UserRoleItemVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\UserRoleListVM.cs" />
+    <Compile Include="ViewModel\UserViewModel\UserVM.cs" />
+    <Compile Include="View\AddNoteView.xaml.cs">
+      <DependentUpon>AddNoteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContentView\ComplexChoiseContentNodeView.xaml.cs">
+      <DependentUpon>ComplexChoiseContentNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContentView\ComplexContentNodeView.xaml.cs">
+      <DependentUpon>ComplexContentNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContentView\ContentNodeView.xaml.cs">
+      <DependentUpon>ContentNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContentView\PotentialContentNodeView.xaml.cs">
+      <DependentUpon>PotentialContentNodeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FileDataView.xaml.cs">
+      <DependentUpon>FileDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ReportDialogView\GetReportDateIntervalView.xaml.cs">
+      <DependentUpon>GetReportDateIntervalView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchView\SearchResultTemplate\DbUserSearchResultView.xaml.cs">
+      <DependentUpon>DbUserSearchResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchView\SearchTemplateView\SearchTaskTemplateView.xaml.cs">
+      <DependentUpon>SearchTaskTemplateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\GUOptionsVM.cs" />
+    <Compile Include="ViewModel\SearchViewModel\SearchResultViewModel\TaskSearchResultVM.cs" />
+    <Compile Include="ViewModel\SearchViewModel\TaskSearchVM.cs" />
+    <Compile Include="ViewModel\TaskViewModel\NewTaskVM.cs" />
+    <Compile Include="ViewModel\TaskViewModel\TaskStatusesVM.cs" />
+    <Compile Include="ViewModel\TaskViewModel\TaskStatusItemVM.cs" />
+    <Compile Include="ViewModel\TaskViewModel\TaskDataVM.cs" />
+    <Compile Include="ViewModel\TaskViewModel\TaskVM.cs" />
+    <Compile Include="View\GUOptionsView.xaml.cs">
+      <DependentUpon>GUOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SearchView\SearchResultTemplate\TaskSearchResultView.xaml.cs">
+      <DependentUpon>TaskSearchResultView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\NewTaskDocView.xaml.cs">
+      <DependentUpon>NewTaskDocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\NewTaskView.xaml.cs">
+      <DependentUpon>NewTaskView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskAttrFileEditView.xaml.cs">
+      <DependentUpon>TaskAttrFileEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskAttrItemView.xaml.cs">
+      <DependentUpon>TaskAttrItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskCommonView.xaml.cs">
+      <DependentUpon>TaskCommonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskDocItemView.xaml.cs">
+      <DependentUpon>TaskDocItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskDockableView.xaml.cs">
+      <DependentUpon>TaskDockableView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskDocManagerView.xaml.cs">
+      <DependentUpon>TaskDocManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskDocSectView.xaml.cs">
+      <DependentUpon>TaskDocSectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskDocView.xaml.cs">
+      <DependentUpon>TaskDocView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskStatusItemView.xaml.cs">
+      <DependentUpon>TaskStatusItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\TaskView\TaskView.xaml.cs">
+      <DependentUpon>TaskView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView\AddRoleView.xaml.cs">
+      <DependentUpon>AddRoleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView\RoleItemView.xaml.cs">
+      <DependentUpon>RoleItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView\SetPasswordView.xaml.cs">
+      <DependentUpon>SetPasswordView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView\UserDataView.xaml.cs">
+      <DependentUpon>UserDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView\UserManageView.xaml.cs">
+      <DependentUpon>UserManageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView\UserModuleView.xaml.cs">
+      <DependentUpon>UserModuleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\employee.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\AddNoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContentView\ComplexChoiseContentNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContentView\ComplexContentNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContentView\ContentNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContentView\PotentialContentNodeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\FileDataView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ReportDialogView\GetReportDateIntervalView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchView\SearchResultTemplate\DbUserSearchResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SearchView\SearchTemplateView\SearchTaskTemplateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GUOptionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SearchView\SearchResultTemplate\TaskSearchResultView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Styles\GuListGroupStyleDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Styles\GuListTemplatesDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Styles\GuSearchTemplatesDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\NewTaskDocView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskView\NewTaskView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskView\TaskAttrFileEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskView\TaskAttrItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\TaskView\TaskCommonView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\TaskDocItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\TaskDockableView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\TaskDocManagerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\TaskDocSectView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\TaskDocView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\TaskStatusItemView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskView\TaskView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\UserView\AddRoleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView\RoleItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView\SetPasswordView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView\UserDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView\UserManageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView\UserModuleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView\UserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\experts_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\license.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\organization.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\place.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\procedures.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\Statements.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Add_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Checkup_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Delete_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Entered_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Help_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\New_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\None_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Open_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Print_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Refresh_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Remove_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Save_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Save_all_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Search_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Send_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Settings_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Statements_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\User_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Working_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\MZ.png" />
+    <Resource Include="Resources\Icons\RZ.png" />
+    <Resource Include="Resources\Icons\Settings_256x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\glass_2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\archive.png" />
+    <Resource Include="Resources\Icons\mz_new.png" />
+    <Resource Include="Resources\Icons\trud.png" />
+    <Resource Include="Resources\Icons\zags.png" />
+    <Resource Include="Resources\Icons\zh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\mun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pictures\splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.BL\Common.BL.csproj">
+      <Project>{C03946AB-F720-41F1-93C0-DDBDBA03D983}</Project>
+      <Name>Common.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.DA\Common.DA.csproj">
+      <Project>{166C26B9-576E-44C2-993A-8392B79A619F}</Project>
+      <Name>Common.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.Types\Common.Types.csproj">
+      <Project>{63B80D1D-4E6D-4C64-93A5-3A117E73A332}</Project>
+      <Name>Common.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.UI\Common.UI.csproj">
+      <Project>{A4E6903C-B459-4D75-9AA9-5C50E41CAC3F}</Project>
+      <Name>Common.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.BL\GU.BL.csproj">
+      <Project>{BE8BC0F3-168A-4957-9972-4D63CC791CC0}</Project>
+      <Name>GU.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.DataModel\GU.DataModel.csproj">
+      <Project>{71463E15-A2C6-4126-8AB9-CA4A570E5E4D}</Project>
+      <Name>GU.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\gtk-convert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\document-new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Information_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\User_256x256.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\32X32\Cancel_32x32.png" />
+    <Resource Include="Resources\Icons\certification.png" />
+    <Resource Include="Resources\Icons\32X32\Check_32x32.png" />
+    <Resource Include="Resources\Icons\drugsupplay.png" />
+    <Resource Include="Resources\Icons\32X32\Key_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\64X64\edit_add.png" />
+    <Resource Include="Resources\Icons\64X64\list_remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\64X64\list_remove_cuted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\128X128\documents.png" />
+    <Resource Include="Resources\Icons\32X32\Documents_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Pictures\eg-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\PropertyValidator\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="GU.Enisey.Service.AppInquiryNotifierService" CodeBehind="AppInquiryNotifierService.svc.cs" %>

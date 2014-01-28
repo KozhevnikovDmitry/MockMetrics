@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="SpecManager.UI.View.SpecSourceView.PreSaveWarningsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:serviceSourceViewModel="clr-namespace:SpecManager.UI.ViewModel.SpecSourceViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance serviceSourceViewModel:PreSaveWarningsVm}"
+             Height="500" Width="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SpecManager.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Style="{StaticResource MainBorderStyle}" HorizontalAlignment="Stretch" Grid.Row="0">
+            <TextBlock Text="{Binding Title}" TextWrapping="Wrap" Foreground="Black"/>
+        </Border>
+
+        <ListBox ItemsSource="{Binding Messages}" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 HorizontalContentAlignment="Stretch"
+                 Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel HorizontalAlignment="Stretch">
+
+                        <Border Style="{StaticResource MainBorderStyle}" DockPanel.Dock="Left">
+                            <Image Width="32" Height="32" Source="/Specmanager.Ui;component/Resources/Icons/delete.png"/>
+                        </Border>
+
+                        <Border Style="{StaticResource MainBorderStyle}" DockPanel.Dock="Right" HorizontalAlignment="Stretch">
+                            <TextBlock Text="{Binding}" TextWrapping="Wrap" Foreground="Black"/>
+                        </Border>
+
+                    </DockPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="{Binding Transparent}"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="{Binding Transparent}"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="{Binding Black}"/>
+            </ListBox.Resources>
+        </ListBox>
+    </Grid>
+</UserControl>

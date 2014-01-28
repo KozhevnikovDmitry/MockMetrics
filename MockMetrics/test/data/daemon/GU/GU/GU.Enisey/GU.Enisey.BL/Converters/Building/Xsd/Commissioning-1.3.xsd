@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/Commissioning/1.3" xmlns:commons="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.3" xmlns:smev="http://smev.gosuslugi.ru/request/rev111111" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/Commissioning/1.3" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="Commissioning" hints:rus="Выдача разрешений на ввод объекта в эксплуатацию">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice hints:showInChoiceScreen="true" hints:rus="Заявитель является">
+					<xs:sequence hints:rus="Физическим лицом / Индивидуальным предпринимателем" hints:roleName="applicant-type">
+						<xs:choice hints:showInChoiceScreen="true" hints:rus="Заявление подается">
+							<xs:sequence hints:rus="Заявителем">
+								<xs:element name="Applicant" type="krsk:ApplicantPhysicalType" hints:injectionType="injectAndGetBack" hints:rus="Сведения о заявителе"/>
+							</xs:sequence>
+							<xs:sequence hints:rus="Представителем заявителя">
+								<xs:element name="ApplicantInfo" type="krsk:ApplicantPhysicalType" hints:injectionType="ignore" hints:rus="Сведения о заявителе"/>
+								<xs:element name="RepresentativeInfo" type="krsk:PersonDataType" hints:injectionType="injectAndGetBack" hints:rus="Сведения о представителе заявителя"/>
+							</xs:sequence>
+						</xs:choice>
+					</xs:sequence>
+					<xs:sequence hints:rus="Юридическим лицом" hints:roleName="applicant-type">
+						<xs:element name="LegalPerson" type="krsk:LegalType" hints:rus="Сведения о заявителе"/>
+					</xs:sequence>
+				</xs:choice>
+				<xs:element name="ObjectInfo" type="krsk:ObjectType" hints:rus="Сведения об объекте, вводимом в эксплуатацию"/>
+				<xs:element name="AppliedDocumentsType" type="smev:AppliedDocumentsType" minOccurs="0" hints:widgetType="deleteProtected" hints:rus="Сведения о предоставляемых документах"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="LegalType" hints:rus="Блок.Юридическое лицо">
+		<xs:sequence>
+			<xs:element name="FullName" type="commons:string-500" hints:rus="Полное наименование" hints:businessMeaning="userLegalPersonName" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+			<xs:element name="RegistrationDate" type="xs:date" hints:rus="Дата государственной регистрации" hints:dateRestriction="past" hints:userHint="Дата должна быть не больше текущей"/>
+			<xs:element name="RegistrationNumber" type="commons:string-50" hints:rus="Номер государственной регистрации" hints:userHint="Номер свидетельства о внесении записи в Единый государственный реестр юридических лиц"/>
+			<xs:element name="OGRN" type="commons:OGRN-Type" hints:rus="ОГРН" hints:businessMeaning="userLegalPersonOGRN"/>
+			<xs:element name="INN" type="commons:LegalPersonINN-Type" hints:rus="ИНН" hints:businessMeaning="userLegalPersonINN"/>
+			<xs:sequence hints:rus="Сведения о руководителе организации">
+				<xs:element name="Position" type="commons:string-200" hints:rus="Должность" hints:businessMeaning="userLegalPersonCEOPositionName" hints:userHint="Пример: Исполнительный директор"/>
+				<xs:element name="ChiefLastName" type="commons:RussianWord-100-Type" hints:rus="Фамилия" hints:businessMeaning="userLegalPersonCEOFamilyName"/>
+				<xs:element name="ChiefFirstName" type="commons:RussianWord-100-Type" hints:rus="Имя" hints:businessMeaning="userLegalPersonCEOFirstName"/>
+				<xs:element name="ChiefMiddleName" type="commons:RussianWord-100-Type" minOccurs="0" hints:rus="Отчество" hints:businessMeaning="userLegalPersonCEOPatronymic"/>
+			</xs:sequence>
+			<xs:element name="LegalAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Юридический адрес"/>
+			<xs:element name="PostalAddress" type="commons:RequiredIndexAddress-Type" minOccurs="0" hints:widgetType="deleteProtected" hints:rus="Фактический (почтовый) адрес">
+				<xs:annotation>
+					<xs:appinfo>
+						<hints:OptionalElementHandling header="Фактический адрес совпадает с юридическим адресом" doNotCreateText="Да" createText="Нет"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Performer" minOccurs="0" hints:widgetType="deleteProtected" hints:rus="Исполнитель">
+				<xs:annotation>
+					<xs:appinfo>
+						<hints:OptionalElementHandling header="Добавить сведения об исполнителе" doNotCreateText="Нет" createText="Да"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="commons:PhysicalPersonQualifiedName-ModelGroup"/>
+						<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Телефон" hints:businessMeaning="userContactPhone"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ApplicantPhysicalType" hints:rus="Тип.Заявитель физ.лицо">
+		<xs:sequence>
+			<xs:element name="IndividualEntrepreneur" minOccurs="0" hints:widgetType="deleteProtected" hints:rus="Сведения об индивидуальном предпринимателе">
+				<xs:annotation>
+					<xs:appinfo>
+						<hints:OptionalElementHandling header="Заявитель является индивидуальным предпринимателем" doNotCreateText="Нет" createText="Да"/>
+					</xs:appinfo>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="INN" type="commons:PhysicalPersonINN-Type" hints:rus="ИНН"/>
+						<xs:element name="OGRNIP" type="commons:OGRNIP-Type" hints:rus="ОГРН ИП"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+			<xs:element name="Document" type="commons:Document-Type" hints:rus="Документ, удостоверяющий личность"/>
+			<xs:element name="RegistrationAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес регистрации по месту жительства"/>
+			<xs:element name="PostallAddress" type="commons:RequiredIndexAddress-Type" minOccurs="0" hints:widgetType="deleteProtected" hints:rus="Почтовый адрес">
+				<xs:annotation>
+					<xs:appinfo>
+						<hints:OptionalElementHandling header="Почтовый адрес совпадает с адресом регистрации по месту жительства" doNotCreateText="Да" createText="Нет"/>
+					</xs:appinfo>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Телефон" hints:businessMeaning="userContactPhone"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ObjectType" hints:rus="Тип. Информация об объекте">
+		<xs:sequence>
+			<xs:element name="ObjectCadastralNumber" type="commons:CadastralNumber-Type" hints:rus="Кадастровый номер земельного участка"/>
+			<xs:element name="ObjectName" type="commons:string-500" hints:rus="Наименование объекта, вводимого в эксплуатацию" hints:userHint="Пример: Жилой многоквартирный дом"/>
+			<xs:element name="Address" type="commons:LocationRosReestr-Type" hints:rus="Почтовый (строительный) адрес объекта"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonDataType">
+		<xs:annotation>
+			<xs:documentation>Представитель</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="commons:PhysicalPersonQualifiedName-ModelGroup"/>
+			<xs:element name="Document" type="commons:Document-Type" hints:rus="Документ, удостоверяющий личность"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

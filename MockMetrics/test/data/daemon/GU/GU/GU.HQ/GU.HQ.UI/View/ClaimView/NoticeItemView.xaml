@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="GU.HQ.UI.View.ClaimView.NoticeItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary  Source="/GU.HQ.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Button}" x:Key="listButtonStyle" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Setter Property="DataContext" Value="{Binding}"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Expander IsExpanded="{Binding Expanded}" Style="{StaticResource GroupBoxExpander}" >
+        <Expander.Header>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Уведомление: " TextWrapping="Wrap" FontWeight="Bold"/>
+                <TextBlock Text="{Binding Path=NoticeInfo}" TextWrapping="Wrap" />
+            </StackPanel>
+        </Expander.Header>
+            
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid  Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="190"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"   Text="Дата уведомления:" />
+                <TextBlock Grid.Row="1"   Text="Исходящий номер уведомления:" />
+
+                <DatePicker Grid.Row="0"  SelectedDate="{Binding Path=DocumentDate, ValidatesOnDataErrors=True}"/>
+                <TextBox    Grid.Row="1"  Text="{Binding Path=DocumentNumber, ValidatesOnDataErrors=True}"/>
+            </Grid>
+
+            <Button Grid.Column="1" VerticalAlignment="Top"
+                    Style="{StaticResource listButtonStyle}" 
+                    Command="{Binding RemoveItemCommand}">
+                <Image Source="/Common.UI;component/Resources/Icons/16X16/delete.png"  Width="16" Height="16"/>
+            </Button>
+        </Grid>
+    </Expander>
+</UserControl>

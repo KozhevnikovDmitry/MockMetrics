@@ -1,0 +1,93 @@
+﻿<Window x:Class="SpecManager.UI.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModel="clr-namespace:SpecManager.UI.ViewModel"
+        xmlns:ctrl="clr-namespace:SpecManager.UI.View.Controls" 
+        xmlns:ad="clr-namespace:AvalonDock;assembly=AvalonDock"
+        xmlns:avalonDock="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
+        xmlns:valueConverter="clr-namespace:SpecManager.UI.ViewModel.ValueConverter"
+        Icon="/SpecManager.UI;component/Resources/Icons/krasinform.ico"
+        mc:Ignorable="d"
+        WindowState="Maximized"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
+        d:DataContext="{d:DesignInstance viewModel:MainVm}"
+        Title="SpecManager" MinHeight="600" MinWidth="800">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/SpecManager.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/SpecManager.UI;component/View/Styles/ToolBarStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <valueConverter:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveSpecCommand}"/>
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewSpecCommand}"/>
+        <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenFromXmlCommand}"/>
+    </Window.InputBindings>
+    
+    <DockPanel>
+        
+        <ToolBar DockPanel.Dock="Top">
+
+            <Button Command="{Binding NewSpecCommand}" ToolTip="Создать" 
+                    Style="{StaticResource ResourceKey=toolBarButtonStyle}" Tag="/SpecManager.UI;component/Resources/Icons/document-new.png" />
+
+            <ctrl:MenuButton Style="{StaticResource ResourceKey=toolBarMenuButtonStyle}" Tag="/SpecManager.UI;component/Resources/Icons/document-open.png" ToolTip="Открыть">
+                <ctrl:MenuButton.ContextMenu>
+                    <ContextMenu>
+                        <ContextMenu.Items>
+                            <MenuItem Header="Из базы данных" Command="{Binding OpenFromDbCommand}"/>
+                            <MenuItem Header="Из XML" Command="{Binding OpenFromXmlCommand}"/>
+                        </ContextMenu.Items>
+                    </ContextMenu>
+                </ctrl:MenuButton.ContextMenu>
+            </ctrl:MenuButton>
+
+            <Button Command="{Binding SaveSpecCommand}" ToolTip="Сохранить" 
+                    Style="{StaticResource ResourceKey=toolBarButtonStyle}" Tag="/SpecManager.UI;component/Resources/Icons/document-save.png" />
+
+            <ctrl:MenuButton Style="{StaticResource ResourceKey=toolBarMenuButtonStyle}" 
+                             Tag="/SpecManager.UI;component/Resources/Icons/document-save-as.png" 
+                             IsEnabled="{Binding CanSaveAs}"
+                             ToolTip="Сохранить как">
+                <ctrl:MenuButton.ContextMenu>
+                    <ContextMenu>
+                        <ContextMenu.Items>
+                            <MenuItem Header="В базу данных" Command="{Binding SaveToDbCommand}"/>
+                            <MenuItem Header="В XML" Command="{Binding SaveToXmlCommand}"/>
+                        </ContextMenu.Items>
+                    </ContextMenu>
+                </ctrl:MenuButton.ContextMenu>
+            </ctrl:MenuButton>
+
+            <Separator Style="{StaticResource ResourceKey=VerticalSeparatorStyle}"/>
+
+        </ToolBar>
+
+        <ad:DockingManager Grid.Row="2"
+                               DocumentsSource="{Binding Workspaces}"
+                               ActiveContent="{Binding ActiveWorkspace, Mode=TwoWay, Converter={StaticResource ActiveDocumentConverter}}">
+
+            <ad:DockingManager.LayoutItemContainerStyle>
+                <Style TargetType="{x:Type avalonDock:LayoutItem}">
+                    <Setter Property="Title" Value="{Binding Model.DisplayName}"/>
+                    <Setter Property="ToolTip" Value="{Binding Model.Hint}"/>
+                </Style>
+            </ad:DockingManager.LayoutItemContainerStyle>
+
+            <ad:DockingManager.LayoutItemTemplate>
+                <DataTemplate>
+                    <ContentControl Content="{Binding View}"/>
+                </DataTemplate>
+            </ad:DockingManager.LayoutItemTemplate>
+        </ad:DockingManager>
+    </DockPanel>
+    
+</Window>

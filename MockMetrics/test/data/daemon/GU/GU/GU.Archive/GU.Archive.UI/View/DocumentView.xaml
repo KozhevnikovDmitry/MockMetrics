@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="GU.Archive.UI.View.DocumentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:conv="clr-namespace:GU.Archive.UI.ViewModel.ValueConverters"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:vib="clr-namespace:VIBlend.WPF.Controls;assembly=VIBlend.WPF.Editors"
+             xmlns:Behaviors="clr-namespace:Common.UI.ViewModel.Attachables.Behaviors;assembly=Common.UI"
+             xmlns:ValueConverters="clr-namespace:Common.UI.ViewModel.ValueConverters;assembly=Common.UI" mc:Ignorable="d" 
+             d:DesignHeight="300" Width="400">
+    <i:Interaction.Behaviors>
+        <Behaviors:FirstFocusBehavior/>
+    </i:Interaction.Behaviors>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <ValueConverters:MaskedNumberTextConverter x:Key="maskedNumberTextConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+                
+        <TextBlock  Text="Серия документа:"                                          Grid.Row="0" />
+        <TextBox    Text="{Binding SerialNumber, ValidatesOnDataErrors=True}"        Grid.Row="0" />
+        
+        <TextBlock  Text="Номер документа:"                                          Grid.Row="1" />
+        <TextBox    Text="{Binding Number, ValidatesOnDataErrors=True}"              Grid.Row="1" />
+        
+        <TextBlock  Text="Кем выдан:"                                                Grid.Row="2" />
+        <TextBox    Text="{Binding Distributor, ValidatesOnDataErrors=True}"         Grid.Row="2" />
+        
+        <TextBlock  Text="Код подразделения:"                                        Grid.Row="3" />
+
+        <vib:MaskEditor Mask="000-000" 
+                        Value="{Binding DistributorDeptCode, ValidatesOnDataErrors=True, Mode=TwoWay, 
+                                        UpdateSourceTrigger=LostFocus, Converter={StaticResource ResourceKey=maskedNumberTextConverter}}"
+                        Grid.Row="3" />
+
+        <TextBlock  Text="Дата выдачи:"                                              Grid.Row="4" />
+        <DatePicker SelectedDate="{Binding Stamp, ValidatesOnDataErrors=True, Mode=TwoWay}" Grid.Row="4" />        
+    </Grid>
+</UserControl>

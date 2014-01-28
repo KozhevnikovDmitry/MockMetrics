@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="GU.UI.View.TaskView.TaskDocSectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ValueConverters="clr-namespace:Common.UI.ViewModel.ValueConverters;assembly=Common.UI"
+             xmlns:View="clr-namespace:Common.UI.View;assembly=Common.UI" mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="listButtonStyle" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+            <Setter Property="DataContext" Value="{Binding}"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+        <ValueConverters:BoolVisibilityConverter x:Key="boolVisibilityconverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Expander IsExpanded="{Binding IsSectBrowsing}" Grid.Column="0">
+            <Expander.Header>                
+                <TextBlock Text="{Binding SectName}" TextWrapping="Wrap" FontWeight="Bold"/>
+            </Expander.Header>
+            <View:ListView DataContext="{Binding TaskAttrsVM}"/>
+        </Expander>
+        <Button Grid.Column="1" VerticalAlignment="Top"
+                Style="{StaticResource listButtonStyle}" 
+                Visibility="{Binding CanAddSimilarSect, Converter={StaticResource boolVisibilityconverter}}" 
+                Command="{Binding CopyItemCommand}">
+            <Image Source="/Common.UI;component/Resources/Icons/16X16/add.png" Width="16" Height="16" />
+        </Button>
+        <Button Grid.Column="2" VerticalAlignment="Top"
+                Style="{StaticResource listButtonStyle}" 
+                Visibility="{Binding CanRemoveSect, Converter={StaticResource boolVisibilityconverter}}" 
+                Command="{Binding RemoveItemCommand}">
+            <Image Source="/Common.UI;component/Resources/Icons/16X16/delete.png"  Width="16" Height="16"/>
+        </Button>
+    </Grid>
+</UserControl>

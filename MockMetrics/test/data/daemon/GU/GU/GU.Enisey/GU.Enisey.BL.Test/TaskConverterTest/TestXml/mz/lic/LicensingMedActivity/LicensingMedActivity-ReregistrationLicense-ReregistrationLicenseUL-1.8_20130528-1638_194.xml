@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:LicensingMedActivity xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingMedActivity/1.8" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:ReregistrationLicense>
+    <ns1:ReregistrationLicenseUL>
+      <ns1:OrgInfo>
+        <ns1:FullName>Переоформление мед юр</ns1:FullName>
+        <ns1:LawForm>Орг-прав форма</ns1:LawForm>
+        <ns1:OrgAddress>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город</ns2:CityLocality>
+        </ns1:OrgAddress>
+        <ns1:OGRN>
+          <ns1:OGRNnumber>2168545241212</ns1:OGRNnumber>
+          <ns1:EGRULData>
+            <ns1:Series>0505</ns1:Series>
+            <ns1:Number>6554645132</ns1:Number>
+            <ns1:DocIssuedBy>Кем выдан</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-05-08</ns1:DocIssuedDate>
+            <ns1:RegAddress>
+              <ns2:Region>
+                <ns2:code>24</ns2:code>
+                <ns2:displayText>Красноярский край</ns2:displayText>
+              </ns2:Region>
+              <ns2:CityLocality>Город</ns2:CityLocality>
+            </ns1:RegAddress>
+          </ns1:EGRULData>
+        </ns1:OGRN>
+        <ns1:INN>
+          <ns1:INN>2494154122</ns1:INN>
+          <ns1:TaxAuthorityData>
+            <ns1:Series>0909</ns1:Series>
+            <ns1:Number>5415415212</ns1:Number>
+            <ns1:Date>2013-05-23</ns1:Date>
+            <ns1:Code>4656</ns1:Code>
+            <ns1:IssuerName>Орган</ns1:IssuerName>
+          </ns1:TaxAuthorityData>
+        </ns1:INN>
+        <ns1:Phone>5465121212</ns1:Phone>
+        <ns1:Director>
+          <ns2:Position>Должность</ns2:Position>
+          <ns2:ChiefLastName>Фамилия</ns2:ChiefLastName>
+          <ns2:ChiefFirstName>Имя</ns2:ChiefFirstName>
+        </ns1:Director>
+      </ns1:OrgInfo>
+      <ns1:LicenseInfo>
+        <ns1:LicenseNumber>00-11-2-001154</ns1:LicenseNumber>
+        <ns1:LicenseDate>2013-05-04</ns1:LicenseDate>
+        <ns1:LicenseOrg>Лицензирующий орган</ns1:LicenseOrg>
+      </ns1:LicenseInfo>
+      <ns1:Base>
+        <ns1:Reorganization>
+          <ns1:FullName>Новое наименование</ns1:FullName>
+          <ns1:LawForm>Орг-прав форма</ns1:LawForm>
+          <ns1:DocData>
+            <ns1:DocIssuedBy>Орган</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-05-02</ns1:DocIssuedDate>
+            <ns1:Series>5845</ns1:Series>
+            <ns1:Number>1265642332</ns1:Number>
+          </ns1:DocData>
+        </ns1:Reorganization>
+      </ns1:Base>
+    </ns1:ReregistrationLicenseUL>
+  </ns1:ReregistrationLicense>
+</ns1:LicensingMedActivity>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{84D177CD-491E-4F09-9F5B-02F14FFFEEC6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GU.HQ.DataModel</RootNamespace>
+    <AssemblyName>GU.HQ.DataModel</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Address.cs" />
+    <Compile Include="AddressDesc.cs" />
+    <Compile Include="Queue.cs" />
+    <Compile Include="QueueClaim.cs" />
+    <Compile Include="Types\AddressType.cs" />
+    <Compile Include="Claim.cs" />
+    <Compile Include="Types\CategoryType.cs" />
+    <Compile Include="ClaimCategory.cs" />
+    <Compile Include="DeclarerBaseRegItem.cs" />
+    <Compile Include="DeclarerBaseReg.cs" />
+    <Compile Include="ClaimQueueDeReg.cs" />
+    <Compile Include="ClaimQueueReg.cs" />
+    <Compile Include="DeclarerRelative.cs" />
+    <Compile Include="QueuePriv.cs" />
+    <Compile Include="Types\DisabilityType.cs" />
+    <Compile Include="Types\QueueBaseDeRegType.cs" />
+    <Compile Include="HouseProvided.cs" />
+    <Compile Include="Notice.cs" />
+    <Compile Include="QueuePrivReg.cs" />
+    <Compile Include="QueuePrivDeReg.cs" />
+    <Compile Include="Types\QueuePrivBaseRegType.cs" />
+    <Compile Include="Types\QueueBaseRegType.cs" />
+    <Compile Include="ClaimStatusHist.cs" />
+    <Compile Include="Types\ClaimStatusType.cs" />
+    <Compile Include="CommonData.cs" />
+    <Compile Include="PersonContactInfo.cs" />
+    <Compile Include="PersonDisability.cs" />
+    <Compile Include="PersonDoc.cs" />
+    <Compile Include="Types\HouseType.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="PersonAddress.cs" />
+    <Compile Include="Types\PersonDocumentType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\QueueType.cs" />
+    <Compile Include="Types\Sex.cs" />
+    <Compile Include="Types\RelativeType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.DA\Common.DA.csproj">
+      <Project>{166C26B9-576E-44C2-993A-8392B79A619F}</Project>
+      <Name>Common.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.DataModel\GU.DataModel.csproj">
+      <Project>{71463E15-A2C6-4126-8AB9-CA4A570E5E4D}</Project>
+      <Name>GU.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

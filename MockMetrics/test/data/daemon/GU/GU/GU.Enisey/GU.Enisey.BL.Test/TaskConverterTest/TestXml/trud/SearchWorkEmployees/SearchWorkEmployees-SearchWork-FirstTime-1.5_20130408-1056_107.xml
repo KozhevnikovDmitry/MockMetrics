@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:SearchWorkEmployees xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:SearchWork>
+    <ns1:FirstTime>
+      <ns1:Person>
+        <ns2:FamilyName>Федченко</ns2:FamilyName>
+        <ns2:FirstName>Наталья</ns2:FirstName>
+        <ns2:Patronymic>Иосифовна</ns2:Patronymic>
+        <ns1:BirthDate>2013-04-01</ns1:BirthDate>
+        <ns1:BirthPlace>Место рождения</ns1:BirthPlace>
+        <ns1:Gender>Женский</ns1:Gender>
+        <ns1:Age>15</ns1:Age>
+        <ns1:Citizenship>
+          <ns2:code>RUS</ns2:code>
+          <ns2:displayText>РОССИЯ</ns2:displayText>
+        </ns1:Citizenship>
+        <ns1:Address>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город пребывания</ns2:CityLocality>
+        </ns1:Address>
+        <ns1:Document>
+          <ns2:PassportRF>
+            <ns2:Series>0101</ns2:Series>
+            <ns2:Number>123456</ns2:Number>
+            <ns2:IssueDate>2013-04-04</ns2:IssueDate>
+            <ns2:Issuer>Кем выдан</ns2:Issuer>
+          </ns2:PassportRF>
+        </ns1:Document>
+        <ns1:Phone>3912134567</ns1:Phone>
+      </ns1:Person>
+      <ns1:EducationLevel>Высшее профессиональное</ns1:EducationLevel>
+      <ns1:Education>
+        <ns1:Institution>Учебное заведение</ns1:Institution>
+        <ns1:Year>1935</ns1:Year>
+      </ns1:Education>
+      <ns1:Profession>Профессия по диплому</ns1:Profession>
+      <ns1:BaseProfession>
+        <ns1:Profession>Основная профессия</ns1:Profession>
+        <ns1:Post>Основная должность</ns1:Post>
+        <ns1:Experience>12</ns1:Experience>
+      </ns1:BaseProfession>
+      <ns1:AddProfession>
+        <ns1:Profession>Дополнительная профессия</ns1:Profession>
+        <ns1:Post>Дополнительная должность</ns1:Post>
+        <ns1:Experience>0</ns1:Experience>
+      </ns1:AddProfession>
+      <ns1:Skills>
+        <ns1:PC>true</ns1:PC>
+      </ns1:Skills>
+      <ns1:LastWorkConditions>
+        <ns1:LastProfession>Профессия последнего места работы</ns1:LastProfession>
+        <ns1:Period>2012 год</ns1:Period>
+        <ns1:Salary>Доход на последней работе</ns1:Salary>
+      </ns1:LastWorkConditions>
+      <ns1:Wishes>
+        <ns1:WishProfession>Желаемая профессия</ns1:WishProfession>
+        <ns1:WishPost>Желаемая должность</ns1:WishPost>
+        <ns1:WishActivity>Желаемый </ns1:WishActivity>
+        <ns1:WishSort>Постоянная работа</ns1:WishSort>
+        <ns1:WishSalary>Желаемый доход</ns1:WishSalary>
+        <ns1:MoreWishes>Дополнительное пожелание</ns1:MoreWishes>
+        <ns1:Agreement>true</ns1:Agreement>
+      </ns1:Wishes>
+    </ns1:FirstTime>
+  </ns1:SearchWork>
+</ns1:SearchWorkEmployees>

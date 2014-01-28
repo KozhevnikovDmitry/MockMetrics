@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:SearchWorkEmployees xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:SearchEmployees>
+    <ns1:EmpToRe>
+      <ns1:Hirer>
+        <ns1:IP>
+          <ns2:FamilyName>Федченко</ns2:FamilyName>
+          <ns2:FirstName>Наталья</ns2:FirstName>
+          <ns2:Patronymic>Иосифовна</ns2:Patronymic>
+          <ns1:OGRN>312456789014589</ns1:OGRN>
+          <ns1:IPAddress>
+            <ns2:PostalCode>660012</ns2:PostalCode>
+            <ns2:Region>
+              <ns2:code>77</ns2:code>
+              <ns2:displayText>Г. Москва</ns2:displayText>
+            </ns2:Region>
+            <ns2:District>Район проживания</ns2:District>
+            <ns2:CityLocality>Город проживания</ns2:CityLocality>
+            <ns2:StreetText>Улица</ns2:StreetText>
+            <ns2:ApartmentBlock>Дом</ns2:ApartmentBlock>
+            <ns2:Building>Корпус</ns2:Building>
+            <ns2:Apartment>Квартира</ns2:Apartment>
+          </ns1:IPAddress>
+        </ns1:IP>
+        <ns1:Phone>3958796458</ns1:Phone>
+        <ns1:e-mail>test@mail.ru</ns1:e-mail>
+        <ns1:PropertyForm>Частная</ns1:PropertyForm>
+        <ns1:ActivityType>Вид деятельности</ns1:ActivityType>
+        <ns1:EmployeesQuantity>33</ns1:EmployeesQuantity>
+        <ns1:FiredEmployeesQuantity>2</ns1:FiredEmployeesQuantity>
+        <ns1:WorkPlacesQuantity>2</ns1:WorkPlacesQuantity>
+        <ns1:InformationPlacement>
+          <ns1:TerritorialJobBank>true</ns1:TerritorialJobBank>
+          <ns1:InterterritorialJobBank>true</ns1:InterterritorialJobBank>
+          <ns1:FederalJobBank>true</ns1:FederalJobBank>
+          <ns1:Media>true</ns1:Media>
+          <ns1:PublicAuthorityInternetResources>true</ns1:PublicAuthorityInternetResources>
+        </ns1:InformationPlacement>
+      </ns1:Hirer>
+      <ns1:WorkConditions>
+        <ns1:WorkAddress>
+          <ns2:PostalCode>331256</ns2:PostalCode>
+          <ns2:Region>
+            <ns2:code>38</ns2:code>
+            <ns2:displayText>Иркутская область</ns2:displayText>
+          </ns2:Region>
+          <ns2:District>Район работы</ns2:District>
+          <ns2:CityLocality>Город работы</ns2:CityLocality>
+          <ns2:StreetText>Улица 1</ns2:StreetText>
+          <ns2:ApartmentBlock>Дом 1</ns2:ApartmentBlock>
+          <ns2:Building>Корпус 1</ns2:Building>
+          <ns2:Apartment>Квартира 1</ns2:Apartment>
+        </ns1:WorkAddress>
+        <ns1:Transport>Проезд электричкой</ns1:Transport>
+        <ns1:SocialGuarantee>
+          <ns1:MedService>true</ns1:MedService>
+          <ns1:Sanatorium>true</ns1:Sanatorium>
+          <ns1:DOU>true</ns1:DOU>
+          <ns1:EatingConditions>true</ns1:EatingConditions>
+        </ns1:SocialGuarantee>
+        <ns1:OtherConditions>Иные условия</ns1:OtherConditions>
+        <ns1:NeedsInfo>
+          <ns1:WorkName>Требуемая профессия</ns1:WorkName>
+          <ns1:WorkQualification>Требуемая квалификация</ns1:WorkQualification>
+          <ns1:NeedEmployees>3</ns1:NeedEmployees>
+          <ns1:WorkSort>Постоянная</ns1:WorkSort>
+          <ns1:Salary>Доход предлагаемый</ns1:Salary>
+          <ns1:Mode>Нормальная продолжительность рабочего времени</ns1:Mode>
+          <ns1:Start>2013</ns1:Start>
+          <ns1:Finish>2014</ns1:Finish>
+          <ns1:Requerements>Дополнительные требования к профессии</ns1:Requerements>
+          <ns1:MoreWishes>Дополнительные пожелания к кандидату</ns1:MoreWishes>
+          <ns1:MoreGuarantee>Дополнительные гарантии</ns1:MoreGuarantee>
+        </ns1:NeedsInfo>
+      </ns1:WorkConditions>
+    </ns1:EmpToRe>
+  </ns1:SearchEmployees>
+</ns1:SearchWorkEmployees>

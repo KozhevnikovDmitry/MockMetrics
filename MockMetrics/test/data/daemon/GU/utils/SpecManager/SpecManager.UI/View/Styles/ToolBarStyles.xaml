@@ -1,0 +1,82 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:ctrl="clr-namespace:SpecManager.UI.View.Controls">
+    
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="CommonStyleResourceDictionary.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    <Style TargetType="{x:Type Image}" x:Key="toolbarImageStyle" BasedOn="{StaticResource buttonImageStyle}">
+        <Setter Property="Height" Value="32px"></Setter>
+        <Setter Property="Width" Value="32px"></Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Image}" x:Key="miniToolbarImageStyle" BasedOn="{StaticResource buttonImageStyle}">
+        <Setter Property="Height" Value="16px"></Setter>
+        <Setter Property="Width" Value="16px"></Setter>
+    </Style>
+
+    <DataTemplate x:Key="toolBarContentTemplate">
+        <StackPanel>
+            <Image Style="{StaticResource ResourceKey=toolbarImageStyle}" 
+                       Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=Tag}"></Image>
+            <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=ToolTip}" HorizontalAlignment="Center" TextOptions.TextFormattingMode="Display"
+                           Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=DataContext.ToolbarTextVisibility}"></TextBlock>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="miniToolBarContentTemplate" >
+        <StackPanel>
+            <Image Style="{StaticResource ResourceKey=miniToolbarImageStyle}" 
+                   Source="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=Tag}"></Image>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style TargetType="{x:Type ButtonBase}" x:Key="toolBarButtonStyle">
+        <Setter Property="DataContext" Value="{Binding}"/>
+        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=toolBarContentTemplate}"></Setter>
+        <Setter Property="Focusable" Value="true"/>
+    </Style>
+
+    <Style TargetType="{x:Type ButtonBase}" x:Key="miniToolBarButtonStyle" BasedOn="{StaticResource toolBarButtonStyle}">
+        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=miniToolBarContentTemplate}"></Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Button}" x:Key="hiddingButtonStyle" BasedOn="{StaticResource toolBarButtonStyle}">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type ctrl:MenuButton}" x:Key="toolBarMenuButtonStyle" BasedOn="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+        <Setter Property="DataContext" Value="{Binding}"/>
+        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=toolBarContentTemplate}"></Setter>
+        <Setter Property="Focusable" Value="true"/>
+        <Setter Property="ClickMode" Value="Press" />
+        <Setter Property="ContextMenuService.PlacementTarget" Value="{Binding RelativeSource={RelativeSource Self}}" />
+        <Setter Property="ContextMenuService.Placement" Value="Bottom" />
+    </Style>
+
+    <Style TargetType="{x:Type ctrl:MenuButton}" x:Key="miniToolBarMenuButtonStyle" BasedOn="{StaticResource toolBarMenuButtonStyle}">
+        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=miniToolBarContentTemplate}"></Setter>
+    </Style>
+
+    <Style x:Key="VerticalSeparatorStyle" 
+            TargetType="Separator">
+        <Setter Property="Margin" Value="6,0,6,0"/>
+        <Setter Property="LayoutTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <TransformGroup.Children>
+                        <TransformCollection>
+                            <RotateTransform Angle="90"/>
+                        </TransformCollection>
+                    </TransformGroup.Children>
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

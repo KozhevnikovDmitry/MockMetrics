@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="GU.HQ.UI.View.PersonView.PersonDocItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" d:DesignWidth="450">
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/GU.HQ.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type ToolTip}" x:Key="_toolTipStyle"/>
+            
+            <Style TargetType="{x:Type Button}" x:Key="listButtonStyle" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Setter Property="DataContext" Value="{Binding}"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Expander Header="{Binding DocNameShort}" Style="{StaticResource GroupBoxExpander}" IsExpanded="{Binding IsExpander}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Grid.Row="0" Text="Тип документа:" />
+            <TextBlock Grid.Row="1" Text="Серия документа:"  />
+            <TextBlock Grid.Row="2" Text="Номер документа:"  />
+            <TextBlock Grid.Row="3" Text="Дата выдачи документа:" />
+            <TextBlock Grid.Row="4" Text="Кем выдан:"  />
+            <TextBlock Grid.Row="5" Text="Код организации:"  />
+            <TextBlock Grid.Row="6" Text="Комментарий:"  />
+
+
+            <ComboBox  Grid.Row="0"                    ItemsSource="{Binding PersonDocumentTypeList}"
+                                                       SelectedValuePath="Id" 
+                                                       SelectedValue="{Binding DocumentTypeId, ValidatesOnDataErrors=True}">
+                <ComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel IsItemsHost="True" />
+                    </ItemsPanelTemplate>
+                </ComboBox.ItemsPanel>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" TextTrimming="CharacterEllipsis" MaxWidth="500"    ToolTipService.BetweenShowDelay="1">
+                            <TextBlock.ToolTip>
+                                <ToolTip Content="{Binding Name}" Style="{StaticResource _toolTipStyle}">
+                                    <ToolTip.ContentTemplate>
+                                        <DataTemplate>
+                                             <TextBlock Text="{TemplateBinding Content}" TextWrapping="WrapWithOverflow"  MaxWidth="500">
+                                                <Line Height="5"/>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ToolTip.ContentTemplate>
+                                </ToolTip> 
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+
+            <TextBox  Grid.Row="1"  Text="{Binding Path=Seria, ValidatesOnDataErrors=True}"/>
+            <TextBox  Grid.Row="2"  Text="{Binding Path=Num, ValidatesOnDataErrors=True}"/>
+            <DatePicker  Grid.Row="3"  SelectedDate="{Binding Path=DateDoc, ValidatesOnDataErrors=True}"/>
+            <TextBox  Grid.Row="4"  Text="{Binding Path=Org, ValidatesOnDataErrors=True}"/>
+            <TextBox  Grid.Row="5"  Text="{Binding Path=OrgCode, ValidatesOnDataErrors=True}"/>
+            <TextBox  Grid.Row="6"  Text="{Binding Path=Note, ValidatesOnDataErrors=True}"/>
+
+            <Button Grid.Column="2" VerticalAlignment="Top"
+                        Style="{StaticResource listButtonStyle}" 
+                        Command="{Binding RemoveItemCommand}">
+                <Image Source="/Common.UI;component/Resources/Icons/16X16/delete.png"  Width="16" Height="16"/>
+            </Button>
+
+        </Grid>
+    </Expander>
+</UserControl>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:LicensingMedActivity xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingMedActivity/1.8" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:StopLicense>
+    <ns1:StopLicenseUL>
+      <ns1:OrgInfo>
+        <ns1:FullName>Прекрашение юр лицо</ns1:FullName>
+        <ns1:LawForm>Орг-прав форма</ns1:LawForm>
+        <ns1:OrgAddress>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город</ns2:CityLocality>
+        </ns1:OrgAddress>
+        <ns1:OGRN>
+          <ns1:OGRNnumber>2985646454541</ns1:OGRNnumber>
+          <ns1:EGRULData>
+            <ns1:Series>0101</ns1:Series>
+            <ns1:Number>6564123212</ns1:Number>
+            <ns1:DocIssuedBy>Кем выдан</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-05-19</ns1:DocIssuedDate>
+            <ns1:RegAddress>
+              <ns2:Region>
+                <ns2:code>24</ns2:code>
+                <ns2:displayText>Красноярский край</ns2:displayText>
+              </ns2:Region>
+              <ns2:CityLocality>Город</ns2:CityLocality>
+            </ns1:RegAddress>
+          </ns1:EGRULData>
+        </ns1:OGRN>
+        <ns1:INN>
+          <ns1:INN>9895454114</ns1:INN>
+          <ns1:TaxAuthorityData>
+            <ns1:Series>0202</ns1:Series>
+            <ns1:Number>5654132</ns1:Number>
+            <ns1:Date>2013-05-13</ns1:Date>
+            <ns1:Code>9565</ns1:Code>
+            <ns1:IssuerName>Орган выдавший</ns1:IssuerName>
+          </ns1:TaxAuthorityData>
+        </ns1:INN>
+        <ns1:Phone>8785445341</ns1:Phone>
+        <ns1:Director>
+          <ns2:Position>Должность</ns2:Position>
+          <ns2:ChiefLastName>Фамилия</ns2:ChiefLastName>
+          <ns2:ChiefFirstName>Имя</ns2:ChiefFirstName>
+        </ns1:Director>
+      </ns1:OrgInfo>
+      <ns1:LicenseInfo>
+        <ns1:LicenseNumber>00-11-2-001156</ns1:LicenseNumber>
+        <ns1:LicenseDate>2013-05-01</ns1:LicenseDate>
+        <ns1:LicenseOrg>Лицензирующий орган</ns1:LicenseOrg>
+      </ns1:LicenseInfo>
+    </ns1:StopLicenseUL>
+  </ns1:StopLicense>
+</ns1:LicensingMedActivity>

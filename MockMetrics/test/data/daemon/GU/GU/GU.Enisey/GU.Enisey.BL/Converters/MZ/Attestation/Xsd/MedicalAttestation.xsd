@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/MedicalAttestation/1.3" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.3" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111" xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/krsk/commons/1.0" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/MedicalAttestation/1.3" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/krsk/commons/1.0" schemaLocation="state-services-krsk-commons-1.0.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:element name="MedicalAttestation" hints:rus="Присвоение и подтверждение квалификационных категорий средних медицинских работников и других специалистов, занимающих должности средних медицинских работников в системе здравоохранения Красноярского края, с целью присвоения (подтверждения) квалификационных категорий">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Applicant" hints:rus="Сведения о заявителе">
+					<xs:complexType>
+						<xs:sequence hints:rus="Сведения о заявителе">
+							<xs:group ref="ns1:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+							<xs:element name="Address" type="ns1:Address-Type" hints:rus="Место жительства"/>
+							<xs:element name="Phone" type="ns1:PhoneNumberRF-Type" hints:rus="Контактный телефон"/>
+							<xs:choice minOccurs="0" hints:rus="Адрес для переписки">
+								<xs:annotation>
+									<xs:appinfo>
+										<hints:OptionalElementHandling header="Указать адрес для переписки" doNotCreateText="Нет " createText="Да " maxOccurs="unbounded"/>
+									</xs:appinfo>
+								</xs:annotation>
+								<xs:element name="PostalAddress" type="ns1:AddressRF-Type" hints:rus="Почтовый адрес"/>
+								<xs:element name="E-mail" hints:rus="E-mail">
+									<xs:simpleType>
+										<xs:restriction base="ns1:Email-Type">
+											<xs:maxLength value="100"/>
+											<xs:pattern value="[0-9a-zA-Z_.\-]{2,50}[@]{1}[0-9a-zA-Z_./-]{2,50}[.]{1}[a-zA-Z]{2,5}"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AttestationSpeciality" hints:rus="Сведения об аттестуемой специальности">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Speciality" type="ns1:string-200" hints:rus="Наименование специальности"/>
+							<xs:element name="Target" hints:rus="Цель аттестации">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="получение квалификационной категории "/>
+										<xs:enumeration value="подтверждение квалификационной категории "/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="Category" type="ns1:TimelineUnawareClassifierValue-Type" hints:classifierName="QualificationCategories" hints:rus="Категория"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AboutWork" hints:rus="Сведения о работе">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="PositionName" type="ns1:string-200" hints:rus="Наименование должности"/>
+							<xs:element name="Subdivision" type="ns1:string-200" hints:rus="Наименование структурного подразделения"/>
+							<xs:sequence hints:rus="Сведения об организации">
+								<xs:element name="FullName" type="ns1:string-200" hints:rus="Полное наименование юридического лица"/>
+								<xs:element name="LiteName" type="ns1:string-200" minOccurs="0" hints:rus="Сокращенное наименование юридического лица"/>
+								<xs:element name="FirmName" type="ns1:string-200" minOccurs="0" hints:rus="Фирменное наименование юридического лица"/>
+								<xs:element name="OrgType" type="ns1:string-200" hints:rus="Организационно-правовая форма"/>
+								<xs:element name="Address" type="ns1:Address-Type" hints:rus="Адрес организации"/>
+							</xs:sequence>
+							<xs:element name="Experience" type="ns1:string-20" hints:rus="Стаж работы по аттестуемой специальности"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PreviousAttestation" minOccurs="0" maxOccurs="1" hints:rus="Сведения о предыдущей аттестации (переаттестации)" hints:widjetType="textArea">
+					<xs:annotation>
+						<xs:appinfo>
+							<hints:OptionalElementHandling header="Сведения о предыдущей аттестации (переаттестации)" doNotCreateText="Ранее аттестован не был" createText="Добавить" maxOccurs="unbounded"/>
+						</xs:appinfo>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence maxOccurs="1" hints:rus="Сведения о предыдущей аттестации (переаттестации)">
+							<xs:element name="Category" type="ns1:TimelineUnawareClassifierValue-Type" hints:classifierName="QualificationCategories" hints:rus="Квалификационная категория"/>
+							<xs:element name="Speciality" type="ns1:string-200" hints:rus="Наименование специальности"/>
+							<xs:element name="From" type="xs:date" hints:dateRestriction="past" hints:rus="С"/>
+							<xs:element name="Confirmed" type="xs:date" hints:rus="Подтверждена"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DocAttach" type="ns3:AppliedDocumentsType" minOccurs="0" hints:rus="Приложенные документы"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

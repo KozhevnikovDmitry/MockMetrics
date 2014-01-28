@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:LicensingDrugActivity xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingDrugActivity/1.5" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:StopLicense>
+    <ns1:OrgInfo>
+      <ns1:FullName>ООО Джигурда Индастриз</ns1:FullName>
+      <ns1:LawForm>ООО</ns1:LawForm>
+      <ns1:OrgAddress>
+        <ns2:PostalCode>100500</ns2:PostalCode>
+        <ns2:Region>
+          <ns2:code>24</ns2:code>
+          <ns2:displayText>Красноярский край</ns2:displayText>
+        </ns2:Region>
+        <ns2:District>Джигурдинский Улус</ns2:District>
+        <ns2:CityLocality>Джигурдоевск</ns2:CityLocality>
+        <ns2:StreetText>Джигурды</ns2:StreetText>
+        <ns2:ApartmentBlock>1</ns2:ApartmentBlock>
+        <ns2:Building>б</ns2:Building>
+        <ns2:Apartment>2</ns2:Apartment>
+      </ns1:OrgAddress>
+      <ns1:OGRN>1005001005001</ns1:OGRN>
+      <ns1:INN>1005001005</ns1:INN>
+      <ns1:Phone>1005001005</ns1:Phone>
+      <ns1:Director>
+        <ns2:Position>Генеральный секретарь ЦК</ns2:Position>
+        <ns2:ChiefLastName>Пигурда</ns2:ChiefLastName>
+        <ns2:ChiefFirstName>Оооо</ns2:ChiefFirstName>
+        <ns2:ChiefMiddleName>Щщщщ</ns2:ChiefMiddleName>
+      </ns1:Director>
+    </ns1:OrgInfo>
+    <ns1:LicenseInfo>
+      <ns1:LicenseNumber>100500</ns1:LicenseNumber>
+      <ns1:LicenseDate>2013-09-01</ns1:LicenseDate>
+      <ns1:LicenseOrg>Министерство</ns1:LicenseOrg>
+    </ns1:LicenseInfo>
+  </ns1:StopLicense>
+</ns1:LicensingDrugActivity>

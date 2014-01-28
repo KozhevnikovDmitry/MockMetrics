@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:SocialWork xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/SocialWork/1.3" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:Person>
+    <ns2:FamilyName>Алексей</ns2:FamilyName>
+    <ns2:FirstName>Петренко</ns2:FirstName>
+    <ns1:Gender>Мужской</ns1:Gender>
+    <ns1:DateOfBirth>2013-03-26</ns1:DateOfBirth>
+    <ns1:Age>23</ns1:Age>
+    <ns1:Citizenship>
+      <ns2:code>BEL</ns2:code>
+      <ns2:displayText>БЕЛЬГИЯ</ns2:displayText>
+    </ns1:Citizenship>
+    <ns1:Address>
+      <ns2:Region>
+        <ns2:code>39</ns2:code>
+        <ns2:displayText>Калининградская область</ns2:displayText>
+      </ns2:Region>
+      <ns2:CityLocality>ывап</ns2:CityLocality>
+    </ns1:Address>
+    <ns1:Document>
+      <ns2:PassportRF>
+        <ns2:Series>1234</ns2:Series>
+        <ns2:Number>234523</ns2:Number>
+        <ns2:IssueDate>2013-03-26</ns2:IssueDate>
+        <ns2:Issuer>свмчим</ns2:Issuer>
+      </ns2:PassportRF>
+    </ns1:Document>
+    <ns1:Phone>2435234523</ns1:Phone>
+  </ns1:Person>
+  <ns1:EducationLevel>Среднее профессиональное</ns1:EducationLevel>
+  <ns1:Profession>ываисми</ns1:Profession>
+  <ns1:BaseProfession>
+    <ns1:Profession>чваыва</ns1:Profession>
+    <ns1:Post>ывап</ns1:Post>
+    <ns1:Experience>12</ns1:Experience>
+  </ns1:BaseProfession>
+  <ns1:AddProfession>
+    <ns1:Profession>вмсичс</ns1:Profession>
+    <ns1:Post>чичсми</ns1:Post>
+    <ns1:Experience>23</ns1:Experience>
+  </ns1:AddProfession>
+  <ns1:Skills>
+    <ns1:PC>true</ns1:PC>
+  </ns1:Skills>
+  <ns1:LastWorkConditions>
+    <ns1:LastProfession>чвичсми</ns1:LastProfession>
+    <ns1:Period>ывапв</ns1:Period>
+    <ns1:Sort>ывапывап</ns1:Sort>
+  </ns1:LastWorkConditions>
+  <ns1:Wishes>
+    <ns1:WishProfession>ывравпр</ns1:WishProfession>
+    <ns1:WishPost>вправапр</ns1:WishPost>
+    <ns1:WishActivity>впрвапр</ns1:WishActivity>
+  </ns1:Wishes>
+</ns1:SocialWork>

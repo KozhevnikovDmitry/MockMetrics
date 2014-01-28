@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="GU.UI.View.TaskView.TaskAttrItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:taskview="clr-namespace:GU.UI.View.TaskView"
+             xmlns:extToolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit/extended"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" mc:Ignorable="d" 
+             d:DesignHeight="300" MinWidth="400">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style TargetType="{x:Type ToolTip}" x:Key="_toolTipStyle"/>
+
+            <DataTemplate x:Key="StringAttrTemplate">
+                <TextBox Text="{Binding AttrValue, ValidatesOnDataErrors=True}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="NumberAttrTemplate">
+                <extToolkit:DecimalUpDown Value="{Binding AttrValue, ValidatesOnDataErrors=True}" 
+                                          HorizontalContentAlignment="Left"/>
+                
+            </DataTemplate>
+
+            <DataTemplate x:Key="BooleanAttrTemplate">
+                <CheckBox IsChecked="{Binding AttrValue, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="DateAttrTemplate">
+                <DatePicker SelectedDate="{Binding AttrValue, ValidatesOnDataErrors=True, NotifyOnValidationError=True}"/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="ListAttrTemplate">
+                <ComboBox ItemsSource="{Binding AttrListItemValues}"
+                          Text="{Binding AttrValue, ValidatesOnDataErrors=true}"
+                          IsEditable="{Binding IsEditableList}" 
+                          IsTextSearchEnabled="True" HorizontalContentAlignment="Stretch">
+                    <!--Рецепт управления шириной dropdownlist попёрт с http://stackoverflow.com/questions/5221601/setting-maxwidth-of-comboboxitem-such-that-items-width-dont-exceed-comboboxwidt-->
+                    <ComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel MaxWidth="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Path=ActualWidth}"/>
+                        </ItemsPanelTemplate>
+                    </ComboBox.ItemsPanel>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ComboBox}}, Path=ActualWidth}"
+                                       TextTrimming="CharacterEllipsis" ToolTipService.BetweenShowDelay="1">
+                                <TextBlock.ToolTip>
+                                    <ToolTip Content="{Binding}" Style="{StaticResource _toolTipStyle}">
+                                        <ToolTip.ContentTemplate>
+                                            <DataTemplate>
+                                                 <TextBlock Text="{TemplateBinding Content}" TextWrapping="WrapWithOverflow"  MaxWidth="500"/>
+                                            </DataTemplate>
+                                        </ToolTip.ContentTemplate>
+                                    </ToolTip> 
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </DataTemplate>
+
+            <DataTemplate x:Key="FileAttrTemplate">
+                <taskview:TaskAttrFileEditView DataContext="{Binding TaskAttrFileEditVM}"/>
+            </DataTemplate>
+
+            <Style TargetType="{x:Type ContentControl}" x:Key="attrValueContentControlStyle">
+                <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=StringAttrTemplate}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding AttrValueType}" Value="String" >
+                        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=StringAttrTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding AttrValueType}" Value="Number">
+                        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=NumberAttrTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding AttrValueType}" Value="Boolean">
+                        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=BooleanAttrTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding AttrValueType}" Value="Date">
+                        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=DateAttrTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding AttrValueType}" Value="List">
+                        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=ListAttrTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding AttrValueType}" Value="File">
+                        <Setter Property="ContentTemplate" Value="{StaticResource ResourceKey=FileAttrTemplate}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+        
+        
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Border Style="{StaticResource ResourceKey=MainBorderStyle}" Grid.Column="0">
+            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Width="200" Margin="2"/>
+        </Border>
+        <Border Style="{StaticResource ResourceKey=MainBorderStyle}"  Grid.Column="1">
+            <ContentControl Content="{Binding}" Style="{StaticResource ResourceKey=attrValueContentControlStyle}"  Margin="2"/>
+        </Border>
+    </Grid>
+</UserControl>

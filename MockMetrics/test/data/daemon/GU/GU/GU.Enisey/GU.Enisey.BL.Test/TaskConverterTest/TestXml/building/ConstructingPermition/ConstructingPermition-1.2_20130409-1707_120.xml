@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:ConstructingPermition xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/ConstructingPermition/1.2" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:PhysicalPerson>
+    <ns2:FamilyName>Мусиенко</ns2:FamilyName>
+    <ns2:FirstName>Дмитрий</ns2:FirstName>
+    <ns2:Patronymic>Евгеньевич</ns2:Patronymic>
+    <ns1:DUL>
+      <ns2:PassportRF>
+        <ns2:Series>1111</ns2:Series>
+        <ns2:Number>111111</ns2:Number>
+        <ns2:IssueDate>2013-04-03</ns2:IssueDate>
+        <ns2:Issuer>aa</ns2:Issuer>
+      </ns2:PassportRF>
+    </ns1:DUL>
+    <ns1:Address>
+      <ns2:PostalCode>111111</ns2:PostalCode>
+      <ns2:Region>
+        <ns2:code>37</ns2:code>
+        <ns2:displayText>Ивановская область</ns2:displayText>
+      </ns2:Region>
+      <ns2:CityLocality>aa</ns2:CityLocality>
+    </ns1:Address>
+  </ns1:PhysicalPerson>
+  <ns1:Object>
+    <ns1:CadastralNumber>61:6:10104:12</ns1:CadastralNumber>
+    <ns1:ObjectName>aa</ns1:ObjectName>
+    <ns1:Address>
+      <ns2:Region>
+        <ns2:code>39</ns2:code>
+        <ns2:displayText>Калининградская область</ns2:displayText>
+      </ns2:Region>
+      <ns2:SovietVillageName>aa</ns2:SovietVillageName>
+      <ns2:NasPunktName>aa</ns2:NasPunktName>
+      <ns2:Note>ssss</ns2:Note>
+    </ns1:Address>
+  </ns1:Object>
+</ns1:ConstructingPermition>

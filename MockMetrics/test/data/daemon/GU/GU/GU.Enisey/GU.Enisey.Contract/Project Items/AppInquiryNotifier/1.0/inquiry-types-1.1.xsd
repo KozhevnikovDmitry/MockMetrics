@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+            xmlns:xmime="http://www.w3.org/2005/05/xmlmime" 
+            xmlns:common="urn://x-artefacts-it-ru/dob/poltava/common-types/aq/1.0" 
+            xmlns:tns="urn://x-artefacts-it-ru/dob/poltava/inquiry/types/1.1"
+            targetNamespace="urn://x-artefacts-it-ru/dob/poltava/inquiry/types/1.1"
+            elementFormDefault="qualified" 
+            attributeFormDefault="unqualified" version="1.0">
+    
+    <xs:import namespace="urn://x-artefacts-it-ru/dob/poltava/common-types/aq/1.0" schemaLocation="common-types-aq-1.0.xsd"/>
+    
+    <xs:complexType name="inquiryTypeInfoType">
+        <xs:annotation>
+            <xs:documentation>Тип для описание типа запроса</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="inquiryTypeName" type="xs:string" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Наименование типа запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inquiryTypeCode" type="xs:string" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Код типа запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="regulatedPeriod" type="xs:int" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Регламентированный срок получения ответа в днях с момента отправки запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="inquiryInfoType">
+        <xs:annotation>
+            <xs:documentation>Тип для описание типа запроса</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="inquiryTypeName" type="xs:string" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Полное наименование типа запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inquiryTypeCode" type="xs:string" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Код типа запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inquiryID" type="common:IDType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Идентификатор запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="edgeDate" type="xs:date" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Крайняя дата получения ответа</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="inquiryStateType">
+        <xs:annotation>
+            <xs:documentation>Тип для описание статуса запроса</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="inquiryStateCode" type="tns:inquiryStateCodeType" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Код статуса запроса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="inquiryStateName" type="xs:string" minOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Наименование статуса</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="inquiryStateCodeType">
+        <xs:annotation>
+            <xs:documentation>Коды статусов исх. запросов:
+                FORMED  -  (1)  Запрос сформирован
+                SENDING  -  (2)  Запрос отправляется
+                ACCEPTED  -  (3)  Запрос принят
+                RESPONSE_RECEIVED  -  (4)  Получен ответ на запрос
+                INVALID  -  (5)  Ошибка ФЛК на стороне ведомства
+                REJECTED  -  (9)  Получен мотивированный отказ
+                FAILED_TO_GET_RESPONSE (6)  Ошибка получения ответа
+                DELETED  -  (7)  Удалён
+                FAILED_TO_SEND_REQUEST (8)  Ошибка отправки в ведомство 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="FORMED">
+                <xs:annotation>
+                    <xs:documentation>Запрос сформирован и ожидает подписи</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SENDING">
+                <xs:annotation>
+                    <xs:documentation>Запрос отправляется</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ACCEPTED">
+                <xs:annotation>
+                    <xs:documentation>Запрос принят</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RESPONSE_RECEIVED">
+                <xs:annotation>
+                    <xs:documentation>Получен ответ на запрос</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="INVALID">
+                <xs:annotation>
+                    <xs:documentation>Ошибка ФЛК на стороне ведомства</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="REJECTED">
+                <xs:annotation>
+                    <xs:documentation>Получен мотивированный отказ</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FAILED_TO_GET_RESPONSE">
+                <xs:annotation>
+                    <xs:documentation>Ошибка получения ответа</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DELETED">
+                <xs:annotation>
+                    <xs:documentation>Удалён</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FAILED_TO_SEND_REQUEST">
+                <xs:annotation>
+                    <xs:documentation>Ошибка отправки в ведомство</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

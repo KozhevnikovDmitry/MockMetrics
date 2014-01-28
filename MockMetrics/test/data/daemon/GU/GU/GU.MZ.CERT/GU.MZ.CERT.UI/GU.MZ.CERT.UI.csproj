@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{72B124EC-2BF4-452E-BD3C-91AE7DB5CA39}</ProjectGuid>
+    <OutputType>library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GU.MZ.CERT.UI</RootNamespace>
+    <AssemblyName>GU.MZ.CERT.UI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="AvalonDock, Version=1.3.3571.0, Culture=neutral, PublicKeyToken=85a1e0ada7ec13e4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.4, Version=4.1.9.0, Culture=neutral, PublicKeyToken=b1d3f6ab3aadaca3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="VIBlend.WPF.Editors, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5f568d4f9cd901f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\VIBlend.WPF.Editors.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="ViewModel\TaskModuleVM.cs" />
+    <Compile Include="ViewModel\CertOptionsVM.cs" />
+    <Compile Include="ViewModel\CertificationModuleVM.cs" />
+    <Compile Include="View\TaskModuleView.xaml.cs">
+      <DependentUpon>TaskModuleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CertOptionsView.xaml.cs">
+      <DependentUpon>CertOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CertificationModuleView.xaml.cs">
+      <DependentUpon>CertificationModuleView.xaml</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.BL\Common.BL.csproj">
+      <Project>{C03946AB-F720-41F1-93C0-DDBDBA03D983}</Project>
+      <Name>Common.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.DA\Common.DA.csproj">
+      <Project>{166C26B9-576E-44C2-993A-8392B79A619F}</Project>
+      <Name>Common.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.Types\Common.Types.csproj">
+      <Project>{63B80D1D-4E6D-4C64-93A5-3A117E73A332}</Project>
+      <Name>Common.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.UI\Common.UI.csproj">
+      <Project>{A4E6903C-B459-4D75-9AA9-5C50E41CAC3F}</Project>
+      <Name>Common.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.BL\GU.BL.csproj">
+      <Project>{BE8BC0F3-168A-4957-9972-4D63CC791CC0}</Project>
+      <Name>GU.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.DataModel\GU.DataModel.csproj">
+      <Project>{71463E15-A2C6-4126-8AB9-CA4A570E5E4D}</Project>
+      <Name>GU.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.UI\GU.UI.csproj">
+      <Project>{C9B66602-5060-4073-9FC1-730202D03C99}</Project>
+      <Name>GU.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.MZ.CERT.BL\GU.MZ.CERT.BL.csproj">
+      <Project>{75C39ABB-DF69-465D-B0E9-4DEB1C2D4D00}</Project>
+      <Name>GU.MZ.CERT.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.MZ.CERT.DataModel\GU.MZ.CERT.DataModel.csproj">
+      <Project>{F44EDF3F-479E-4699-8144-4D8C7C26AB8B}</Project>
+      <Name>GU.MZ.CERT.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\Styles\СertListTemplatesDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Styles\СertSearchTemplatesDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Styles\ItemListDataTemplatesDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\TaskModuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CertOptionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\CertificationModuleView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

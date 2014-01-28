@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:xmime="http://www.w3.org/2005/05/xmlmime" 
+           targetNamespace="urn://x-artefacts-it-ru/dob/poltava/appquiry/req-types/1.0"
+           xmlns:appl="urn://x-artefacts-it-ru/dob/poltava/application-types/aq/1.0" 
+           xmlns:tns="urn://x-artefacts-it-ru/dob/poltava/appquiry/req-types/1.0"
+           xmlns:inq="urn://x-artefacts-it-ru/dob/poltava/inquiry/types/1.1"
+           xmlns:common="urn://x-artefacts-it-ru/dob/poltava/common-types/aq/1.0" 
+           elementFormDefault="qualified">
+                
+    <xs:import namespace="urn://x-artefacts-it-ru/dob/poltava/common-types/aq/1.0" schemaLocation="common-types-aq-1.0.xsd"/>
+    <xs:import namespace="urn://x-artefacts-it-ru/dob/poltava/application-types/aq/1.0" schemaLocation="application-types-aq-1.0.xsd"/>
+    <xs:import namespace="urn://x-artefacts-it-ru/dob/poltava/inquiry/types/1.1" schemaLocation="inquiry-types-1.1.xsd"/>
+    
+    <xs:element name="setApplicationRequest">
+        <xs:annotation>
+            <xs:documentation>Запроса метода по созданию или обновлению заявки в системе.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="aplicantInfo" type="common:applicantInfoType">
+                    <xs:annotation>
+                        <xs:documentation>Информация о заявителе. Заполняется при необходимости создания нового заявителя в системе.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="departmentID" type="common:IDType" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор подразделения, в которое подается заявка.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="contentData" type="common:contentDataType">
+                    <xs:annotation>
+                        <xs:documentation>Содержимое заявки</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="setApplicationResponse">
+        <xs:annotation>
+            <xs:documentation>Ответ метода по созданию или обновлению заявки в системе.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="error" type="common:errorType">
+                    <xs:annotation>
+                        <xs:documentation>Ошибка, возвращается в случае неуспешного выполнения.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:sequence>
+                    <xs:element name="applicationID" type="common:IDType">
+                        <xs:annotation>
+                            <xs:documentation>Идентификатор созданной или обновленной заявки. Возвращается в случае успешного выполнения.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="inquiryType" type="inq:inquiryTypeInfoType" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Типы запросов по заявке</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    
+        
+    <xs:element name="changeApplicationStateRequest">
+        <xs:annotation>
+            <xs:documentation>Запрос метода смены статуса заявки.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="applicationID" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор заявки.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="applicationStateName" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Наименование нового статуса заявки</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="applicationStateComment" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Комментарий к новому статусу заявки</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="appendContent" type="common:anyDocumentContentType" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Добавляемые сведения (необязательный элемент)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="changeApplicationStateResponse">
+        <xs:annotation>
+            <xs:documentation>Ответ метода смены статуса заявки</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="error" type="common:errorType">
+                    <xs:annotation>
+                        <xs:documentation>Ошибка, возвращается в случае неуспешного выполнения.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="accepted" type="common:tagType">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор запроса в Полтаве</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getInquiryStateRequest">
+        <xs:annotation>
+            <xs:documentation>Запрос метода получения статуса обработки запроса</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="inquiryID" type="common:IDType">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор запроса в Полтаве</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="inquirySourceSystemID" type="common:IDType">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор запроса во внешней системе</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="getInquiryStateResponse">
+        <xs:annotation>
+            <xs:documentation>Ответ метода получения статуса обработки запроса</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="inquiryStateType" type="inq:inquiryStateType">
+                        <xs:annotation>
+                            <xs:documentation>Статус запроса</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="contentData" type="common:contentDataType" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>контент запроса</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:element name="error" type="common:errorType">
+                    <xs:annotation>
+                        <xs:documentation>Ошибка, возвращается в случае неуспешного выполнения.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="setInquiryRequest">
+        <xs:annotation>
+            <xs:documentation>Запрос метода подачи запроса сведений в электронном виде</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="inquiryTypeCode" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>Код типа запроса</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="contentData" type="common:contentDataType">
+                    <xs:annotation>
+                        <xs:documentation>контент запроса</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="departmentID" type="common:IDType" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор подразделения</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="inquirySourceSystemID" type="common:IDType" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор запроса во внешней системе</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="applicationID" type="common:IDType" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Идентификатор заявки</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="setInquiryResponse">
+        <xs:annotation>
+            <xs:documentation>Ответ метода подачи запроса сведений в электронном виде</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="inquiryID" type="common:IDType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Идентификатор созданного/измененного запроса внутри Полтавы</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="edgeDate" type="xs:date" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Крайняя дата получения ответа</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:element name="error" type="common:errorType">
+                    <xs:annotation>
+                        <xs:documentation>Ошибка, возвращается в случае неуспешного выполнения.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+
+
+</xs:schema>

@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="GU.MZ.UI.View.SupervisionView.GrantResultStepView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:conv="clr-namespace:Common.UI.ViewModel.ValueConverters;assembly=Common.UI"
+             xmlns:dossierFileView="clr-namespace:GU.MZ.UI.View.DossierFileView"
+             xmlns:supervisionViewModel="clr-namespace:GU.MZ.UI.ViewModel.SupervisionViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance supervisionViewModel:GrantResultStepVm}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/ToolBarStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <conv:BoolVisibilityConverter x:Key="BoolVisibilityConverter"/>
+            <conv:UnBoolVisibilityConverter x:Key="UnBoolVisibilityConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <GroupBox Style="{StaticResource GroupBoxCommonStyle}" Header="Результат предоставления услуги" Grid.Row="0" HorizontalAlignment="Left"
+                      Visibility="{Binding IsResultCreated, Converter={StaticResource BoolVisibilityConverter}, ConverterParameter=Collapsed}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <dossierFileView:DossierFileServiceResultView DataContext="{Binding DossierFileServiceResultVm}" Grid.Column="0"/>
+                        <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" 
+                                    VerticalAlignment="Top" Grid.Column="1"
+                                    Height="20px" Width="20px"
+                                    Command="{Binding RemoveServiceResultCommand}"
+                                    Visibility="{Binding IsResultGranted, Converter={StaticResource UnBoolVisibilityConverter}}">
+                            <Image Source="/GU.UI;component/Resources/Icons/32X32/Delete_32x32.png"></Image>
+                        </Button>
+                    </Grid>
+                </GroupBox>
+            </Grid>
+        </ScrollViewer>
+        <WrapPanel Grid.Row="1" Grid.Column="0" >
+
+            <Button Content="Завести результат услуги" 
+                HorizontalAlignment="Left"
+                Margin="10"
+                Command="{Binding SetupServiceResultCommand}"
+                Width="275" Height="40"/>
+
+        </WrapPanel>
+    </Grid>
+
+</UserControl>
+

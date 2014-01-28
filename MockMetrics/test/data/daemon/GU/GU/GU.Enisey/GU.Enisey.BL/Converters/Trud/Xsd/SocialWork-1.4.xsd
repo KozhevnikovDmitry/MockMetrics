@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/SocialWork/1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.3" xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:smev="http://smev.gosuslugi.ru/request/rev111111" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/SocialWork/1.4" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="SocialWork" hints:rus="Предоставление государственной услуги по организации проведения оплачиваемых общественных работ">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Person" hints:rus="Информация о заявителе" hints:injectionType="injectAndGetBack">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="ns1:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+							<xs:element name="Gender" type="ns1:Gender-Type" hints:rus="Пол"/>
+							<xs:element name="DateOfBirth" type="xs:date" hints:rus="Дата рождения" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+							<xs:element name="Age" type="xs:positiveInteger" hints:rus="Возраст (количество полных лет)" hints:userHint="Введите число. Пример: 32"/>
+							<xs:element name="Citizenship" type="ns1:TimelineUnawareClassifierValue-Type" hints:classifierName="COUNTRY" hints:default="RUS" hints:rus="Гражданство"/>
+							<xs:element name="Address" type="ns1:OptionalIndexAddress-Type" hints:rus="Адрес места жительства (пребывания)"/>
+							<xs:element name="Document" type="ns1:Document-Type" hints:rus="Документ, удостоверяющий личность"/>
+							<xs:element name="Phone" type="ns1:PhoneNumberRF-Type" hints:rus="Номер контактного телефона"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EducationLevel" hints:rus="Образование">
+					<xs:simpleType>
+						<xs:restriction base="ns1:string-200">
+							<xs:enumeration value="Основное общее"/>
+							<xs:enumeration value="Среднее (полное) общее"/>
+							<xs:enumeration value="Начальное профессиональное"/>
+							<xs:enumeration value="Среднее профессиональное"/>
+							<xs:enumeration value="Высшее профессиональное"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="Profession" type="ns1:string-200" hints:rus="Профессия (специальность), квалификация (в соответствии с документами, удостоверяющими профессиональную квалификацию)" hints:userHint="Пример: Системный программист"/>
+				<xs:element name="BaseProfession" type="krsk:ProfessionType" minOccurs="0" hints:rus="Основная профессия (специальность)" hints:widgetType="deleteProtected"/>
+				<xs:element name="AddProfession" type="krsk:ProfessionType" minOccurs="0" hints:rus="Дополнительная профессия (специальность)" hints:widgetType="deleteProtected"/>
+				<xs:element name="Skills" hints:rus="Дополнительные навыки">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Language" type="ns1:string-200" minOccurs="0" maxOccurs="unbounded" hints:rus="Знание иностранного языка" hints:userHint="Пример: Английский, свободно говорю"/>
+							<xs:element name="PC" type="xs:boolean" hints:rus="Знание и умение пользоваться ПК"/>
+							<xs:element name="Drive" type="ns1:string-200" minOccurs="0" hints:rus="Наличие водительского удостоверения (указать категории)" hints:userHint="Пример: Имеется водительское удостоверение категории В"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="LastWorkConditions" minOccurs="0" hints:rus="Условия последнего места работы" hints:widgetType="deleteProtected">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="LastProfession" type="ns1:string-200" hints:rus="Профессия (специальность), квалификация, должность, вид деятельности" hints:userHint="Пример: Программист 1С"/>
+							<xs:element name="Period" type="ns1:string-200" hints:rus="Период работы" hints:userHint="Пример: январь 2008 - май 2011"/>
+							<xs:element name="Sort" type="ns1:string-200" hints:rus="Характер работы" minOccurs="0" hints:userHint="Пример: Постоянная работа"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Wishes" hints:rus="Пожелания к искомой работе">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="WishProfession" type="ns1:string-200" hints:rus="Профессия (специальность), квалификация" hints:userHint="Пример: Программист 1C"/>
+							<xs:element name="WishPost" type="ns1:string-200" hints:rus="Должность" hints:userHint="Пример: Инженер-программист"/>
+							<xs:element name="WishActivity" type="ns1:string-200" hints:rus="Вид деятельности" minOccurs="0" hints:userHint="Пример: Умственная"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ProfessionType" hints:rus="Тип: Профессия">
+		<xs:sequence>
+			<xs:element name="Profession" type="ns1:string-200" hints:rus="Профессия (специальность), квалификация" hints:userHint="Пример: Системный программист"/>
+			<xs:element name="Post" type="ns1:string-200" hints:rus="Должность" hints:userHint="Пример: Инженер-программист"/>
+			<xs:element name="Experience" type="ns1:string-200" hints:rus="Стаж работы" hints:userHint="Пример: 11 лет 3 месяца"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

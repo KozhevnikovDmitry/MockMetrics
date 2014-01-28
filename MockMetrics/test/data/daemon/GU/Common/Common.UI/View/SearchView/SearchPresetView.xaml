@@ -1,0 +1,154 @@
+﻿<UserControl x:Class="Common.UI.View.SearchView.SearchPresetView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" 
+             d:DesignHeight="300" Width="445">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type ListBox}" x:Key="searchitemsListBoxStyle" BasedOn="{StaticResource whiteHighlightedListBoxStyle}">
+                <Setter Property="Grid.Row" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+                <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            </Style>
+
+            <Style TargetType="{x:Type ListBox}" x:Key="ExpressionListBoxStyle" BasedOn="{StaticResource searchitemsListBoxStyle}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding ExpressionVMs.Count}" Value="0">
+                        <Setter Property="Height" Value="50"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style TargetType="{x:Type ListBox}" x:Key="OrderingListBoxStyle" BasedOn="{StaticResource searchitemsListBoxStyle}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding OrderingVMs.Count}" Value="0">
+                        <Setter Property="Height" Value="50"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Header="Условия" Grid.Row="1" Style="{StaticResource GroupBoxCommonStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListBox ItemsSource="{Binding ExpressionVMs}" Style="{StaticResource ExpressionListBoxStyle}">
+                    <ListBox.ItemTemplate >
+                        <DataTemplate>
+                            <Border Style="{StaticResource MainBorderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding SearchFieldDefinition}" Grid.Row="0" Grid.Column="0"/>
+                                    <TextBlock Text="{Binding ExpressionDefinition}" Grid.Row="1" Grid.Column="0"/>
+                                    <ContentControl DataContext="{Binding}" Template="{Binding DisplayTemplate}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+                                    <Button Command="{Binding RemoveExpressionCommand}" 
+                                                      Grid.Row="0"
+                                                      Grid.Column="1"
+                                                      HorizontalAlignment="Right" 
+                                                      Margin="2"
+                                                      Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                        <Button.Content>
+                                            <Image Source="/Common.UI;component/Resources/Icons/16X16/delete.png" Width="16" Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Command="{Binding AddExpressionCommand}" Grid.Row="1"
+                        HorizontalAlignment="Right" 
+                        Margin="2"
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Button.Content>
+                        <Image Source="/Common.UI;component/Resources/Icons/16X16/add.png" Width="16" Height="16" />
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="Сортировки" Grid.Row="2" Style="{StaticResource GroupBoxCommonStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListBox ItemsSource="{Binding OrderingVMs}" Style="{StaticResource OrderingListBoxStyle}">
+                    <ListBox.ItemTemplate >
+                        <DataTemplate>
+                            <Border Style="{StaticResource MainBorderStyle}">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Text="{Binding OrderProprtyString}" 
+                                               Grid.Row="0" 
+                                               Grid.Column="0" 
+                                               Grid.ColumnSpan="2"/>
+
+                                    <CheckBox Content="Инвертировать направление сортировки"
+                                              Margin="2,2,2,5"
+                                              IsChecked="{Binding IsDescending}"
+                                              Grid.Row="1" 
+                                              Grid.Column="0" 
+                                              Grid.ColumnSpan="2"/>
+
+                                    <Button Command="{Binding RemoveOrderingCommand}" 
+                                                      Grid.Row="0"
+                                                      Grid.Column="1"
+                                                      HorizontalAlignment="Right" 
+                                                      Margin="2"
+                                                      Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                                        <Button.Content>
+                                            <Image Source="/Common.UI;component/Resources/Icons/16X16/delete.png" Width="16" Height="16"/>
+                                        </Button.Content>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Button Command="{Binding AddOrderingCommand}" Grid.Row="1"
+                        HorizontalAlignment="Right" 
+                        Margin="2"
+                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <Button.Content>
+                        <Image Source="/Common.UI;component/Resources/Icons/16X16/add.png" Width="16" Height="16" />
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </GroupBox>
+        
+    </Grid>
+</UserControl>

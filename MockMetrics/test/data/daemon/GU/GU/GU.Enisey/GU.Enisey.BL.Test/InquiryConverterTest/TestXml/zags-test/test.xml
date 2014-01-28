@@ -1,0 +1,16 @@
+﻿<krsk:ValidityBirthCertificate xmlns:app="urn://x-artefacts-it-ru/dob/state-services/krsk/DOU/10.2.1" xmlns:commons="urn://x-artefacts-it-ru/dob/state-services/commons/1.1" xmlns:krsk="urn://x-artefacts-it-ru/dob/interauthority-interaction/krsk/ValidityBirthCertificate/inquiry/1.00" xmlns:krsk-commons="urn://x-artefacts-it-ru/dob/state-services/krsk/commons/1.0" xmlns:tns="http://data.service.pfr.socit.ru" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn://x-artefacts-it-ru/dob/interauthority-interaction/krsk/ValidityBirthCertificate/inquiry/1.00 Request.xsd">
+  <krsk:FIO>
+    <krsk:LastName />
+    <krsk:FirstName />
+  </krsk:FIO>
+  <krsk:Gender>Мужской</krsk:Gender>
+  <krsk:DateOfBirth>2013-10-08</krsk:DateOfBirth>
+  <krsk:BirthCertificateRF>
+    <krsk:Series>IV-ЮС</krsk:Series>
+    <krsk:Number>111111</krsk:Number>
+    <krsk:IssueDate>2013-10-14</krsk:IssueDate>
+  </krsk:BirthCertificateRF>
+  <krsk:ZAGSKrskK />
+  <krsk:NumberOfRegister>ф</krsk:NumberOfRegister>
+  <krsk:DateOfRegister>2013-10-14</krsk:DateOfRegister>
+</krsk:ValidityBirthCertificate>

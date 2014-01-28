@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{EF405418-0C5B-48E3-9600-23F4E522C0F3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GU.MZ.BL.Tests</RootNamespace>
+    <AssemblyName>GU.MZ.BL.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Integration\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Integration</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\..\Externals\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.0.12035, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AcceptanceTest\BltoolkitTest\GetTableLastTests.cs" />
+    <Compile Include="AcceptanceTest\ContentParser.cs" />
+    <Compile Include="AcceptanceTest\Content\ParseTaskTests.cs" />
+    <Compile Include="AcceptanceTest\Licensing\ImportLicenseTests.cs" />
+    <Compile Include="AcceptanceTest\MzBlTestRoot.cs" />
+    <Compile Include="AcceptanceTest\DbTest\SaveLicenseTest.cs" />
+    <Compile Include="AcceptanceTest\MzBlFactoryTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\AcceptTaskTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\ArrangeDataForHandyTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\GrantResultTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\OrderResultTests.cs" />
+    <Compile Include="AcceptanceTest\DbTest\ExpertStateDbTest.cs" />
+    <Compile Include="AcceptanceTest\Supervision\LinkageLightScenariedTests.cs" />
+    <Compile Include="AcceptanceTest\MzAcceptanceTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\ExpertiseTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\InspectionTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\OrderAcceptOrRejectTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\OrderExpertiseTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\OrderInspectionTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\Renewal\MedIndividualRenewalTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\Renewal\MedJuridicalRenewalTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\Renewal\RenewalTests.cs" />
+    <Compile Include="AcceptanceTest\Supervision\ViolationNoticeTests.cs" />
+    <Compile Include="AcceptanceTest\ReportTest\FullActivityDataReportTest.cs" />
+    <Compile Include="AcceptanceTest\Supervision\SupervisionFixture.cs" />
+    <Compile Include="AcceptanceTest\TaskData\ContentFixture.cs" />
+    <Compile Include="AcceptanceTest\BltoolkitTest\CloneEditableObjectTest.cs" />
+    <Compile Include="Common\DomainDependentTests.cs" />
+    <Compile Include="DataMapping\DocumentExpertiseDataMapperTests.cs" />
+    <Compile Include="DataMapping\FileScenarioStepDataMapperTests.cs" />
+    <Compile Include="DataMapping\InspectionDataMapperTests.cs" />
+    <Compile Include="DataMapping\InventoryDataMapperTests.cs" />
+    <Compile Include="DataMapping\LicenseRequisitesDataMapperTests.cs" />
+    <Compile Include="DomainLogic\GuParse\DrugParserTests.cs" />
+    <Compile Include="DomainLogic\GuParse\BasicParserTests.cs" />
+    <Compile Include="DomainLogic\GuParse\FarmParserTests.cs" />
+    <Compile Include="DomainLogic\GuParse\ContentMapperTests.cs" />
+    <Compile Include="DomainLogic\GuParse\MedParserTests.cs" />
+    <Compile Include="DomainLogic\GuParse\ParserFacadeTests.cs" />
+    <Compile Include="DomainLogic\GuParse\ParserTests.cs" />
+    <Compile Include="DomainLogic\Licensing\LicenseProviderTests.cs" />
+    <Compile Include="DomainLogic\MzTask\MzTaskWrapperTests.cs" />
+    <Compile Include="DomainLogic\Linkage\CheckHolderdataAddInTests.cs" />
+    <Compile Include="DomainLogic\Linkage\DossierFileLinkWrapperTests.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageDossierAddInTests.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageHolderAddInTests.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageLicenseAddInTests.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageRequisitesAddInTests.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkagerTests.cs" />
+    <Compile Include="DomainLogic\Linkage\SetupFileAddInTests.cs" />
+    <Compile Include="MzTestBlFactory.cs" />
+    <Compile Include="MzTestModule.cs" />
+    <Compile Include="RandomProvider.cs" />
+    <Compile Include="StubDbCtx.cs" />
+    <Compile Include="DomainLogic\Inspect\DocumentExpertTests.cs" />
+    <Compile Include="DomainLogic\Notify\DossierFileNotifierTests.cs" />
+    <Compile Include="DomainLogic\Supervision\DossierFileSuperviserTests.cs" />
+    <Compile Include="DataMapping\EmployeeDataMapperTests.cs" />
+    <Compile Include="DataMapping\LicenseDataMapperTests.cs" />
+    <Compile Include="DataMapping\LicenseDossierDataMapperTests.cs" />
+    <Compile Include="DataMapping\LicenseObjectDataMapperTests.cs" />
+    <Compile Include="DataMapping\AbstractDataMapperTests.cs" />
+    <Compile Include="DataMapping\MapperTestImplementation.cs" />
+    <Compile Include="AcceptanceTest\Supervision\LinkageFullScenariedTaskTests.cs" />
+    <Compile Include="BaseTestFixture.cs" />
+    <Compile Include="TestObjectMother.cs" />
+    <Compile Include="DataMapping\DossierFileDataMapperTests.cs" />
+    <Compile Include="Validation\AddressValidatorTests.cs" />
+    <Compile Include="DomainLogic\Authentification\AuthentificatorTests.cs" />
+    <Compile Include="DomainLogic\Linkage\DossierFileRepositoryTests.cs" />
+    <Compile Include="DataMapping\HolderRequisitesDataMapperTests.cs" />
+    <Compile Include="DataMapping\LicenseHolderDataMapperTests.cs" />
+    <Compile Include="DomainLogic\Inspect\HolderInspecterTests.cs" />
+    <Compile Include="Reporting\Mapping\LicenseBlankReportTests.cs" />
+    <Compile Include="DomainLogic\Linkage\LicenseHolderRepositoryTests.cs" />
+    <Compile Include="DomainLogic\AcceptTask\DossierFileBuilderTests.cs" />
+    <Compile Include="Reporting\Mapping\InventoryReportTests.cs" />
+    <Compile Include="DomainLogic\Linkage\LicenseDossierRegistrTests.cs" />
+    <Compile Include="Validation\LicenseObjectValidatorTests.cs" />
+    <Compile Include="Validation\LicenseValidatorTests.cs" />
+    <Compile Include="DomainLogic\Order\OrderProviderTests.cs" />
+    <Compile Include="DomainLogic\GrantResult\ServiceResultGranterTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DomainLogic\ViolationResolve\ViolationResolverTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.BL\Common.BL.csproj">
+      <Project>{C03946AB-F720-41F1-93C0-DDBDBA03D983}</Project>
+      <Name>Common.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.DA\Common.DA.csproj">
+      <Project>{166C26B9-576E-44C2-993A-8392B79A619F}</Project>
+      <Name>Common.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.Types\Common.Types.csproj">
+      <Project>{63B80D1D-4E6D-4C64-93A5-3A117E73A332}</Project>
+      <Name>Common.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.BL\GU.BL.csproj">
+      <Project>{BE8BC0F3-168A-4957-9972-4D63CC791CC0}</Project>
+      <Name>GU.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.DataModel\GU.DataModel.csproj">
+      <Project>{71463E15-A2C6-4126-8AB9-CA4A570E5E4D}</Project>
+      <Name>GU.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Enisey\GU.Enisey.BL\GU.Enisey.BL.csproj">
+      <Project>{B64EE885-8BB8-4CEC-BE0C-95047E493F67}</Project>
+      <Name>GU.Enisey.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.MZ.BL\GU.MZ.BL.csproj">
+      <Project>{A33A9463-E764-4E60-9D8C-0F261986E199}</Project>
+      <Name>GU.MZ.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.MZ.DataModel\GU.MZ.DataModel.csproj">
+      <Project>{D82B639F-C023-44CC-A7F3-58F75492079D}</Project>
+      <Name>GU.MZ.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.MZ.Import\GU.MZ.Import.csproj">
+      <Project>{7ABC9BE5-2EBA-401E-960C-6719CF7DC517}</Project>
+      <Name>GU.MZ.Import</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\GU.MZ\app.config">
+      <Link>app.config</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\06_med_new.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\07_med_renewal.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\10_med_copy.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\09_med_dublicate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\08_med_stop.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\05_drug_copy.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\04_drug_dublicate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\01_drug_new.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\02_drug_renewal.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\03_drug_stop.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\11_farm_new.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\12_farm_renewal.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\13_farm_stop.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\14_farm_dublicate.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\15_farm_copy.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\ind\med_another_address_ind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\ind\med_another_works_ind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\ind\med_stop_activity_address_ind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\ind\med_stop_works_ind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_another_address_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_another_works_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\ind\med_change_address_ind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_change_address_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\ind\med_change_document_ind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_merge_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\ind\med_rename_ind.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_rename_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_reorganization_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_stop_activity_address_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="AcceptanceTest\Content\Renewal\med\jur\med_stop_works_jur.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

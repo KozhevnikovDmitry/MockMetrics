@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/InformationProvision/1.5.2" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.3" xmlns:commons="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:smev="http://smev.gosuslugi.ru/request/rev111111" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/InformationProvision/1.5.2" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="InformationProvision" hints:rus="Организация информационного обеспечения граждан, организаций и общественных объединений на основе документов Архивного фонда Российской Федерации и других архивных документов">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice hints:showInChoiceScreen="true" hints:rus="Заявитель является">
+					<xs:sequence hints:rus="Физическим лицом" hints:roleName="applicant-type">
+						<xs:choice hints:showInChoiceScreen="true" hints:rus="Вы являетесь">
+							<xs:sequence hints:rus="Заявителем">
+								<xs:element name="Applicant" type="krsk:ApplicantType" hints:injectionType="injectAndGetBack" hints:rus="Сведения о заявителе"/>
+							</xs:sequence>
+							<xs:sequence hints:rus="Представителем заявителя">
+								<xs:element name="AgentApplicant" type="krsk:ApplicantType" hints:injectionType="ignore" hints:rus="Сведения о заявителе"/>
+								<xs:element name="Agent" type="krsk:AgentType" hints:injectionType="injectAndGetBack" hints:rus="Сведения о представителе"/>
+							</xs:sequence>
+						</xs:choice>
+					</xs:sequence>
+					<xs:sequence hints:rus="Юридическим лицом" hints:roleName="applicant-type">
+						<xs:element name="Organization" type="krsk:OrganizationType" hints:injectionType="injectAndGetBack" hints:rus="Сведения о заявителе"/>
+					</xs:sequence>
+				</xs:choice>
+				<xs:element name="RequiredInfo" type="commons:string-500" hints:widgetType="textArea" hints:rus="Интересующая тема, вопрос, событие, факт, сведения и хронологические рамки запрашиваемой информации" hints:userHint="Опишите запрашиваемую информацию. Пример: История и настоящее местонахождение библиотеки Ивана Грозного"/>
+				<xs:element name="Delivery" maxOccurs="7" hints:rus="Форма получения пользователем информации" hints:default="информационное письмо">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="информационное письмо"/>
+							<xs:enumeration value="архивная справка"/>
+							<xs:enumeration value="архивная выписка"/>
+							<xs:enumeration value="архивная копия"/>
+							<xs:enumeration value="тематический перечень"/>
+							<xs:enumeration value="тематическая подборка копий архивных документов"/>
+							<xs:enumeration value="тематический обзор документов"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ApplicantType">
+		<xs:sequence>
+			<xs:element name="FamilyName" type="commons:RussianWord-100-Type" hints:businessMeaning="userFamilyName" hints:rus="Фамилия" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="FirstName" type="commons:RussianWord-100-Type" hints:businessMeaning="userFirstName" hints:rus="Имя" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="Patronymic" type="commons:RussianWord-100-Type" hints:businessMeaning="userPatronymic" hints:rus="Отчество" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="Address" type="krsk:AddressType" hints:rus="Почтовый адрес"/>
+			<xs:element name="Email" type="commons:Email-Type" hints:businessMeaning="userEmailAddress" hints:rus="Адрес электронной почты"/>
+			<xs:element name="Phone" type="commons:PhoneNumberRF-Type" maxOccurs="5" hints:businessMeaning="userContactPhone" hints:rus="Контактный телефон"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrganizationType">
+		<xs:sequence>
+			<xs:element name="FullName" type="commons:string-500" hints:businessMeaning="userLegalPersonName" hints:rus="Полное наименование" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+			<xs:element name="Address" type="krsk:AddressType" hints:rus="Почтовый адрес"/>
+			<xs:element name="Email" type="commons:Email-Type" hints:businessMeaning="userEmailAddress" hints:rus="Адрес электронной почты"/>
+			<xs:element name="Phone" type="commons:PhoneNumberRF-Type" maxOccurs="5" hints:businessMeaning="userContactPhone" hints:rus="Телефон (факс)"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AgentType">
+		<xs:sequence>
+			<xs:element name="AgentFamilyName" type="commons:RussianWord-100-Type" hints:businessMeaning="userFamilyName" hints:rus="Фамилия" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="AgentFirstName" type="commons:RussianWord-100-Type" hints:businessMeaning="userFirstName" hints:rus="Имя" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="AgentPatronymic" type="commons:RussianWord-100-Type" hints:businessMeaning="userPatronymic" hints:rus="Отчество" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="AgentPhone" type="commons:PhoneNumberRF-Type" hints:businessMeaning="userContactPhone" hints:rus="Контактный телефон"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="PostalCode" type="commons:SixDigitString-Type" hints:rus="Индекс" hints:userHint="6 цифр. Пример: 450098"/>
+			<xs:element name="Region" type="commons:TimelineUnawareClassifierValue-Type" form="qualified" hints:classifierName="RFRegions" hints:rus="Регион" hints:default="24" hints:userHint="Пример: Красноярский край"/>
+			<xs:element name="District" type="commons:string-200" minOccurs="0" hints:rus="Район" hints:userHint="Пример: Усть-каменский"/>
+			<xs:element name="CityLocality" type="commons:string-200" hints:rus="Город/Населенный пункт" hints:userHint="Город или населенный пункт. Пример: Красноярск"/>
+			<xs:element name="StreetText" type="commons:string-100" hints:rus="Улица" hints:userHint="Пример: Осенний бульвар"/>
+			<xs:element name="ApartmentBlock" type="commons:string-10" hints:rus="Номер дома" hints:userHint="Пример: 15"/>
+			<xs:element name="Building" type="commons:string-10" minOccurs="0" hints:rus="Корпус/Строение" hints:userHint="Пример: 2А"/>
+			<xs:element name="Apartment" type="commons:string-10" minOccurs="0" hints:rus="Квартира/Офис" hints:userHint="Пример: 121"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

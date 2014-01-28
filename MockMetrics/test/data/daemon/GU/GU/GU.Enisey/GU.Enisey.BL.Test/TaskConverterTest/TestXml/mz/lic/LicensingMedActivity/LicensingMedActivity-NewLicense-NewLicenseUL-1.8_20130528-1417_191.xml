@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:LicensingMedActivity xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingMedActivity/1.8" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:NewLicense>
+    <ns1:NewLicenseUL>
+      <ns1:OrgInfo>
+        <ns1:FullName>Полное наименование</ns1:FullName>
+        <ns1:LawForm>Орг-прав форма</ns1:LawForm>
+        <ns1:OrgAddress>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город</ns2:CityLocality>
+        </ns1:OrgAddress>
+        <ns1:OGRN>
+          <ns1:OGRNnumber>2545121221321</ns1:OGRNnumber>
+          <ns1:EGRULData>
+            <ns1:Series>8546</ns1:Series>
+            <ns1:Number>154964654</ns1:Number>
+            <ns1:DocIssuedBy>Кем выдан</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-05-15</ns1:DocIssuedDate>
+            <ns1:RegAddress>
+              <ns2:Region>
+                <ns2:code>24</ns2:code>
+                <ns2:displayText>Красноярский край</ns2:displayText>
+              </ns2:Region>
+              <ns2:CityLocality>Город</ns2:CityLocality>
+            </ns1:RegAddress>
+          </ns1:EGRULData>
+        </ns1:OGRN>
+        <ns1:INN>
+          <ns1:INN>2495652121</ns1:INN>
+          <ns1:TaxAuthorityData>
+            <ns1:Series>0406</ns1:Series>
+            <ns1:Number>8545321310</ns1:Number>
+            <ns1:Date>2013-05-01</ns1:Date>
+            <ns1:Code>5987</ns1:Code>
+            <ns1:IssuerName>Орган выдавший</ns1:IssuerName>
+          </ns1:TaxAuthorityData>
+        </ns1:INN>
+        <ns1:Phone>9656412312</ns1:Phone>
+        <ns1:Director>
+          <ns2:Position>Должность руководителя</ns2:Position>
+          <ns2:ChiefLastName>Фамилия</ns2:ChiefLastName>
+          <ns2:ChiefFirstName>Имя</ns2:ChiefFirstName>
+        </ns1:Director>
+      </ns1:OrgInfo>
+      <ns1:WorksInfo>
+        <ns1:ActivityAddress>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город 2</ns2:CityLocality>
+        </ns1:ActivityAddress>
+        <ns1:Works>Выполняемые работы</ns1:Works>
+        <ns1:DocRequisites>
+          <ns1:OrgName>Орган, выдавший документ</ns1:OrgName>
+          <ns1:Date>2013-05-09</ns1:Date>
+          <ns1:Number>65411222</ns1:Number>
+        </ns1:DocRequisites>
+      </ns1:WorksInfo>
+    </ns1:NewLicenseUL>
+  </ns1:NewLicense>
+</ns1:LicensingMedActivity>

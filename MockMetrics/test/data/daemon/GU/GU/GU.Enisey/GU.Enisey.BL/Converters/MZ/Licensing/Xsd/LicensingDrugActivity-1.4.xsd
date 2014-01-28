@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingDrugActivity/1.4" xmlns:commons="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.1" xmlns:attach="http://smev.gosuslugi.ru/request/rev111111" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingDrugActivity/1.4" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="LicensingDrugActivity" hints:rus="Лицензирование деятельности, связанной с оборотом нароктических средств">
+		<xs:complexType>
+			<xs:choice hints:rus="Выберите вариант оказания услуги" hints:showInChoiceScreen="true">
+				<xs:element name="NewLicense" hints:roleName="subservice" hints:rus="Получение лицензии на осуществление деятельности по обороту наркотических средств">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OrgInfo" type="krsk:OrgInfoType" hints:injectionType="injectAndGetBack" hints:rus="Информация о лицензиате, его правопреемнике, либо об ином предусмотренном федеральным законом лице"/>
+							<xs:element name="DocAttach" type="attach:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Reregistration" hints:roleName="subservice" hints:rus="Переоформление лицензии на осуществление деятельности по обороту наркотических средств">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OrgInfo" type="krsk:OrgInfoType" hints:injectionType="injectAndGetBack" hints:rus="Информация о лицензиате, его правопреемнике, либо об ином предусмотренном федеральным законом лице"/>
+							<xs:element name="LicenseInfo" type="krsk:LicenseInfoType" hints:rus="Информация о переоформляемой лицензии на осуществление деятельности по обороту наркотических средств"/>
+							<xs:choice maxOccurs="unbounded" hints:rus="Основание для переоформления лицензии" hints:showInChoiceScreen="true">
+								<xs:element name="Reorganization" hints:rus="Реорганизация юридического лица в форме преобразования">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="FullName" type="commons:string-250" hints:rus="Полное наименование юридического лица" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+											<xs:element name="LawForm" type="commons:string-250" hints:rus="Организационно-правовая форма юридического лица" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+											<xs:element name="ShortName" type="commons:string-100" minOccurs="0" hints:rus="Сокращенное наименование юридического лица  (в случае, если имеется)" hints:userHint="Пример: 20 век фокс"/>
+											<xs:element name="FirmName" type="commons:string-250" minOccurs="0" hints:rus="Фирменное наименование юридического лица (в случае, если имеется)" hints:userHint="Пример: XX century FOX"/>
+											<xs:element name="EGRULData" type="krsk:ShortEGRULDataType" hints:rus="Данные  документа, подтверждающего факт внесения сведений о юридическом лице в Единый государственный реестр юридических лиц"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Rename" hints:rus="Изменение наименования юридического лица">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="FullName" type="commons:string-250" hints:rus="Полное наименование юридического лица" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+											<xs:element name="LawForm" type="commons:string-250" hints:rus="Организационно-правовая форма юридического лица" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+											<xs:element name="ShortName" type="commons:string-250" minOccurs="0" hints:rus="Сокращенное наименование юридического лица (в случае, если имеется)" hints:userHint="Пример: 20 век фокс"/>
+											<xs:element name="FirmName" type="commons:string-250" minOccurs="0" hints:rus="Фирменное наименование юридического лица (в случае, если имеется)" hints:userHint="Пример: XX century FOX"/>
+											<xs:element name="EGRULData" type="krsk:ShortEGRULDataType" hints:rus="Данные  документа, подтверждающего факт внесения сведений о юридическом лице в Единый государственный реестр юридических лиц"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ChangeOrgAddress" hints:rus="Изменение адреса места нахождения юридического лица">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="NewAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места нахождения юридического лица"/>
+											<xs:element name="EGRULData" type="krsk:ShortEGRULDataType" hints:rus="Данные  документа, подтверждающего факт внесения сведений о юридическом лице в Единый государственный реестр юридических лиц"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="AnotherAddress" hints:rus="Осуществление лицензируемого вида деятельности по адресу, не указанному в лицензии">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="WorksInfo" type="krsk:WorkInfoType" maxOccurs="unbounded" hints:rus="Информация о новых адресах и видах деятельности"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="StopActivityAddress" hints:rus="Прекращение лицензируемого вида деятельности по одному или нескольким адресам">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="StopInfo" maxOccurs="unbounded" hints:rus="Информация о прекращении деятельности">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="StopAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес, по которому прекращена деятельность"/>
+														<xs:element name="StopDate" type="xs:date" hints:rus="Дата фактического прекращения деятельности" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Merge" hints:rus="Реорганизация юридических лиц в форме слияния">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="LegalEntity" maxOccurs="unbounded" hints:rus="Юридическое лицо">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="FullName" type="commons:string-250" hints:rus="Полное наименование реорганизованного юридического лица" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+														<xs:element name="LawForm" type="commons:string-250" hints:rus="Организационно-правовая форма реорганизованного юридического лица" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+														<xs:element name="OGRN" type="commons:OGRN-Type" hints:rus="Государственный регистрационный номер записи о создании юридического лица (ОГРН)"/>
+														<xs:element name="INN" type="commons:LegalPersonINN-Type" hints:rus="ИНН"/>
+														<xs:element name="LicenseInfo" type="krsk:LicenseInfoType" hints:rus="Лицензия на осуществление деятельности по обороту наркотических средств, психотропных веществ и их прекурсоров, культивированию наркосодержащих растений"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="AnotherWorks" hints:rus="Выполнение работ, оказание услуг, не указанных в лицензии">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="WorkInfo" type="krsk:WorkInfoType" maxOccurs="unbounded" hints:rus="Адрес места осуществления лицензируемого вида деятельности"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="StopWorks" hints:rus="Прекращение выполнения работ, оказания услуг">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="WorkInfo" type="krsk:WorkInfoType" maxOccurs="unbounded" hints:rus="Адрес места прекращения лицензируемого вида деятельности"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ChangeNameWork" hints:rus="Изменение наименования вида деятельности (в порядке, предусмотренном ч.4 ст.22 ФЗ «О лицензировании отдельных видов деятельности»)">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="ChangeWorksInfo" type="krsk:WorkInfoType" maxOccurs="unbounded" hints:rus="Информация о работах, услугах, наименования которых изменены"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="NewWorks" hints:rus="Появление работ, услуг, которые выполняются в составе конкретного вида деятельности (в порядке, предусмотренном ч.4 ст.22 ФЗ «О лицензировании отдельных видов деятельности»)">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="NewWorksInfo" type="krsk:WorkInfoType" maxOccurs="unbounded" hints:rus="Информация о работах, услугах, которые выполняются в составе конкретного вида деятельности"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+							<xs:element name="DocAttach" type="attach:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Dublicat" hints:roleName="subservice" hints:rus="Получение дубликата лицензии на осуществление деятельности по обороту наркотических средств">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Reason" hints:rus="Причина получения дубликата">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="Утрата лицензии"/>
+										<xs:enumeration value="Порча лицензии"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="OrgInfo" type="krsk:ShortOrgInfoType" hints:rus="Информация о юридическом лице" hints:injectionType="injectAndGetBack"/>
+							<xs:element name="LicenseInfo" type="krsk:LicenseInfoType" hints:rus="Информация о дублируемой лицензии"/>
+							<xs:element name="DocAttach" type="attach:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Copy" hints:roleName="subservice" hints:rus="Получение копии лицензии на осуществление деятельности по обороту наркотических средств">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OrgInfo" type="krsk:ShortOrgInfoType" hints:rus="Информация о юридическом лице" hints:injectionType="injectAndGetBack"/>
+							<xs:element name="LicenseInfo" type="krsk:LicenseInfoType" hints:rus="Информация о копируемой лицензии"/>
+							<xs:element name="Quantity" hints:rus="Количество копий" hints:userHint="Введите число. Пример: 50">
+								<xs:simpleType>
+									<xs:restriction base="xs:decimal">
+										<xs:totalDigits value="5"/>
+										<xs:fractionDigits value="0"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="DocAttach" type="attach:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="StopLicense" hints:roleName="subservice" hints:rus="Прекращение лицензируемого вида деятельности">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="OrgInfo" type="krsk:ShortOrgInfoType" hints:rus="Информация о лицензиате, его правопреемнике" hints:injectionType="injectAndGetBack"/>
+							<xs:element name="LicenseInfo" type="krsk:LicenseInfoType" hints:rus="Информация о лицензии, действие которой прекращается"/>
+							<xs:element name="DocAttach" type="attach:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="WorkInfoType">
+		<xs:annotation>
+			<xs:documentation>Тип: Информация о работах, услугах</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:sequence>
+				<xs:element name="Address" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес осуществления работ, услуг"/>
+				<xs:element name="ApartmentDescription" type="commons:string-500" hints:widgetType="textArea" hints:rus="Описание помещения, в котором непосредственно будет осуществляться деятельность" hints:userHint="Например: двухэтажное кирпичное здание. Комната № 23, расположенная на складе 1-го этажа хирургического отделения, согласно плана БТИ"/>
+			</xs:sequence>
+			<xs:element name="Works" type="commons:TimelineUnawareClassifierValue-Type" maxOccurs="unbounded" hints:classifierName="DrugActivity" hints:rus="Выполняемые работы, оказываемые услуги"/>
+			<xs:element name="ComplianceLicenseRequirement" type="krsk:LicenseRequirementsType" maxOccurs="unbounded" hints:rus="Документ, входящий в перечень, определяемый положением о лицензировании конкретного вида деятельности и свидетельствующий о соответствии соискателя лицензии лицензионным требованиям" hints:userHint="Документы, подтверждающие наличие у соискателя лицензии на праве собственности или на ином законном основании соответствующих установленным требованиям и необходимых для осуществления деятельности по обороту наркотических средств, психотропных веществ и их прекурсоров, культивированию наркосодержащих растений оборудования, помещений и земельных участков, права на которые зарегистрированы в Едином государственном реестре прав на недвижимое имущество и сделок с ним"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LicenseInfoType">
+		<xs:annotation>
+			<xs:documentation>Тип: информация о лицензии</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="LicenseNumber" type="commons:string-50" hints:rus="Номер лицензии" hints:userHint="Номер лицензии на осуществление деятельности по обороту наркотических средств. Например: ЛО-22-05-000078"/>
+			<xs:element name="LicenseDate" type="xs:date" hints:rus="Дата выдачи лицензии" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+			<xs:element name="LicenseOrg" type="commons:string-250" hints:rus="Наименование лицензирующего органа" hints:userHint="Наименование органа, выдавшего лицензию. Например: Главное управление Красноярского края по здравоохранению и фармацевтической деятельности"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShortOrgInfoType">
+		<xs:annotation>
+			<xs:documentation>Тип: Скоращенная информация об организации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FullName" type="commons:string-250" hints:businessMeaning="userLegalPersonName" hints:rus="Полное наименование юридического лица" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+			<xs:element name="LawForm" type="commons:string-250" hints:rus="Организационно-правовая форма" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+			<xs:element name="OrgAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места нахождения юридического лица"/>
+			<xs:element name="OGRN" type="commons:OGRN-Type" hints:rus="Государственный регистрационный номер записи о создании юридического лица (ОГРН)" hints:businessMeaning="userLegalPersonOGRN"/>
+			<xs:element name="INN" type="commons:LegalPersonINN-Type" hints:rus="ИНН юридического лица" hints:businessMeaning="userLegalPersonINN"/>
+			<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:businessMeaning="userContactPhone" hints:rus="Номер телефона (факса)"/>
+			<xs:element name="Email" type="commons:Email-Type" minOccurs="0" hints:businessMeaning="userEmailAddress" hints:rus="Адрес электронной почты"/>
+			<xs:element name="Director" type="krsk:DirectorType" hints:rus="Информация о руководителе юридического лица"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OrgInfoType">
+		<xs:annotation>
+			<xs:documentation>Тип: Информация об организации</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FullName" type="commons:string-250" hints:businessMeaning="userLegalPersonName" hints:rus="Полное наименование юридического лица" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+			<xs:element name="LawForm" type="commons:string-250" hints:rus="Организационно-правовая форма" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+			<xs:element name="ShortName" type="commons:string-100" minOccurs="0" hints:rus="Сокращенное наименование (в случае, если имеется)" hints:userHint="Пример: 20 век фокс"/>
+			<xs:element name="FirmName" type="commons:string-250" minOccurs="0" hints:rus="Фирменное наименование (в случае, если имеется)" hints:userHint="Пример: XX century FOX"/>
+			<xs:element name="OrgAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места нахождения юридического лица"/>
+			<xs:element name="WorksInfo" type="krsk:WorkInfoType" maxOccurs="unbounded" hints:rus="Адрес места осуществления лицензируемого вида деятельности"/>
+			<xs:element name="OGRN" type="commons:OGRN-Type" hints:businessMeaning="userLegalPersonOGRN" hints:rus="Государственный регистрационный номер записи о создании юридического лица (ОГРН)"/>
+			<xs:element name="EGRULData" type="krsk:EGRULDataType" hints:rus="Данные  документа, подтверждающего факт внесения сведений о юридическом лице в Единый государственный реестр юридических лиц"/>
+			<xs:element name="INN" type="commons:LegalPersonINN-Type" hints:rus="ИНН юридического лица" hints:businessMeaning="userLegalPersonINN"/>
+			<xs:element name="TaxAuthorityData" type="krsk:TaxAuthorityDataType" hints:rus="Данные документа о постановке юридического лица на учет в налоговом органе"/>
+			<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:businessMeaning="userContactPhone" hints:rus="Номер телефона (факса)"/>
+			<xs:element name="Email" type="commons:Email-Type" minOccurs="0" hints:businessMeaning="userEmailAddress" hints:rus="Адрес электронной почты"/>
+			<xs:element name="Director" type="krsk:DirectorType" hints:rus="Информация о руководителе юридического лица"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaxAuthorityDataType">
+		<xs:annotation>
+			<xs:documentation>Тип: Данные документа о постановке юридического лица на учет в налоговом органе</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegDepartment" type="commons:string-200" hints:rus="Выдан (орган, выдавший документ)" hints:userHint="Наименование органа, выдавшего документ. Пример: Управление Федеральной налоговой службы по Красноярскому краю"/>
+			<xs:element name="DocIssuedDate" type="xs:date" hints:rus="Дата" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+			<xs:element name="Series" type="commons:string-10" hints:rus="Серия" hints:userHint="Серия свидететльства о постановке на учет в налоговом органе"/>
+			<xs:element name="Number" type="commons:string-10" hints:rus="Номер" hints:userHint="Номер свидететльства о постановке на учет в налоговом органе"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EGRULDataType">
+		<xs:annotation>
+			<xs:documentation>Тип: Данные  документа, подтверждающего факт внесения сведений о юридическом лице в Единый государственный реестр юридических лиц</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="commons:string-10" hints:rus="Серия" hints:userHint="Серия документа, подтверждающего факт внесения сведений о ЮЛ в ЕГРЮЛ"/>
+			<xs:element name="Number" type="commons:string-10" hints:rus="Номер" hints:userHint="Номер документа, подтверждающего факт внесения сведений о ЮЛ в ЕГРЮЛ"/>
+			<xs:element name="DocIssuedBy" type="commons:string-200" hints:rus="Кем выдан" hints:userHint="Наименование органа, выдавшего документ"/>
+			<xs:element name="DocIssuedDate" type="xs:date" hints:rus="Когда выдан" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+			<xs:element name="RegAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места нахождения органа, осуществившего государственную регистрацию"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShortEGRULDataType">
+		<xs:annotation>
+			<xs:documentation>Тип: Сокращенные данные  документа, подтверждающего факт внесения сведений о юридическом лице в Единый государственный реестр юридических лиц</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Series" type="commons:string-10" hints:rus="Серия" hints:userHint="Серия документа, подтверждающего факт внесения сведений о ЮЛ в ЕГРЮЛ"/>
+			<xs:element name="Number" type="commons:string-10" hints:rus="Номер" hints:userHint="Номер документа, подтверждающего факт внесения сведений о ЮЛ в ЕГРЮЛ"/>
+			<xs:element name="DocIssuedBy" type="commons:string-200" hints:rus="Кем выдан" hints:userHint="Наименование органа, выдавшего документ"/>
+			<xs:element name="DocIssuedDate" type="xs:date" hints:rus="Когда выдан" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DirectorType">
+		<xs:annotation>
+			<xs:documentation>Тип: Руководитель</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="FamilyName" type="commons:RussianWord-100-Type" hints:businessMeaning="userLegalPersonCEOFamilyName" hints:rus="Фамилия" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="FirstName" type="commons:RussianWord-100-Type" hints:businessMeaning="userLegalPersonCEOFirstName" hints:rus="Имя" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="Patronymic" type="commons:RussianWord-100-Type" minOccurs="0" hints:businessMeaning="userLegalPersonCEOPatronymic" hints:rus="Отчество" hints:userHint="Только русские буквы, до 100 символов"/>
+			<xs:element name="Post" type="commons:string-200" hints:rus="Должность" hints:userHint="Пример: Директор"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LicenseRequirementsType">
+		<xs:annotation>
+			<xs:documentation>Тип: Реквизиты подтверждающих документов</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocName" type="commons:string-250" hints:rus="Наименование документа" hints:userHint="Наименование документа, подтверждающего соответствие соискателя лицензионным требованиям"/>
+			<xs:element name="RegDepartment" type="commons:string-250" hints:rus="Наименование органа (организации), выдавшего документ" hints:userHint="Орган, выдавший документ, подтверждающий соответствие соискателя лицензионным требованиям"/>
+			<xs:element name="DocIssuedDate" type="xs:date" hints:rus="Дата" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+			<xs:element name="Number" type="commons:string-20" hints:rus="Номер" hints:userHint="Номер документа, подтверждающего соответствие соискателя лицензионным требованиям"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

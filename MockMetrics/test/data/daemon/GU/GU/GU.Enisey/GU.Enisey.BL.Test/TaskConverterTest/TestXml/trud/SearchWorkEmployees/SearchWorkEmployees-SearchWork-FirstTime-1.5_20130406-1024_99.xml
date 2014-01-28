@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:SearchWorkEmployees xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:SearchWork>
+    <ns1:FirstTime>
+      <ns1:Person>
+        <ns2:FamilyName>Мусиенко</ns2:FamilyName>
+        <ns2:FirstName>Дмитрий</ns2:FirstName>
+        <ns2:Patronymic>Евгеньевич</ns2:Patronymic>
+        <ns1:BirthDate>2013-04-04</ns1:BirthDate>
+        <ns1:BirthPlace>фф</ns1:BirthPlace>
+        <ns1:Gender>Мужской</ns1:Gender>
+        <ns1:Age>44</ns1:Age>
+        <ns1:Citizenship>
+          <ns2:code>BGD</ns2:code>
+          <ns2:displayText>БАНГЛАДЕШ</ns2:displayText>
+        </ns1:Citizenship>
+        <ns1:Address>
+          <ns2:Region>
+            <ns2:code>37</ns2:code>
+            <ns2:displayText>Ивановская область</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>фф</ns2:CityLocality>
+        </ns1:Address>
+        <ns1:Document>
+          <ns2:LossPassportCertificate>
+            <ns2:Number>ф</ns2:Number>
+            <ns2:Date>2013-04-04</ns2:Date>
+            <ns2:IssueOrgan>фф</ns2:IssueOrgan>
+          </ns2:LossPassportCertificate>
+        </ns1:Document>
+        <ns1:Phone>1211111111</ns1:Phone>
+      </ns1:Person>
+      <ns1:EducationLevel>Основное общее</ns1:EducationLevel>
+      <ns1:Education>
+        <ns1:Institution>фф</ns1:Institution>
+        <ns1:Year>2222</ns1:Year>
+      </ns1:Education>
+      <ns1:Profession>ф</ns1:Profession>
+      <ns1:Skills>
+        <ns1:PC>true</ns1:PC>
+      </ns1:Skills>
+      <ns1:LastWorkConditions>
+        <ns1:LastProfession>ф</ns1:LastProfession>
+        <ns1:Period>ф</ns1:Period>
+        <ns1:Salary>ф</ns1:Salary>
+      </ns1:LastWorkConditions>
+      <ns1:Wishes>
+        <ns1:WishProfession>ф</ns1:WishProfession>
+        <ns1:WishPost>ф</ns1:WishPost>
+        <ns1:WishActivity>ф</ns1:WishActivity>
+        <ns1:WishSort>Постоянная работа</ns1:WishSort>
+        <ns1:WishSalary>ф</ns1:WishSalary>
+        <ns1:MoreWishes>ф</ns1:MoreWishes>
+        <ns1:Agreement>false</ns1:Agreement>
+      </ns1:Wishes>
+    </ns1:FirstTime>
+  </ns1:SearchWork>
+</ns1:SearchWorkEmployees>

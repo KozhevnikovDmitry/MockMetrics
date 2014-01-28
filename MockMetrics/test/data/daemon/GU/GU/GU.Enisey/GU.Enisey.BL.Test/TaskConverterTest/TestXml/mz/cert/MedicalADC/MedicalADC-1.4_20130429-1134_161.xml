@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:MedicalADC xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/MedicalADC/1.4" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4">
+  <ns1:Applicant>
+    <ns2:FamilyName>Аттестуемая</ns2:FamilyName>
+    <ns2:FirstName>Провизор</ns2:FirstName>
+    <ns1:Address>
+      <ns2:CityLocality>Город жительства</ns2:CityLocality>
+      <ns2:Street>Улица</ns2:Street>
+      <ns2:ApartmentBlock>Дом</ns2:ApartmentBlock>
+    </ns1:Address>
+    <ns1:Phone>4541323232</ns1:Phone>
+  </ns1:Applicant>
+  <ns1:AttestationSpeciality>
+    <ns1:Speciality>Специальность аттестуемая</ns1:Speciality>
+    <ns1:Target>получение квалификационной категории </ns1:Target>
+    <ns1:Category>
+      <ns2:code>0</ns2:code>
+      <ns2:displayText>Высшая</ns2:displayText>
+    </ns1:Category>
+  </ns1:AttestationSpeciality>
+  <ns1:AboutWork>
+    <ns1:PositionName>Должность текущая</ns1:PositionName>
+    <ns1:Subdivision>Подразделение</ns1:Subdivision>
+    <ns1:FullName>Юр лицо - полное наименование</ns1:FullName>
+    <ns1:LiteName>Юр лицо - сокращенное</ns1:LiteName>
+    <ns1:FirmName>Юр лицо - фирменное</ns1:FirmName>
+    <ns1:OrgType>Орг-прав-форма</ns1:OrgType>
+    <ns1:Address>
+      <ns2:CityLocality>Город организации</ns2:CityLocality>
+      <ns2:Street>Улица</ns2:Street>
+      <ns2:ApartmentBlock>Дом</ns2:ApartmentBlock>
+    </ns1:Address>
+    <ns1:Experience>Стаж по аттестуемой </ns1:Experience>
+  </ns1:AboutWork>
+  <ns1:PreviousAttestation>
+    <ns1:Category>
+      <ns2:code>0</ns2:code>
+      <ns2:displayText>Высшая</ns2:displayText>
+    </ns1:Category>
+    <ns1:Speciality>Специальность предыдущей аттестации</ns1:Speciality>
+    <ns1:From>2013-04-03</ns1:From>
+    <ns1:Confirmed>2013-04-25</ns1:Confirmed>
+  </ns1:PreviousAttestation>
+</ns1:MedicalADC>

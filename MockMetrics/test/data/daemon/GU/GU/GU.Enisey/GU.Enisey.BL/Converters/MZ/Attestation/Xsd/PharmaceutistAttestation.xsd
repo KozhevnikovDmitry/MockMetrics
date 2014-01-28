@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/PharmaceutistAttestation/1.4" xmlns:commons="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.3" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111" xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/commons/1.1" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/krsk/commons/1.0" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/PharmaceutistAttestation/1.4" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/krsk/commons/1.0" schemaLocation="state-services-krsk-commons-1.0.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="PharmaceutistAttestation" hints:rus="Присвоение и подтверждение квалификационных категорий средних фармацевтических работников и других специалистов, занимающих должности средних в системе здравоохранения Красноярского края, с целью присвоения (подтверждения) квалификационных категорий">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ApplicantInfo" hints:rus="Сведения об аттестуемом">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+							<xs:element name="BirthDate" type="xs:date" hints:dateRestriction="past" hints:rus="Дата рождения"/>
+							<xs:element name="Gender" type="commons:Gender-Type" hints:rus="Пол"/>
+							<xs:element name="PostalAddress" type="commons:AddressRF-Type" hints:rus="Адрес для переписки"/>
+							<xs:element name="ContactPhone" type="commons:PhoneNumberRF-Type" hints:rus="Контактный телефон" hints:userHint="Номер телефона. Пример: +7 391 1234567"/>
+							<xs:element name="ResidenceAddress" type="commons:AddressRF-Type" hints:rus="Адрес местожительства"/>
+							<xs:element name="HomePhone" type="commons:PhoneNumberRF-Type" hints:rus="Домашний телефон" hints:userHint="Номер телефона. Пример: +7 391 1234567"/>
+							<xs:element name="BusinessAddress" type="commons:AddressRF-Type" hints:rus="Служебный адрес"/>
+							<xs:element name="BusinessPhone" type="commons:PhoneNumberRF-Type" hints:rus="Служебный телефон" hints:userHint="Номер телефона. Пример: +7 391 1234567"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="QualificationCategoryToAward" hints:rus="Прошу разрешить пройти аттестацию по специальности">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SpecialtyName" type="commons:string-200" hints:rus="Наименование специальности"/>
+							<xs:element name="QualificationToGive" type="commons:TimelineUnawareClassifierValue-Type" hints:classifierName="QualificationCategories" hints:rus="Для получения/подтверждения квалификационной категории"/>
+							<xs:element name="ExperienceInSpecialty" type="xs:nonNegativeInteger" hints:rus="Стаж работы по аттестуемой специальности (лет)"/>
+							<xs:element name="ExperienceInMedicine" type="xs:nonNegativeInteger" hints:rus="Стаж работы в учреждениях здравоохранения (лет)"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="CurrentJobInfo" hints:rus="Данные о текущем месте работы">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Position" type="commons:string-200" hints:rus="Наименование должности"/>
+							<xs:element name="Department" type="commons:string-200" hints:rus="Наименование структурного подразделения"/>
+							<xs:element name="CompanyFullName" type="commons:string-200" hints:rus="Полное наименование организации"/>
+							<xs:element name="CompanyShortName" type="commons:string-200" hints:rus="Сокращенное наименование организации"/>
+							<xs:element name="CompanyBrandName" type="commons:string-200" hints:rus="Фирменное наименование организации"/>
+							<xs:element name="LawForm" type="commons:string-200" hints:rus="Организационно-правовая форма"/>
+							<xs:element name="OrgAddress" type="commons:AddressRF-Type" hints:rus="Местонахождение организации"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PeviousQualificationCategoryInfo" minOccurs="0" maxOccurs="unbounded" hints:rus="Ранее присвоенная квалификационная категория по аттестуемой специальности" hints:userHint="В случае отсутствия ранее присвоенных квалификаций, данный блок следует оставить пустым">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="QualificationCategory" type="commons:TimelineUnawareClassifierValue-Type" hints:classifierName="QualificationCategories" hints:rus="Квалификационная категория"/>
+							<xs:element name="Specialty" type="commons:string-200" hints:rus="По специальности"/>
+							<xs:element name="From" type="xs:date" hints:dateRestriction="past" hints:rus="С"/>
+							<xs:element name="Approved" type="xs:date" hints:dateRestriction="past" hints:rus="Подтверждена"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="OtherSpecialties" minOccurs="0" maxOccurs="unbounded" hints:rus="Другая специальность">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SpecialtyName" type="commons:string-200" hints:rus="Наименование специальности"/>
+							<xs:element name="ExperienceInSpecialty" type="xs:nonNegativeInteger" hints:rus="Стаж работы по данной специальности (лет)"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AttestationsInOtherSpecialties" minOccurs="0" maxOccurs="unbounded" hints:rus="Квалификационная категория по другой специальности">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="QualificationCategory" type="commons:TimelineUnawareClassifierValue-Type" hints:classifierName="QualificationCategories" hints:rus="Квалификационная категория"/>
+							<xs:element name="SpecialtyName" type="commons:string-200" hints:rus="По специальности"/>
+							<xs:element name="Year" type="xs:gYear" hints:rus="Год присвоения"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Education" hints:rus="Образование">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="InstName" type="commons:string-200" hints:rus="Название учебного заведения"/>
+							<xs:element name="EndYear" type="xs:gYear" hints:rus="Год окончания"/>
+							<xs:element name="Specialty" type="commons:string-200" hints:rus="Специальность по образованию"/>
+							<xs:element name="DiplomaNumber" type="commons:string-50" hints:rus="№ диплома"/>
+							<xs:element name="DiplomaIssueDate" type="xs:date" hints:dateRestriction="past" hints:rus="Дата выдачи диплома"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PostgraduateEducation" minOccurs="0" maxOccurs="unbounded" hints:rus="Сведения о послевузовском и дополнительном профессиональном образовании" hints:userHint="Интернатура, клиническая ординатура, аспирантура, повышение квалификации">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="KindOfTrainingCourse" type="commons:string-200" hints:rus="Вид образования"/>
+							<xs:element name="TrainingYear" type="xs:gYear" hints:rus="Год обучения"/>
+							<xs:element name="TrainingPlace" type="commons:string-200" hints:rus="Место обучения"/>
+							<xs:element name="CourseName" type="commons:string-200" hints:rus="Название цикла, курса обучения"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ProfessionalExperience" maxOccurs="unbounded" hints:rus="Трудовая деятельность по окончании вуза" hints:userHint="Заполняется в соответствии с записями в трудовой книжке и справками о совместительстве">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SinceDate" type="xs:date" hints:dateRestriction="past" hints:rus="С"/>
+							<xs:element name="ToDate" type="xs:date" hints:rus="По"/>
+							<xs:element name="Position" type="commons:string-200" hints:rus="Должность"/>
+							<xs:element name="OrganizationName" type="commons:string-200" hints:rus="Наименование учреждения"/>
+							<xs:element name="OrganizationAddress" type="commons:string-200" hints:rus="Местонахождение учреждения"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="AwardsTitlesDegrees" minOccurs="0" hints:rus="Наличие ученых степеней, ученых званий, научных трудов, изобретений, рационализаторских предложений, патентов, почетных званий">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AcademicDegree" type="commons:string-500" minOccurs="0" maxOccurs="unbounded" hints:userhint="Указать год присвоения, № диплома" hints:rus="Ученая степень"/>
+							<xs:element name="AcademicTitle" type="commons:string-500" minOccurs="0" maxOccurs="unbounded" hints:userhint="Указать год присвоения, № диплома" hints:rus="Ученое звание"/>
+							<xs:element name="Publication" type="commons:string-500" minOccurs="0" maxOccurs="unbounded" hints:userhint="Указать количество статей, монографий и т.д." hints:rus="Научный труд (печатный)"/>
+							<xs:element name="Invention" type="commons:string-500" minOccurs="0" maxOccurs="unbounded" hints:userhint="Указать регистрационный номер удостоверения, дату выдачи" hints:rus="Изобретение, рационализаторское предложение, патент"/>
+							<xs:element name="TitleOfHonour" type="commons:string-500" minOccurs="0" maxOccurs="unbounded" hints:rus="Почетное звание"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ForeignLanguare" type="commons:string-200" minOccurs="0" maxOccurs="unbounded" hints:rus="Знание иностранного языка"/>
+				<xs:element name="DocAttach" type="ns3:AppliedDocumentsType" minOccurs="0" hints:widgetType="deleteProtected" hints:rus="Приложенные документы"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ApplicantType">
+		<xs:annotation>
+			<xs:documentation>Тип: Данные заявителя</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+			<xs:element name="DUL" type="commons:Document-Type" hints:rus="Сведения о документе, удостоверяющем личность"/>
+			<xs:element name="Address" type="commons:AddressRF-Type" hints:rus="Адрес места жительства"/>
+			<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Номер телефона" hints:userHint="Номер телефона. Пример: +7 391 1234567"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="string-8">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

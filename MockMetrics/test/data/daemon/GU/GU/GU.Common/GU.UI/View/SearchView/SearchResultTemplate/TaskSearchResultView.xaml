@@ -1,0 +1,94 @@
+﻿<UserControl x:Class="GU.UI.View.SearchView.SearchResultTemplate.TaskSearchResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/GU.UI;component/View/Styles/GuListTemplatesDictionary.xaml"/>
+    </UserControl.Resources>
+    <Border Style="{StaticResource ResourceKey=SearchItemBorderStyle}">
+        <StackPanel Orientation="Horizontal">
+            <Border Style="{StaticResource ResourceKey=DeadlineNotifyBorderStyle}"  Margin="2">
+                <Image Width="2cm" Height="3cm" Source="/GU.UI;component/Resources/Icons/128X128/Statements.png"></Image>
+            </Border>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="600"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="Border" BasedOn="{StaticResource MainBorderStyle}" />
+                </Grid.Resources>
+                
+                <Border Grid.Column="0" Grid.Row="0">
+                    <TextBlock Text="Заявка"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="0">
+                    <TextBlock Text="{Binding TaskDataString}"></TextBlock>
+                </Border>
+
+                <Border Grid.Column="0" Grid.Row="1">
+                    <TextBlock Text="Ведомство"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="1">
+                    <TextBlock Text="{Binding AgencyName}" TextWrapping="Wrap"></TextBlock>
+                </Border>
+
+                <Border Grid.Column="0" Grid.Row="2">
+                    <TextBlock Text="Услуга"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="2">
+                    <TextBlock Text="{Binding ServiceDataString}" TextWrapping="Wrap"></TextBlock>
+                </Border>
+
+                <Border Grid.Column="0" Grid.Row="3">
+                    <TextBlock Text="Заявитель"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="3">
+                    <TextBlock Text="{Binding ReceiverDataString}" TextWrapping="Wrap"></TextBlock>
+                </Border>
+
+                <Border Grid.Column="0" Grid.Row="4">
+                    <TextBlock Text="Статус"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="4">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Width="32" Height="32" Source="{Binding IconPath}" Margin="2" VerticalAlignment="Top" Grid.Column="0"></Image>
+
+                        <Border Style="{StaticResource ResourceKey=MainBorderStyle}" Grid.Column="1">
+                            <TextBlock Text="{Binding StatusDataString}" TextWrapping="Wrap" ></TextBlock>
+                        </Border>
+
+                        <Border Style="{StaticResource ResourceKey=MainBorderStyle}" Grid.Column="2">
+                            <TextBlock Text="{Binding TimeLeftString}" TextWrapping="Wrap" ></TextBlock>
+                        </Border>
+                    </Grid>
+                </Border>
+
+                <Border Grid.Column="0" Grid.Row="5">
+                    <TextBlock Text="Изменения"></TextBlock>
+                </Border>
+                <Border Grid.Column="1" Grid.Row="5">
+                    <TextBlock Text="{Binding LastChangesStamp}" TextWrapping="Wrap"></TextBlock>
+                </Border>
+
+            </Grid>            
+        </StackPanel>
+    </Border>
+
+</UserControl>

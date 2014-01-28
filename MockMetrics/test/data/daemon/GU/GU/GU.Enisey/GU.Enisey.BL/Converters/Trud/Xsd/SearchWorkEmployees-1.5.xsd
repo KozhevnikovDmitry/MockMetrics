@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.3" xmlns:commons="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:smev="http://smev.gosuslugi.ru/request/rev111111" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="SearchWorkEmployees" hints:rus="Содействие гражданам в поиске подходящей работы, а работодателям в подборе необходимых работников">
+		<xs:complexType>
+			<xs:choice hints:rus="Выберите услугу" hints:showInChoiceScreen="true">
+				<xs:element name="SearchWork" hints:rus="Заявление-анкета о предоставлении государственной услуги  содействия в поиске подходящей работы">
+					<xs:complexType>
+						<xs:choice hints:rus="Вариант оказания услуги:" hints:showInChoiceScreen="true">
+							<xs:element name="FirstTime" hints:rus="Содействие в поиске подходящей работы гражданам, обратившимся впервые" hints:roleName="subservice">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Person" hints:rus="Информация о заявителе" hints:injectionType="injectAndGetBack">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+													<xs:element name="BirthDate" type="xs:date" hints:rus="Дата рождения" hints:businessMeaning="userBirthDate" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+													<xs:element name="BirthPlace" type="commons:string-500" hints:rus="Место рождения" hints:widgetTtpe="textArea" hints:userHint="Место рождения. Пример: город Богородск, Нижегородская область"/>
+													<xs:element name="Gender" type="commons:Gender-Type" hints:rus="Пол"/>
+													<xs:element name="Age" hints:rus="Возраст (количество полных лет)" hints:userHint="Введите число. Пример: 23">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:totalDigits value="2"/>
+																<xs:fractionDigits value="0"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="Citizenship" type="commons:TimelineUnawareClassifierValue-Type" hints:classifierName="COUNTRY" hints:rus="Гражданство"/>
+													<xs:element name="Address" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства (пребывания)"/>
+													<xs:element name="Document" type="commons:Document-Type" hints:rus="Документ, удостоверяющий личность"/>
+													<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Номер контактного телефона"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="EducationLevel" hints:rus="Образование">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Основное общее"/>
+													<xs:enumeration value="Среднее (полное) общее"/>
+													<xs:enumeration value="Начальное профессиональное"/>
+													<xs:enumeration value="Среднее профессиональное"/>
+													<xs:enumeration value="Высшее профессиональное"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Education" minOccurs="0" maxOccurs="unbounded"  hints:widgetType="deleteProtected" hints:rus="Информация об учебных заведениях">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Institution" type="commons:string-200" hints:rus="Наименование учебного заведения" hints:userHint="Пример: Сибирский федеральный университет"/>
+													<xs:element name="Year" type="xs:gYear" hints:rus="Год окончания" hints:userHint="Введите 4 цифры. Пример: 2007"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Profession" type="commons:string-200" maxOccurs="unbounded" hints:rus="Профессия (специальность), квалификация (в соответствии с документами, удостоверяющими профессиональную квалификацию)" hints:userHint="В случае отсутствия профессии (специальности) в данной графе необходимо указать «Отсутствует»"/>
+										<xs:element name="BaseProfession" type="krsk:ProfessionType" minOccurs="0" hints:rus="Основная профессия (специальность)" hints:widgetType="deleteProtected"/>
+										<xs:element name="AddProfession" type="krsk:ProfessionType" minOccurs="0" hints:rus="Дополнительная профессия (специальность)" hints:widgetType="deleteProtected"/>
+										<xs:element name="Skills" hints:rus="Дополнительные навыки">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Language" type="commons:string-200" minOccurs="0" maxOccurs="unbounded" hints:rus="Знание иностранного языка" hints:userHint="Пример: Английский, свободно говорю"/>
+													<xs:element name="PC" type="xs:boolean" hints:rus="Знание и умение пользоваться ПЭВМ"/>
+													<xs:element name="Drive" type="commons:string-200" minOccurs="0" hints:rus="Наличие водительского удостоверения (указать категории)" hints:userHint="Пример: Имеется водительское удостоверение категории В"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="LastWorkConditions" minOccurs="0" hints:rus="Условия последнего места работы" hints:widgetType="deleteProtected">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="LastProfession" type="commons:string-200" hints:rus="Профессия (специальность), квалификация, должность, вид деятельности" hints:userHint="Пример: Программист 1С"/>
+													<xs:element name="Period" type="commons:string-200" hints:rus="Период работы" hints:userHint="Пример: январь 2008 - май 2011"/>
+													<xs:element name="Sort" type="commons:string-200" minOccurs="0" hints:rus="Характер работы" hints:userHint="Пример: Постоянная работа"/>
+													<xs:element name="Salary" type="commons:string-200" hints:rus="Заработная плата (доход)" hints:userHint="Пример: 10 000 рублей"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Wishes" hints:rus="Пожелания к искомой работе">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="WishProfession" type="commons:string-200" hints:rus="Профессия (специальность), квалификация" hints:userHint="Пример: Программист 1C"/>
+													<xs:element name="WishPost" type="commons:string-200" hints:rus="Должность" hints:userHint="Пример: Инженер-программист"/>
+													<xs:element name="WishActivity" type="commons:string-200" hints:rus="Вид деятельности" hints:userHint="Пример: Умственная"/>
+													<xs:element name="WishSort" hints:rus="Характер работы">
+														<xs:simpleType>
+															<xs:restriction base="commons:string-200">
+																<xs:enumeration value="Постоянная работа"/>
+																<xs:enumeration value="Временная работа"/>
+																<xs:enumeration value="Работа по совместительству"/>
+																<xs:enumeration value="Сезонная работа"/>
+																<xs:enumeration value="Надомная работа"/>
+																<xs:enumeration value="Работа в другой местности"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="WishSalary" type="commons:string-200" hints:rus="Заработная плата (доход)" hints:userHint="Пример: 100 тыс руб"/>
+													<xs:element name="MoreWishes" type="commons:string-200" hints:rus="Дополнительные пожелания" hints:userHint="Пример: ДМС"/>
+													<xs:element name="Agreement" type="xs:boolean" hints:rus="Согласен на передачу моих персональных данных работодателю в целях подбора подходящей работы"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ToRe" hints:rus="Содействие в поиске подходящей работы гражданам при последующих обращениях" hints:roleName="subservice">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Person" hints:rus="Информация о заявителе" hints:injectionType="injectAndGetBack">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+													<xs:element name="Document" type="commons:Document-Type" hints:rus="Документ, удостоверяющий личность"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ActiveEmployment" hints:rus="Содействие в поиске подходящей работы гражданам при реализации активной политики занятости" hints:roleName="subservice">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Person" hints:rus="Информация о заявителе" hints:injectionType="injectAndGetBack">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+													<xs:element name="BirthDate" type="xs:date" hints:rus="Дата рождения" hints:businessMeaning="userBirthDate" hints:dateRestriction="past" hints:userHint="Дата должна быть не более текущей"/>
+													<xs:element name="BirthPlace" type="commons:string-500" hints:rus="Место рождения" hints:widgetTtpe="textArea" hints:userHint="Место рождения. Пример: город Богородск, Нижегородская область"/>
+													<xs:element name="Gender" type="commons:Gender-Type" hints:rus="Пол"/>
+													<xs:element name="Age" hints:rus="Возраст (количество полных лет)" hints:userHint="Введите число. Пример: 23">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:totalDigits value="2"/>
+																<xs:fractionDigits value="0"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="Citizenship" type="commons:TimelineUnawareClassifierValue-Type" hints:classifierName="COUNTRY" hints:rus="Гражданство"/>
+													<xs:element name="Address" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства (пребывания)"/>
+													<xs:element name="Document" type="commons:Document-Type" hints:rus="Документ, удостоверяющий личность"/>
+													<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Номер контактного телефона"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="EducationLevel" hints:rus="Образование">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:enumeration value="Основное общее"/>
+													<xs:enumeration value="Среднее (полное) общее"/>
+													<xs:enumeration value="Начальное профессиональное"/>
+													<xs:enumeration value="Среднее профессиональное"/>
+													<xs:enumeration value="Высшее профессиональное"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+										<xs:element name="Education" maxOccurs="unbounded" hints:rus="Информация об учебных заведениях">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Institution" type="commons:string-200" hints:rus="Наименование учебного заведения" hints:userHint="Пример: Сибирский федеральный университет"/>
+													<xs:element name="Year" type="xs:gYear" hints:rus="Год окончания" hints:userHint="Введите 4 цифры. Пример: 2007"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Profession" type="commons:string-200" maxOccurs="unbounded" hints:rus="Профессия (специальность), квалификация (в соответствии с документами, удостоверяющими профессиональную квалификацию)" hints:userHint="Пример: Системный программист"/>
+										<xs:element name="BaseProfession" type="krsk:ProfessionType" hints:rus="Основная профессия (специальность)"/>
+										<xs:element name="AddProfession" type="krsk:ProfessionType" hints:rus="Дополнительная профессия (специальность)"/>
+										<xs:element name="Skills" hints:rus="Дополнительные навыки">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="Language" type="commons:string-200" minOccurs="0" maxOccurs="unbounded" hints:rus="Знание иностранного языка" hints:userHint="Пример: Английский, свободно говорю"/>
+													<xs:element name="PC" type="xs:boolean" hints:rus="Знание и умение пользоваться ПЭВМ"/>
+													<xs:element name="Drive" type="commons:string-200" minOccurs="0" hints:rus="Наличие водительского удостоверения (указать категории)" hints:userHint="Пример: Имеется водительское удостоверение категории В"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="Agreement" type="krsk:AgreementType" hints:rus="Согласен на участие в мероприятиях активной политики занятости"/>
+										<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SearchEmployees" hints:rus="Содействие работодателю в подборе необходимых работников">
+					<xs:complexType>
+						<xs:choice hints:rus="Вариант оказания услуги:" hints:showInChoiceScreen="true">
+							<xs:element name="EmpFirstTime" hints:rus="Содействие работодателям в подборе необходимых работников, впервые обратившимся" hints:roleName="subservice">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Hirer" hints:rus="Информация о работодателе">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:choice hints:rus="Выберите юридический статус работодателя">
+														<xs:element name="UL" hints:injectionType="injectAndGetBack" hints:rus="Юридическое лицо" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="ULName" type="commons:string-200" hints:businessMeaning="userLegalPersonName" hints:rus="Наименование" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+																	<xs:element name="LawForm" type="commons:string-200" hints:rus="Организационно-правовая форма" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+																	<xs:element name="Representative" hints:rus="Информация о представителе юридического лица">
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:group ref="commons:PhysicalPersonQualifiedName-ModelGroup"/>
+																				<xs:element name="Post" type="commons:string-200" minOccurs="0" hints:rus="Должность" hints:userHint="Пример: Офис-менеджер"/>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="OGRN" type="commons:OGRN-Type" hints:businessMeaning="userLegalPersonOGRN" hints:rus="ОГРН"/>
+																	<xs:element name="Address" type="commons:OptionalIndexAddress-Type" hints:rus="Юридический адрес"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="IP" hints:injectionType="injectAndGetBack" hints:rus="Индивидуальный предприниматель" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+																	<xs:element name="OGRN" type="commons:OGRNIP-Type" hints:rus="ОГРН ИП"/>
+																	<xs:element name="IPAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="FL" hints:rus="Физическое лицо" hints:roleName="applicant-type" hints:injectionType="injectAndGetBack">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+																	<xs:element name="FLAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:choice>
+													<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Номер телефона (факса)"/>
+													<xs:element name="e-mail" type="commons:Email-Type" minOccurs="0" hints:rus="Адрес электронной почты"/>
+													<xs:element name="PropertyForm" hints:rus="Форма собственности">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="Государственная"/>
+																<xs:enumeration value="Муниципальная"/>
+																<xs:enumeration value="Частная"/>
+																<xs:enumeration value="Общественные объединения или организации"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="ActivityType" type="commons:string-200" hints:rus="Вид экономической деятельности (по ОКВЭД)" hints:userHint="Пример: рыболовство в реках, озерах, водохранилищах и прудах"/>
+													<xs:element name="EmployeesQuantity" hints:rus="Численность работников" hints:userHint="Введите число. Пример: 12">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="FiredEmployeesQuantity" hints:rus="Численность работников, уволенных с начала года" hints:userHint="Введите число. Пример: 1">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="0"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="WorkPlacesQuantity" hints:rus="Количество рабочих мест" hints:userHint="Введите число. Пример: 3">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="InformationPlacement" type="krsk:InformationPlacementType" hints:rus="Прошу размещать сведения о потребности в работниках, наличии свободных рабочих мест (вакантных должностей)"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="WorkConditions" type="krsk:WorkConditionsType" hints:rus="Сведения об условиях работы"/>
+										<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EmpToRe" hints:rus="Содействие работодателям в подборе необходимых работников при последующих обращениях" hints:roleName="subservice">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Hirer" hints:rus="Информация о работодателе">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:choice hints:rus="Выберите юридический статус работодателя">
+														<xs:element name="UL" hints:rus="Юридическое лицо" hints:injectionType="injectAndGetBack" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="ULName" type="commons:string-200" hints:businessMeaning="userLegalPersonName" hints:rus="Наименование" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+																	<xs:element name="LawForm" type="commons:string-200" hints:rus="Организационно-правовая форма" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+																	<xs:element name="Representative" hints:rus="Информация о представителе юридического лица">
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:group ref="commons:PhysicalPersonQualifiedName-ModelGroup"/>
+																				<xs:element name="Post" type="commons:string-200" minOccurs="0" hints:rus="Должность" hints:userHint="Пример: Офис-менеджер"/>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="OGRN" type="commons:OGRN-Type" hints:rus="Государственный регистрационный номер записи о создании юридического лица"/>
+																	<xs:element name="Address" type="commons:OptionalIndexAddress-Type" hints:rus="Юридический адрес"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="IP" hints:rus="Индивидуальный предприниматель" hints:injectionType="injectAndGetBack" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+																	<xs:element name="OGRN" type="commons:OGRNIP-Type" hints:rus="ОГРН ИП"/>
+																	<xs:element name="IPAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="FL" hints:rus="Физическое лицо" hints:injectionType="injectAndGetBack" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+																	<xs:element name="FLAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:choice>
+													<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Номер телефона (факса)"/>
+													<xs:element name="e-mail" type="commons:Email-Type" minOccurs="0" hints:rus="Адрес электронной почты"/>
+													<xs:element name="PropertyForm" hints:rus="Форма собственности">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="Государственная"/>
+																<xs:enumeration value="Муниципальная"/>
+																<xs:enumeration value="Частная"/>
+																<xs:enumeration value="Общественные объединения или организации"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="ActivityType" type="commons:string-200" hints:rus="Вид экономической деятельности (по ОКВЭД)" hints:userHint="Пример: рыболовство в реках, озерах, водохранилищах и прудах"/>
+													<xs:element name="EmployeesQuantity" hints:rus="Численность работников" hints:userHint="Введите число. Пример: 21">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="FiredEmployeesQuantity" hints:rus="Численность работников, уволенных с начала года" hints:userHint="Введите число. Пример: 3">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="0"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="WorkPlacesQuantity" hints:rus="Количество рабочих мест" hints:userHint="Введите число. Пример: 2">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="InformationPlacement" type="krsk:InformationPlacementType" hints:rus="Прошу размещать сведения о потребности в работниках, наличии свободных рабочих мест (вакантных должностей)"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="WorkConditions" type="krsk:WorkConditionsType" hints:rus="Сведения об условиях работы"/>
+										<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EmpActiveEmployment" hints:rus="Содействие работодателям в подборе необходимых работников при реализации мероприятий активной политики занятости" hints:roleName="subservice">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Hirer" hints:rus="Информация о работодателе">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:choice hints:rus="Выберите юридический статус работодателя">
+														<xs:element name="UL" hints:rus="Юридическое лицо" hints:injectionType="injectAndGetBack" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:element name="ULName" type="commons:string-200" hints:businessMeaning="userLegalPersonName" hints:rus="Наименование" hints:userHint="Полное наименование юридического лица. Пример: Общество с ограниченной ответственностью «20 век фокс»"/>
+																	<xs:element name="LawForm" type="commons:string-200" hints:rus="Организационно-правовая форма" hints:userHint="Пример: Общество с ограниченной ответственностью"/>
+																	<xs:element name="Representative" hints:rus="Информация о представителе юридического лица">
+																		<xs:complexType>
+																			<xs:sequence>
+																				<xs:group ref="commons:PhysicalPersonQualifiedName-ModelGroup"/>
+																				<xs:element name="Post" type="commons:string-200" minOccurs="0" hints:rus="Должность" hints:userHint="Пример: Офис-менеджер"/>
+																			</xs:sequence>
+																		</xs:complexType>
+																	</xs:element>
+																	<xs:element name="OGRN" type="commons:OGRN-Type" hints:businessMeaning="userLegalPersonOGRN" hints:rus="Государственный регистрационный номер записи о создании юридического лица"/>
+																	<xs:element name="Address" type="commons:OptionalIndexAddress-Type" hints:rus="Юридический адрес"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="IP" hints:rus="Индивидуальный предприниматель" hints:injectionType="injectAndGetBack" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+																	<xs:element name="OGRN" type="commons:OGRNIP-Type" hints:rus="ОГРН ИП"/>
+																	<xs:element name="IPAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="FL" hints:rus="Физическое лицо" hints:injectionType="injectAndGetBack" hints:roleName="applicant-type">
+															<xs:complexType>
+																<xs:sequence>
+																	<xs:group ref="commons:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+																	<xs:element name="FLAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес места жительства"/>
+																</xs:sequence>
+															</xs:complexType>
+														</xs:element>
+													</xs:choice>
+													<xs:element name="Phone" type="commons:PhoneNumberRF-Type" hints:rus="Номер телефона (факса)"/>
+													<xs:element name="e-mail" type="commons:Email-Type" minOccurs="0" hints:rus="Адрес электронной почты"/>
+													<xs:element name="PropertyForm" hints:rus="Форма собственности">
+														<xs:simpleType>
+															<xs:restriction base="xs:string">
+																<xs:enumeration value="Государственная"/>
+																<xs:enumeration value="Муниципальная"/>
+																<xs:enumeration value="Частная"/>
+																<xs:enumeration value="Общественные объединения или организации"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="ActivityType" type="commons:string-200" hints:rus="Вид экономической деятельности (по ОКВЭД)" hints:userHint="Пример: рыболовство в реках, озерах, водохранилищах и прудах"/>
+													<xs:element name="EmployeesQuantity" hints:rus="Численность работников" hints:userHint="Введите число. Пример: 21">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="FiredEmployeesQuantity" hints:rus="Численность работников, уволенных с начала года" hints:userHint="Введите число. Пример: 3">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="0"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="WorkPlacesQuantity" hints:rus="Количество рабочих мест" hints:userHint="Введите число. Пример: 2">
+														<xs:simpleType>
+															<xs:restriction base="xs:decimal">
+																<xs:minInclusive value="1"/>
+															</xs:restriction>
+														</xs:simpleType>
+													</xs:element>
+													<xs:element name="InformationPlacement" type="krsk:InformationPlacementType" hints:rus="Прошу размещать сведения о потребности в работниках, наличии свободных рабочих мест (вакантных должностей)"/>
+													<xs:element name="Agreement" type="krsk:AgreementType" hints:rus="Согласен  / не согласен на участие в мероприятиях активной политики занятости"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="WorkConditions" type="krsk:WorkConditionsType" hints:rus="Сведения об условиях работы"/>
+										<xs:element name="DocAttach" type="smev:AppliedDocumentsType" minOccurs="0" hints:widgetType="deleteProtected" hints:rus="Сведения о предоставляемых документах"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="WorkConditionsType">
+		<xs:sequence>
+			<xs:element name="WorkAddress" type="commons:OptionalIndexAddress-Type" hints:rus="Адрес (место нахождения)"/>
+			<xs:element name="Transport" type="commons:string-200" hints:rus="Проезд (вид транспорта, название остановки)" hints:userHint="Пример: на личном автомобиле"/>
+			<xs:element name="SocialGuarantee" hints:rus="Социальные гарантии работникам">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MedService" type="xs:boolean" hints:rus="медицинское обслуживание"/>
+						<xs:element name="Sanatorium" type="xs:boolean" hints:rus="санаторно-курортное обеспечение"/>
+						<xs:element name="DOU" type="xs:boolean" hints:rus="обеспечение детскими дошкольными учреждениями"/>
+						<xs:element name="EatingConditions" type="xs:boolean" hints:rus="условия для приема пищи во время перерыва"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="OtherConditions" type="commons:string-200" hints:rus="Иные условия" hints:userHint="Пример: комната отдыха"/>
+			<xs:element name="NeedsInfo" maxOccurs="unbounded" hints:rus="Сведения о потребности в работниках, наличии свободных рабочих мест (вакантных должностей)">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="WorkName" type="commons:string-200" hints:rus="Наименование профессии (специальности), должности" hints:userHint="Пример: Программист"/>
+						<xs:element name="WorkQualification" type="commons:string-200" hints:rus="Квалификация" hints:userHint="Пример: старший инженер-программист"/>
+						<xs:element name="NeedEmployees" hints:rus="Необходимое количество работников" hints:userHint="Введите число. Пример: 4">
+							<xs:simpleType>
+								<xs:restriction base="xs:decimal">
+									<xs:minInclusive value="1"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="WorkSort" hints:rus="Характер работы">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="Постоянная"/>
+									<xs:enumeration value="Временная"/>
+									<xs:enumeration value="По совместительству"/>
+									<xs:enumeration value="Сезонная"/>
+									<xs:enumeration value="Надомная"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Salary" type="commons:string-200" hints:rus="Заработная плата (доход)" hints:userHint="Пример: 10 тыс руб"/>
+						<xs:element name="Mode" hints:rus="Режим работы">
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="Нормальная продолжительность рабочего времени"/>
+									<xs:enumeration value="Ненормированный рабочий день"/>
+									<xs:enumeration value="Работа в режиме гибкого рабочего времени"/>
+									<xs:enumeration value="Сокращенная продолжительность рабочего времени"/>
+									<xs:enumeration value="Сменная работа"/>
+									<xs:enumeration value="Вахтовым методом"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:element>
+						<xs:element name="Start" type="xs:gYear" hints:rus="Начало работы" hints:userHint="Введите 4 цифры. Пример: 1999"/>
+						<xs:element name="Finish" type="xs:gYear" hints:rus="Окончание работы" hints:userHint="Введите 4 цифры. Пример: 2001"/>
+						<xs:element name="Requerements" type="commons:string-200" hints:rus="Профессионально-квалификационные требования, образование, дополнительные навыки, опыт работы" hints:userHint="Пример: Образование высшее, опыт раюоты от 3 лет"/>
+						<xs:element name="MoreWishes" type="commons:string-200" hints:rus="Дополнительные пожелания к кандидатуре работника" hints:userHint="Пример: Отсутствие вредных привычек"/>
+						<xs:element name="MoreGuarantee" type="commons:string-300" hints:rus="Предоставление дополнительных социальных гарантий работнику" hints:userHint="Пример:  Дополнительные социальные гарантии не предоставляются"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProfessionType" hints:rus="Тип: Профессия">
+		<xs:sequence>
+			<xs:element name="Profession" type="commons:string-200" hints:rus="Профессия (специальность), квалификация" hints:userHint="Пример: Системный программист"/>
+			<xs:element name="Post" type="commons:string-200" hints:rus="Должность" hints:userHint="Пример: Программист 1С"/>
+			<xs:element name="Experience" hints:rus="Стаж работы" hints:userHint="Введите число. Пример: 11">
+				<xs:simpleType>
+					<xs:restriction base="xs:decimal">
+						<xs:minInclusive value="0"/>
+						<xs:maxInclusive value="99"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AgreementType">
+		<xs:sequence>
+			<xs:element name="Fair" type="xs:boolean" hints:rus="ярмарках вакансий и учебных рабочих мест"/>
+			<xs:element name="PayedWorks" type="xs:boolean" hints:rus="оплачиваемых общественных работах"/>
+			<xs:element name="NonAdults" type="xs:boolean" hints:rus="временном трудоустройстве несовершеннолетних граждан в возрасте от 14 до 18 лет в свободное от учебы время"/>
+			<xs:element name="Graduates" type="xs:boolean" hints:rus="временном трудоустройстве безработных граждан в возрасте от 18 до 20 лет из числа выпускников учреждений начального и среднего профессионального образования, ищущих работу впервые"/>
+			<xs:element name="DifficultEmployees" type="xs:boolean" hints:rus="временном трудоустройстве безработных граждан, испытывающих трудности в поиске работы"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InformationPlacementType">
+		<xs:sequence>
+			<xs:element name="TerritorialJobBank" type="xs:boolean" hints:rus="в банке вакансий на территориальном уровне"/>
+			<xs:element name="InterterritorialJobBank" type="xs:boolean" hints:rus="в банке вакансий на межтерриториальном уровне"/>
+			<xs:element name="FederalJobBank" type="xs:boolean" hints:rus="в банке вакансий на федеральном уровне"/>
+			<xs:element name="Media" type="xs:boolean" hints:rus="в средствах массовой информации"/>
+			<xs:element name="PublicAuthorityInternetResources" type="xs:boolean" hints:rus="на Интернет-ресурсах органов, участвующих в оказании государственной услуги"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

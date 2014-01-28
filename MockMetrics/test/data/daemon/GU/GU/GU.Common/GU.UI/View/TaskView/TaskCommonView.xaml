@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="GU.UI.View.TaskView.TaskCommonView"             
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:Behaviors="clr-namespace:Common.UI.ViewModel.Attachables.Behaviors;assembly=Common.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+    <i:Interaction.Behaviors>
+        <Behaviors:FirstFocusBehavior/>
+    </i:Interaction.Behaviors>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    
+    <WrapPanel AllowDrop="True">
+        <GroupBox Header="Данные заявки" Width="350">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock  Text="Номер заявки:"                                                      Grid.Row="0" />
+                <TextBox    Text="{Binding TaskId, ValidatesOnDataErrors=True, Mode=OneWay}"
+                            IsReadOnly="True"                                                         Grid.Row="0" />
+                <TextBlock  Text="Ведомство:"                                                         Grid.Row="1" />
+                <ComboBox   ItemsSource="{Binding AgencyListView}" DisplayMemberPath="Name"
+                            IsEnabled="{Binding IsChangeAgencyAvailable}"
+                            SelectedValuePath="Id"
+                            SelectedValue="{Binding AgencyId, ValidatesOnDataErrors=True}"              Grid.Row="1" />
+                <TextBlock  Text="Услуга:"                                                            Grid.Row="2" />
+                <TextBox Text="{Binding ServiceName,  Mode=OneWay}" IsReadOnly="True"                 Grid.Row="2"/>
+                <TextBlock  Text="Статус:"                                                            Grid.Row="3" />
+                <TextBox Text="{Binding CurrentState,  Mode=OneWay}" IsReadOnly="True"                Grid.Row="3"/>
+                <TextBlock  Text="Дата подачи:"                                                       Grid.Row="4" />
+                <DatePicker SelectedDate="{Binding CreateDate, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                            IsEnabled="False"                                                         Grid.Row="4" />
+                <TextBlock  Text="Выполнить до:"                                                      Grid.Row="5" />
+                <DatePicker SelectedDate="{Binding DueDate, ValidatesOnDataErrors=True, Mode=TwoWay}" Grid.Row="5" />
+                <TextBlock  Text="Дата завершения:"                                                   Grid.Row="6" />
+                <DatePicker SelectedDate="{Binding CloseDate, ValidatesOnDataErrors=True, Mode=TwoWay}"
+                            IsEnabled="False"                                                         Grid.Row="6" />
+            </Grid>
+        </GroupBox>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Заявитель" Width="350" Grid.Row="0">
+                <AdornerDecorator>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  Text="ФИО заявителя:   "                                                Grid.Row="0" />
+                        <TextBox    Text="{Binding CustomerFio, ValidatesOnDataErrors=True}"                Grid.Row="0" Grid.Column="1" />
+                        <Button Command="{Binding ShowTaskByCustomerCommand}" ToolTip="Поиск подобных"      Grid.Row="0" Grid.Column="2" Margin="2,2,2,2">
+                            <Image Source="/GU.UI;component/Resources/Icons/32X32/Search_32x32.png" Width="16"/>
+                        </Button>
+                        <TextBlock  Text="Телефон:"                                                         Grid.Row="1" />
+                        <TextBox    Text="{Binding CustomerPhone, ValidatesOnDataErrors=True}"              Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+                        <TextBlock  Text="Email:"                                                           Grid.Row="2" />
+                        <TextBox    Text="{Binding CustomerEmail, ValidatesOnDataErrors=True}"              Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    </Grid>
+                </AdornerDecorator>
+            </GroupBox>
+            <GroupBox Header="Дополнительно" Width="350" Grid.Row="1">
+                <AdornerDecorator>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  Text="Код авторизации:"                                                 Grid.Row="0" />
+                        <TextBox    Text="{Binding AuthCode, ValidatesOnDataErrors=True}" IsReadOnly="True" Grid.Row="0" Grid.Column="1" />
+                        <Button Command="{Binding PrintTaskInformationCommand}" ToolTip="Печать информации по заявке" Grid.Row="0" Grid.Column="2" Margin="2,2,2,2">
+                            <Image Style="{StaticResource ResourceKey=buttonImageStyle}" 
+                                   Source="/GU.UI;component/Resources/Icons/32X32/Print_32x32.png" Width="16" />
+                        </Button>
+                        <TextBlock  Text="Примечание:" VerticalAlignment="Top"                               Grid.Row="1" />
+                        <TextBox    Text="{Binding Note, ValidatesOnDataErrors=True}"
+                                    Height="50" Grid.RowSpan="2"
+                                    VerticalContentAlignment="Top"
+                                    TextWrapping="Wrap"
+                                    VerticalScrollBarVisibility="Auto"
+                                    Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
+                    </Grid>
+                </AdornerDecorator>
+            </GroupBox>
+        </Grid>
+    </WrapPanel>
+</UserControl>

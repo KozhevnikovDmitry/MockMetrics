@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:krsk="urn://x-artefacts-it-ru/dob/state-services/krsk/UnemployedPayment/1.5" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:altova="http://www.altova.com/xml-schema-extensions" xmlns:hints="urn://x-artefacts-it-ru/dob/xml-editor/rendering-hints/1.3" xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:attach="http://smev.gosuslugi.ru/request/rev111111" targetNamespace="urn://x-artefacts-it-ru/dob/state-services/krsk/UnemployedPayment/1.5" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" schemaLocation="state-services-commons-1.4.xsd"/>
+	<xs:import namespace="http://smev.gosuslugi.ru/request/rev111111" schemaLocation="smev-attachments-2.2.4.xsd"/>
+	<xs:element name="UnemployedPayment" hints:rus="Осуществление социальных выплат гражданам, признанным в установленном порядке безработными">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ApplicantInfo" hints:rus="Сведения о заявителе" hints:injectionType="injectAndGetBack">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="ns1:ApplicantPhysicalPersonQualifiedName-ModelGroup"/>
+							<xs:element name="INN" type="ns1:PhysicalPersonINN-Type" hints:rus="ИНН"/>
+							<xs:element name="Address" type="ns1:OptionalIndexAddress-Type" hints:rus="Адрес регистрации"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:choice hints:rus="Желательный способ получения социальных выплат">
+					<xs:element name="MoneyWire" type="ns1:Bank-Type" hints:rus="Перечисление через отделение кредитной организации (на банковский счет)"/>
+					<xs:element name="PostalPayment" hints:rus="Перечисление в почтовое отделение связи (почтовый перевод)">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Post_Office_Number" type="ns1:SixDigitString-Type" hints:rus="Номер отделения федеральной почтовой связи"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:element name="DocAttach" type="attach:AppliedDocumentsType" minOccurs="0" hints:rus="Сведения о предоставляемых документах" hints:widgetType="deleteProtected"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

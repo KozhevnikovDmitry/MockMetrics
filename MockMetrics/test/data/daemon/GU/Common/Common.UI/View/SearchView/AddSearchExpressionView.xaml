@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="Common.UI.View.SearchView.AddSearchExpressionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:Behaviors="clr-namespace:Common.UI.ViewModel.Attachables.Behaviors" mc:Ignorable="d" 
+             d:DesignHeight="300" Width="400">
+    <i:Interaction.Behaviors>
+        <Behaviors:FirstFocusBehavior/>
+    </i:Interaction.Behaviors>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Text="Сущность:" Grid.Row="0" />
+        <ComboBox Grid.Row="0" ItemsSource="{Binding DomainEntityList}"                    
+                                             DisplayMemberPath="Value"
+                                             SelectedValuePath="Key"
+                                             SelectedValue="{Binding SelectedDomainEntity}" />
+
+        <TextBlock  Text="Свойство:" Grid.Row="1"/>
+        <ComboBox Grid.Row="1" ItemsSource="{Binding DomainPropertyList}"                    
+                                             DisplayMemberPath="DisplayName" 
+                                             SelectedValue="{Binding SelectedDomainProperty}" />
+
+        <TextBlock Text="Условие:" Grid.Row="2" />
+        <ComboBox Grid.Row="2" ItemsSource="{Binding ExpressionList}"                    
+                                             DisplayMemberPath="Name" 
+                                             SelectedValue="{Binding SelectedExpression}" />
+    </Grid>
+</UserControl>

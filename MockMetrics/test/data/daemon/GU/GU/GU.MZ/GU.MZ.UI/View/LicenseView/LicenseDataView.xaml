@@ -1,0 +1,134 @@
+﻿<UserControl x:Class="GU.MZ.UI.View.LicenseView.LicenseDataView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:Behaviors="clr-namespace:Common.UI.ViewModel.Attachables.Behaviors;assembly=Common.UI"
+             xmlns:licenseViewModel="clr-namespace:GU.MZ.UI.ViewModel.LicenseViewModel"
+             mc:Ignorable="d" 
+             d:DataContext="{d:DesignInstance licenseViewModel:LicenseDataVm}"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <i:Interaction.Behaviors>
+        <Behaviors:FirstFocusBehavior/>
+    </i:Interaction.Behaviors>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <WrapPanel>
+        
+        <GroupBox Header="Данные лицензии" Style="{StaticResource GroupBoxCommonStyle}" Width="400">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Номер:" Grid.Row="0" />
+                <TextBox Text="{Binding RegNumber, ValidatesOnDataErrors=True}" Grid.Row="0"/>
+
+                <TextBlock Text="Дата выдачи:" Grid.Row="1" />
+                <DatePicker Grid.Row="1" SelectedDate="{Binding GrantDate, ValidatesOnDataErrors=True}"/>
+
+                <TextBlock Text="Дата окончания:" Grid.Row="2" />
+                <DatePicker Grid.Row="2" SelectedDate="{Binding DueDate, ValidatesOnDataErrors=True}"/>
+
+                <TextBlock  Text="Деятельность:" Grid.Row="3"/>
+                <ComboBox Grid.Row="3" ItemsSource="{Binding LicensedActivityList}"                    
+                                           DisplayMemberPath="Name" 
+                                           SelectedValuePath="Id"  
+                                           SelectedValue="{Binding LicensedActivityId, ValidatesOnDataErrors=True}" />
+
+                <TextBlock  Text="Статус лицензии:" Grid.Row="4"/>
+                <ComboBox Grid.Row="4" ItemsSource="{Binding LicenseStatusList}"                    
+                                           DisplayMemberPath="Name" 
+                                           SelectedValuePath="Id"  
+                                           SelectedValue="{Binding LicenseStatusId, ValidatesOnDataErrors=True}"/>
+
+
+            </Grid>
+        </GroupBox>
+       
+        <GroupBox Header="Данные бланка" Style="{StaticResource GroupBoxCommonStyle}" Width="400">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Номер бланка:" Grid.Row="0" />
+                <TextBox Text="{Binding BlankNumber, ValidatesOnDataErrors=True}" Grid.Row="0"/>
+
+                <TextBlock Text="Номер решения:" Grid.Row="1" />
+                <TextBox Text="{Binding GrantOrderRegNumber, ValidatesOnDataErrors=True}" Grid.Row="1"/>
+
+                <TextBlock Text="Дата решения:" Grid.Row="2" />
+                <DatePicker SelectedDate="{Binding GrantOrderStamp, ValidatesOnDataErrors=True}" Grid.Row="2"/>
+
+                <TextBlock Text="Должность главы лиц. орг.:" Grid.Row="3" />
+                <TextBox Text="{Binding LicensiarHeadPosition, ValidatesOnDataErrors=True}" Grid.Row="3"/>
+
+                <TextBlock Text="ФИО главы лиц. орг.:" Grid.Row="4" />
+                <TextBox Text="{Binding LicensiarHeadName, ValidatesOnDataErrors=True}" Grid.Row="4"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="Данные лицензионного дела" Style="{StaticResource GroupBoxCommonStyle}" Width="400">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Номер дела:" Grid.Row="0" />
+                <TextBox Text="{Binding DossierRegNumber, ValidatesOnDataErrors=True, Mode=OneWay}" Grid.Row="0" IsReadOnly="True"/>
+
+                <TextBlock Text="Лицензиат:" Grid.Row="1" VerticalAlignment="Top"/>
+                <TextBox Text="{Binding HolderFullName, ValidatesOnDataErrors=True, Mode=OneWay}" Grid.Row="1" Height="50" IsReadOnly="True" VerticalContentAlignment="Top" TextWrapping="Wrap"/>
+
+                <TextBlock Text="ИНН:" Grid.Row="2" />
+                <TextBox Text="{Binding Inn, ValidatesOnDataErrors=True, Mode=OneWay}" Grid.Row="2" IsReadOnly="True"/>
+
+                <TextBlock Text="ОГРН:" Grid.Row="3" />
+                <TextBox Text="{Binding Ogrn, ValidatesOnDataErrors=True, Mode=OneWay}" Grid.Row="3" IsReadOnly="True"/>
+
+                <Button Content="Найти лицензионное дело" Grid.Row="4" HorizontalAlignment="Right" Grid.Column="1"
+                        Command="{Binding SearchLicenseDossierCommand}"/>
+
+            </Grid>
+        </GroupBox>
+        
+    </WrapPanel>
+</UserControl>

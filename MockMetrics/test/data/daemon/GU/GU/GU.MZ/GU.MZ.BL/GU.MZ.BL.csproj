@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A33A9463-E764-4E60-9D8C-0F261986E199}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GU.MZ.BL</RootNamespace>
+    <AssemblyName>GU.MZ.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <SkipPostSharp>True</SkipPostSharp>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Integration|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Integration\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac">
+      <HintPath>..\..\..\Externals\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.4">
+      <HintPath>..\..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DataMapping\IExpertStateDataMapper.cs" />
+    <Compile Include="DataMapping\LicenseChangeSessionDataMapper.cs" />
+    <Compile Include="DataMapping\StandartOrderDataMapper.cs" />
+    <Compile Include="DataMapping\InspectionOrderDataMapper.cs" />
+    <Compile Include="DataMapping\ExpertiseOrderDataMapper.cs" />
+    <Compile Include="DataMapping\DocumentExpertiseDataMapper.cs" />
+    <Compile Include="DataMapping\DossierFileDataMapper.cs" />
+    <Compile Include="DataMapping\EmployeeDataMapper.cs" />
+    <Compile Include="DataMapping\ExpertDataMapper.cs" />
+    <Compile Include="DataMapping\FileScenarioStepDataMapper.cs" />
+    <Compile Include="DataMapping\InspectionDataMapper.cs" />
+    <Compile Include="DataMapping\HolderRequisitesDataMapper.cs" />
+    <Compile Include="DataMapping\IndividualExpertStateDataMapper.cs" />
+    <Compile Include="DataMapping\InventoryDataMapper.cs" />
+    <Compile Include="DataMapping\JuridicalExpertStateDataMapper.cs" />
+    <Compile Include="DataMapping\LicenseDossierDataMapper.cs" />
+    <Compile Include="DataMapping\LicenseHolderDataMapper.cs" />
+    <Compile Include="DataMapping\LicenseObjectDataMapper.cs" />
+    <Compile Include="DataMapping\LicenseRequisistesDataMapper.cs" />
+    <Compile Include="DataMapping\NoticeDataMapper.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\BuildingDataNotCompleteException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\CantAddProvidedDocumentWithEmptyNameException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\CantAddProvidedDocumentWithNegativeQuantityException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\CantFindTaskLicensedActivityException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\NoLicenseForNewLicenseTaskExcpetion.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\WrongScenarioSteplistException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\HolderInfo.cs" />
+    <Compile Include="DomainLogic\Entity\EntityManager.cs" />
+    <Compile Include="DomainLogic\GuParse\BasicParser.cs" />
+    <Compile Include="DomainLogic\GuParse\DrugParser.cs" />
+    <Compile Include="DomainLogic\GuParse\FarmParser.cs" />
+    <Compile Include="DomainLogic\GuParse\NoRenewalScenarioException.cs" />
+    <Compile Include="Reporting\IReportFacade.cs" />
+    <Compile Include="DomainLogic\Licensing\ILicenseProvider.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\AnotherAddressScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\AnotherWorksScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\ChangeDocumentScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\ChangeNameWorkScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\ChangeOrgAddressScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\ChangeRequisitesScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\ILicenseRenewaller.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\IRenewalScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\LicenseObjectsScenraio.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\LicenseRenewaller.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\MergeScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\NewWorksScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\RenameScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\RenewalType.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\ReorganizationScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\StopActivityAddressScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\StopWorksScenario.cs" />
+    <Compile Include="DomainLogic\Licensing\Renewal\UnrecognizedStopAddressesException.cs" />
+    <Compile Include="Modules\GuForMzModule.cs" />
+    <Compile Include="Modules\GuParseModule.cs" />
+    <Compile Include="DomainLogic\GuParse\IContentMapper.cs" />
+    <Compile Include="DomainLogic\GuParse\IParser.cs" />
+    <Compile Include="DomainLogic\AcceptTask\LicenseInfo.cs" />
+    <Compile Include="DomainLogic\GuParse\IParserImpl.cs" />
+    <Compile Include="DomainLogic\GuParse\ContentMapper.cs" />
+    <Compile Include="DomainLogic\GuParse\MedParser.cs" />
+    <Compile Include="DomainLogic\GuParse\MultipleParserForLicenseTypeException.cs" />
+    <Compile Include="DomainLogic\GuParse\NoParserForLicenseTypeException.cs" />
+    <Compile Include="DomainLogic\GuParse\Parser.cs" />
+    <Compile Include="DomainLogic\Authentification\MzAutentificator.cs" />
+    <Compile Include="DomainLogic\DiActionContext.cs" />
+    <Compile Include="DomainLogic\GuParse\ParserFacade.cs" />
+    <Compile Include="DomainLogic\Inspect\ExpertiseException\AddEmployeeBeforePrepareInspectionException.cs" />
+    <Compile Include="DomainLogic\Inspect\ExpertiseException\AddExpertBeforePrepareInspectionException.cs" />
+    <Compile Include="DomainLogic\Inspect\ExpertiseException\NoInspectionFoundException.cs" />
+    <Compile Include="DomainLogic\MzTask\DefaultMzTaskContext.cs" />
+    <Compile Include="DomainLogic\Licensing\LicenseObjectProvider.cs" />
+    <Compile Include="DomainLogic\Licensing\LicenseProvider.cs" />
+    <Compile Include="DomainLogic\MzTask\IMzTaskWrapper.cs" />
+    <Compile Include="DomainLogic\MzTask\LicenseActionType.cs" />
+    <Compile Include="DomainLogic\MzTask\LicenseServiceType.cs" />
+    <Compile Include="DomainLogic\MzTask\MzTaskContext.cs" />
+    <Compile Include="DomainLogic\MzTask\MzTaskWrapper.cs" />
+    <Compile Include="DomainLogic\Linkage\CheckHolderdataAddIn.cs" />
+    <Compile Include="DomainLogic\Linkage\DossierFileLinkWrapper.cs" />
+    <Compile Include="DomainLogic\Linkage\IDossierFileLinkWrapper.cs" />
+    <Compile Include="DomainLogic\Linkage\ILinkager.cs" />
+    <Compile Include="DomainLogic\Linkage\ILinkagerAddIn.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageDossierAddIn.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageHolderAddIn.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageLicenseAddIn.cs" />
+    <Compile Include="DomainLogic\Linkage\Linkager.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageRequisitesAddIn.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\NoDossierLinkagedException.cs" />
+    <Compile Include="DomainLogic\Linkage\SetupFileAddIn.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\TooMoreLinkagingLicesensesException.cs" />
+    <Compile Include="DomainLogic\Supervision\SupervisionFacade.cs" />
+    <Compile Include="DomainLogic\Supervision\SupervisionException\NoNextScenarioStepException.cs" />
+    <Compile Include="DomainLogic\FluentDiActionContext.cs" />
+    <Compile Include="DomainLogic\GrantResult\GrantResultException\GranterWorksWithTaskWithWrongStatusException.cs" />
+    <Compile Include="DomainLogic\GrantResult\GrantResultException\NotSingleResulstOnLightScenarioException.cs" />
+    <Compile Include="DomainLogic\GrantResult\ServiceResultGranter.cs" />
+    <Compile Include="DomainLogic\Inspect\DocumentExpert.cs" />
+    <Compile Include="DomainLogic\Inspect\ExpertiseException\AddResultBeforePrepareExpertiseException.cs" />
+    <Compile Include="DomainLogic\Inspect\ExpertiseException\PrepareMoreThanOneExpertiseException.cs" />
+    <Compile Include="DomainLogic\Inspect\ExpertiseException\UnavailableDocumentToAddResultException.cs" />
+    <Compile Include="DomainLogic\Inspect\HolderInspecter.cs" />
+    <Compile Include="DomainLogic\Inspect\InspectException\AccessBeforePrepareInspectionException.cs" />
+    <Compile Include="DomainLogic\Inspect\InspectException\PrepareMoreThanOneInspectionException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\NoDossierFoundInRegistrException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\WrongSceanrioTypeForLinkagerException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\MultipleHolderFoundInRegistrException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\NoExistingDossierForLightSceanrioException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\NoExistingHolderForLightSceanrioException.cs" />
+    <Compile Include="DomainLogic\Linkage\RequisitesOrigin.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\CantLinkageRequisitesException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\DossierFileBuilder.cs" />
+    <Compile Include="DomainLogic\Linkage\DossierFileRepository.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\UnavailableRequisitesException.cs" />
+    <Compile Include="Modules\LicensingModule.cs" />
+    <Compile Include="Modules\LinkageModule.cs" />
+    <Compile Include="Modules\SupervisionModule.cs" />
+    <Compile Include="Reporting\BaseReport.cs" />
+    <Compile Include="Reporting\Mapping\InspectionOrderReport.cs" />
+    <Compile Include="Reporting\Mapping\ExpertiseOrderReport.cs" />
+    <Compile Include="Modules\MzReportModule.cs" />
+    <Compile Include="Reporting\Mapping\StandartOrderReport.cs" />
+    <Compile Include="Reporting\Mapping\ViolationNoticeReport.cs" />
+    <Compile Include="DomainLogic\ViolationResolve\NullTaskCreateDateException.cs" />
+    <Compile Include="GumzCore.cs" />
+    <Compile Include="GumzFacade.cs" />
+    <Compile Include="Modules\MzBlModule.cs" />
+    <Compile Include="Reporting\Mapping\InventoryReport.cs" />
+    <Compile Include="DomainLogic\Linkage\LicenseDossierRepository.cs" />
+    <Compile Include="DomainLogic\Linkage\LicenseHolderRepository.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\NoBoundedLicenseHolderException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\NoHolderFoundInRegistrException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\DuplicateLicenseHolderException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\OldDossierWithoutFilesException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\SaveUnlinkagedDossierFileException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\CantSetStatusException.cs" />
+    <Compile Include="DomainLogic\AcceptTask\AcceptException\DossierFileBuildingFailException.cs" />
+    <Compile Include="DomainLogic\Linkage\LinkageException\DuplicateDossierException.cs" />
+    <Compile Include="DomainLogic\Notify\DossierFileNotifier.cs" />
+    <Compile Include="DomainLogic\Order\OrderProvider.cs" />
+    <Compile Include="DomainLogic\ViolationResolve\ViolationResolver.cs" />
+    <Compile Include="DataMapping\LicenseDataMapper.cs" />
+    <Compile Include="GumzDictionaryManager.cs" />
+    <Compile Include="GumzDomainObjectInitializer.cs" />
+    <Compile Include="GumzDbManager.cs" />
+    <Compile Include="Reporting\Data\FullActivityData.cs" />
+    <Compile Include="Reporting\Data\LicenseBlank.cs" />
+    <Compile Include="Reporting\Mapping\FullActivityDataReport.cs" />
+    <Compile Include="Reporting\Mapping\LicenseBlankReport.cs" />
+    <Compile Include="Reporting\Mapping\MappingException\RetrieveLicenseDataWithoutActiveObjectsException.cs" />
+    <Compile Include="Reporting\Mapping\MonthDataHelper.cs" />
+    <Compile Include="Reporting\MzReportPool.cs" />
+    <Compile Include="Search\GumzSearchPresetSpecContainer.cs" />
+    <Compile Include="GumzUserPreferences.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reporting\Data\AcceptTaskInventory.cs" />
+    <Compile Include="Reporting\Mapping\LicenseByActivityReport.cs" />
+    <Compile Include="Reporting\Data\LicenseByActivity.cs" />
+    <Compile Include="Reporting\Data\StatementByService.cs" />
+    <Compile Include="Reporting\Mapping\StatementByServiceReport.cs" />
+    <Compile Include="Search\GumzDomainObjectSearcher.cs" />
+    <Compile Include="Search\Strategy\DossierFileSearchStrategy.cs" />
+    <Compile Include="Search\Strategy\EmployeeSearchStrategy.cs" />
+    <Compile Include="Search\Strategy\ExpertSearchStrategy.cs" />
+    <Compile Include="Search\Strategy\LicenseDossierSearchStartegy.cs" />
+    <Compile Include="Search\Strategy\LicenseHolderSearchStrategy.cs" />
+    <Compile Include="Search\Strategy\LicenseSearchStrategy.cs" />
+    <Compile Include="Validation\AddressValidator.cs" />
+    <Compile Include="Validation\EmployeeValidator.cs" />
+    <Compile Include="Validation\InspectionExpertValidator.cs" />
+    <Compile Include="Validation\LicenseDossierValidator.cs" />
+    <Compile Include="Validation\HolderRequisitesValidator.cs" />
+    <Compile Include="Validation\IExpertStateValidator.cs" />
+    <Compile Include="Validation\IndRequisitesValidator.cs" />
+    <Compile Include="Validation\JurRequisitesValidator.cs" />
+    <Compile Include="Validation\LicenseHolderValidator.cs" />
+    <Compile Include="Validation\LicenseRequisitesValidator.cs" />
+    <Compile Include="Validation\LicenseStatusValidator.cs" />
+    <Compile Include="Validation\StandartOrderAgreeValidator.cs" />
+    <Compile Include="Validation\StandartOrderDetailValidator.cs" />
+    <Compile Include="Validation\StandartOrderValidator.cs" />
+    <Compile Include="Validation\InspectionOrderExpertValidator.cs" />
+    <Compile Include="Validation\InspectionHolderAddressValidator.cs" />
+    <Compile Include="Validation\InspectionOrderAgreeValidator.cs" />
+    <Compile Include="Validation\InspectionOrderValidator.cs" />
+    <Compile Include="Validation\ExpertiseHolderAddressValidator.cs" />
+    <Compile Include="Validation\ExpertiseOrderAgreeValidator.cs" />
+    <Compile Include="Validation\ExpertiseOrderValidator.cs" />
+    <Compile Include="Validation\DocumentExpertiseResultValidator.cs" />
+    <Compile Include="Validation\DocumentExpertiseValidator.cs" />
+    <Compile Include="Validation\DossierFileServiceResultValidator.cs" />
+    <Compile Include="Validation\DossierFileValidator.cs" />
+    <Compile Include="Validation\ExpertValidator.cs" />
+    <Compile Include="Validation\IndividualExpertStateValidator.cs" />
+    <Compile Include="Validation\InspectionValidator.cs" />
+    <Compile Include="Validation\InventoryValidator.cs" />
+    <Compile Include="Validation\JuridicalExpertStateValidator.cs" />
+    <Compile Include="Validation\LicenseObjectValidator.cs" />
+    <Compile Include="Validation\LicenseValidator.cs" />
+    <Compile Include="Validation\NoticeValidator.cs" />
+    <Compile Include="Validation\ProvidedDocumentValidator.cs" />
+    <Compile Include="Validation\ViolationNoticeValidator.cs" />
+    <Compile Include="Validation\ViolationResolveInfoValidator.cs" />
+    <Compile Include="DomainLogic\Licensing\WrongTaskServiceException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.BL\Common.BL.csproj">
+      <Project>{C03946AB-F720-41F1-93C0-DDBDBA03D983}</Project>
+      <Name>Common.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.DA\Common.DA.csproj">
+      <Project>{166C26B9-576E-44C2-993A-8392B79A619F}</Project>
+      <Name>Common.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.Types\Common.Types.csproj">
+      <Project>{63B80D1D-4E6D-4C64-93A5-3A117E73A332}</Project>
+      <Name>Common.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.BL\GU.BL.csproj">
+      <Project>{BE8BC0F3-168A-4957-9972-4D63CC791CC0}</Project>
+      <Name>GU.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.DataModel\GU.DataModel.csproj">
+      <Project>{71463E15-A2C6-4126-8AB9-CA4A570E5E4D}</Project>
+      <Name>GU.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.MZ.DataModel\GU.MZ.DataModel.csproj">
+      <Project>{D82B639F-C023-44CC-A7F3-58F75492079D}</Project>
+      <Name>GU.MZ.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\StatementByServiceElcReport.mrt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\LicenseByActivityReport.mrt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\FullActivityDataReport.mrt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\LicenseBlank.mrt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\ViolationNoticeReport.mrt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\ExpertiseOrderReport.mrt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\InspectionOrderReport.mrt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Reporting\View\StandartOrderReport.mrt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Reporting\View\AcceptTaskInventoryReport.mrt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

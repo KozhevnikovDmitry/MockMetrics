@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:ConstructingPermition xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/ConstructingPermition/1.2" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:LegalPerson>
+    <ns1:FullName>аа</ns1:FullName>
+    <ns1:RegistrationNumber>ааа</ns1:RegistrationNumber>
+    <ns1:RegistrationDate>2013-04-03</ns1:RegistrationDate>
+    <ns1:RegistrationCountry>
+      <ns2:code>BRB</ns2:code>
+      <ns2:displayText>БАРБАДОС</ns2:displayText>
+    </ns1:RegistrationCountry>
+    <ns1:OGRN>1111111111111</ns1:OGRN>
+    <ns1:INN>1111111111</ns1:INN>
+    <ns1:Address>
+      <ns2:PostalCode>111111</ns2:PostalCode>
+      <ns2:Region>
+        <ns2:code>38</ns2:code>
+        <ns2:displayText>Иркутская область</ns2:displayText>
+      </ns2:Region>
+      <ns2:CityLocality>фф</ns2:CityLocality>
+      <ns2:ApartmentBlock>фф</ns2:ApartmentBlock>
+    </ns1:Address>
+    <ns1:Executor>
+      <ns2:FamilyName>ф</ns2:FamilyName>
+      <ns2:FirstName>ф</ns2:FirstName>
+      <ns1:Phone>1111111111</ns1:Phone>
+    </ns1:Executor>
+  </ns1:LegalPerson>
+  <ns1:Object>
+    <ns1:CadastralNumber>61:6:10104:12</ns1:CadastralNumber>
+    <ns1:ObjectName>вв</ns1:ObjectName>
+    <ns1:Address>
+      <ns2:Region>
+        <ns2:code>39</ns2:code>
+        <ns2:displayText>Калининградская область</ns2:displayText>
+      </ns2:Region>
+      <ns2:House>в</ns2:House>
+      <ns2:Note>в</ns2:Note>
+    </ns1:Address>
+  </ns1:Object>
+</ns1:ConstructingPermition>

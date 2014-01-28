@@ -1,0 +1,247 @@
+﻿<UserControl x:Class="GU.UI.View.ContentView.ContentNodeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:extToolkit="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended"
+             xmlns:contentView="clr-namespace:GU.UI.View.ContentView"
+             xmlns:contentVm="clr-namespace:GU.UI.ViewModel.ContentViewModel"
+             xmlns:ValueConverters="clr-namespace:Common.UI.ViewModel.ValueConverters;assembly=Common.UI"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance contentVm:ContentNodeVM}">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding ReadyToValidateCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="{x:Type Button}" x:Key="listButtonStyle" BasedOn="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                <Setter Property="DataContext" Value="{Binding}"/>
+                <Setter Property="Margin" Value="2"/>
+            </Style>
+
+            <ValueConverters:BoolVisibilityConverter x:Key="boolVisibilityconverter"/>
+
+            <Style TargetType="{x:Type ToolTip}" x:Key="_toolTipStyle"/>
+
+            <contentVm:DeppLevelWitdthConverter x:Key="DeepLevelWidthConverter" />
+            
+            <UserControl x:Key="SimpleTemplate" d:DataContext="{d:DesignInstance contentVm:SimpleNodeVm}" HorizontalAlignment="Left">
+                <UserControl.Resources>
+                    <UserControl x:Key="SimpleStringTemplate" d:DataContext="{d:DesignInstance contentVm:SimpleStringNodeVm}">
+                        <Border Style="{StaticResource MainBorderStyle}" CornerRadius="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" TextWrapping="WrapWithOverflow"/>
+                                <TextBox Text="{Binding StrValue, ValidatesOnDataErrors=True}" Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </UserControl>
+
+                    <UserControl x:Key="SimpleNumberTemplate" d:DataContext="{d:DesignInstance contentVm:SimpleNumberNodeVm}">
+                        <Border Style="{StaticResource MainBorderStyle}" CornerRadius="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" TextWrapping="WrapWithOverflow"/>
+                                <extToolkit:DecimalUpDown Value="{Binding NumberValue, ValidatesOnDataErrors=True}" 
+                                          HorizontalContentAlignment="Left"
+                                          Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </UserControl>
+
+                    <UserControl x:Key="SimpleBooleanTemplate" d:DataContext="{d:DesignInstance contentVm:SimpleBooleanNodeVm}">
+                        <Border Style="{StaticResource MainBorderStyle}" CornerRadius="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" TextWrapping="WrapWithOverflow"/>
+                                <CheckBox IsChecked="{Binding BoolValue, ValidatesOnDataErrors=True}" 
+                          Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </UserControl>
+
+                    <UserControl x:Key="SimpleDateTemplate" d:DataContext="{d:DesignInstance contentVm:SimpleDateNodeVm}">
+                        <Border Style="{StaticResource MainBorderStyle}" CornerRadius="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" TextWrapping="WrapWithOverflow"/>
+                                <DatePicker SelectedDate="{Binding DateValue, ValidatesOnDataErrors=True}" 
+                            Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </UserControl>
+
+                    <UserControl x:Key="SimpleListTemplate" d:DataContext="{d:DesignInstance contentVm:SimpleDictNodeVm}">
+                        <Border Style="{StaticResource MainBorderStyle}" CornerRadius="0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="{Binding Name}" TextWrapping="WrapWithOverflow"/>
+                                <ComboBox ItemsSource="{Binding DictDets}"
+                                          Text="{Binding StrValue, ValidatesOnDataErrors=true}"
+                                          IsEditable="{Binding IsEditableDict}" 
+                                          IsTextSearchEnabled="True" 
+                                          HorizontalContentAlignment="Stretch"
+                                          Grid.Column="1">
+                                    <ComboBox.ToolTip>
+                                        <ToolTip Content="{Binding StrValue}" Style="{StaticResource _toolTipStyle}">
+                                            <ToolTip.ContentTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding}" TextWrapping="WrapWithOverflow"  MaxWidth="500"/>
+                                                </DataTemplate>
+                                            </ToolTip.ContentTemplate>
+                                        </ToolTip>
+                                    </ComboBox.ToolTip>
+                                    <!--Рецепт управления шириной dropdownlist попёрт с http://stackoverflow.com/questions/5221601/setting-maxwidth-of-comboboxitem-such-that-items-width-dont-exceed-comboboxwidt-->
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}" 
+                                               TextTrimming="CharacterEllipsis" 
+                                               ToolTipService.BetweenShowDelay="1">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip Content="{Binding}" Style="{StaticResource _toolTipStyle}">
+                                                <ToolTip.ContentTemplate>
+                                                    <DataTemplate>
+                                                         <TextBlock Text="{Binding}" TextWrapping="WrapWithOverflow"  MaxWidth="500"/>
+                                                    </DataTemplate>
+                                                </ToolTip.ContentTemplate>
+                                            </ToolTip> 
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </Grid>
+                        </Border>
+                    </UserControl>
+
+                    <UserControl x:Key="SimpleFileTemplate" d:DataContext="{d:DesignInstance contentVm:SimpleFileNodeVm}">
+                        <Border Style="{StaticResource MainBorderStyle}" CornerRadius="0">
+                            <DockPanel LastChildFill="True">
+                                <Button Command="{Binding SaveFileOnDiskCommand}" DockPanel.Dock="Right" Margin="2">
+                                    <Image Source="/GU.UI;component/Resources/Icons/32X32/Save_32x32.png" Height="18" Width="18"></Image>
+                                </Button>
+                                <Button Command="{Binding LoadFileFromDiskCommand}" Style="{StaticResource BrowseButtonStyle}" DockPanel.Dock="Right" Margin="2"/>
+                                <TextBox IsReadOnly="True" Text="{Binding FileName, Mode=OneWay}" DockPanel.Dock="Left" Margin="2"/>
+                            </DockPanel>
+                        </Border>
+                    </UserControl>
+
+                    <Style TargetType="{x:Type ContentControl}" x:Key="SimpleContenNodeStyle" >
+                        <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleStringTemplate}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding AttrDataType}" Value="String" >
+                                <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleStringTemplate}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AttrDataType}" Value="Number">
+                                <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleNumberTemplate}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AttrDataType}" Value="Boolean">
+                                <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleBooleanTemplate}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AttrDataType}" Value="Date">
+                                <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleDateTemplate}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AttrDataType}" Value="List">
+                                <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleListTemplate}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding AttrDataType}" Value="File">
+                                <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleFileTemplate}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </UserControl.Resources>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <ContentControl DataContext="{Binding}" 
+                                    Style="{StaticResource SimpleContenNodeStyle}" 
+                                    d:DataContext="{d:DesignInstance contentVm:SimpleNodeVm}" 
+                                    Grid.Column="0" 
+                                    Width="{Binding DeepLevel, Converter={StaticResource DeepLevelWidthConverter}}"/>
+
+                    <Button Grid.Column="1" VerticalAlignment="Top"
+                            Style="{StaticResource listButtonStyle}" 
+                            Visibility="{Binding CanAddCopy, Converter={StaticResource boolVisibilityconverter}}" 
+                            Command="{Binding AddCopyCommand}">
+                        <Image Source="/Common.UI;component/Resources/Icons/16X16/add.png" Width="16" Height="16" />
+                    </Button>
+
+                    <Button Grid.Column="2" VerticalAlignment="Top"
+                            Style="{StaticResource listButtonStyle}" 
+                            Visibility="{Binding CanDelete, Converter={StaticResource boolVisibilityconverter}}" 
+                            Command="{Binding DeleteCommand}">
+                        <Image Source="/Common.UI;component/Resources/Icons/16X16/delete.png"  Width="16" Height="16"/>
+                    </Button>
+                </Grid>
+            </UserControl>
+
+            <UserControl x:Key="ComplexTemplate">
+                <contentView:ComplexContentNodeView DataContext="{Binding}"/>
+            </UserControl>
+
+            <UserControl x:Key="ComplexChoiceTemplate">
+                <contentView:ComplexChoiseContentNodeView DataContext="{Binding}"/>
+            </UserControl>
+
+            <UserControl x:Key="PotentialTemplate">
+                <contentView:PotentialContentNodeView DataContext="{Binding}"/>
+            </UserControl>
+
+            <Style TargetType="{x:Type ContentControl}" x:Key="ContenNodeStyle">
+                <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleTemplate}"/>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding SpecNodeType}" Value="Simple" >
+                        <Setter Property="Content" Value="{StaticResource ResourceKey=SimpleTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding SpecNodeType}" Value="RefSpec">
+                        <Setter Property="Content" Value="{StaticResource ResourceKey=ComplexTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding SpecNodeType}" Value="Complex">
+                        <Setter Property="Content" Value="{StaticResource ResourceKey=ComplexTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding SpecNodeType}" Value="ComplexChoice">
+                        <Setter Property="Content" Value="{StaticResource ResourceKey=ComplexChoiceTemplate}"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding SpecNodeType}" Value="{x:Null}">
+                        <Setter Property="Content" Value="{StaticResource ResourceKey=PotentialTemplate}"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+        
+    <ContentControl DataContext="{Binding}" Grid.Column="0" Style="{StaticResource ContenNodeStyle}" HorizontalContentAlignment="Stretch"/>
+    
+</UserControl>

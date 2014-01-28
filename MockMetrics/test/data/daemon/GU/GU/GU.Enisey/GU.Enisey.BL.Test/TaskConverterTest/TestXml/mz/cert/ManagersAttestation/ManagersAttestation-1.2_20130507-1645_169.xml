@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:ManagersAttestation xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/ManagersAttestation/1.2" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4">
+  <ns1:ApplicantInfo>
+    <ns2:FamilyName>Аттестуемый</ns2:FamilyName>
+    <ns2:FirstName>Руководитель</ns2:FirstName>
+    <ns1:BirthDate>2013-05-01</ns1:BirthDate>
+  </ns1:ApplicantInfo>
+  <ns1:CurrentJobInfo>
+    <ns1:NameOfInstitution>Учреждение текущей работы</ns1:NameOfInstitution>
+    <ns1:Position>Должность</ns1:Position>
+    <ns1:PositionDate>2013-05-02</ns1:PositionDate>
+  </ns1:CurrentJobInfo>
+  <ns1:QualificationCategoryInfo>
+    <ns1:QualificationCategory>
+      <ns2:code>0</ns2:code>
+      <ns2:displayText>Высшая</ns2:displayText>
+    </ns1:QualificationCategory>
+    <ns1:DueDate>2013-05-08</ns1:DueDate>
+  </ns1:QualificationCategoryInfo>
+  <ns1:QualificationCategoryToAward>
+    <ns1:QualificationToGive>0</ns1:QualificationToGive>
+    <ns1:ExOfficio>Должность для аттестации</ns1:ExOfficio>
+    <ns1:AttestationBase>Основание для аттестации</ns1:AttestationBase>
+    <ns1:AttestationForm>Форма аттестации</ns1:AttestationForm>
+  </ns1:QualificationCategoryToAward>
+  <ns1:Education>
+    <ns1:InstName>Учебное заведение</ns1:InstName>
+    <ns1:EndDate>2004</ns1:EndDate>
+    <ns1:Specialty>Специальность</ns1:Specialty>
+    <ns1:Qualification>Квалификация</ns1:Qualification>
+  </ns1:Education>
+  <ns1:ExperienceInTraining>
+    <ns1:ExpirienceTotal>6</ns1:ExpirienceTotal>
+    <ns1:SpecialtyExpirience>5</ns1:SpecialtyExpirience>
+    <ns1:PositionExperience>4</ns1:PositionExperience>
+    <ns1:OrganizationExperience>3</ns1:OrganizationExperience>
+  </ns1:ExperienceInTraining>
+</ns1:ManagersAttestation>

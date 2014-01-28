@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B64EE885-8BB8-4CEC-BE0C-95047E493F67}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GU.Enisey.BL</RootNamespace>
+    <AssemblyName>GU.Enisey.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Autofac, Version=2.6.3.862, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="BLToolkit.4, Version=4.1.15.0, Culture=neutral, PublicKeyToken=b1d3f6ab3aadaca3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Externals\BLToolkit.4.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\Externals\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AppInquiryNotifierLogic.cs" />
+    <Compile Include="AppQuiryPortTypeLogic.cs" />
+    <Compile Include="Converters\Archive\InformationProvisionTaskXmlImporter.cs" />
+    <Compile Include="Converters\Common\InquiryXmlImporter.cs" />
+    <Compile Include="Converters\Common\IInquiryXmlImporter.cs" />
+    <Compile Include="Converters\Common\TestBirthCertificateValidityInquiryXmlImporter.cs" />
+    <Compile Include="EniseyCore.cs" />
+    <Compile Include="EniseyDbManager.cs" />
+    <Compile Include="EniseyDomainLogicContainer.cs" />
+    <Compile Include="EniseyDomainObjectInitializer.cs" />
+    <Compile Include="EniseyFacade.cs" />
+    <Compile Include="EniseyModule.cs" />
+    <Compile Include="InquiryInternalLogic.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializeUtils.cs" />
+    <Compile Include="ServiceExecutor.cs" />
+    <Compile Include="Converters\Building\CommissioningTaskXmlImporter.cs" />
+    <Compile Include="Converters\Building\ConstructingPermitionTaskXmlImporter.cs" />
+    <Compile Include="Converters\Common\ITaskXmlImporter.cs" />
+    <Compile Include="Converters\Common\ContentXmlImporter.cs" />
+    <Compile Include="Converters\Common\TaskXmlImporter.cs" />
+    <Compile Include="Converters\Common\ConvertationContext.cs" />
+    <Compile Include="Converters\Common\IContentXmlImporter.cs" />
+    <Compile Include="Converters\Common\IContentXmlExporter.cs" />
+    <Compile Include="Converters\Common\ContentXsdMatch.cs" />
+    <Compile Include="Converters\Common\Exceptions\NodeConverterException.cs" />
+    <Compile Include="Converters\Common\Exceptions\ConverterException.cs" />
+    <Compile Include="Converters\Common\XmlData.cs" />
+    <Compile Include="Converters\Common\XmlDataUtils.cs" />
+    <Compile Include="Converters\Mun\RegistrationHouseingNeededTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Attestation\TeachersAttestationTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Attestation\MedicalAdcTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Attestation\MedicalAttestationTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Attestation\PharmaceutistAttestationTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Attestation\ManagersAttestationTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Licensing\LicensingMedActivityTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Licensing\LicensingFarmActivityTaskXmlImporter.cs" />
+    <Compile Include="Converters\MZ\Licensing\LicensingDrugActivityTaskXmlImporter.cs" />
+    <Compile Include="Converters\ConverterManager.cs" />
+    <Compile Include="Converters\Trud\SearchWorkEmployeesTaskXmlImporter.cs" />
+    <Compile Include="Converters\Trud\SocialWorkTaskXmlImporter.cs" />
+    <Compile Include="Converters\Trud\TemporaryWorkTaskXmlImporter.cs" />
+    <Compile Include="Converters\Trud\UnemployedPaymentTaskXmlImporter.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\Common.BL\Common.BL.csproj">
+      <Project>{C03946AB-F720-41F1-93C0-DDBDBA03D983}</Project>
+      <Name>Common.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.DA\Common.DA.csproj">
+      <Project>{166C26B9-576E-44C2-993A-8392B79A619F}</Project>
+      <Name>Common.DA</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Common\Common.Types\Common.Types.csproj">
+      <Project>{63B80D1D-4E6D-4C64-93A5-3A117E73A332}</Project>
+      <Name>Common.Types</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.BL\GU.BL.csproj">
+      <Project>{BE8BC0F3-168A-4957-9972-4D63CC791CC0}</Project>
+      <Name>GU.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GU.Common\GU.DataModel\GU.DataModel.csproj">
+      <Project>{71463E15-A2C6-4126-8AB9-CA4A570E5E4D}</Project>
+      <Name>GU.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.Enisey.Contract\GU.Enisey.Contract.csproj">
+      <Project>{0B417629-7D85-4B39-AAE3-0B5218C59673}</Project>
+      <Name>GU.Enisey.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GU.Enisey.DataModel\GU.Enisey.DataModel.csproj">
+      <Project>{AACF3DC6-8F7B-4193-BF7C-9F88F15CE420}</Project>
+      <Name>GU.Enisey.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Converters\Archive\Xsd\InformationProvision-1.5.2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Building\Xsd\Commissioning-1.3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Building\Xsd\Commissioning-1.5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Building\Xsd\ConstructingPermition-1.2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Building\Xsd\ConstructingPermition-1.3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Common\Xsd\smev-attachments-2.2.4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Common\Xsd\state-services-commons-1.1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Common\Xsd\state-services-commons-1.4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Common\Xsd\state-services-krsk-commons-1.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Mun\Xsd\RegistrationHousingNeeded.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Attestation\Xsd\ManagersAttestation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Attestation\Xsd\MedicalADC.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Attestation\Xsd\MedicalAttestation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Attestation\Xsd\PharmaceutistAttestation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Attestation\Xsd\TeachersAttestation.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingDrugActivity-1.0.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingDrugActivity-1.2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingDrugActivity-1.4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingDrugActivity-1.5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingFarmActivity-1.7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingFarmActivity-1.8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingMedActivity-1.6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingMedActivity-1.8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\MZ\Licensing\Xsd\LicensingMedActivity-1.9.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\SearchWorkEmployees-1.5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\SearchWorkEmployees-1.6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\SocialWork-1.1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\SocialWork-1.3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\SocialWork-1.4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\TemporaryWork-1.3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\UnemployedPayment-1.4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Converters\Trud\Xsd\UnemployedPayment-1.5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

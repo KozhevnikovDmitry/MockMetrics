@@ -1,0 +1,275 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:extk="clr-namespace:Microsoft.Windows.Controls;assembly=WPFToolkit.Extended"
+                    xmlns:vib="clr-namespace:VIBlend.WPF.Controls;assembly=VIBlend.WPF.Editors"
+                    xmlns:Properties="clr-namespace:SpecManager.UI.ViewModel.Behaviors">
+
+    <ControlTemplate x:Key="TransparentRectangle">
+        <Rectangle Stroke="Transparent">
+        </Rectangle>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type UserControl}" x:Key="TransparentFocusVisualStyle">
+        <Setter Property="FocusVisualStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type Control}">
+                    <Setter Property="Template" Value="{StaticResource ResourceKey=TransparentRectangle}" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+        
+    </Style>
+
+    <PopupAnimation x:Key="{x:Static SystemParameters.ToolTipPopupAnimationKey}">Slide</PopupAnimation>
+
+    <Style x:Key="ErrorToolTipStyle" TargetType="{x:Type ToolTip}">
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="HasDropShadow"  Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToolTip}">
+                    <Border Name="Border" BorderThickness="1" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" >
+                        <Border.Background>
+                            <SolidColorBrush Color="Red" />
+                        </Border.Background>
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="Black"/>
+                        </Border.BorderBrush>
+                        <ContentPresenter Margin="4" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasDropShadow" Value="true">
+                            <Setter TargetName="Border" Property="CornerRadius" Value="0" />
+                            <Setter TargetName="Border"  Property="SnapsToDevicePixels"  Value="true" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="GroupBoxCommonStyle" TargetType="{x:Type GroupBox}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="4"/>
+        <Setter Property="Background" Value="WhiteSmoke" />
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <Style x:Key="MainBorderStyle" TargetType="{x:Type Border}" >
+        <Setter Property="Background" Value="WhiteSmoke" />
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <Style x:Key="SearchItemBorderStyle" TargetType="{x:Type Border}" >
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="WhiteSmoke" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Width" Value="Auto" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBox}" x:Key="NotValidateTextBoxStyle">
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ShadowItemContainerStyle" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border Background="LightGray"
+                            CornerRadius="8"
+                            BorderThickness="3"
+                            x:Name="IconBorder"
+                            Margin="8,4,8,4" >
+                        <ContentPresenter />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="true">
+                            <Setter TargetName="IconBorder" Property="Background" Value="LightBlue"/>
+                            <Setter TargetName="IconBorder" Property="BitmapEffect">
+                                <Setter.Value>
+                                    <DropShadowBitmapEffect Color="LightBlue" ShadowDepth="5"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Image}" x:Key="buttonImageStyle">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}" Value="False">
+                <Setter Property="Opacity" Value="0.50"></Setter>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    
+    <Style TargetType="{x:Type ListBox}" x:Key="whiteHighlightedListBoxStyle">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="White"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black"/>
+        </Style.Resources>
+    </Style>
+
+    <Style TargetType="{x:Type ComboBox}" x:Key="dodgerHighlightedComboBoxStyle" BasedOn="{StaticResource {x:Type ComboBox}}">
+        <Style.Resources>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="DodgerBlue"/>
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White"/>
+        </Style.Resources>
+    </Style>
+  
+    <Style TargetType="TextBox" x:Key="CommonTextBoxStyle">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Properties:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Properties:StylizedBehaviorCollection>
+                    <Properties:BindInputControlBehavior/>
+                </Properties:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="extk:MaskedTextBox" x:Key="CommonMaskedTextBoxStyle" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="SelectAllOnGotFocus" Value="False"/>
+        <Setter Property="Properties:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Properties:StylizedBehaviorCollection>
+                    <Properties:BindInputControlBehavior/>
+                </Properties:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="extk:DecimalUpDown" x:Key="CommonDecimalUpDownStyle" BasedOn="{StaticResource {x:Type extk:DecimalUpDown}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="SelectAllOnGotFocus" Value="False"/>
+        <Setter Property="Properties:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Properties:StylizedBehaviorCollection>
+                    <Properties:BindInputControlBehavior/>
+                </Properties:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="vib:MaskEditor" x:Key="CommonMaskEditorStyle" BasedOn="{StaticResource {x:Type vib:MaskEditor}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Properties:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Properties:StylizedBehaviorCollection>
+                    <Properties:BindInputControlBehavior/>
+                </Properties:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style TargetType="vib:NumberEditor" x:Key="CommonNumberEditorStyle" BasedOn="{StaticResource {x:Type vib:NumberEditor}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Properties:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Properties:StylizedBehaviorCollection>
+                    <Properties:BindInputControlBehavior/>
+                </Properties:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="PasswordBox" x:Key="CommonPasswordBoxStyle" BasedOn="{StaticResource {x:Type PasswordBox}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="PasswordChar" Value="*"/>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Properties:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Properties:StylizedBehaviorCollection>
+                    <Properties:BindInputControlBehavior/>
+                </Properties:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="ComboBox" x:Key="CommonComboBoxStyle" BasedOn="{StaticResource dodgerHighlightedComboBoxStyle}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Height" Value="22"/>
+        <Setter Property="Properties:StylizedBehaviors.Behaviors">
+            <Setter.Value>
+                <Properties:StylizedBehaviorCollection>
+                    <Properties:BindInputComboBoxBehavior/>
+                </Properties:StylizedBehaviorCollection>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="CheckBox"  x:Key="CommonCheckBoxStyle" BasedOn="{StaticResource {x:Type CheckBox}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="IsEnabled" Value="{Binding IsEditable}"/>
+    </Style>
+
+    <Style TargetType="RadioButton" x:Key="CommonTextRadioButtonStyle" BasedOn="{StaticResource {x:Type RadioButton}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="CommonTextBlockStyle" BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="TextOptions.TextFormattingMode" Value="Display"></Setter>
+        <Setter Property="Margin" Value="2,0,2,0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="TextBox" BasedOn="{StaticResource CommonTextBoxStyle}"></Style>
+
+    <Style TargetType="extk:MaskedTextBox" BasedOn="{StaticResource CommonMaskedTextBoxStyle}"></Style>
+
+    <Style TargetType="extk:DecimalUpDown" BasedOn="{StaticResource CommonDecimalUpDownStyle}"></Style>
+
+    <Style TargetType="vib:MaskEditor" BasedOn="{StaticResource CommonMaskEditorStyle}"></Style>
+
+    <Style TargetType="vib:NumberEditor" BasedOn="{StaticResource CommonNumberEditorStyle}"></Style>
+
+    <Style TargetType="PasswordBox" BasedOn="{StaticResource CommonPasswordBoxStyle}"></Style>
+
+    <Style TargetType="ComboBox" BasedOn="{StaticResource CommonComboBoxStyle}"></Style>
+
+    <Style TargetType="CheckBox"  BasedOn="{StaticResource CommonCheckBoxStyle}"></Style>
+
+    <Style TargetType="RadioButton" BasedOn="{StaticResource CommonTextRadioButtonStyle}"></Style>
+
+    <Style TargetType="TextBlock" BasedOn="{StaticResource CommonTextBlockStyle}"></Style>
+</ResourceDictionary>

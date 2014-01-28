@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:search="clr-namespace:GU.HQ.UI.View.Search.SearchReesultTemplate">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+        <ResourceDictionary Source="/Common.UI;component/View/Styles/CustomSearchTemplateDictionary.xaml"/>
+        <ResourceDictionary Source="/Common.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+    
+
+    <Style TargetType="Border" x:Key="DeadlineNotifyBorderStyle" BasedOn="{StaticResource MainBorderStyle}">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding TaskSearchResultVM.IsDeadlineSoon}" Value="True">
+                <Setter Property="Background" Value="LightYellow"/>
+            </DataTrigger>
+            <DataTrigger Binding="{Binding TaskSearchResultVM.IsDeadlineFailed}" Value="True">
+                <Setter Property="Background" Value="LightPink"/>
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="ClaimListBorderStyle" TargetType="{x:Type Border}" >
+        <Setter Property="BorderBrush" Value="DarkGray" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+        <Setter Property="CornerRadius" Value="1" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Margin" Value="0,3,0,3" />
+    </Style>
+    
+
+    <DataTemplate x:Key="ClaimListItemTemplate">
+        <Border  Style="{StaticResource ClaimListBorderStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150" />
+                    <ColumnDefinition Width="350"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+            
+                <TextBlock Grid.Column="0" Text="{Binding ClaimDate}"    />
+                <TextBlock Grid.Column="1" Text="{Binding ClaimStatus}"  />
+                <TextBlock Grid.Column="2" Text="{Binding DeclarerFIO}"  />
+        
+            </Grid>
+        </Border>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="ClaimListSelectedItemTemplate">
+        <search:ClaimSearchResultView/>
+    </DataTemplate>
+
+</ResourceDictionary>

@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:DeclarerView="clr-namespace:GU.HQ.UI.View.DeclarerView"
+                    xmlns:ClaimView="clr-namespace:GU.HQ.UI.View.ClaimView"
+                    xmlns:PersonView="clr-namespace:GU.HQ.UI.View.PersonView">
+    
+    <DataTemplate x:Key="DeclarerRelativeItemTemplate">
+        <DeclarerView:DeclarerRelativeItemView  />
+    </DataTemplate>
+
+    <DataTemplate x:Key="NoticeItemTemplate">
+        <ClaimView:NoticeItemView  />
+    </DataTemplate>
+
+    <DataTemplate x:Key="PersonDocItemTemplate">
+        <PersonView:PersonDocItemView/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="QueuePrivItemTemplate">
+        <ClaimView:ClaimQueuePrivItemView/>
+    </DataTemplate>
+    
+    <DataTemplate x:Key="ClaimCategoryItemTemplate">
+        <ClaimView:ClaimCategoryItemView  />
+    </DataTemplate>
+
+    <DataTemplate x:Key="DeclarerBaseRegItemItemTemplate">
+        <DeclarerView:DeclarerBaseRegItemView  />
+    </DataTemplate>
+    
+    <DataTemplate x:Key="ClaimStatusHistItemTemplate">
+        <ClaimView:ClaimStatusHistItemView />
+    </DataTemplate>
+        
+
+</ResourceDictionary>

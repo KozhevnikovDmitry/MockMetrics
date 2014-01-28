@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:LicensingFarmActivity xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/LicensingFarmActivity/1.8" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:ReregistrationLicense>
+    <ns1:ReregistrationLicenseUL>
+      <ns1:OrgInfo>
+        <ns1:FullName>ООО Джигурда Индастриз</ns1:FullName>
+        <ns1:LawForm>ООО</ns1:LawForm>
+        <ns1:ShortName>ООО Джигурда</ns1:ShortName>
+        <ns1:FirmName>ООО Джигурда Inc</ns1:FirmName>
+        <ns1:OrgAddress>
+          <ns2:PostalCode>100500</ns2:PostalCode>
+          <ns2:Region>
+            <ns2:code>24</ns2:code>
+            <ns2:displayText>Красноярский край</ns2:displayText>
+          </ns2:Region>
+          <ns2:District>Джигурдинский Улус</ns2:District>
+          <ns2:CityLocality>Джигурдоевск</ns2:CityLocality>
+          <ns2:StreetText>Джигурды</ns2:StreetText>
+          <ns2:ApartmentBlock>1</ns2:ApartmentBlock>
+          <ns2:Building>б</ns2:Building>
+          <ns2:Apartment>2</ns2:Apartment>
+        </ns1:OrgAddress>
+        <ns1:OGRN>
+          <ns1:OGRNnumber>1005001005001</ns1:OGRNnumber>
+          <ns1:EGRULData>
+            <ns1:Series>100500</ns1:Series>
+            <ns1:Number>100500</ns1:Number>
+            <ns1:DocIssuedBy>Министерство</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-09-01</ns1:DocIssuedDate>
+            <ns1:RegAddress>
+              <ns2:PostalCode>100500</ns2:PostalCode>
+              <ns2:Region>
+                <ns2:code>24</ns2:code>
+                <ns2:displayText>Красноярский край</ns2:displayText>
+              </ns2:Region>
+              <ns2:District>Джигурдинский Улус</ns2:District>
+              <ns2:CityLocality>Джигурдоевск</ns2:CityLocality>
+              <ns2:StreetText>Джигурды</ns2:StreetText>
+              <ns2:ApartmentBlock>1</ns2:ApartmentBlock>
+              <ns2:Building>б</ns2:Building>
+              <ns2:Apartment>2</ns2:Apartment>
+            </ns1:RegAddress>
+          </ns1:EGRULData>
+        </ns1:OGRN>
+        <ns1:INN>
+          <ns1:INN>1005001005</ns1:INN>
+          <ns1:TaxAuthorityData>
+            <ns1:Series>100500</ns1:Series>
+            <ns1:Number>100500</ns1:Number>
+            <ns1:Date>2013-09-01</ns1:Date>
+            <ns1:Code>1005</ns1:Code>
+            <ns1:IssuerName>Министерство</ns1:IssuerName>
+          </ns1:TaxAuthorityData>
+        </ns1:INN>
+        <ns1:Phone>1005001005</ns1:Phone>
+        <ns1:Director>
+          <ns2:Position>Генеральный секретарь ЦК</ns2:Position>
+          <ns2:ChiefLastName>Пигурда</ns2:ChiefLastName>
+          <ns2:ChiefFirstName>Оооо</ns2:ChiefFirstName>
+          <ns2:ChiefMiddleName>Щщщщ</ns2:ChiefMiddleName>
+        </ns1:Director>
+      </ns1:OrgInfo>
+      <ns1:LicenseInfo>
+        <ns1:LicenseNumber>100500</ns1:LicenseNumber>
+        <ns1:LicenseDate>2013-09-01</ns1:LicenseDate>
+        <ns1:LicenseOrg>Министерство</ns1:LicenseOrg>
+      </ns1:LicenseInfo>
+      <ns1:Base>
+        <ns1:ChangeAddress>
+          <ns1:NewAddress>
+            <ns2:PostalCode>100500</ns2:PostalCode>
+            <ns2:Region>
+              <ns2:code>24</ns2:code>
+              <ns2:displayText>Красноярский край</ns2:displayText>
+            </ns2:Region>
+            <ns2:District>Джигурдинский Улус</ns2:District>
+            <ns2:CityLocality>Джигурдоевск</ns2:CityLocality>
+            <ns2:StreetText>Джигурды</ns2:StreetText>
+            <ns2:ApartmentBlock>100</ns2:ApartmentBlock>
+            <ns2:Building>ш</ns2:Building>
+            <ns2:Apartment>500</ns2:Apartment>
+          </ns1:NewAddress>
+          <ns1:DocData>
+            <ns1:DocIssuedBy>Министерство</ns1:DocIssuedBy>
+            <ns1:DocIssuedDate>2013-09-01</ns1:DocIssuedDate>
+            <ns1:Series>100500</ns1:Series>
+            <ns1:Number>100500</ns1:Number>
+          </ns1:DocData>
+        </ns1:ChangeAddress>
+      </ns1:Base>
+      <ns1:Base>
+        <ns1:AnotherAddress>
+          <ns1:WorksInfo>
+            <ns1:ActivityAddress>
+              <ns2:PostalCode>100500</ns2:PostalCode>
+              <ns2:Region>
+                <ns2:code>24</ns2:code>
+                <ns2:displayText>Красноярский край</ns2:displayText>
+              </ns2:Region>
+              <ns2:District>Пигурдинский Улус</ns2:District>
+              <ns2:CityLocality>Пигурдоевск</ns2:CityLocality>
+              <ns2:StreetText>Пигурды</ns2:StreetText>
+              <ns2:ApartmentBlock>1</ns2:ApartmentBlock>
+              <ns2:Building>б</ns2:Building>
+              <ns2:Apartment>2</ns2:Apartment>
+            </ns1:ActivityAddress>
+            <ns1:Works>
+              <ns1:StoringDrugs>true</ns1:StoringDrugs>
+              <ns1:StoringMedications>true</ns1:StoringMedications>
+              <ns1:TransportDrugs>false</ns1:TransportDrugs>
+              <ns1:TransportMedications>false</ns1:TransportMedications>
+              <ns1:TradeMedications>false</ns1:TradeMedications>
+              <ns1:DistributionMedications>false</ns1:DistributionMedications>
+              <ns1:PrepareMedications>false</ns1:PrepareMedications>
+            </ns1:Works>
+            <ns1:Subject>Производственная аптека с правом изготовления асептических лекарственных препаратов</ns1:Subject>
+            <ns1:DocRequisites>
+              <ns1:OrgName>Министерство</ns1:OrgName>
+              <ns1:Date>2013-09-01</ns1:Date>
+              <ns1:Number>100500</ns1:Number>
+            </ns1:DocRequisites>
+          </ns1:WorksInfo>
+        </ns1:AnotherAddress>
+      </ns1:Base>
+    </ns1:ReregistrationLicenseUL>
+  </ns1:ReregistrationLicense>
+</ns1:LicensingFarmActivity>

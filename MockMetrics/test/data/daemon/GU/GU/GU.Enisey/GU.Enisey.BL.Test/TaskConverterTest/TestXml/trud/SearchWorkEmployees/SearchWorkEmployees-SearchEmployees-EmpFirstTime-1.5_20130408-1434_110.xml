@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ns1:SearchWorkEmployees xmlns:ns1="urn://x-artefacts-it-ru/dob/state-services/krsk/SearchWorkEmployees/1.5" xmlns:ns2="urn://x-artefacts-it-ru/dob/state-services/commons/1.4" xmlns:ns3="http://smev.gosuslugi.ru/request/rev111111">
+  <ns1:SearchEmployees>
+    <ns1:EmpFirstTime>
+      <ns1:Hirer>
+        <ns1:IP>
+          <ns2:FamilyName>Федченко</ns2:FamilyName>
+          <ns2:FirstName>Наталья</ns2:FirstName>
+          <ns2:Patronymic>Иосифовна</ns2:Patronymic>
+          <ns1:OGRN>312454678912345</ns1:OGRN>
+          <ns1:IPAddress>
+            <ns2:Region>
+              <ns2:code>24</ns2:code>
+              <ns2:displayText>Красноярский край</ns2:displayText>
+            </ns2:Region>
+            <ns2:CityLocality>Город места житльства</ns2:CityLocality>
+          </ns1:IPAddress>
+        </ns1:IP>
+        <ns1:Phone>5647891596</ns1:Phone>
+        <ns1:PropertyForm>Частная</ns1:PropertyForm>
+        <ns1:ActivityType>Вид деятельности</ns1:ActivityType>
+        <ns1:EmployeesQuantity>15</ns1:EmployeesQuantity>
+        <ns1:FiredEmployeesQuantity>0</ns1:FiredEmployeesQuantity>
+        <ns1:WorkPlacesQuantity>17</ns1:WorkPlacesQuantity>
+        <ns1:InformationPlacement>
+          <ns1:TerritorialJobBank>true</ns1:TerritorialJobBank>
+          <ns1:InterterritorialJobBank>false</ns1:InterterritorialJobBank>
+          <ns1:FederalJobBank>true</ns1:FederalJobBank>
+          <ns1:Media>false</ns1:Media>
+          <ns1:PublicAuthorityInternetResources>true</ns1:PublicAuthorityInternetResources>
+        </ns1:InformationPlacement>
+      </ns1:Hirer>
+      <ns1:WorkConditions>
+        <ns1:WorkAddress>
+          <ns2:Region>
+            <ns2:code>40</ns2:code>
+            <ns2:displayText>Калужская область</ns2:displayText>
+          </ns2:Region>
+          <ns2:CityLocality>Город для работы</ns2:CityLocality>
+        </ns1:WorkAddress>
+        <ns1:Transport>Проезд автобусом</ns1:Transport>
+        <ns1:SocialGuarantee>
+          <ns1:MedService>true</ns1:MedService>
+          <ns1:Sanatorium>true</ns1:Sanatorium>
+          <ns1:DOU>true</ns1:DOU>
+          <ns1:EatingConditions>true</ns1:EatingConditions>
+        </ns1:SocialGuarantee>
+        <ns1:OtherConditions>нет иных условий</ns1:OtherConditions>
+        <ns1:NeedsInfo>
+          <ns1:WorkName>Профессия требуется</ns1:WorkName>
+          <ns1:WorkQualification>Квалификация требуется</ns1:WorkQualification>
+          <ns1:NeedEmployees>3</ns1:NeedEmployees>
+          <ns1:WorkSort>Сезонная</ns1:WorkSort>
+          <ns1:Salary>50 тыс. руб.</ns1:Salary>
+          <ns1:Mode>Вахтовым методом</ns1:Mode>
+          <ns1:Start>1999</ns1:Start>
+          <ns1:Finish>2001</ns1:Finish>
+          <ns1:Requerements>Профессиональные навыки</ns1:Requerements>
+          <ns1:MoreWishes>Дополнительные пожелания</ns1:MoreWishes>
+          <ns1:MoreGuarantee>Дополнительные гарантии</ns1:MoreGuarantee>
+        </ns1:NeedsInfo>
+      </ns1:WorkConditions>
+    </ns1:EmpFirstTime>
+  </ns1:SearchEmployees>
+</ns1:SearchWorkEmployees>

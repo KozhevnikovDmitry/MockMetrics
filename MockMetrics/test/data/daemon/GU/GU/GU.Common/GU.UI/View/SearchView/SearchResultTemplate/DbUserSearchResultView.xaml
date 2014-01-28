@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="GU.UI.View.SearchView.SearchResultTemplate.DbUserSearchResultView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Border}" BasedOn="{StaticResource MainBorderStyle}"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <StackPanel Orientation="Horizontal">
+        <Border Margin="2">
+            <Image Width="2cm" Height="3cm" Source="/GU.UI;component/Resources/Icons/User_256x256.png"></Image>
+        </Border>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="500"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Grid.Row="0">
+                <TextBlock Text="Логин"></TextBlock>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="0">
+                <TextBlock Text="{Binding Login}"></TextBlock>
+            </Border>
+
+            <Border Grid.Column="0" Grid.Row="1">
+                <TextBlock Text="ФИО"></TextBlock>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="1">
+                <TextBlock Text="{Binding Fio}"></TextBlock>
+            </Border>
+
+            <Border Grid.Column="0" Grid.Row="2">
+                <TextBlock Text="Статус"></TextBlock>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="2">
+                <TextBlock Text="{Binding Status}"></TextBlock>
+            </Border>
+
+            <Border Grid.Column="0" Grid.Row="3">
+                <TextBlock Text="Рабочие данные"></TextBlock>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="3">
+                <TextBlock Text="{Binding WorkDataString}" TextWrapping="WrapWithOverflow"></TextBlock>
+            </Border>
+
+        </Grid>
+    </StackPanel>
+</UserControl>

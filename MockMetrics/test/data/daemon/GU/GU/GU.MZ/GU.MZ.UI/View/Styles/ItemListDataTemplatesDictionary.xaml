@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/GU.MZ.UI;component/View/Styles/GumzSearchTemplatesDictionary.xaml"/>
+        <ResourceDictionary Source="/GU.MZ.UI;component/View/Styles/GumzListTemplatesDictionary.xaml"/>
+        <ResourceDictionary Source="/GU.UI;component/View/Styles/GuListGroupStyleDictionary.xaml"/>
+        <ResourceDictionary Source="/GU.UI;component/View/Styles/GuListTemplatesDictionary.xaml"/>
+        <ResourceDictionary Source="/GU.UI;component/View/Styles/GuSearchTemplatesDictionary.xaml"/>
+    </ResourceDictionary.MergedDictionaries>    
+
+</ResourceDictionary>

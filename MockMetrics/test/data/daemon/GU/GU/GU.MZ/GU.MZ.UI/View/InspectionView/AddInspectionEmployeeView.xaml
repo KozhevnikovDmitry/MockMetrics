@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="GU.MZ.UI.View.InspectionView.AddInspectionEmployeeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:Behaviors="clr-namespace:Common.UI.ViewModel.Attachables.Behaviors;assembly=Common.UI"
+             xmlns:inspectionViewModel="clr-namespace:GU.MZ.UI.ViewModel.InspectionViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" Width="400"
+             d:DataContext="{d:DesignInstance inspectionViewModel:AddInspectionEmployeeVm}">
+    <i:Interaction.Behaviors>
+        <Behaviors:FirstFocusBehavior/>
+    </i:Interaction.Behaviors>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/DialogViewResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions >
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Доступные сотрудники"            Grid.Row="0" />
+        <ComboBox ItemsSource="{Binding EmployeeList}" 
+                  DisplayMemberPath="Name" 
+                  SelectedValue="{Binding Employee}"
+                  Grid.Row="0"/>
+    </Grid>
+</UserControl>

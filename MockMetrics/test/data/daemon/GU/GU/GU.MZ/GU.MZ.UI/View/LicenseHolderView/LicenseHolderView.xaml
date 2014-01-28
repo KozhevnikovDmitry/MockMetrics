@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="GU.MZ.UI.View.LicenseHolderView.LicenseHolderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:holderview="clr-namespace:GU.MZ.UI.View.LicenseHolderView"
+             xmlns:commonview="clr-namespace:Common.UI.View;assembly=Common.UI"
+             xmlns:licenseHolderViewModel="clr-namespace:GU.MZ.UI.ViewModel.LicenseHolderViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance licenseHolderViewModel:LicenseHolderVm}">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Common.UI;component/View/Styles/CommonStyleResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Grid.Row="0">
+            <GroupBox Header="Лицензиат" Style="{StaticResource GroupBoxCommonStyle}">
+                <AdornerDecorator>
+                    <holderview:LicenseHolderDataView DataContext="{Binding LicenseHolderDataVm}" VerticalContentAlignment="Top" Width="400"/>
+                </AdornerDecorator>
+            </GroupBox>
+            <GroupBox Header="Реквизиты" Style="{StaticResource GroupBoxCommonStyle}">
+                <AdornerDecorator>
+                    <holderview:HolderRequisitesView DataContext="{Binding HolderRequisitesDataVm}" VerticalContentAlignment="Top" Width="400"/>
+                </AdornerDecorator>
+            </GroupBox>
+        </WrapPanel>
+
+        <GroupBox Header="Лицензии"  Grid.Row="1" Style="{StaticResource GroupBoxCommonStyle}">
+            <commonview:ListView DataContext="{Binding DossierListVm}"/>
+        </GroupBox>
+    </Grid>
+</UserControl>
