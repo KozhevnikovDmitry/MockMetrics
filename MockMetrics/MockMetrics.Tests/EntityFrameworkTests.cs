@@ -30,7 +30,7 @@ namespace MockMetrics.Tests
 
         protected override string RelativeTestDataPath
         {
-            get { return @"daemon\EntityFramework"; }
+            get { return @"D:\GitHub\mm_test\EntityFramework"; }
         }
 
         protected override string SolutionName

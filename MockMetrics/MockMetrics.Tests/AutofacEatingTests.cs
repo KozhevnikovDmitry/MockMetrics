@@ -30,7 +30,7 @@ namespace MockMetrics.Tests
 
         protected override string RelativeTestDataPath
         {
-            get { return @"daemon\Autofac"; }
+            get { return @"D:\GitHub\mm_test\Autofac"; }
         }
 
         protected override string SolutionName
