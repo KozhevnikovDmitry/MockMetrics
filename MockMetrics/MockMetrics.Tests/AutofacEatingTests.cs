@@ -38,8 +38,8 @@ namespace MockMetrics.Tests
             get { return @"Autofac.sln"; }
         }
 
-        [TestCase(@"<Autofac.Tests>")]
-        [TestCase(@"<Core.Tests>")]
+        [TestCase(@"<Autofac.Tests")]
+        [TestCase(@"<Autofac.Extras.Tests")]
         public void Autofac_Tests_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
