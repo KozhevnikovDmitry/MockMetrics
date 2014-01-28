@@ -18,8 +18,12 @@ namespace MockMetrics.Eating.Expression
                     Eater.Eat(snapshot, size);
             }
 
-            // TODO : Cover by unit tests
-            return Eater.Eat(snapshot, expression.ArrayInitializer);
+            if (expression.ArrayInitializer != null)
+            {
+                return Eater.Eat(snapshot, expression.ArrayInitializer);
+            }
+            
+            return Variable.Library;
         }
     }
 }
