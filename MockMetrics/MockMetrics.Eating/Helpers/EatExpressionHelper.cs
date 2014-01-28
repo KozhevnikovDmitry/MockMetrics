@@ -107,7 +107,8 @@ namespace MockMetrics.Eating.Helpers
                 }
                 else
                 {
-                    if (result.ResolveErrorType.ToString() == "DYNAMIC")
+                    var errorType = result.ResolveErrorType.ToString();
+                    if (errorType == "DYNAMIC")
                     {
                         return new DynamicDeclaredElement();
                     }
@@ -138,7 +139,8 @@ namespace MockMetrics.Eating.Helpers
                 }
                 else
                 {
-                    if (result.ResolveErrorType.ToString() == "DYNAMIC")
+                    var errorType = result.ResolveErrorType.ToString();
+                    if (errorType == "DYNAMIC" || errorType == "MULTIPLE_CANDIDATES")
                     {
                         if (result.Result.Candidates.Any())
                         {
