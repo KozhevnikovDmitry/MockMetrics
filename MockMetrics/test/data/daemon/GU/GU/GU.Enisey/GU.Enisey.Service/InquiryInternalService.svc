@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="GU.Enisey.Service.InquiryInternalService" CodeBehind="InquiryInternalService.svc.cs" %>
