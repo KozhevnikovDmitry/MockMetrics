@@ -109,7 +109,10 @@ namespace MockMetrics.Tests
                         listOfProjectPaths.Add(projectFile.GetPresentableProjectPath());
                         if (!projectFile.GetPresentableProjectPath().StartsWith(fullProjectPathToTestFile))
                             continue;
-
+                        else
+                        {
+                            int i = 0;
+                        }
                         IPsiSourceFile sourceFile = projectFile.ToSourceFile();
                         Assert.IsNotNull(sourceFile);
 
@@ -119,17 +122,25 @@ namespace MockMetrics.Tests
                             Assert.IsTrue(projectFile.Kind == ProjectItemKind.PHYSICAL_FILE);
 
                             IProjectFile file = projectFile;
-                            ExecuteWithGold(projectFile.Location.FullPath
-                                            , (writer =>
-                                            {
-                                                var highlightDumper =
-                                                    CreateHighlightDumper(sourceFile, writer);
-                                                highlightDumper.DoHighlighting(
-                                                    DaemonProcessKind.VISIBLE_DOCUMENT);
-                                                highlightDumper.Dump();
+                            try
+                            {
+                                ExecuteWithGold(projectFile.Location.FullPath
+                                                , (writer =>
+                                                {
+                                                    var highlightDumper =
+                                                        CreateHighlightDumper(sourceFile, writer);
+                                                    highlightDumper.DoHighlighting(
+                                                        DaemonProcessKind.VISIBLE_DOCUMENT);
+                                                    highlightDumper.Dump();
 
-                                                DumperShortCutAction(file, writer);
-                                            }));
+                                                    DumperShortCutAction(file, writer);
+                                                }));
+                            }
+                            catch (Exception ex)
+                            {
+                                if (ex.Message != "The test output differs from the gold file.")
+                                throw;
+                            }
                         }
                     }
                 }

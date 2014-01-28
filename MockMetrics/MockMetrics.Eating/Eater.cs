@@ -64,7 +64,7 @@ namespace MockMetrics.Eating
         public Variable Eat(ISnapshot snapshot, IInitializerElement initializerElement)
         {
             if (initializerElement == null)
-                throw new ArgumentNullException("statement");
+                throw new ArgumentNullException("initializerElement");
 
             EatedNodes.Add(initializerElement);
 
