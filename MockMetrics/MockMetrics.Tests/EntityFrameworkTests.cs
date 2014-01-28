@@ -38,6 +38,7 @@ namespace MockMetrics.Tests
             get { return @"EntityFramework.sln"; }
         }
 
+        [TestCase(@"<UnitTests>")]
         public void Entity_Framework_Tests(string testName)
         {
             DoMultipleTestFiles(testName);

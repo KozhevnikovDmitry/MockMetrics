@@ -35,7 +35,7 @@ namespace MockMetrics.Tests
 
         protected override string SolutionName
         {
-            get { return @"nuget.sln"; }
+            get { return @"NuGet.sln"; }
         }
 
         public void Nuget_Tests(string testName)

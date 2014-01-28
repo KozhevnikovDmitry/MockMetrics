@@ -30,14 +30,15 @@ namespace MockMetrics.Tests
 
         protected override string RelativeTestDataPath
         {
-            get { return @"daemon\Nhibernate"; }
+            get { return @"daemon\Nhibernate\src"; }
         }
 
         protected override string SolutionName
         {
-            get { return @"nhibernate.sln"; }
+            get { return @"NHibernate.sln"; }
         }
 
+        [TestCase(@"<NHibernate.Test>")]
         public void Nhibernate_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
