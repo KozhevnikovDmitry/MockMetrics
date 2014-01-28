@@ -64,7 +64,8 @@ namespace MockMetrics
             }
 
             return method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestAttribute"), false)
-                || method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestCaseAttribute"), false);
+                || method.HasAttributeInstance(new ClrTypeName("NUnit.Framework.TestCaseAttribute"), false)
+                || method.HasAttributeInstance(new ClrTypeName("Xunit.FactAttribute"), false);
         }
 
         public bool ProcessingIsFinished
