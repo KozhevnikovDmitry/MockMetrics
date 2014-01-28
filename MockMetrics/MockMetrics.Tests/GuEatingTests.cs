@@ -30,7 +30,7 @@ namespace MockMetrics.Tests
 
         protected override string RelativeTestDataPath
         {
-            get { return @"D:\GitHub\GU\GU\GU.MZ"; }
+            get { return @"daemon\GU\GU\GU.MZ"; }
         }
 
         protected override string SolutionName

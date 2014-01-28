@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace MockMetrics.Tests
 {
-    public class AutofacEatingTests : BaseFixture
+    public class EntityFrameworkTests : BaseFixture
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting,
             IContextBoundSettingsStore settingsstore)
@@ -30,22 +30,20 @@ namespace MockMetrics.Tests
 
         protected override string RelativeTestDataPath
         {
-            get { return @"daemon\Autofac"; }
+            get { return @"daemon\EntityFramework"; }
         }
 
         protected override string SolutionName
         {
-            get { return @"Autofac.sln"; }
+            get { return @"EntityFramework.sln"; }
         }
 
-        [TestCase(@"<Autofac.Tests")]
-        [TestCase(@"<Autofac.Extras.Tests")]
-        public void Autofac_Tests(string testName)
+        public void Entity_Framework_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
             var snapshots = FakesElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count());
-            new SnapshotDump().Dump(snapshots, "autofac_tests");
+            new SnapshotDump().Dump(snapshots, "enitity_framework_tests");
         }
     }
 }
