@@ -25,5 +25,20 @@ namespace MockMetrics.Eating.Tests.Statement
             // Assert
             eater.Verify(t => t.Eat(snapshot, exception), Times.Once);
         }
+        [Test]
+        public void NotEatNullExceptionTest()
+        {
+            // Arrange
+            var snapshot = Mock.Of<ISnapshot>();
+            var throwStatement = Mock.Of<IThrowStatement>();
+            var eater = new Mock<IEater>();
+            var throwStatementEater = new ThrowStatementEater(eater.Object);
+
+            // Act
+            throwStatementEater.Eat(snapshot, throwStatement);
+
+            // Assert
+            eater.Verify(t => t.Eat(snapshot, It.IsAny<ICSharpExpression>()), Times.Never);
+        }
     }
 }
