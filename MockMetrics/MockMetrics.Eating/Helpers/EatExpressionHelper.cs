@@ -133,7 +133,7 @@ namespace MockMetrics.Eating.Helpers
                 else
                 {
                     var errorType = result.ResolveErrorType.ToString();
-                    if (errorType == "DYNAMIC")
+                    if (errorType == "DYNAMIC" || errorType == "NOT_RESOLVED")
                     {
                         return new NullDeclaredElement();
                     }
