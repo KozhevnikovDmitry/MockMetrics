@@ -88,6 +88,11 @@ namespace MockMetrics.Eating.Helpers
 
         private Variable GetVariable(ISnapshot snapshot, ITypeElement typeElement)
         {
+            if (typeElement is NullTypeElement)
+            {
+                return Variable.None;
+            }
+
             if (snapshot.IsInTestScope(typeElement.Module.Name))
             {
                 if (typeElement is IInterface)
