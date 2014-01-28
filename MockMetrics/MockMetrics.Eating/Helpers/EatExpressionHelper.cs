@@ -62,7 +62,7 @@ namespace MockMetrics.Eating.Helpers
                 else
                 {
                     var errorType = result.ResolveErrorType.ToString();
-                    if (errorType == "MULTIPLE_CANDIDATES")
+                    if (errorType == "MULTIPLE_CANDIDATES" || errorType == "INCORRECT_PARAMETER_TYPE")
                     {
                         if (result.Result.Candidates.Any())
                         {
@@ -159,7 +159,7 @@ namespace MockMetrics.Eating.Helpers
                         return "NOT_INVOCABLE";
                     }
 
-                    if (errorType == "DYNAMIC" || errorType == "MULTIPLE_CANDIDATES")
+                    if (errorType == "DYNAMIC" || errorType == "MULTIPLE_CANDIDATES" || errorType == "INCORRECT_PARAMETER_TYPE")
                     {
                         if (result.Result.Candidates.Any())
                         {
