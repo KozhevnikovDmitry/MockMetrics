@@ -133,6 +133,15 @@ namespace MockMetrics.Eating.Helpers
                 else
                 {
                     var errorType = result.ResolveErrorType.ToString();
+
+                    if (errorType == "MULTIPLE_CANDIDATES")
+                    {
+                        if (result.Result.Candidates.Any())
+                        {
+                            return result.Result.Candidates.First();
+                        }
+                    }
+
                     if (errorType == "DYNAMIC" || errorType == "NOT_RESOLVED")
                     {
                         return new NullDeclaredElement();
@@ -171,7 +180,14 @@ namespace MockMetrics.Eating.Helpers
                         return "NOT_INVOCABLE";
                     }
 
-                    if (errorType == "DYNAMIC" || errorType == "MULTIPLE_CANDIDATES" || errorType == "INCORRECT_PARAMETER_TYPE")
+                    if (errorType == "TYPE_INFERENCE_FAILED")
+                    {
+                        return "TYPE_INFERENCE_FAILED";
+                    }
+
+                    if (errorType == "DYNAMIC" || 
+                        errorType == "MULTIPLE_CANDIDATES" ||
+                        errorType == "INCORRECT_PARAMETER_TYPE")
                     {
                         if (result.Result.Candidates.Any())
                         {
