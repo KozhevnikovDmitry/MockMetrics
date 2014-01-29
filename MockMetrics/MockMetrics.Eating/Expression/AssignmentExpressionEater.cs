@@ -7,11 +7,13 @@ namespace MockMetrics.Eating.Expression
     public class AssignmentExpressionEater : ExpressionEater<IAssignmentExpression>
     {
         private readonly IMetricHelper _metricHelper;
+        private readonly EatExpressionHelper _eatExpressionHelper;
 
-        public AssignmentExpressionEater(IEater eater, IMetricHelper metricHelper)
+        public AssignmentExpressionEater(IEater eater, IMetricHelper metricHelper, EatExpressionHelper eatExpressionHelper)
             : base(eater)
         {
             _metricHelper = metricHelper;
+            _eatExpressionHelper = eatExpressionHelper;
         }
 
         public override Variable Eat(ISnapshot snapshot, IAssignmentExpression expression)
@@ -22,11 +24,16 @@ namespace MockMetrics.Eating.Expression
             if (expression.Dest is IReferenceExpression)
             {
                 var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);
-                if (!(expression.Dest is IReferenceExpression))
+                var dest = expression.Dest as IReferenceExpression;
+                var declaration = _eatExpressionHelper.GetReferenceDeclaration(dest);
+                if (declaration is NullCsharpDeclaration)
                 {
-                    int i = 0;
+                    snapshot.AddVariable(dest, assigneeMetrics);
                 }
-                snapshot.AddVariable(expression.Dest as IReferenceExpression, assigneeMetrics);
+                else
+                {
+                    snapshot.AddVariable(declaration, assigneeMetrics);
+                }
             }
             else
             {
