@@ -122,6 +122,12 @@ namespace MockMetrics.Eating.Helpers
             if (referenceExpression == null)
                 throw new ArgumentNullException("referenceExpression");
             var declaredElement = GetReferenceElement(referenceExpression);
+
+            if (declaredElement is NullDeclaredElement)
+            {
+                return new NullCsharpDeclaration();
+            }
+
             var declaration = declaredElement as ICSharpDeclaration;
 
             if (declaration != null)
