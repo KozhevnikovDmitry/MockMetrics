@@ -21,7 +21,11 @@ namespace MockMetrics.Eating.Expression
 
             if (expression.Dest is IReferenceExpression)
             {
-                var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);;
+                var assigneeMetrics = _metricHelper.MetricsMerge(destMetrics, sourceMetrics);
+                if (!(expression.Dest is IReferenceExpression))
+                {
+                    int i = 0;
+                }
                 snapshot.AddVariable(expression.Dest as IReferenceExpression, assigneeMetrics);
             }
             else

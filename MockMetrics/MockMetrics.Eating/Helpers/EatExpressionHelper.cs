@@ -46,19 +46,14 @@ namespace MockMetrics.Eating.Helpers
             var scalarType = type.GetScalarType();
             if (scalarType != null)
             {
-                if (scalarType.GetTypeElement() != null)
+                var typeElement = scalarType.GetTypeElement();
+                if (typeElement != null)
                 {
-                    return scalarType.GetTypeElement();
-                }
-                else
-                {
-                    throw new ExpressionHelperException("Declared element type is not a class", type);
+                    return typeElement;
                 }
             }
-            else
-            {
-                throw new ExpressionHelperException("Null scalara type for type", type);
-            }
+
+            return new NullTypeElement();
         }
 
         public virtual IDeclaredElement GetInvokedElement([NotNull] IInvocationExpression invocationExpression)
@@ -71,35 +66,13 @@ namespace MockMetrics.Eating.Helpers
                 {
                     return result.DeclaredElement;
                 }
-                else
+                
+                if (result.Result.Candidates.Any())
                 {
-                    var errorType = result.ResolveErrorType.ToString();
-                    if (errorType == "MULTIPLE_CANDIDATES" || errorType == "INCORRECT_PARAMETER_TYPE")
-                    {
-                        if (result.Result.Candidates.Any())
-                        {
-                            return result.Result.Candidates.First();
-                        }
-                        else
-                        {
-                            return new NullDeclaredElement();
-                        }
-                    }
-
-                    if (errorType == "DYNAMIC" || errorType == "NOT_INVOCABLE")
-                    {
-                        return new NullDeclaredElement();
-                    }
-                    else
-                    {
-                        throw new ExpressionHelperException("Null resolved result of invocation expression", invocationExpression);
-                    }
+                    return result.Result.Candidates.First();
                 }
             }
-            else
-            {
-                throw new ExpressionHelperException("Null resolved result of invocation expression", invocationExpression);
-            }
+            return new NullDeclaredElement();
         }
 
         public virtual bool IsInternalMethod(IInvocationExpression expression, ISnapshot snapshot)
@@ -130,78 +103,22 @@ namespace MockMetrics.Eating.Helpers
                 {
                     return result.DeclaredElement;
                 }
-                else
+
+                if (result.Result.Candidates.Any())
                 {
-                    var errorType = result.ResolveErrorType.ToString();
-
-                    if (errorType == "MULTIPLE_CANDIDATES")
-                    {
-                        if (result.Result.Candidates.Any())
-                        {
-                            return result.Result.Candidates.First();
-                        }
-                    }
-
-                    if (errorType == "DYNAMIC" || errorType == "NOT_RESOLVED")
-                    {
-                        return new NullDeclaredElement();
-                    }
-                    else
-                    {
-                        throw new ExpressionHelperException("Null resolved result of reference expression", referenceExpression);
-                    }
+                    return result.Result.Candidates.First();
                 }
             }
-            else
-            {
-                throw new ExpressionHelperException("Null resolved result of reference expression", referenceExpression);
-            }
+
+            return new NullDeclaredElement();
         }
 
         public virtual string GetInvokedElementName([NotNull] IInvocationExpression invocationExpression)
         {
             if (invocationExpression == null)
                 throw new ArgumentNullException("invocationExpression");
-
-            var result = invocationExpression.InvocationExpressionReference.CurrentResolveResult;
-
-            if (result != null)
-            {
-                if (result.DeclaredElement != null)
-                {
-                    return result.DeclaredElement.ToString();
-                }
-                else
-                {
-                    var errorType = result.ResolveErrorType.ToString();
-
-                    if (errorType == "NOT_INVOCABLE")
-                    {
-                        return "NOT_INVOCABLE";
-                    }
-
-                    if (errorType == "TYPE_INFERENCE_FAILED")
-                    {
-                        return "TYPE_INFERENCE_FAILED";
-                    }
-
-                    if (errorType == "DYNAMIC" || 
-                        errorType == "MULTIPLE_CANDIDATES" ||
-                        errorType == "INCORRECT_PARAMETER_TYPE")
-                    {
-                        if (result.Result.Candidates.Any())
-                        {
-                            return result.Result.Candidates.First().ToString();
-                        }
-                    }
-
-                    throw new ExpressionHelperException("Null parent reference of invocation expression", invocationExpression);
-                }
-            }
-            else
-            {
-                throw new ExpressionHelperException("Null resolved result of invocation parent reference expression", invocationExpression);
-            }
+            
+            return GetInvokedElement(invocationExpression).ToString();
         }
 
         public virtual bool IsStandaloneExpression([NotNull] IInvocationExpression expression)
