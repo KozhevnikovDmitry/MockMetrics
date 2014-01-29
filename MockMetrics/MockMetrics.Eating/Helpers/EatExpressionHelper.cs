@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using JetBrains.Annotations;
+using JetBrains.DocumentModel;
 using JetBrains.Metadata.Reader.API;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Impl.Resolve;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
+using JetBrains.ReSharper.Psi.ExtensionsAPI.Tree;
 using JetBrains.ReSharper.Psi.Modules;
 using JetBrains.ReSharper.Psi.Resolve;
 using JetBrains.ReSharper.Psi.Tree;
+using JetBrains.Text;
 using JetBrains.Util.DataStructures;
 using MockMetrics.Eating.Exceptions;
 using MockMetrics.Eating.MetricMeasure;
@@ -111,6 +115,28 @@ namespace MockMetrics.Eating.Helpers
             }
 
             return new NullDeclaredElement();
+        }
+        
+        public virtual ICSharpDeclaration GetReferenceDeclaration([NotNull] IReferenceExpression referenceExpression)
+        {
+            if (referenceExpression == null)
+                throw new ArgumentNullException("referenceExpression");
+            var declaredElement = GetReferenceElement(referenceExpression);
+            var declaration = declaredElement as ICSharpDeclaration;
+
+            if (declaration != null)
+            {
+                return declaration;
+            }
+
+            declaration = declaredElement.GetDeclarations().FirstOrDefault() as ICSharpDeclaration;
+
+            if (declaration != null)
+            {
+                return declaration;
+            }
+
+            return new NullCsharpDeclaration();
         }
 
         public virtual string GetInvokedElementName([NotNull] IInvocationExpression invocationExpression)
@@ -222,6 +248,172 @@ namespace MockMetrics.Eating.Helpers
 
             return false;
         }
+    }
+
+    public class NullCsharpDeclaration : ICSharpDeclaration
+    {
+        public IPsiServices GetPsiServices()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPsiModule GetPsiModule()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPsiSourceFile GetSourceFile()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ReferenceCollection GetFirstClassReferences()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ProcessDescendantsForResolve(IRecursiveElementProcessor processor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public T GetContainingNode<T>(bool returnThis = false) where T : ITreeNode
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Contains(ITreeNode other)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsPhysical()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsValid()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsStub()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsFiltered()
+        {
+            throw new NotImplementedException();
+        }
+
+        public DocumentRange GetNavigationRange()
+        {
+            throw new NotImplementedException();
+        }
+
+        public TreeOffset GetTreeStartOffset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetTextLength()
+        {
+            throw new NotImplementedException();
+        }
+
+        public StringBuilder GetText(StringBuilder to)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IBuffer GetTextAsBuffer()
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetText()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITreeNode FindNodeAt(TreeTextRange treeTextRange)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICollection<ITreeNode> FindNodesAt(TreeOffset treeTextOffset)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITreeNode FindTokenAt(TreeOffset treeTextOffset)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITreeNode Parent { get; private set; }
+        public ITreeNode FirstChild { get; private set; }
+        public ITreeNode LastChild { get; private set; }
+        public ITreeNode NextSibling { get; private set; }
+        public ITreeNode PrevSibling { get; private set; }
+        public NodeType NodeType { get; private set; }
+        public PsiLanguageType Language { get; private set; }
+        public NodeUserData UserData { get; private set; }
+        public NodeUserData PersistentUserData { get; private set; }
+        public XmlNode GetXMLDoc(bool inherit)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TreeTextRange GetNameRange()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsSynthetic()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IDeclaredElement DeclaredElement { get; private set; }
+        public string DeclaredName { get; private set; }
+        public void Accept(TreeNodeVisitor visitor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Accept<TContext>(TreeNodeVisitor<TContext> visitor, TContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TReturn Accept<TContext, TReturn>(TreeNodeVisitor<TContext, TReturn> visitor, TContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICSharpNamespaceDeclaration GetContainingNamespaceDeclaration()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICSharpTypeMemberDeclaration GetContainingTypeMemberDeclaration()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICSharpTypeDeclaration GetContainingTypeDeclaration()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICSharpIdentifier NameIdentifier { get; private set; }
     }
 
     public class NullTypeElement : ITypeElement
