@@ -38,6 +38,8 @@ namespace MockMetrics.Tests
             get { return @"NuGet.sln"; }
         }
 
+
+        [TestCase(@"<Core.Test>")]
         public void Nuget_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
