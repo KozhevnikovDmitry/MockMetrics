@@ -2,7 +2,6 @@
 using System.Linq;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
-using MockMetrics.Fake;
 using NUnit.Framework;
 
 namespace MockMetrics.Tests
@@ -12,20 +11,20 @@ namespace MockMetrics.Tests
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting, IContextBoundSettingsStore settingsstore)
         {
-            return highlighting is FakeHighlighting;
+            return highlighting is MockMetricInfo;
         }
 
         [SetUp]
         public void Setup()
         {
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         [TearDown]
         public override void TearDown()
         {
             base.TearDown();
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         protected override string RelativeTestDataPath
@@ -42,7 +41,7 @@ namespace MockMetrics.Tests
         public void MoqStubPositioningTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
 
@@ -50,7 +49,7 @@ namespace MockMetrics.Tests
         public void ReferenceTypesTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
 
@@ -58,7 +57,7 @@ namespace MockMetrics.Tests
         public void MethodInvocationTypesTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
 
@@ -66,7 +65,7 @@ namespace MockMetrics.Tests
         public void ItIsFakeOptionTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
 
@@ -74,7 +73,7 @@ namespace MockMetrics.Tests
         public void LinqQuerySyntaxTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
         }
     }

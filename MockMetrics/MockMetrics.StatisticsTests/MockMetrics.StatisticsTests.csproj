@@ -12,12 +12,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B1B51081-DED0-415C-B58D-0AC4ACDBE811}</ProjectGuid>
+    <ProjectGuid>{C3751436-25ED-444C-B129-DFA34DC08BCE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MockMetrics.Tests</RootNamespace>
-    <AssemblyName>MockMetrics.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>MockMetrics.StatisticsTests</RootNamespace>
+    <AssemblyName>MockMetrics.StatisticsTests</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -29,7 +29,6 @@
     <DefineConstants>JET_MODE_ASSERT;DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -38,7 +37,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -53,25 +51,32 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="AutofacEatingTests.cs" />
+    <Compile Include="EntityFrameworkTests.cs" />
+    <Compile Include="GuEatingTests.cs" />
+    <Compile Include="NhibernateTests.cs" />
+    <Compile Include="NugetTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MockMetrics.Eating\MockMetrics.Eating.csproj">
       <Project>{d4187cda-cbb4-4b29-860c-214fab5c4c82}</Project>
       <Name>MockMetrics.Eating</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MockMetrics.Tests\MockMetrics.Tests.csproj">
+      <Project>{b1b51081-ded0-415c-b58d-0ac4acdbe811}</Project>
+      <Name>MockMetrics.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MockMetrics\MockMetrics.csproj">
       <Project>{c12beabe-614d-4264-9f16-488422a962fb}</Project>
       <Name>MockMetrics</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="AcceptanceTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="BaseFixture.cs" />
-    <Compile Include="EducationalTests.cs" />
-    <Compile Include="IntegrationTests.cs" />
-    <Compile Include="SnapshotDump.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

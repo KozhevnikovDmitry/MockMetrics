@@ -2,7 +2,6 @@
 using System.Linq;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
-using MockMetrics.Fake;
 using NUnit.Framework;
 
 namespace MockMetrics.Tests
@@ -12,20 +11,20 @@ namespace MockMetrics.Tests
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting, IContextBoundSettingsStore settingsstore)
         {
-            return highlighting is FakeHighlighting;
+            return highlighting is MockMetricInfo;
         }
 
         [SetUp]
         public void Setup()
         {
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         [TearDown]
         public override void TearDown()
         {
             base.TearDown();
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         protected override string RelativeTestDataPath
@@ -45,7 +44,7 @@ namespace MockMetrics.Tests
         public void PrimitiveVariableTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Librarians.Count, 4);
@@ -58,7 +57,7 @@ namespace MockMetrics.Tests
         public void EnumOccurencesTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -80,7 +79,7 @@ namespace MockMetrics.Tests
         public void SimpleVariablesTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -97,7 +96,7 @@ namespace MockMetrics.Tests
         public void ExpressionVariableTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -114,7 +113,7 @@ namespace MockMetrics.Tests
         public void StubTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 1, "Assert stubs");
@@ -131,7 +130,7 @@ namespace MockMetrics.Tests
         public void MoqStubTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 3, "Assert stubs");
@@ -148,7 +147,7 @@ namespace MockMetrics.Tests
         public void MoqAssignmentStubsTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 2, "Assert stubs");
@@ -165,7 +164,7 @@ namespace MockMetrics.Tests
         public void VariablesWithInitializersTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 4, "Assert stubs");
@@ -182,7 +181,7 @@ namespace MockMetrics.Tests
         public void NestedMoqStubsTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
         }
@@ -194,7 +193,7 @@ namespace MockMetrics.Tests
         public void MoqSyntaxTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 12, "Assert stubs");
@@ -217,7 +216,7 @@ namespace MockMetrics.Tests
         public void InternalVariableTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -239,7 +238,7 @@ namespace MockMetrics.Tests
         public void InternalMultiDeclaredVariableTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -261,7 +260,7 @@ namespace MockMetrics.Tests
         public void InternalFieldVariableTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -283,7 +282,7 @@ namespace MockMetrics.Tests
         public void LocalVariableFromInternalMethodTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -305,7 +304,7 @@ namespace MockMetrics.Tests
         public void EatingForeachVaribaleBeforeBodyTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -327,7 +326,7 @@ namespace MockMetrics.Tests
         public void EatingCatchVaribaleBeforeBodyTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -349,7 +348,7 @@ namespace MockMetrics.Tests
         public void DynamicArgumentForOverloadMethodTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");
@@ -371,7 +370,7 @@ namespace MockMetrics.Tests
         public void EatingForVariableTests(string testName)
         {
             DoTestFiles(testName);
-            var snapshot = Enumerable.ToArray(FakesElementProcessor.Results.Values)[0];
+            var snapshot = Enumerable.ToArray(MockMetricsElementProcessor.Results.Values)[0];
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 0, "Assert stubs");

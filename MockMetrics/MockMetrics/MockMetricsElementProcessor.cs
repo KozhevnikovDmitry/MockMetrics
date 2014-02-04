@@ -4,11 +4,13 @@ using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp.Tree;
 using JetBrains.ReSharper.Psi.Tree;
 using MockMetrics.Eating;
+using MockMetrics.Eating.MetricMeasure;
 
 namespace MockMetrics
 {
     public class MockMetricsElementProcessor : IRecursiveElementProcessor
     {
+        public static Dictionary<IMethodDeclaration, ISnapshot> Results = new Dictionary<IMethodDeclaration, ISnapshot>();
         private readonly IDaemonProcess _process;
 
         private List<HighlightingInfo> _highlightings;
@@ -52,6 +54,7 @@ namespace MockMetrics
             if (IsNunitTestDeclaration(methodDeclaration.DeclaredElement))
             {
                 var snapshot = _eater.EatUnitTest(methodDeclaration);
+                Results[methodDeclaration] = snapshot;
                 Highlightings.Add(new HighlightingInfo(methodDeclaration.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
             }
         }

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
-using MockMetrics.Fake;
 using NUnit.Framework;
 
 namespace MockMetrics.Tests
@@ -11,20 +9,20 @@ namespace MockMetrics.Tests
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting, IContextBoundSettingsStore settingsstore)
         {
-            return highlighting is FakeHighlighting;
+            return highlighting is MockMetricInfo;
         }
 
         [SetUp]
         public void Setup()
         {
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         [TearDown]
         public override void TearDown()
         {
             base.TearDown();
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         protected override string RelativeTestDataPath
@@ -41,8 +39,8 @@ namespace MockMetrics.Tests
         public void PostGrad_AddInList_After_LinakgerTests_Tests(string testName)
         {
             DoTestFiles(testName);
-            var snapshots = FakesElementProcessor.Results.Values;
-            Console.WriteLine(snapshots.Count());
+            var snapshots = MockMetricsElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count);
             new SnapshotDump().Dump(snapshots, "add_in_list");
         }
 
@@ -51,8 +49,8 @@ namespace MockMetrics.Tests
         public void PostGrad_AddInList_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            var snapshots = FakesElementProcessor.Results.Values;
-            Console.WriteLine(snapshots.Count());
+            var snapshots = MockMetricsElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count);
             new SnapshotDump().Dump(snapshots, "add_in_list");
         }
 
@@ -60,8 +58,8 @@ namespace MockMetrics.Tests
         public void PostGrad_StepByStep_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            var snapshots = FakesElementProcessor.Results.Values;
-            Console.WriteLine(snapshots.Count());
+            var snapshots = MockMetricsElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count);
             new SnapshotDump().Dump(snapshots, "step_by_step");
         }
 
@@ -69,8 +67,8 @@ namespace MockMetrics.Tests
         public void PostGrad_InitializedObject_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            var snapshots = FakesElementProcessor.Results.Values;
-            Console.WriteLine(snapshots.Count());
+            var snapshots = MockMetricsElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count);
             new SnapshotDump().Dump(snapshots, "initialized_object");
         }
 
@@ -78,8 +76,8 @@ namespace MockMetrics.Tests
         public void PostGrad_DiActionContext_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            var snapshots = FakesElementProcessor.Results.Values;
-            Console.WriteLine(snapshots.Count());
+            var snapshots = MockMetricsElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count);
             new SnapshotDump().Dump(snapshots, "di_action_context");
         }
     }

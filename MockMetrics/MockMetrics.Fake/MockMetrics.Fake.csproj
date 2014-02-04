@@ -9,8 +9,8 @@
     <ProjectGuid>{B0AB91D3-CFA9-43FB-B7BB-86E259C5EE96}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MockMetrics.Fake</RootNamespace>
-    <AssemblyName>MockMetrics.Fake</AssemblyName>
+    <RootNamespace>MockMetrics.Statistics</RootNamespace>
+    <AssemblyName>MockMetrics.Statistics</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

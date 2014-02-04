@@ -1,31 +1,30 @@
 ﻿using System;
-using System.Linq;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
-using MockMetrics.Fake;
+using MockMetrics.Tests;
 using NUnit.Framework;
 
-namespace MockMetrics.Tests
+namespace MockMetrics.StatisticsTests
 {
     public class EntityFrameworkTests : BaseFixture
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting,
             IContextBoundSettingsStore settingsstore)
         {
-            return highlighting is FakeHighlighting;
+            return highlighting is MockMetricInfo;
         }
 
         [SetUp]
         public void Setup()
         {
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         [TearDown]
         public override void TearDown()
         {
             base.TearDown();
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         protected override string RelativeTestDataPath
@@ -42,8 +41,8 @@ namespace MockMetrics.Tests
         public void Entity_Framework_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            var snapshots = FakesElementProcessor.Results.Values;
-            Console.WriteLine(snapshots.Count());
+            var snapshots = MockMetricsElementProcessor.Results.Values;
+            Console.WriteLine(snapshots.Count);
             new SnapshotDump().Dump(snapshots, "enitity_framework_tests");
         }
     }

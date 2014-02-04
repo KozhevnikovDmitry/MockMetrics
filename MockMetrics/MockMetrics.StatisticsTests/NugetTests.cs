@@ -2,50 +2,50 @@
 using System.Linq;
 using JetBrains.Application.Settings;
 using JetBrains.ReSharper.Daemon;
-using MockMetrics.Fake;
+using MockMetrics.Tests;
 using NUnit.Framework;
 
-namespace MockMetrics.Tests
+namespace MockMetrics.StatisticsTests
 {
-    public class AutofacEatingTests : BaseFixture
+    public class NugetTests : BaseFixture
     {
         protected override bool HighlightingPredicate(IHighlighting highlighting,
             IContextBoundSettingsStore settingsstore)
         {
-            return highlighting is FakeHighlighting;
+            return highlighting is MockMetricInfo;
         }
 
         [SetUp]
         public void Setup()
         {
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         [TearDown]
         public override void TearDown()
         {
             base.TearDown();
-            FakesElementProcessor.Results.Clear();
+            MockMetricsElementProcessor.Results.Clear();
         }
 
         protected override string RelativeTestDataPath
         {
-            get { return @"D:\GitHub\mm_test\Autofac"; }
+            get { return @"D:\GitHub\mm_test\Nuget"; }
         }
 
         protected override string SolutionName
         {
-            get { return @"Autofac.sln"; }
+            get { return @"NuGet.sln"; }
         }
 
-        [TestCase(@"<Autofac.Tests")]
-        [TestCase(@"<Autofac.Extras.Tests")]
-        public void Autofac_Tests(string testName)
+
+        [TestCase(@"<Core.Test>")]
+        public void Nuget_Tests(string testName)
         {
             DoMultipleTestFiles(testName);
-            var snapshots = FakesElementProcessor.Results.Values;
+            var snapshots = MockMetricsElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count());
-            new SnapshotDump().Dump(snapshots, "autofac_tests");
+            new SnapshotDump().Dump(snapshots, "nuget_tests");
         }
     }
 }
