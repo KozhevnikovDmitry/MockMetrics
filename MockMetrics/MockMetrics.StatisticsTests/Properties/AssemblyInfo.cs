@@ -1,16 +1,16 @@
 ﻿using JetBrains.Application;
 using JetBrains.Threading;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using MockMetrics;
+using MockMetrics.Eating.MetricMeasure;
 using NUnit.Framework;
 
 /// <summary>
 /// Test environment. Must be in the global namespace.
 /// </summary>
 [SetUpFixture]
-public class TestEnvironmentAssembly : ReSharperTestEnvironmentAssembly
+public class StatisticsTestAssembly : ReSharperTestEnvironmentAssembly
 {
     /// <summary>
     /// Gets the assemblies to load into test environment.
@@ -21,8 +21,8 @@ public class TestEnvironmentAssembly : ReSharperTestEnvironmentAssembly
         // Test assembly
         yield return Assembly.GetExecutingAssembly();
 
-#warning you need to replace 'object' below with a type from the assembly being tested
-        yield return typeof(object).Assembly;
+        yield return typeof(MockMetricInfo).Assembly;
+        yield return typeof(ISnapshot).Assembly;
     }
 
     public override void SetUp()

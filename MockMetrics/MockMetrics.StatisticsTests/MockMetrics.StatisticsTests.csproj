@@ -54,11 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutofacEatingTests.cs" />
+    <Compile Include="BaseFixture.cs" />
     <Compile Include="EntityFrameworkTests.cs" />
     <Compile Include="GuEatingTests.cs" />
-    <Compile Include="NhibernateTests.cs" />
     <Compile Include="NugetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SnapshotDump.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -70,10 +71,6 @@
     <ProjectReference Include="..\MockMetrics.Eating\MockMetrics.Eating.csproj">
       <Project>{d4187cda-cbb4-4b29-860c-214fab5c4c82}</Project>
       <Name>MockMetrics.Eating</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MockMetrics.Tests\MockMetrics.Tests.csproj">
-      <Project>{b1b51081-ded0-415c-b58d-0ac4acdbe811}</Project>
-      <Name>MockMetrics.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\MockMetrics\MockMetrics.csproj">
       <Project>{c12beabe-614d-4264-9f16-488422a962fb}</Project>
