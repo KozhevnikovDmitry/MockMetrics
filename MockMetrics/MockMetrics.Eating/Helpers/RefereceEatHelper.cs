@@ -177,8 +177,13 @@ namespace MockMetrics.Eating.Helpers
             {
                 return false;
             }
-            var declaration = declaredElement.GetDeclarations().FirstOrDefault();
 
+            if (declaredElement.GetElementType().PresentableName == "enum member")
+            {
+                return true;
+            }
+
+            var declaration = declaredElement.GetDeclarations().FirstOrDefault();
             return declaration is IEnumMemberDeclaration;
         }
 
