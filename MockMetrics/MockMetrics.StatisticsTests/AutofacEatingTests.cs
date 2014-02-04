@@ -43,7 +43,7 @@ namespace MockMetrics.StatisticsTests
         {
             DoMultipleTestFiles(testName);
             var snapshots = MockMetricsElementProcessor.Results.Values;
-            Console.WriteLine(snapshots.Count());
+            Console.WriteLine(snapshots.Count);
             new SnapshotDump().Dump(snapshots, "autofac_tests");
         }
     }

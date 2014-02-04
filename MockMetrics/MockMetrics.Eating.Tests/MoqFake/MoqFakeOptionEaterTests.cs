@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace MockMetrics.Eating.Tests.MoqFake
 {
     [TestFixture]
-    class MoqFakeOptionEaterTests
+    public class MoqFakeOptionEaterTests
     {
         [Test]
         public void EatMethodOptionTest()

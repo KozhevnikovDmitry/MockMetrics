@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace MockMetrics.Eating.Tests.Expression
 {
     [TestFixture]
-    class InvocationStuffEaterTests
+    public class InvocationStuffEaterTests
     {
         [Test]
         public void EatArgumentsTest()

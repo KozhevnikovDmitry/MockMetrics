@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace MockMetrics.Eating.Tests
 {
     [TestFixture]
-    public class EaterConfigTest
+    public class EaterConfigTests
     {
         [Test]
         public void GetInstancesFromContainerTest()
@@ -50,8 +50,7 @@ namespace MockMetrics.Eating.Tests
             Assert.DoesNotThrow(() => eater.GetEater(Mock.Of<IObjectCreationExpression>()));
             Assert.DoesNotThrow(() => eater.GetEater(Mock.Of<IReferenceExpression>()));
         }
-
-
+        
         [Test]
         public void GetBinaryEatersFromEaterTest()
         {

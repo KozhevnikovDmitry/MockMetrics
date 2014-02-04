@@ -55,7 +55,6 @@ namespace MockMetrics
             {
                 var snapshot = _eater.EatUnitTest(methodDeclaration);
                 Results[methodDeclaration] = snapshot;
-                Highlightings.Add(new HighlightingInfo(methodDeclaration.GetNameDocumentRange(), new MockMetricInfo(snapshot)));
             }
         }
 

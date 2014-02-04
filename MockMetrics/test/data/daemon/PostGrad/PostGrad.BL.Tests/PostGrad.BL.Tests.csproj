@@ -70,9 +70,6 @@
     <Compile Include="StepByStep\Before\DossierFileBuilderTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="goldgen.exe" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\PostGrad.BL\PostGrad.BL.csproj">
       <Project>{88b3a12d-adfa-4cff-a48c-45de652c415d}</Project>
       <Name>PostGrad.BL</Name>
