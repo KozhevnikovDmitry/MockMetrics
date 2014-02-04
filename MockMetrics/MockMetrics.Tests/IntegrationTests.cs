@@ -197,7 +197,7 @@ namespace MockMetrics.Tests
             Console.WriteLine(snapshot);
 
             Assert.AreEqual(snapshot.Stubs.Count(), 12, "Assert stubs");
-            Assert.AreEqual(snapshot.Librarians.Count(), 23, "Assert library");
+            Assert.AreEqual(snapshot.Librarians.Count(), 26, "Assert library");
             Assert.AreEqual(snapshot.Targets.Count(), 0, "Assert targets");
             Assert.AreEqual(snapshot.Mocks.Count(), 2, "Assert mocks");
             Assert.AreEqual(snapshot.Services.Count(), 21, "Assert services");
