@@ -162,10 +162,6 @@ namespace MockMetrics.Eating.Helpers
                 snapshot.AddVariable(expression, vartype);
             }
 
-            if (IsEnumMember(expression))
-            {
-                snapshot.AddVariable(expression, vartype);
-            }
 
             return vartype;
         }
@@ -223,6 +219,11 @@ namespace MockMetrics.Eating.Helpers
         {
             if (_eatExpressionHelper.IsStandaloneExpression(expression))
             {
+                if (IsEnumMember(expression))
+                {
+                    return true;
+                }
+
                 var declaredElement = _eatExpressionHelper.GetReferenceElement(expression);
 
                 if (declaredElement is IMethod)
