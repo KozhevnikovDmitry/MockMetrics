@@ -56,6 +56,8 @@ namespace MockMetrics
                 var snapshot = _eater.EatUnitTest(methodDeclaration);
                 Results[methodDeclaration] = snapshot;
             }
+
+            System.Runtime.CompilerServices.ExtensionAttribute x = null;
         }
 
         private bool IsNunitTestDeclaration(IMethod method)

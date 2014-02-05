@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="AutofacEatingTests.cs" />
     <Compile Include="BaseFixture.cs" />
+    <Compile Include="BooEatingTests.cs" />
     <Compile Include="EntityFrameworkTests.cs" />
     <Compile Include="GuEatingTests.cs" />
     <Compile Include="NugetTests.cs" />
