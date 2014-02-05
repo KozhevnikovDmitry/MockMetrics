@@ -55,12 +55,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MockMetrics.Eating\MockMetrics.Eating.csproj">
-      <Project>{d4187cda-cbb4-4b29-860c-214fab5c4c82}</Project>
-      <Name>MockMetrics.Eating</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MockMetrics.Eating\MockMetrics.Eating.csproj">
+      <Project>{d3d283eb-d36e-4d39-b698-4a3ccb7e7750}</Project>
+      <Name>MockMetrics.Eating</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
