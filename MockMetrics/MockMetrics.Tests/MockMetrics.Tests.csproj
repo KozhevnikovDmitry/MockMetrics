@@ -56,13 +56,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MockMetrics\MockMetrics.csproj">
+      <Project>{214046ab-f093-419b-980b-b1c53cb1ec0d}</Project>
+      <Name>MockMetrics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MockMetrics.Eating\MockMetrics.Eating.csproj">
       <Project>{d4187cda-cbb4-4b29-860c-214fab5c4c82}</Project>
       <Name>MockMetrics.Eating</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MockMetrics\MockMetrics.csproj">
-      <Project>{c12beabe-614d-4264-9f16-488422a962fb}</Project>
-      <Name>MockMetrics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
