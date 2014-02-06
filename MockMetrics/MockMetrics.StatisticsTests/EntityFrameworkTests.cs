@@ -43,7 +43,7 @@ namespace MockMetrics.StatisticsTests
             DoMultipleTestFiles(testName);
             var snapshots = MockMetricsElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count);
-            new SnapshotDump().Dump(snapshots, "enitity_framework_tests");
+            new SnapshotDbDump().Dump("enitity_framework_tests", snapshots);
         }
     }
 }
