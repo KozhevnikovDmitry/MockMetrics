@@ -1,0 +1,1 @@
+C:\projects\mockmetrics\MockMetrics\.nuget\nuget.exe restore C:\projects\mockmetrics\MockMetrics\MockMetrics.sln
