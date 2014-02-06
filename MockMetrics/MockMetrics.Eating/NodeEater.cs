@@ -74,7 +74,7 @@ namespace MockMetrics.Eating
             }
             catch (Exception ex)
             {
-                throw new EatingException("Unexpected exception", ex, this, node);
+                throw new UnexpextedEatingException(ex, this, node);
             }
 #endif
         }

@@ -41,7 +41,9 @@ namespace MockMetrics.Tests
             DoTestFiles(testName);
             var snapshots = MockMetricsElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count);
+#if DEBUG
             new SnapshotDump().Dump(snapshots, "add_in_list");
+#endif
         }
 
 
@@ -51,7 +53,9 @@ namespace MockMetrics.Tests
             DoMultipleTestFiles(testName);
             var snapshots = MockMetricsElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count);
+#if DEBUG
             new SnapshotDump().Dump(snapshots, "add_in_list");
+#endif
         }
 
         [TestCase(@"<PostGrad.BL.Tests>\StepByStep")]
@@ -60,7 +64,9 @@ namespace MockMetrics.Tests
             DoMultipleTestFiles(testName);
             var snapshots = MockMetricsElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count);
+#if DEBUG
             new SnapshotDump().Dump(snapshots, "step_by_step");
+#endif
         }
 
         [TestCase(@"<PostGrad.BL.Tests>\InitializedObject")]
@@ -69,7 +75,9 @@ namespace MockMetrics.Tests
             DoMultipleTestFiles(testName);
             var snapshots = MockMetricsElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count);
+#if DEBUG
             new SnapshotDump().Dump(snapshots, "initialized_object");
+#endif
         }
 
         [TestCase(@"<PostGrad.BL.Tests>\DiActionContext")]
@@ -78,7 +86,9 @@ namespace MockMetrics.Tests
             DoMultipleTestFiles(testName);
             var snapshots = MockMetricsElementProcessor.Results.Values;
             Console.WriteLine(snapshots.Count);
+#if DEBUG
             new SnapshotDump().Dump(snapshots, "di_action_context");
+#endif
         }
     }
 }
