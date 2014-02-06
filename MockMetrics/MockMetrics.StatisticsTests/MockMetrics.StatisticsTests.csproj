@@ -42,9 +42,23 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.0.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServerCompact">
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.6.0.2\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,12 +73,17 @@
       <Project>{d3d283eb-d36e-4d39-b698-4a3ccb7e7750}</Project>
       <Name>MockMetrics.Eating</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MockMetrics.Tests\MockMetrics.Tests.csproj">
+      <Project>{fa29be00-54d5-4f46-b4c3-c651eff27d40}</Project>
+      <Name>MockMetrics.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MockMetrics\MockMetrics.csproj">
       <Project>{214046ab-f093-419b-980b-b1c53cb1ec0d}</Project>
       <Name>MockMetrics</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +94,7 @@
     <Compile Include="GuEatingTests.cs" />
     <Compile Include="NugetTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnapshotDump.cs" />
+    <Compile Include="SnapshotDbDump.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ReadMe.txt" />
