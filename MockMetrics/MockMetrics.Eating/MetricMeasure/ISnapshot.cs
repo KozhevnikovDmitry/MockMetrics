@@ -36,5 +36,7 @@ namespace MockMetrics.Eating.MetricMeasure
 
         Variable GetVarMetrics(IVariableDeclaration variable);
         Variable GetVarMetrics(IParameter paramter);
+
+        int[] Metrics();
     }
 }

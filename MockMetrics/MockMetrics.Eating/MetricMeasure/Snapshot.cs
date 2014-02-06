@@ -137,7 +137,7 @@ namespace MockMetrics.Eating.MetricMeasure
             }
         }
 
-        public IList<IMetricMockOption> FakeMethods 
+        public IList<IMetricMockOption> FakeMethods
         {
             get { return FakeOptions.Where(t => t.FakeOption == FakeOption.Method).ToList(); }
         }
@@ -155,6 +155,22 @@ namespace MockMetrics.Eating.MetricMeasure
         public IList<IMetricMockOption> FakeExceptions
         {
             get { return FakeOptions.Where(t => t.FakeOption == FakeOption.Exception).ToList(); }
+        }
+        
+        public int[] Metrics()
+        {
+            return new[]
+            {
+                Librarians.Count, 
+                Stubs.Count, 
+                Mocks.Count, 
+                Targets.Count, 
+                Services.Count, 
+                FakeProperties.Count, 
+                FakeMethods.Count, 
+                FakeCallbacks.Count, 
+                FakeExceptions.Count
+            };
         }
 
         #endregion
@@ -210,5 +226,7 @@ namespace MockMetrics.Eating.MetricMeasure
         }
 
         #endregion
+
+
     }
 }

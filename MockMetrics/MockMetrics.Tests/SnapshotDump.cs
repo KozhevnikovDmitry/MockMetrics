@@ -24,15 +24,43 @@ namespace MockMetrics.Tests
             string csv = string.Format("Test{0} Librarians{0} Stubs{0} Mocks{0} Targets{0} Services{0} FakeProperties{0} FakeMethods{0} FakeCallbacks{0} FakeExceptions\n)", _sep);
             foreach (var snapshot in snapshots)
             {
-                DetailDump(snapshot);
                 csv += WriteSnapshot(snapshot);
                 csv += "\n";
             }
             csv = csv.Remove(csv.Count() - 1, 1);
 
-         Directory.CreateDirectory(DumpPath);
+            Directory.CreateDirectory(DumpPath);
             File.Create(Path.Combine(DumpPath, testSet + ".csv")).Dispose();
             File.WriteAllText(Path.Combine(DumpPath, testSet + ".csv"), csv);
+        }
+
+        public void DumpAssert(IEnumerable<ISnapshot> snapshots, string testSet)
+        {
+            var assertText = string.Empty;
+            foreach (var snapshot in snapshots)
+            {
+                var metrics = snapshot.Metrics();
+                var assert = new StringBuilder().Append("Assert.That(snapshots[0].Metrics().SequenceEqual(new[] {")
+                                                .Append(string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8}", metrics[0], metrics[1], metrics[2],
+                                                        metrics[3], metrics[4], metrics[5], metrics[6], metrics[7], metrics[8]))
+                                                .Append(" }), ")
+                                                .Append(string.Format("\"{0}\");\r\n", snapshot.UnitTest.DeclaredName))
+                                                .ToString();
+                assertText += assert;
+            }
+
+            Console.WriteLine("//------------------{0}----------------------------------------------//", testSet);
+            Console.WriteLine(assertText);
+            Console.WriteLine("//-------------------------------------------------------------------//");
+        }
+
+        public void DumpWithDetail(IEnumerable<ISnapshot> snapshots, string testSet)
+        {
+            Dump(snapshots, testSet);
+            foreach (var snapshot in snapshots)
+            {
+                DetailDump(snapshot);
+            }
         }
 
         private string WriteSnapshot(ISnapshot snapshot)
