@@ -42,6 +42,30 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.CommandLine.Common">
+      <HintPath>..\lib\JetBrains.CommandLine.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.CommandLine.Common.Console">
+      <HintPath>..\lib\JetBrains.CommandLine.Common.Console.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.CommandLine.Common.TeamCity">
+      <HintPath>..\lib\JetBrains.CommandLine.Common.TeamCity.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.CommandLine.DupFinder.Library">
+      <HintPath>..\lib\JetBrains.CommandLine.DupFinder.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.CommandLine.DupFinder.Library.CSharp">
+      <HintPath>..\lib\JetBrains.CommandLine.DupFinder.Library.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.CommandLine.DupFinder.Library.VB">
+      <HintPath>..\lib\JetBrains.CommandLine.DupFinder.Library.VB.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.CommandLine.InspectCode.MsBuild">
+      <HintPath>..\lib\JetBrains.CommandLine.InspectCode.MsBuild.dll</HintPath>
+    </Reference>
+    <Reference Include="JetBrains.CommandLine.InspectCode.Unattended">
+      <HintPath>..\lib\JetBrains.CommandLine.InspectCode.Unattended.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +90,7 @@
   <ItemGroup>
     <Compile Include="AcceptanceTests.cs" />
     <Compile Include="BaseFixture.cs" />
+    <Compile Include="CodeInspectTests.cs" />
     <Compile Include="EducationalTests.cs" />
     <Compile Include="IntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

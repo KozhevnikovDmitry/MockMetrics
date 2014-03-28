@@ -12,6 +12,7 @@ using JetBrains.IDE;
 using JetBrains.ProjectModel;
 using JetBrains.ReSharper.Daemon;
 using JetBrains.ReSharper.Daemon.Impl;
+using JetBrains.ReSharper.Daemon.SolutionAnalysis;
 using JetBrains.ReSharper.Daemon.Test;
 using JetBrains.ReSharper.Psi;
 using JetBrains.ReSharper.Psi.CSharp;
@@ -195,6 +196,31 @@ namespace MockMetrics.Tests
                             return;
                         }
                     }
+                }
+            });
+            if (!processedFile)
+            {
+                listOfProjectPaths.ForEach(f => System.Diagnostics.Trace.WriteLine("Located Item:" + f));
+                Assert.Fail("Failed to project file by project path " + fullProjectPathToTestFile);
+            }
+        }
+
+
+        public void DoTestFiles_CodeInspection(string fullProjectPathToTestFile)
+        {
+            Assert.IsNotNull(_loadedTestSolution, "Expected solution to be loaded");
+            bool processedFile = false;
+
+            var listOfProjectPaths = new List<string>();
+            var factory = new MockMetricsFactory();
+
+            RunGuarded(() =>
+            {
+                foreach (var project in _loadedTestSolution.GetAllProjects())
+                {
+                    List<IProjectFile> projectFiles = project.GetAllProjectFiles().ToList();
+                    var outpuPath = new FileSystemPath("");
+                    var consumer = factory.CreateConsumer(projectFiles, outpuPath);
                 }
             });
             if (!processedFile)
